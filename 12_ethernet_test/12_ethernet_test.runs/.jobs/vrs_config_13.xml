@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<Runs Version="1" Minor="0">
+	<Run Id="eth_data_fifo_synth_1" LaunchDir="/home/yrzal0/_FPGA/12_ethernet_test/12_ethernet_test.runs/eth_data_fifo_synth_1" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado"/>
+	<Run Id="len_fifo_synth_1" LaunchDir="/home/yrzal0/_FPGA/12_ethernet_test/12_ethernet_test.runs/len_fifo_synth_1" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado"/>
+	<Run Id="udp_tx_data_fifo_synth_1" LaunchDir="/home/yrzal0/_FPGA/12_ethernet_test/12_ethernet_test.runs/udp_tx_data_fifo_synth_1" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado"/>
+	<Run Id="udp_rx_ram_8_2048_synth_1" LaunchDir="/home/yrzal0/_FPGA/12_ethernet_test/12_ethernet_test.runs/udp_rx_ram_8_2048_synth_1" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado"/>
+	<Run Id="icmp_rx_ram_8_256_synth_1" LaunchDir="/home/yrzal0/_FPGA/12_ethernet_test/12_ethernet_test.runs/icmp_rx_ram_8_256_synth_1" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado"/>
+	<Run Id="clk_wiz_0_synth_1" LaunchDir="/home/yrzal0/_FPGA/12_ethernet_test/12_ethernet_test.runs/clk_wiz_0_synth_1" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado"/>
+	<Run Id="udp_checksum_fifo_synth_1" LaunchDir="/home/yrzal0/_FPGA/12_ethernet_test/12_ethernet_test.runs/udp_checksum_fifo_synth_1" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado"/>
+	<Run Id="synth_2" LaunchDir="/home/yrzal0/_FPGA/12_ethernet_test/12_ethernet_test.runs/synth_2" FlowId="Vivado_Synthesis" FromStepId="vivado" ToStepId="vivado">
+		<Parent Id="eth_data_fifo_synth_1"/>
+		<Parent Id="len_fifo_synth_1"/>
+		<Parent Id="udp_tx_data_fifo_synth_1"/>
+		<Parent Id="udp_rx_ram_8_2048_synth_1"/>
+		<Parent Id="icmp_rx_ram_8_256_synth_1"/>
+		<Parent Id="clk_wiz_0_synth_1"/>
+		<Parent Id="udp_checksum_fifo_synth_1"/>
+	</Run>
+	<Run Id="impl_2" LaunchDir="/home/yrzal0/_FPGA/12_ethernet_test/12_ethernet_test.runs/impl_2" FlowId="Vivado_Implementation" FromStepId="init_design" ToStepId="write_bitstream">
+		<Parent Id="synth_2"/>
+		<Parent Id="eth_data_fifo_synth_1"/>
+		<Parent Id="len_fifo_synth_1"/>
+		<Parent Id="udp_tx_data_fifo_synth_1"/>
+		<Parent Id="udp_rx_ram_8_2048_synth_1"/>
+		<Parent Id="icmp_rx_ram_8_256_synth_1"/>
+		<Parent Id="clk_wiz_0_synth_1"/>
+		<Parent Id="udp_checksum_fifo_synth_1"/>
+	</Run>
+	<Parameters>
+		<Parameter Name="runs.monitorLSFJobs" Val="true" Type="bool"/>
+		<Parameter Name="runs.enableClusterConf" Val="true" Type="bool"/>
+		<Parameter Name="general.ignorePathLengthChecks" Val="true" Type="bool"/>
+		<Parameter Name="general.shortenLongPath" Val="true" Type="bool"/>
+		<Parameter Name="general.usePosixSpawnForFork" Val="true" Type="bool"/>
+	</Parameters>
+	<ProductInfo Name="vivado"/>
+</Runs>
+

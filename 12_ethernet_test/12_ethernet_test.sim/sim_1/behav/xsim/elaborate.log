@@ -1,0 +1,83 @@
+Vivado Simulator v2025.2
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+Running: /2025.2/2025.2/Vivado/bin/unwrapped/lnx64.o/xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot top_behav xil_defaultlib.top xil_defaultlib.glbl -log elaborate.log 
+Using 8 slave threads.
+WARNING: [XSIM 43-3431] One or more environment variables have been detected which affect the operation of the C compiler. These are typically not set in standard installations and are not tested by AMD, however they may be appropriate for your system, so the flow will attempt to continue.  If errors occur, try running xelab with the "-mt off -v 1" switches to see more information from the C compiler. The following environment variables have been detected:
+Starting static elaboration
+Pass Through NonSizing Optimizer
+WARNING: [VRFC 10-9543] actual bit length 32 differs from formal bit length 1 for port 'D1' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/src/new/eth_src/util_gmii_to_rgmii.v:131]
+WARNING: [VRFC 10-9543] actual bit length 32 differs from formal bit length 1 for port 'D2' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/src/new/eth_src/util_gmii_to_rgmii.v:132]
+WARNING: [VRFC 10-9543] actual bit length 32 differs from formal bit length 1 for port 'SR' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/src/new/eth_src/util_gmii_to_rgmii.v:133]
+WARNING: [VRFC 10-9543] actual bit length 32 differs from formal bit length 1 for port 'SR' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/src/new/eth_src/util_gmii_to_rgmii.v:167]
+WARNING: [VRFC 10-9543] actual bit length 32 differs from formal bit length 1 for port 'R' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/src/new/eth_src/util_gmii_to_rgmii.v:201]
+WARNING: [VRFC 10-9543] actual bit length 32 differs from formal bit length 1 for port 'SR' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/src/new/eth_src/util_gmii_to_rgmii.v:150]
+WARNING: [VRFC 10-9543] actual bit length 32 differs from formal bit length 1 for port 'R' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/src/new/eth_src/util_gmii_to_rgmii.v:185]
+WARNING: [VRFC 10-9543] actual bit length 11 differs from formal bit length 8 for port 'addra' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/src/new/eth_src/mac/icmp_reply.v:331]
+WARNING: [VRFC 10-9543] actual bit length 11 differs from formal bit length 8 for port 'addrb' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/src/new/eth_src/mac/icmp_reply.v:334]
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module unisims_ver.BUFGCE(CE_TYPE="ASYNC")
+Compiling module unisims_ver.IBUFDS
+Compiling module unisims_ver.MMCME3_ADV(CLKIN1_PERIOD=5.0,CLK...
+Compiling module xil_defaultlib.clk_wiz_0_clk_wiz
+Compiling module xil_defaultlib.clk_wiz_0
+Compiling module unisims_ver.GND
+Compiling module unisims_ver.x_lut1_mux2
+Compiling module unisims_ver.LUT1
+Compiling module unisims_ver.x_lut2_mux4
+Compiling module unisims_ver.LUT2
+Compiling module unisims_ver.x_lut3_mux8
+Compiling module unisims_ver.LUT3
+Compiling module unisims_ver.FDCE_default
+Compiling module unisims_ver.CARRY8
+Compiling module unisims_ver.LUT6
+Compiling module unisims_ver.FDPE_default
+Compiling module unisims_ver.LUT4
+Compiling module unisims_ver.RAMB36E2(CLOCK_DOMAINS="COMMON",...
+Compiling module unisims_ver.LUT5
+Compiling module unisims_ver.FDRE_default
+Compiling module xil_defaultlib.eth_data_fifo_xpm_cdc_async_rst
+Compiling module xil_defaultlib.eth_data_fifo
+Compiling module unisims_ver.RAMB18E2(CLOCK_DOMAINS="COMMON",...
+Compiling module xil_defaultlib.len_fifo_xpm_cdc_async_rst
+Compiling module xil_defaultlib.len_fifo
+Compiling module xil_defaultlib.gmii_tx_buffer
+Compiling module xil_defaultlib.gmii_rx_buffer
+Compiling module xil_defaultlib.gmii_arbi
+Compiling module xil_defaultlib.smi_read_write(MDC_CLK=500)
+Compiling module xil_defaultlib.smi_config
+Compiling module unisims_ver.ODDRE1
+Compiling module unisims_ver.IDDRE1(DDR_CLK_EDGE="SAME_EDGE_P...
+Compiling module xil_defaultlib.util_gmii_to_rgmii_default
+Compiling module xil_defaultlib.mac_tx
+Compiling module xil_defaultlib.mac_tx_mode
+Compiling module xil_defaultlib.crc
+Compiling module xil_defaultlib.arp_tx
+Compiling module xil_defaultlib.ip_tx
+Compiling module xil_defaultlib.ip_tx_mode
+Compiling module xil_defaultlib.udp_tx_data_fifo_xpm_cdc_async_r...
+Compiling module xil_defaultlib.udp_tx_data_fifo
+Compiling module xil_defaultlib.udp_checksum_fifo_xpm_cdc_async_...
+Compiling module xil_defaultlib.udp_checksum_fifo
+Compiling module xil_defaultlib.udp_tx
+Compiling module xil_defaultlib.mac_tx_top
+Compiling module xil_defaultlib.mac_rx
+Compiling module xil_defaultlib.ip_rx
+Compiling module unisims_ver.RAMB18E2(CLOCK_DOMAINS="COMMON",...
+Compiling module xil_defaultlib.udp_rx_ram_8_2048
+Compiling module xil_defaultlib.udp_rx
+Compiling module xil_defaultlib.arp_rx
+Compiling module xil_defaultlib.mac_rx_top
+Compiling module unisims_ver.RAMB18E2(CLOCK_DOMAINS="COMMON",...
+Compiling module xil_defaultlib.icmp_rx_ram_8_256
+Compiling module xil_defaultlib.icmp_reply
+Compiling module xil_defaultlib.arp_cache
+Compiling module xil_defaultlib.mac_top
+Compiling module xil_defaultlib.mac_test
+Compiling module xil_defaultlib.ethernet_test
+Compiling module xil_defaultlib.top
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot top_behav

@@ -1,0 +1,176 @@
+#-----------------------------------------------------------
+# Vivado v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 04:59:54 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Wed Aug  5 22:47:55 2026
+# Process ID: 1248005
+# Current directory: /home/williams/MYFPGA/FPGA Final/rs_codec_clean
+# Command line: vivado
+# Log file: /home/williams/MYFPGA/FPGA Final/rs_codec_clean/vivado.log
+# Journal file: /home/williams/MYFPGA/FPGA Final/rs_codec_clean/vivado.jou
+# Running On: Williams, OS: Linux, CPU Frequency: 5300.000 MHz, CPU Physical cores: 16, Host memory: 67183 MB
+#-----------------------------------------------------------
+start_gui
+open_project {/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.xpr}
+update_compile_order -fileset sources_1
+reset_run synth_1
+generate_target all [get_files  {{/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci}}]
+generate_target all [get_files  {{/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/ip/bram_rs/bram_rs.xci}}]
+catch { config_ip_cache -export [get_ips -all bram_rs] }
+catch { config_ip_cache -export [get_ips -all clk_wiz_0] }
+export_ip_user_files -of_objects [get_files {{/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/ip/bram_rs/bram_rs.xci}}] -no_script -sync -force -quiet
+export_ip_user_files -of_objects [get_files {{/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci}}] -no_script -sync -force -quiet
+reset_run bram_rs_synth_1
+reset_run clk_wiz_0_synth_1
+launch_runs bram_rs_synth_1 clk_wiz_0_synth_1 -jobs 24
+wait_on_run bram_rs_synth_1
+wait_on_run clk_wiz_0_synth_1
+export_simulation -of_objects [get_files {{/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/ip/bram_rs/bram_rs.xci}}] -directory {/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.ip_user_files/sim_scripts} -ip_user_files_dir {/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.ip_user_files} -ipstatic_source_dir {/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.ip_user_files/ipstatic} -lib_map_path [list {modelsim=/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.cache/compile_simlib/modelsim} {questa=/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.cache/compile_simlib/questa} {xcelium=/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.cache/compile_simlib/xcelium} {vcs=/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.cache/compile_simlib/vcs} {riviera=/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.cache/compile_simlib/riviera}] -use_ip_compiled_libs -force -quiet
+export_simulation -of_objects [get_files {{/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci}}] -directory {/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.ip_user_files/sim_scripts} -ip_user_files_dir {/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.ip_user_files} -ipstatic_source_dir {/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.ip_user_files/ipstatic} -lib_map_path [list {modelsim=/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.cache/compile_simlib/modelsim} {questa=/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.cache/compile_simlib/questa} {xcelium=/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.cache/compile_simlib/xcelium} {vcs=/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.cache/compile_simlib/vcs} {riviera=/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.cache/compile_simlib/riviera}] -use_ip_compiled_libs -force -quiet
+launch_simulation
+source top.tcl
+source top.tcl
+source top.tcl
+source top.tcl
+source top.tcl
+source top.tcl
+source top.tcl
+source top.tcl
+source top.tcl
+source top.tcl
+source top.tcl
+source top.tcl
+source top.tcl
+source top.tcl
+source top.tcl
+source top.tcl
+source top.tcl
+source top.tcl
+source top.tcl
+source top.tcl
+source top.tcl
+source top.tcl
+source top.tcl
+source top.tcl
+source top.tcl
+source top.tcl
+source top.tcl
+source top.tcl
+source top.tcl
+source top.tcl
+source top.tcl
+source top.tcl
+source top.tcl
+remove_files  -fileset sim_1 {{/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sim_1/imports/rs_codec_clean/sim.tcl}}
+launch_simulation
+source top.tcl
+close_sim
+launch_sim
+source top.tcl
+add_force {top/sys_clk_p} -radix hex {0 0ns} {1 2.5ns} -repeat 5ns
+add_force {top/sys_clk_n} -radix hex {1 0ns} {0 2.5ns} -repeat 5ns
+run 10us
+launch_runs synth_1 -jobs 24
+wait_on_run synth_1
+launch_runs impl_1 -jobs 24
+wait_on_run impl_1
+reset_run impl_1
+launch_runs impl_1 -jobs 24
+wait_on_run impl_1
+reset_run synth_1
+launch_runs impl_1 -jobs 24
+wait_on_run impl_1
+open_run impl_1
+close_sim
+launch_simulation
+source top.tcl
+close_sim
+launch_sim
+source top.tcl
+add_force {top/sys_clk_p} -radix hex {0 0ns} {1 2.5ns} -repeat 5ns
+add_force {top/sys_clk_n} -radix hex {1 0ns} {0 2.5ns} -repeat 5ns
+run 10us
+open_run synth_1 -name synth_1
+create_debug_core u_ila_0 ila
+set_property C_DATA_DEPTH 1024 [get_debug_cores u_ila_0]
+set_property C_TRIGIN_EN false [get_debug_cores u_ila_0]
+set_property C_TRIGOUT_EN false [get_debug_cores u_ila_0]
+set_property C_ADV_TRIGGER false [get_debug_cores u_ila_0]
+set_property C_INPUT_PIPE_STAGES 0 [get_debug_cores u_ila_0]
+set_property C_EN_STRG_QUAL false [get_debug_cores u_ila_0]
+set_property ALL_PROBE_SAME_MU true [get_debug_cores u_ila_0]
+set_property ALL_PROBE_SAME_MU_CNT 1 [get_debug_cores u_ila_0]
+connect_debug_port u_ila_0/clk [get_nets [list clk_wiz_inst/inst/clk_out1 ]]
+set_property port_width 8 [get_debug_ports u_ila_0/probe0]
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe0]
+connect_debug_port u_ila_0/probe0 [get_nets [list {stream_data[0]} {stream_data[1]} {stream_data[2]} {stream_data[3]} {stream_data[4]} {stream_data[5]} {stream_data[6]} {stream_data[7]} ]]
+create_debug_port u_ila_0 probe
+set_property port_width 8 [get_debug_ports u_ila_0/probe1]
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe1]
+connect_debug_port u_ila_0/probe1 [get_nets [list {fso_data[0]} {fso_data[1]} {fso_data[2]} {fso_data[3]} {fso_data[4]} {fso_data[5]} {fso_data[6]} {fso_data[7]} ]]
+create_debug_port u_ila_0 probe
+set_property port_width 8 [get_debug_ports u_ila_0/probe2]
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe2]
+connect_debug_port u_ila_0/probe2 [get_nets [list {encoder_data[0]} {encoder_data[1]} {encoder_data[2]} {encoder_data[3]} {encoder_data[4]} {encoder_data[5]} {encoder_data[6]} {encoder_data[7]} ]]
+create_debug_port u_ila_0 probe
+set_property port_width 8 [get_debug_ports u_ila_0/probe3]
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe3]
+connect_debug_port u_ila_0/probe3 [get_nets [list {data_out[0]} {data_out[1]} {data_out[2]} {data_out[3]} {data_out[4]} {data_out[5]} {data_out[6]} {data_out[7]} ]]
+create_debug_port u_ila_0 probe
+set_property port_width 1 [get_debug_ports u_ila_0/probe4]
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe4]
+connect_debug_port u_ila_0/probe4 [get_nets [list en ]]
+create_debug_port u_ila_0 probe
+set_property port_width 1 [get_debug_ports u_ila_0/probe5]
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe5]
+connect_debug_port u_ila_0/probe5 [get_nets [list encoder_dv ]]
+create_debug_port u_ila_0 probe
+set_property port_width 1 [get_debug_ports u_ila_0/probe6]
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe6]
+connect_debug_port u_ila_0/probe6 [get_nets [list fso_dv ]]
+create_debug_port u_ila_0 probe
+set_property port_width 1 [get_debug_ports u_ila_0/probe7]
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe7]
+connect_debug_port u_ila_0/probe7 [get_nets [list stream_dv ]]
+create_debug_port u_ila_0 probe
+set_property port_width 1 [get_debug_ports u_ila_0/probe8]
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe8]
+connect_debug_port u_ila_0/probe8 [get_nets [list valid ]]
+save_constraints
+reset_run impl_1
+launch_runs impl_1 -to_step write_bitstream -jobs 24
+wait_on_run impl_1
+open_hw_manager
+connect_hw_server -allow_non_jtag
+open_hw_target
+set_property PROGRAM.FILE {/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.runs/impl_1/top.bit} [get_hw_devices xcku060_0]
+set_property PROBES.FILE {/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.runs/impl_1/top.ltx} [get_hw_devices xcku060_0]
+set_property FULL_PROBES.FILE {/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.runs/impl_1/top.ltx} [get_hw_devices xcku060_0]
+current_hw_device [get_hw_devices xcku060_0]
+refresh_hw_device [lindex [get_hw_devices xcku060_0] 0]
+set_property PROBES.FILE {/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.runs/impl_1/top.ltx} [get_hw_devices xcku060_0]
+set_property FULL_PROBES.FILE {/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.runs/impl_1/top.ltx} [get_hw_devices xcku060_0]
+set_property PROGRAM.FILE {/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.runs/impl_1/top.bit} [get_hw_devices xcku060_0]
+program_hw_devices [get_hw_devices xcku060_0]
+refresh_hw_device [lindex [get_hw_devices xcku060_0] 0]
+display_hw_ila_data [ get_hw_ila_data hw_ila_data_1 -of_objects [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
+set_property TRIGGER_COMPARE_VALUE eq1'b1 [get_hw_probes valid -of_objects [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
+set_property TRIGGER_COMPARE_VALUE eq1'bX [get_hw_probes valid -of_objects [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
+set_property TRIGGER_COMPARE_VALUE eq1'bR [get_hw_probes en -of_objects [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
+close_sim
+save_wave_config {/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.hw/hw_1/wave/hw_ila_data_1/hw_ila_data_1.wcfg}

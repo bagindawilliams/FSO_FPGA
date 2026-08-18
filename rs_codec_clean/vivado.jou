@@ -1,0 +1,108 @@
+#-----------------------------------------------------------
+# Vivado v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 04:59:54 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Wed Aug 12 17:14:43 2026
+# Process ID: 3806647
+# Current directory: /home/williams/MYFPGA/FPGA Final/rs_codec_clean
+# Command line: vivado
+# Log file: /home/williams/MYFPGA/FPGA Final/rs_codec_clean/vivado.log
+# Journal file: /home/williams/MYFPGA/FPGA Final/rs_codec_clean/vivado.jou
+# Running On: Williams, OS: Linux, CPU Frequency: 5300.000 MHz, CPU Physical cores: 16, Host memory: 67183 MB
+#-----------------------------------------------------------
+start_gui
+open_project {/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.xpr}
+update_compile_order -fileset sources_1
+open_run synth_1 -name synth_1
+synth_design -rtl -rtl_skip_mlo -name rtl_1
+current_design synth_1
+close_design
+open_run impl_1
+reset_run synth_1
+launch_runs synth_1 -jobs 24
+wait_on_run synth_1
+launch_runs impl_1 -jobs 24
+wait_on_run impl_1
+synth_design -dataflow -name dfv_1
+open_run synth_1 -name synth_1
+current_design impl_1
+refresh_design
+current_design synth_1
+delete_debug_core [get_debug_cores {u_ila_0 }]
+create_debug_core u_ila_0 ila
+set_property C_DATA_DEPTH 1024 [get_debug_cores u_ila_0]
+set_property C_TRIGIN_EN false [get_debug_cores u_ila_0]
+set_property C_TRIGOUT_EN false [get_debug_cores u_ila_0]
+set_property C_ADV_TRIGGER false [get_debug_cores u_ila_0]
+set_property C_INPUT_PIPE_STAGES 0 [get_debug_cores u_ila_0]
+set_property C_EN_STRG_QUAL false [get_debug_cores u_ila_0]
+set_property ALL_PROBE_SAME_MU true [get_debug_cores u_ila_0]
+set_property ALL_PROBE_SAME_MU_CNT 1 [get_debug_cores u_ila_0]
+connect_debug_port u_ila_0/clk [get_nets [list clk_wiz_inst/inst/clk_out1 ]]
+set_property port_width 8 [get_debug_ports u_ila_0/probe0]
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe0]
+connect_debug_port u_ila_0/probe0 [get_nets [list {fso_data[0]} {fso_data[1]} {fso_data[2]} {fso_data[3]} {fso_data[4]} {fso_data[5]} {fso_data[6]} {fso_data[7]} ]]
+create_debug_port u_ila_0 probe
+set_property port_width 8 [get_debug_ports u_ila_0/probe1]
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe1]
+connect_debug_port u_ila_0/probe1 [get_nets [list {encoder_data[0]} {encoder_data[1]} {encoder_data[2]} {encoder_data[3]} {encoder_data[4]} {encoder_data[5]} {encoder_data[6]} {encoder_data[7]} ]]
+create_debug_port u_ila_0 probe
+set_property port_width 8 [get_debug_ports u_ila_0/probe2]
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe2]
+connect_debug_port u_ila_0/probe2 [get_nets [list {data_out[0]} {data_out[1]} {data_out[2]} {data_out[3]} {data_out[4]} {data_out[5]} {data_out[6]} {data_out[7]} ]]
+create_debug_port u_ila_0 probe
+set_property port_width 8 [get_debug_ports u_ila_0/probe3]
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe3]
+connect_debug_port u_ila_0/probe3 [get_nets [list {stream_data[0]} {stream_data[1]} {stream_data[2]} {stream_data[3]} {stream_data[4]} {stream_data[5]} {stream_data[6]} {stream_data[7]} ]]
+create_debug_port u_ila_0 probe
+set_property port_width 1 [get_debug_ports u_ila_0/probe4]
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe4]
+connect_debug_port u_ila_0/probe4 [get_nets [list en ]]
+create_debug_port u_ila_0 probe
+set_property port_width 1 [get_debug_ports u_ila_0/probe5]
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe5]
+connect_debug_port u_ila_0/probe5 [get_nets [list encoder_dv ]]
+create_debug_port u_ila_0 probe
+set_property port_width 1 [get_debug_ports u_ila_0/probe6]
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe6]
+connect_debug_port u_ila_0/probe6 [get_nets [list fso_dv ]]
+create_debug_port u_ila_0 probe
+set_property port_width 1 [get_debug_ports u_ila_0/probe7]
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe7]
+connect_debug_port u_ila_0/probe7 [get_nets [list stream_dv ]]
+create_debug_port u_ila_0 probe
+set_property port_width 1 [get_debug_ports u_ila_0/probe8]
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe8]
+connect_debug_port u_ila_0/probe8 [get_nets [list valid ]]
+set_property mark_debug false [get_nets [list {sl_iport0_o_0[27]} {sl_iport0_o_0[17]} {sl_oport0_i_0[11]} {sl_iport0_o_0[35]} {sl_oport0_i_0[6]} <const0> fan {sl_iport0_o_0[28]} {sl_iport0_o_0[24]} {sl_iport0_o_0[23]} {sl_oport0_i_0[15]} {sl_oport0_i_0[9]} sys_clk_in {sl_iport0_o_0[12]} {stream_data[1]} {fso_data[7]} {sl_iport0_o_0[33]} {stream_data[5]} {data_out[3]} {data_out[2]} {sl_iport0_o_0[20]} {sl_iport0_o_0[34]} {sl_iport0_o_0[36]} {fso_data[3]} {sl_iport0_o_0[16]} {sl_iport0_o_0[13]} {sl_oport0_i_0[5]} fso_dv {stream_data[3]} {sl_oport0_i_0[1]} {sl_oport0_i_0[16]} {fso_data[4]} {sl_oport0_i_0[12]} {sl_iport0_o_0[19]} {sl_oport0_i_0[7]} {stream_data[2]} {sl_iport0_o_0[11]} {sl_iport0_o_0[9]} {sl_iport0_o_0[3]} {sl_iport0_o_0[8]} encoder_dv {sl_oport0_i_0[0]} {fso_data[6]} {encoder_data[7]} {data_out[0]} valid {encoder_data[1]} {sl_iport0_o_0[21]} {sl_iport0_o_0[7]} {sl_iport0_o_0[29]} {encoder_data[6]} {sl_oport0_i_0[13]} {encoder_data[5]} sys_clk_n en {encoder_data[0]} {sl_iport0_o_0[32]} {sl_oport0_i_0[10]} {sl_iport0_o_0[30]} {sl_oport0_i_0[8]} {sl_oport0_i_0[2]} {data_out[5]} {fso_data[2]} sys_clk_p {stream_data[6]} {sl_oport0_i_0[14]} {sl_iport0_o_0[5]} {sl_iport0_o_0[4]} {sl_iport0_o_0[1]} {sl_iport0_o_0[6]} {data_out[7]} {sl_iport0_o_0[26]} {sl_iport0_o_0[14]} {sl_iport0_o_0[22]} {sl_iport0_o_0[18]} {sl_iport0_o_0[25]} {sl_iport0_o_0[15]} {sl_iport0_o_0[31]} {sl_oport0_i_0[3]} {encoder_data[2]} {sl_oport0_i_0[4]} {fso_data[5]} <const1> {encoder_data[4]} {stream_data[0]} sys_clk {encoder_data[3]} {stream_data[4]} {data_out[4]} {sl_iport0_o_0[2]} {sl_iport0_o_0[10]} {sl_iport0_o_0[0]} {fso_data[0]} {stream_data[7]} {data_out[6]} {data_out[1]} {fso_data[1]} stream_dv]]
+save_constraints
+launch_simulation
+source top.tcl
+close_sim
+launch_sim
+source top.tcl
+add_force {top/sys_clk_p} -radix hex {0 0ns} {1 2.5ns} -repeat 5ns
+add_force {top/sys_clk_n} -radix hex {1 0ns} {0 2.5ns} -repeat 5ns
+run 10us
+launch_simulation -mode post-implementation -type timing
+source top.tcl
+close_sim
+launch_sim
+current_wave_config {Untitled 2}
+add_wave {{/top/rs_decoder_inst}} 
+close_sim
+launch_simulation
+source top.tcl
+current_wave_config {}
+add_wave {{/top/rs_decoder_inst}} 
+save_wave_config {/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/top_behav.wcfg}
+add_files -fileset sim_1 -norecurse {{/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/top_behav.wcfg}}
+set_property xsim.view {{/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/top_behav.wcfg}} [get_filesets sim_1]
+close_sim
+launch_sim
+open_wave_config {/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/top_behav.wcfg}
+source top.tcl
+add_force {top/sys_clk_p} -radix hex {0 0ns} {1 2.5ns} -repeat 5ns
+add_force {top/sys_clk_n} -radix hex {1 0ns} {0 2.5ns} -repeat 5ns
+run 10us
+open_hw_manager

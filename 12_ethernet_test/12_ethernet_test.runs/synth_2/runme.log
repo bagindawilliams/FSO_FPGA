@@ -1,0 +1,711 @@
+
+*** Running vivado
+    with args -log top.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source top.tcl
+
+
+****** Vivado v2025.2 (64-bit)
+  **** SW Build 6299465 on Fri Nov 14 12:34:56 MST 2025
+  **** IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+  **** SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+  **** Start of session at: Fri Apr 17 22:29:44 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source top.tcl -notrace
+Command: synth_design -top top -part xcku060-ffva1156-2-i
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xcku060'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xcku060'
+INFO: [Common 17-86] Your Synthesis license expires in 29 day(s)
+INFO: [Device 21-403] Loading part xcku060-ffva1156-2-i
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 7 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 184135
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 2672.164 ; gain = 414.688 ; free physical = 41766 ; free virtual = 111853
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'top' [/home/yrzal0/_FPGA/12_ethernet_test/src/new/top.v:23]
+INFO: [Synth 8-6157] synthesizing module 'clk_wiz_0' [/home/yrzal0/_FPGA/12_ethernet_test/12_ethernet_test.runs/synth_2/.Xil/Vivado-184003-yrzal-linux/realtime/clk_wiz_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'clk_wiz_0' (0#1) [/home/yrzal0/_FPGA/12_ethernet_test/12_ethernet_test.runs/synth_2/.Xil/Vivado-184003-yrzal-linux/realtime/clk_wiz_0_stub.v:6]
+INFO: [Synth 8-6157] synthesizing module 'ethernet_test' [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/ethernet_test.v:5]
+INFO: [Synth 8-6157] synthesizing module 'gmii_arbi' [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/arbi/gmii_arbi.v:5]
+INFO: [Synth 8-6157] synthesizing module 'gmii_tx_buffer' [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/arbi/gmii_tx_buffer.v:5]
+INFO: [Synth 8-6157] synthesizing module 'eth_data_fifo' [/home/yrzal0/_FPGA/12_ethernet_test/12_ethernet_test.runs/synth_2/.Xil/Vivado-184003-yrzal-linux/realtime/eth_data_fifo_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'eth_data_fifo' (0#1) [/home/yrzal0/_FPGA/12_ethernet_test/12_ethernet_test.runs/synth_2/.Xil/Vivado-184003-yrzal-linux/realtime/eth_data_fifo_stub.v:6]
+INFO: [Synth 8-6157] synthesizing module 'len_fifo' [/home/yrzal0/_FPGA/12_ethernet_test/12_ethernet_test.runs/synth_2/.Xil/Vivado-184003-yrzal-linux/realtime/len_fifo_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'len_fifo' (0#1) [/home/yrzal0/_FPGA/12_ethernet_test/12_ethernet_test.runs/synth_2/.Xil/Vivado-184003-yrzal-linux/realtime/len_fifo_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'gmii_tx_buffer' (0#1) [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/arbi/gmii_tx_buffer.v:5]
+INFO: [Synth 8-6157] synthesizing module 'gmii_rx_buffer' [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/arbi/gmii_rx_buffer.v:5]
+INFO: [Synth 8-6155] done synthesizing module 'gmii_rx_buffer' (0#1) [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/arbi/gmii_rx_buffer.v:5]
+INFO: [Synth 8-6155] done synthesizing module 'gmii_arbi' (0#1) [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/arbi/gmii_arbi.v:5]
+INFO: [Synth 8-6157] synthesizing module 'smi_config' [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mdio/smi_config.v:2]
+INFO: [Synth 8-6157] synthesizing module 'smi_read_write' [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mdio/smi_read_write.v:2]
+	Parameter REF_CLK bound to: 50 - type: integer 
+	Parameter MDC_CLK bound to: 500 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'smi_read_write' (0#1) [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mdio/smi_read_write.v:2]
+INFO: [Synth 8-6155] done synthesizing module 'smi_config' (0#1) [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mdio/smi_config.v:2]
+INFO: [Synth 8-6157] synthesizing module 'util_gmii_to_rgmii' [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/util_gmii_to_rgmii.v:2]
+INFO: [Synth 8-6157] synthesizing module 'ODDRE1' [/home/yrzal0/AMD/2025.2/Vivado/scripts/rt/data/unisim_comp.v:117276]
+	Parameter IS_C_INVERTED bound to: 1'b0 
+	Parameter IS_D1_INVERTED bound to: 1'b0 
+	Parameter IS_D2_INVERTED bound to: 1'b0 
+	Parameter SRVAL bound to: 1'b0 
+INFO: [Synth 8-6155] done synthesizing module 'ODDRE1' (0#1) [/home/yrzal0/AMD/2025.2/Vivado/scripts/rt/data/unisim_comp.v:117276]
+INFO: [Synth 8-6157] synthesizing module 'IDDRE1' [/home/yrzal0/AMD/2025.2/Vivado/scripts/rt/data/unisim_comp.v:85026]
+	Parameter DDR_CLK_EDGE bound to: SAME_EDGE_PIPELINED - type: string 
+	Parameter IS_CB_INVERTED bound to: 1'b1 
+	Parameter IS_C_INVERTED bound to: 1'b0 
+INFO: [Synth 8-6155] done synthesizing module 'IDDRE1' (0#1) [/home/yrzal0/AMD/2025.2/Vivado/scripts/rt/data/unisim_comp.v:85026]
+INFO: [Synth 8-6155] done synthesizing module 'util_gmii_to_rgmii' (0#1) [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/util_gmii_to_rgmii.v:2]
+WARNING: [Synth 8-7071] port 'speed_selection' of module 'util_gmii_to_rgmii' is unconnected for instance 'util_gmii_to_rgmii_m0' [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/ethernet_test.v:84]
+WARNING: [Synth 8-7023] instance 'util_gmii_to_rgmii_m0' of module 'util_gmii_to_rgmii' has 19 connections declared, but only 18 given [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/ethernet_test.v:84]
+INFO: [Synth 8-6157] synthesizing module 'mac_test' [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/mac_test.v:9]
+INFO: [Synth 8-6157] synthesizing module 'mac_top' [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/mac_top.v:7]
+INFO: [Synth 8-6157] synthesizing module 'mac_tx_top' [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/tx/mac_tx_top.v:7]
+INFO: [Synth 8-6157] synthesizing module 'mac_tx' [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/tx/mac_tx.v:8]
+INFO: [Synth 8-6155] done synthesizing module 'mac_tx' (0#1) [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/tx/mac_tx.v:8]
+INFO: [Synth 8-6157] synthesizing module 'mac_tx_mode' [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/tx/mac_tx_mode.v:7]
+INFO: [Synth 8-6155] done synthesizing module 'mac_tx_mode' (0#1) [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/tx/mac_tx_mode.v:7]
+INFO: [Synth 8-6157] synthesizing module 'crc' [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/crc.v:5]
+INFO: [Synth 8-6155] done synthesizing module 'crc' (0#1) [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/crc.v:5]
+INFO: [Synth 8-6157] synthesizing module 'arp_tx' [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/tx/arp_tx.v:7]
+INFO: [Synth 8-6155] done synthesizing module 'arp_tx' (0#1) [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/tx/arp_tx.v:7]
+INFO: [Synth 8-6157] synthesizing module 'ip_tx' [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/tx/ip_tx.v:9]
+WARNING: [Synth 8-151] case item 8'b10000000 is unreachable [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/tx/ip_tx.v:126]
+INFO: [Synth 8-6155] done synthesizing module 'ip_tx' (0#1) [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/tx/ip_tx.v:9]
+WARNING: [Synth 8-7071] port 'ip_tx_busy' of module 'ip_tx' is unconnected for instance 'ip0' [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/tx/mac_tx_top.v:179]
+WARNING: [Synth 8-7023] instance 'ip0' of module 'ip_tx' has 21 connections declared, but only 20 given [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/tx/mac_tx_top.v:179]
+INFO: [Synth 8-6157] synthesizing module 'ip_tx_mode' [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/tx/ip_tx_mode.v:7]
+INFO: [Synth 8-6155] done synthesizing module 'ip_tx_mode' (0#1) [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/tx/ip_tx_mode.v:7]
+INFO: [Synth 8-6157] synthesizing module 'udp_tx' [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/tx/udp_tx.v:7]
+INFO: [Synth 8-6157] synthesizing module 'udp_tx_data_fifo' [/home/yrzal0/_FPGA/12_ethernet_test/12_ethernet_test.runs/synth_2/.Xil/Vivado-184003-yrzal-linux/realtime/udp_tx_data_fifo_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'udp_tx_data_fifo' (0#1) [/home/yrzal0/_FPGA/12_ethernet_test/12_ethernet_test.runs/synth_2/.Xil/Vivado-184003-yrzal-linux/realtime/udp_tx_data_fifo_stub.v:6]
+INFO: [Synth 8-6157] synthesizing module 'udp_checksum_fifo' [/home/yrzal0/_FPGA/12_ethernet_test/12_ethernet_test.runs/synth_2/.Xil/Vivado-184003-yrzal-linux/realtime/udp_checksum_fifo_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'udp_checksum_fifo' (0#1) [/home/yrzal0/_FPGA/12_ethernet_test/12_ethernet_test.runs/synth_2/.Xil/Vivado-184003-yrzal-linux/realtime/udp_checksum_fifo_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'udp_tx' (0#1) [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/tx/udp_tx.v:7]
+INFO: [Synth 8-6155] done synthesizing module 'mac_tx_top' (0#1) [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/tx/mac_tx_top.v:7]
+INFO: [Synth 8-6157] synthesizing module 'mac_rx_top' [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/rx/mac_rx_top.v:7]
+INFO: [Synth 8-6157] synthesizing module 'mac_rx' [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/rx/mac_rx.v:7]
+INFO: [Synth 8-6155] done synthesizing module 'mac_rx' (0#1) [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/rx/mac_rx.v:7]
+INFO: [Synth 8-6157] synthesizing module 'ip_rx' [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/rx/ip_rx.v:7]
+INFO: [Synth 8-6155] done synthesizing module 'ip_rx' (0#1) [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/rx/ip_rx.v:7]
+INFO: [Synth 8-6157] synthesizing module 'udp_rx' [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/rx/udp_rx.v:7]
+INFO: [Synth 8-6157] synthesizing module 'udp_rx_ram_8_2048' [/home/yrzal0/_FPGA/12_ethernet_test/12_ethernet_test.runs/synth_2/.Xil/Vivado-184003-yrzal-linux/realtime/udp_rx_ram_8_2048_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'udp_rx_ram_8_2048' (0#1) [/home/yrzal0/_FPGA/12_ethernet_test/12_ethernet_test.runs/synth_2/.Xil/Vivado-184003-yrzal-linux/realtime/udp_rx_ram_8_2048_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'udp_rx' (0#1) [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/rx/udp_rx.v:7]
+INFO: [Synth 8-6157] synthesizing module 'arp_rx' [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/rx/arp_rx.v:7]
+INFO: [Synth 8-6155] done synthesizing module 'arp_rx' (0#1) [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/rx/arp_rx.v:7]
+WARNING: [Synth 8-7071] port 'crc_error' of module 'arp_rx' is unconnected for instance 'arp0' [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/rx/mac_rx_top.v:162]
+WARNING: [Synth 8-7023] instance 'arp0' of module 'arp_rx' has 13 connections declared, but only 12 given [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/rx/mac_rx_top.v:162]
+INFO: [Synth 8-6155] done synthesizing module 'mac_rx_top' (0#1) [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/rx/mac_rx_top.v:7]
+INFO: [Synth 8-6157] synthesizing module 'icmp_reply' [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/icmp_reply.v:6]
+INFO: [Synth 8-6157] synthesizing module 'icmp_rx_ram_8_256' [/home/yrzal0/_FPGA/12_ethernet_test/12_ethernet_test.runs/synth_2/.Xil/Vivado-184003-yrzal-linux/realtime/icmp_rx_ram_8_256_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'icmp_rx_ram_8_256' (0#1) [/home/yrzal0/_FPGA/12_ethernet_test/12_ethernet_test.runs/synth_2/.Xil/Vivado-184003-yrzal-linux/realtime/icmp_rx_ram_8_256_stub.v:6]
+WARNING: [Synth 8-689] width (11) of port connection 'addra' does not match port width (8) of module 'icmp_rx_ram_8_256' [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/icmp_reply.v:331]
+WARNING: [Synth 8-689] width (11) of port connection 'addrb' does not match port width (8) of module 'icmp_rx_ram_8_256' [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/icmp_reply.v:334]
+INFO: [Synth 8-6155] done synthesizing module 'icmp_reply' (0#1) [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/icmp_reply.v:6]
+INFO: [Synth 8-6157] synthesizing module 'arp_cache' [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/arp_cache.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'arp_cache' (0#1) [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/arp_cache.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'mac_top' (0#1) [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/mac_top.v:7]
+INFO: [Synth 8-226] default block is never used [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/mac_test.v:375]
+INFO: [Synth 8-6155] done synthesizing module 'mac_test' (0#1) [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/mac_test.v:9]
+INFO: [Synth 8-6155] done synthesizing module 'ethernet_test' (0#1) [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/ethernet_test.v:5]
+INFO: [Synth 8-6155] done synthesizing module 'top' (0#1) [/home/yrzal0/_FPGA/12_ethernet_test/src/new/top.v:23]
+WARNING: [Synth 8-6014] Unused sequential element gmii_rx_dv_d2_reg was removed.  [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/arbi/gmii_rx_buffer.v:110]
+WARNING: [Synth 8-6014] Unused sequential element read_data_buf_reg was removed.  [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mdio/smi_config.v:218]
+WARNING: [Synth 8-3848] Net write_req in module/entity smi_config does not have driver. [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mdio/smi_config.v:21]
+WARNING: [Synth 8-3848] Net write_data in module/entity smi_config does not have driver. [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mdio/smi_config.v:22]
+WARNING: [Synth 8-6014] Unused sequential element speed_selection_d0_reg was removed.  [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/util_gmii_to_rgmii.v:74]
+WARNING: [Synth 8-6014] Unused sequential element speed_selection_d1_reg was removed.  [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/util_gmii_to_rgmii.v:75]
+WARNING: [Synth 8-6014] Unused sequential element gmii_tx_er_r_d1_reg was removed.  [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/util_gmii_to_rgmii.v:115]
+WARNING: [Synth 8-6014] Unused sequential element mac_send_end_d0_reg was removed.  [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/tx/ip_tx.v:141]
+WARNING: [Synth 8-3848] Net ip_tx_busy in module/entity ip_tx does not have driver. [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/tx/ip_tx.v:31]
+INFO: [Synth 8-6071] Mark debug on the nets applies keep_hierarchy on instance 'udp0'. This will prevent further optimization [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/tx/mac_tx_top.v:234]
+INFO: [Synth 8-6071] Mark debug on the nets applies keep_hierarchy on instance 'tx_data_fifo'. This will prevent further optimization [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/tx/udp_tx.v:214]
+WARNING: [Synth 8-6014] Unused sequential element fifo_count_reg was removed.  [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/tx/udp_tx.v:157]
+WARNING: [Synth 8-6014] Unused sequential element ram_rdata_d1_reg was removed.  [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/tx/udp_tx.v:249]
+WARNING: [Synth 8-6014] Unused sequential element rx_dv_d1_reg was removed.  [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/rx/mac_rx.v:191]
+WARNING: [Synth 8-6014] Unused sequential element mac_crc_cnt_reg was removed.  [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/rx/mac_rx.v:229]
+WARNING: [Synth 8-6014] Unused sequential element ip_rx_data_d1_reg was removed.  [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/rx/ip_rx.v:168]
+INFO: [Synth 8-6071] Mark debug on the nets applies keep_hierarchy on instance 'udp_receive_ram'. This will prevent further optimization [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/rx/udp_rx.v:189]
+WARNING: [Synth 8-3848] Net icmp_tx_end in module/entity icmp_reply does not have driver. [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mac/icmp_reply.v:21]
+INFO: [Synth 8-6071] Mark debug on the nets applies keep_hierarchy on instance 'mac_test0'. This will prevent further optimization [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/ethernet_test.v:109]
+INFO: [Synth 8-6071] Mark debug on the nets applies keep_hierarchy on instance 'arbi_inst'. This will prevent further optimization [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/ethernet_test.v:51]
+WARNING: [Synth 8-3917] design top has port fan driven by constant 0
+WARNING: [Synth 8-7129] Port icmp_tx_end in module icmp_reply is either unconnected or has no load
+WARNING: [Synth 8-7129] Port ip_tx_busy in module ip_tx is either unconnected or has no load
+WARNING: [Synth 8-7129] Port mac_send_end in module ip_tx is either unconnected or has no load
+WARNING: [Synth 8-7129] Port icmp_tx_end in module mac_tx_top is either unconnected or has no load
+WARNING: [Synth 8-7129] Port speed_selection[1] in module util_gmii_to_rgmii is either unconnected or has no load
+WARNING: [Synth 8-7129] Port speed_selection[0] in module util_gmii_to_rgmii is either unconnected or has no load
+WARNING: [Synth 8-7129] Port gmii_rxd[7] in module gmii_rx_buffer is either unconnected or has no load
+WARNING: [Synth 8-7129] Port gmii_rxd[6] in module gmii_rx_buffer is either unconnected or has no load
+WARNING: [Synth 8-7129] Port gmii_rxd[5] in module gmii_rx_buffer is either unconnected or has no load
+WARNING: [Synth 8-7129] Port gmii_rxd[4] in module gmii_rx_buffer is either unconnected or has no load
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 2793.102 ; gain = 535.625 ; free physical = 41616 ; free virtual = 111705
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 2799.039 ; gain = 541.562 ; free physical = 41761 ; free virtual = 111850
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 2799.039 ; gain = 541.562 ; free physical = 41761 ; free virtual = 111850
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:00.04 ; elapsed = 00:00:00.03 . Memory (MB): peak = 2802.008 ; gain = 0.000 ; free physical = 41763 ; free virtual = 111851
+INFO: [Netlist 29-17] Analyzing 11 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [/home/yrzal0/_FPGA/12_ethernet_test/src/ip/eth_data_fifo/eth_data_fifo/eth_data_fifo_in_context.xdc] for cell 'eth1/arbi_inst/tx_buffer_inst/tx_fifo'
+Finished Parsing XDC File [/home/yrzal0/_FPGA/12_ethernet_test/src/ip/eth_data_fifo/eth_data_fifo/eth_data_fifo_in_context.xdc] for cell 'eth1/arbi_inst/tx_buffer_inst/tx_fifo'
+Parsing XDC File [/home/yrzal0/_FPGA/12_ethernet_test/src/ip/eth_data_fifo/eth_data_fifo/eth_data_fifo_in_context.xdc] for cell 'eth1/arbi_inst/rx_buffer_inst/rx_fifo'
+Finished Parsing XDC File [/home/yrzal0/_FPGA/12_ethernet_test/src/ip/eth_data_fifo/eth_data_fifo/eth_data_fifo_in_context.xdc] for cell 'eth1/arbi_inst/rx_buffer_inst/rx_fifo'
+Parsing XDC File [/home/yrzal0/_FPGA/12_ethernet_test/src/ip/len_fifo/len_fifo/len_fifo_in_context.xdc] for cell 'eth1/arbi_inst/tx_buffer_inst/tx_len_fifo'
+Finished Parsing XDC File [/home/yrzal0/_FPGA/12_ethernet_test/src/ip/len_fifo/len_fifo/len_fifo_in_context.xdc] for cell 'eth1/arbi_inst/tx_buffer_inst/tx_len_fifo'
+Parsing XDC File [/home/yrzal0/_FPGA/12_ethernet_test/src/ip/len_fifo/len_fifo/len_fifo_in_context.xdc] for cell 'eth1/arbi_inst/rx_buffer_inst/rx_len_fifo'
+Finished Parsing XDC File [/home/yrzal0/_FPGA/12_ethernet_test/src/ip/len_fifo/len_fifo/len_fifo_in_context.xdc] for cell 'eth1/arbi_inst/rx_buffer_inst/rx_len_fifo'
+Parsing XDC File [/home/yrzal0/_FPGA/12_ethernet_test/src/ip/udp_tx_data_fifo/udp_tx_data_fifo/udp_tx_data_fifo_in_context.xdc] for cell 'eth1/mac_test0/mac_top0/mac_tx0/udp0/tx_data_fifo'
+Finished Parsing XDC File [/home/yrzal0/_FPGA/12_ethernet_test/src/ip/udp_tx_data_fifo/udp_tx_data_fifo/udp_tx_data_fifo_in_context.xdc] for cell 'eth1/mac_test0/mac_top0/mac_tx0/udp0/tx_data_fifo'
+Parsing XDC File [/home/yrzal0/_FPGA/12_ethernet_test/src/ip/udp_rx_ram_8_2048/udp_rx_ram_8_2048/udp_rx_ram_8_2048_in_context.xdc] for cell 'eth1/mac_test0/mac_top0/mac_rx0/udp0/udp_receive_ram'
+Finished Parsing XDC File [/home/yrzal0/_FPGA/12_ethernet_test/src/ip/udp_rx_ram_8_2048/udp_rx_ram_8_2048/udp_rx_ram_8_2048_in_context.xdc] for cell 'eth1/mac_test0/mac_top0/mac_rx0/udp0/udp_receive_ram'
+Parsing XDC File [/home/yrzal0/_FPGA/12_ethernet_test/src/ip/icmp_rx_ram_8_256/icmp_rx_ram_8_256/icmp_rx_ram_8_256_in_context.xdc] for cell 'eth1/mac_test0/mac_top0/icmp0/icmp_receive_ram'
+Finished Parsing XDC File [/home/yrzal0/_FPGA/12_ethernet_test/src/ip/icmp_rx_ram_8_256/icmp_rx_ram_8_256/icmp_rx_ram_8_256_in_context.xdc] for cell 'eth1/mac_test0/mac_top0/icmp0/icmp_receive_ram'
+Parsing XDC File [/home/yrzal0/_FPGA/12_ethernet_test/src/ip/clk_wiz_0/clk_wiz_0/clk_wiz_0_in_context.xdc] for cell 'pll_inst'
+Finished Parsing XDC File [/home/yrzal0/_FPGA/12_ethernet_test/src/ip/clk_wiz_0/clk_wiz_0/clk_wiz_0_in_context.xdc] for cell 'pll_inst'
+Parsing XDC File [/home/yrzal0/_FPGA/12_ethernet_test/src/ip/udp_checksum_fifo/udp_checksum_fifo/udp_checksum_fifo_in_context.xdc] for cell 'eth1/mac_test0/mac_top0/mac_tx0/udp0/udp_tx_checksum'
+Finished Parsing XDC File [/home/yrzal0/_FPGA/12_ethernet_test/src/ip/udp_checksum_fifo/udp_checksum_fifo/udp_checksum_fifo_in_context.xdc] for cell 'eth1/mac_test0/mac_top0/mac_tx0/udp0/udp_tx_checksum'
+Parsing XDC File [/home/yrzal0/_FPGA/12_ethernet_test/src/ethernet.xdc]
+Finished Parsing XDC File [/home/yrzal0/_FPGA/12_ethernet_test/src/ethernet.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [/home/yrzal0/_FPGA/12_ethernet_test/src/ethernet.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/top_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/top_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2899.777 ; gain = 0.000 ; free physical = 41747 ; free virtual = 111836
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 11 instances were transformed.
+  IDDRE1 => ISERDESE3 (inverted pins: CLK_B): 5 instances
+  ODDRE1 => OSERDESE3: 6 instances
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.01 . Memory (MB): peak = 2899.812 ; gain = 0.000 ; free physical = 41746 ; free virtual = 111835
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 2899.812 ; gain = 642.336 ; free physical = 41738 ; free virtual = 111827
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xcku060-ffva1156-2-i
+INFO: [Synth 8-6742] Reading net delay rules and data
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 2907.781 ; gain = 650.305 ; free physical = 41738 ; free virtual = 111827
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 2907.781 ; gain = 650.305 ; free physical = 41739 ; free virtual = 111828
+---------------------------------------------------------------------------------
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'gmii_tx_buffer'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'gmii_rx_buffer'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'smi_read_write'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'smi_config'
+WARNING: [Synth 8-3936] Found unconnected internal register 'gmii_txd_r_d1_reg' and it is trimmed from '8' to '4' bits. [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/util_gmii_to_rgmii.v:113]
+INFO: [Synth 8-802] inferred FSM for state register 'send_state_reg' in module 'mac_tx'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'mac_tx_mode'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'arp_tx'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'ip_tx'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'ip_tx_mode'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'udp_tx'
+INFO: [Synth 8-802] inferred FSM for state register 'ck_state_reg' in module 'udp_tx'
+INFO: [Synth 8-802] inferred FSM for state register 'rec_state_reg' in module 'mac_rx'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'ip_rx'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'udp_rx'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'arp_rx'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'icmp_reply'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'mac_test'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                          0000001 |                             0000
+              CHECK_FIFO |                          0000010 |                             0001
+               LEN_LATCH |                          0000100 |                             0010
+               SEND_WAIT |                          0001000 |                             0011
+                    SEND |                          0010000 |                             0100
+             SEND_WAIT_1 |                          0100000 |                             0101
+                SEND_END |                          1000000 |                             0110
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'gmii_tx_buffer'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                           000001 |                             0000
+              CHECK_FIFO |                           000010 |                             0001
+               LEN_LATCH |                           000100 |                             0010
+                REC_WAIT |                           001000 |                             0011
+               READ_FIFO |                           010000 |                             0100
+                 REC_END |                           100000 |                             0101
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'gmii_rx_buffer'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                          0000001 |                              000
+                  W_MDIO |                          1000000 |                              001
+                   W_END |                          0000100 |                              101
+                  R_MDIO |                          0100000 |                              010
+                    R_TA |                          0010000 |                              011
+                  R_DATA |                          0001000 |                              100
+                   R_END |                          0000010 |                              110
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'smi_read_write'
+WARNING: [Synth 8-327] inferring latch for variable 'mdio_en_reg' [/home/yrzal0/_FPGA/12_ethernet_test/src/new/eth_src/mdio/smi_read_write.v:35]
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                             0111 |                             0000
+              R_GEN_REQ1 |                             1011 |                             1001
+                  R_REG1 |                             1010 |                             1010
+                R_CHECK1 |                             1000 |                             1011
+              ETH_UNLINK |                             0100 |                             0100
+               R_GEN_REQ |                             1001 |                             0001
+                   R_REG |                             0110 |                             0010
+                 R_CHECK |                             0000 |                             0011
+               ETH_1000M |                             0001 |                             0101
+                ETH_100M |                             0010 |                             0110
+                 ETH_10M |                             0011 |                             0111
+                  R_WAIT |                             0101 |                             1000
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'sequential' in module 'smi_config'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+              SEND_START |                           000010 |                           000010
+           SEND_PREAMBLE |                           000100 |                           000100
+               SEND_DATA |                           001000 |                           001000
+                SEND_CRC |                           010000 |                           010000
+                SEND_END |                           100000 |                           100000
+               SEND_IDLE |                           000001 |                           000001
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'send_state_reg' using encoding 'one-hot' in module 'mac_tx'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                            00001 |                            00001
+                ARP_WAIT |                            00010 |                            00010
+                     ARP |                            00100 |                            00100
+                 IP_WAIT |                            01000 |                            01000
+                      IP |                            10000 |                            10000
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'mac_tx_mode'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                         00000001 |                         00000001
+      ARP_REQUEST_WAIT_0 |                         00000010 |                         00000010
+      ARP_REQUEST_WAIT_1 |                         00000100 |                         00000100
+             ARP_REQUEST |                         00001000 |                         00001000
+        ARP_REPLY_WAIT_0 |                         00010000 |                         00010000
+        ARP_REPLY_WAIT_1 |                         00100000 |                         00100000
+               ARP_REPLY |                         01000000 |                         01000000
+                 ARP_END |                         10000000 |                         10000000
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'arp_tx'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                         00000001 |                          0000001
+                   START |                         10000000 |                          0000010
+        WAIT_DATA_LENGTH |                         01000000 |                          0000100
+            GEN_CHECKSUM |                         00100000 |                          0001000
+               SEND_WAIT |                         00010000 |                          0010000
+                WAIT_MAC |                         00001000 |                          0100000
+                 IP_SEND |                         00000010 |                          1000000
+                  iSTATE |                         00000100 |                          0000000
+*
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'ip_tx'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                            00001 |                            00001
+                UDP_WAIT |                            00010 |                            00010
+                     UDP |                            00100 |                            00100
+               ICMP_WAIT |                            01000 |                            01000
+                    ICMP |                            10000 |                            10000
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'ip_tx_mode'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                 CK_IDLE |                           000001 |                           000001
+         HEADER_CHECKSUM |                           000010 |                           000010
+            GEN_CHECKSUM |                           000100 |                           000100
+        GEN_ODD_CHECKSUM |                           001000 |                           001000
+        GEN_CHECKSUM_END |                           010000 |                           010000
+           CHECKSUM_WAIT |                           100000 |                           100000
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'ck_state_reg' using encoding 'one-hot' in module 'udp_tx'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                           000001 |                           000001
+                   START |                           000010 |                           000010
+               LEN_LATCH |                           000100 |                           000100
+               SEND_WAIT |                           001000 |                           001000
+                UDP_SEND |                           010000 |                           010000
+                 UDP_END |                           100000 |                           100000
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'udp_tx'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                         00000001 |                         00000001
+            REC_PREAMBLE |                         00000010 |                         00000010
+            REC_MAC_HEAD |                         00000100 |                         00000100
+            REC_IDENTIFY |                         00001000 |                         00001000
+                REC_DATA |                         00010000 |                         00010000
+                 REC_CRC |                         00100000 |                         00100000
+                 REC_END |                         10000000 |                         10000000
+               REC_ERROR |                         01000000 |                         01000000
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'rec_state_reg' using encoding 'one-hot' in module 'mac_rx'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                            00001 |                            00001
+             REC_HEADER0 |                            00010 |                            00010
+             REC_HEADER1 |                            00100 |                            00100
+                REC_DATA |                            01000 |                            01000
+                 REC_END |                            10000 |                            10000
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'ip_rx'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                         00000001 |                         00000001
+                REC_HEAD |                         00000010 |                         00000010
+                REC_DATA |                         00000100 |                         00000100
+            REC_ODD_DATA |                         00001000 |                         00001000
+         VERIFY_CHECKSUM |                         00010000 |                         00010000
+               REC_ERROR |                         00100000 |                         00100000
+            REC_END_WAIT |                         01000000 |                         01000000
+                 REC_END |                         10000000 |                         10000000
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'udp_rx'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                             0001 |                             0001
+            ARP_REC_DATA |                             0010 |                             0010
+                ARP_WAIT |                             0100 |                             0100
+                 ARP_END |                             1000 |                             1000
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'arp_rx'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                     000000000001 |                     000000000001
+                REC_DATA |                     000000000010 |                     000000000010
+            REC_ODD_DATA |                     000000000100 |                     000000000100
+         VERIFY_CHECKSUM |                     000000001000 |                     000000001000
+               REC_ERROR |                     000000010000 |                     000000010000
+            REC_END_WAIT |                     000000100000 |                     000000100000
+                 REC_END |                     010000000000 |                     010000000000
+             SEND_WAIT_0 |                     000010000000 |                     000010000000
+             SEND_WAIT_1 |                     000100000000 |                     000100000000
+                    SEND |                     001000000000 |                     001000000000
+                SEND_END |                     100000000000 |                     100000000000
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'icmp_reply'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                        000000001 |                        000000001
+                 ARP_REQ |                        000000010 |                        000000010
+                ARP_SEND |                        000000100 |                        000000100
+                ARP_WAIT |                        000001000 |                        000001000
+                    WAIT |                        010000000 |                        010000000
+               CHECK_ARP |                        100000000 |                        100000000
+                 GEN_REQ |                        000010000 |                        000010000
+               WRITE_RAM |                        000100000 |                        000100000
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'mac_test'
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 2907.781 ; gain = 650.305 ; free physical = 41737 ; free virtual = 111828
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input   32 Bit       Adders := 25    
+	   2 Input   20 Bit       Adders := 2     
+	   2 Input   19 Bit       Adders := 3     
+	   2 Input   18 Bit       Adders := 6     
+	   2 Input   17 Bit       Adders := 22    
+	   2 Input   16 Bit       Adders := 25    
+	   3 Input   16 Bit       Adders := 1     
+	   2 Input   11 Bit       Adders := 4     
+	   2 Input    8 Bit       Adders := 2     
+	   2 Input    6 Bit       Adders := 1     
+	   2 Input    5 Bit       Adders := 4     
+	   2 Input    4 Bit       Adders := 3     
+	   2 Input    3 Bit       Adders := 3     
+	   2 Input    2 Bit       Adders := 3     
++---XORs : 
+	   2 Input      1 Bit         XORs := 18    
+	   3 Input      1 Bit         XORs := 12    
+	   6 Input      1 Bit         XORs := 14    
+	   8 Input      1 Bit         XORs := 2     
+	   5 Input      1 Bit         XORs := 8     
+	   7 Input      1 Bit         XORs := 14    
+	  10 Input      1 Bit         XORs := 4     
+	   9 Input      1 Bit         XORs := 6     
+	  12 Input      1 Bit         XORs := 2     
+	   4 Input      1 Bit         XORs := 2     
++---Registers : 
+	               80 Bit    Registers := 1     
+	               64 Bit    Registers := 1     
+	               48 Bit    Registers := 6     
+	               32 Bit    Registers := 36    
+	               20 Bit    Registers := 4     
+	               19 Bit    Registers := 3     
+	               18 Bit    Registers := 5     
+	               17 Bit    Registers := 14    
+	               16 Bit    Registers := 43    
+	               11 Bit    Registers := 4     
+	                8 Bit    Registers := 35    
+	                6 Bit    Registers := 1     
+	                5 Bit    Registers := 6     
+	                4 Bit    Registers := 12    
+	                3 Bit    Registers := 3     
+	                2 Bit    Registers := 7     
+	                1 Bit    Registers := 118   
++---Muxes : 
+	   2 Input   64 Bit        Muxes := 2     
+	   2 Input   48 Bit        Muxes := 9     
+	   7 Input   48 Bit        Muxes := 2     
+	   6 Input   48 Bit        Muxes := 2     
+	   2 Input   32 Bit        Muxes := 31    
+	   4 Input   32 Bit        Muxes := 8     
+	   5 Input   32 Bit        Muxes := 1     
+	   3 Input   32 Bit        Muxes := 2     
+	   5 Input   31 Bit        Muxes := 1     
+	   3 Input   27 Bit        Muxes := 1     
+	   5 Input   23 Bit        Muxes := 1     
+	   2 Input   20 Bit        Muxes := 2     
+	   2 Input   19 Bit        Muxes := 3     
+	   2 Input   18 Bit        Muxes := 5     
+	   2 Input   17 Bit        Muxes := 16    
+	   2 Input   16 Bit        Muxes := 38    
+	   5 Input   15 Bit        Muxes := 1     
+	  29 Input   12 Bit        Muxes := 1     
+	   2 Input   11 Bit        Muxes := 4     
+	   2 Input    9 Bit        Muxes := 10    
+	   3 Input    9 Bit        Muxes := 1     
+	   8 Input    9 Bit        Muxes := 2     
+	   2 Input    8 Bit        Muxes := 79    
+	   3 Input    8 Bit        Muxes := 2     
+	   8 Input    8 Bit        Muxes := 4     
+	   4 Input    8 Bit        Muxes := 1     
+	   7 Input    7 Bit        Muxes := 1     
+	   2 Input    7 Bit        Muxes := 10    
+	   6 Input    7 Bit        Muxes := 1     
+	   5 Input    7 Bit        Muxes := 1     
+	   6 Input    6 Bit        Muxes := 7     
+	   2 Input    6 Bit        Muxes := 28    
+	   2 Input    5 Bit        Muxes := 30    
+	   5 Input    5 Bit        Muxes := 3     
+	   3 Input    5 Bit        Muxes := 1     
+	   9 Input    4 Bit        Muxes := 1     
+	   2 Input    4 Bit        Muxes := 15    
+	   4 Input    4 Bit        Muxes := 2     
+	   5 Input    4 Bit        Muxes := 1     
+	   2 Input    3 Bit        Muxes := 4     
+	   2 Input    2 Bit        Muxes := 9     
+	   3 Input    2 Bit        Muxes := 1     
+	   2 Input    1 Bit        Muxes := 70    
+	   3 Input    1 Bit        Muxes := 16    
+	  15 Input    1 Bit        Muxes := 1     
+	  33 Input    1 Bit        Muxes := 1     
+	   6 Input    1 Bit        Muxes := 2     
+	   4 Input    1 Bit        Muxes := 3     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 2760 (col length:120)
+BRAMs: 2160 (col length: RAMB18 120 RAMB36 60)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-3917] design top has port fan driven by constant 0
+WARNING: [Synth 8-7129] Port icmp_tx_end in module icmp_reply is either unconnected or has no load
+WARNING: [Synth 8-7129] Port ip_tx_busy in module ip_tx is either unconnected or has no load
+WARNING: [Synth 8-7129] Port mac_send_end in module ip_tx is either unconnected or has no load
+WARNING: [Synth 8-7129] Port icmp_tx_end in module mac_tx_top is either unconnected or has no load
+WARNING: [Synth 8-3332] Sequential element (eth1/smi_config_inst/smi_inst/FSM_onehot_state_reg[6]) is unused and will be removed from module top.
+WARNING: [Synth 8-3332] Sequential element (eth1/smi_config_inst/smi_inst/FSM_onehot_state_reg[2]) is unused and will be removed from module top.
+WARNING: [Synth 8-3332] Sequential element (mdio_out_regi_4) is unused and will be removed from module top.
+WARNING: [Synth 8-3332] Sequential element (ip0/FSM_onehot_state_reg[2]) is unused and will be removed from module mac_tx_top.
+WARNING: [Synth 8-3332] Sequential element (FSM_onehot_state_reg[6]) is unused and will be removed from module icmp_reply.
+WARNING: [Synth 8-3332] Sequential element (FSM_onehot_state_reg[6]) is unused and will be removed from module mac_test.
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:16 ; elapsed = 00:00:17 . Memory (MB): peak = 2925.359 ; gain = 667.883 ; free physical = 41683 ; free virtual = 111784
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:18 ; elapsed = 00:00:18 . Memory (MB): peak = 3066.586 ; gain = 809.109 ; free physical = 41564 ; free virtual = 111665
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 3092.617 ; gain = 835.141 ; free physical = 41540 ; free virtual = 111641
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:19 ; elapsed = 00:00:19 . Memory (MB): peak = 3092.617 ; gain = 835.141 ; free physical = 41531 ; free virtual = 111632
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:21 ; elapsed = 00:00:21 . Memory (MB): peak = 3266.430 ; gain = 1008.953 ; free physical = 41384 ; free virtual = 111485
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:21 ; elapsed = 00:00:21 . Memory (MB): peak = 3266.430 ; gain = 1008.953 ; free physical = 41384 ; free virtual = 111485
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:21 ; elapsed = 00:00:21 . Memory (MB): peak = 3266.430 ; gain = 1008.953 ; free physical = 41384 ; free virtual = 111485
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:21 ; elapsed = 00:00:21 . Memory (MB): peak = 3266.430 ; gain = 1008.953 ; free physical = 41384 ; free virtual = 111485
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:21 ; elapsed = 00:00:21 . Memory (MB): peak = 3266.430 ; gain = 1008.953 ; free physical = 41384 ; free virtual = 111485
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:21 ; elapsed = 00:00:21 . Memory (MB): peak = 3266.430 ; gain = 1008.953 ; free physical = 41384 ; free virtual = 111485
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++------+------------------+----------+
+|      |BlackBox name     |Instances |
++------+------------------+----------+
+|1     |clk_wiz_0         |         1|
+|2     |eth_data_fifo     |         2|
+|3     |len_fifo          |         2|
+|4     |icmp_rx_ram_8_256 |         1|
+|5     |udp_rx_ram_8_2048 |         1|
+|6     |udp_tx_data_fifo  |         1|
+|7     |udp_checksum_fifo |         1|
++------+------------------+----------+
+
+Report Cell Usage: 
++------+------------------+------+
+|      |Cell              |Count |
++------+------------------+------+
+|1     |clk_wiz           |     1|
+|2     |eth_data_fifo     |     2|
+|4     |icmp_rx_ram_8     |     1|
+|5     |len_fifo          |     2|
+|7     |udp_checksum_fifo |     1|
+|8     |udp_rx_ram_8      |     1|
+|9     |udp_tx_data_fifo  |     1|
+|10    |BUFG              |     1|
+|11    |CARRY8            |   161|
+|12    |IDDRE1            |     5|
+|13    |LUT1              |    49|
+|14    |LUT2              |  1124|
+|15    |LUT3              |   535|
+|16    |LUT4              |   515|
+|17    |LUT5              |   532|
+|18    |LUT6              |   761|
+|19    |MUXF7             |     3|
+|20    |ODDRE1            |     6|
+|21    |FDCE              |  2733|
+|22    |FDPE              |   237|
+|23    |FDRE              |    36|
+|24    |LD                |     1|
+|25    |IBUF              |     7|
+|26    |IOBUF             |     1|
+|27    |OBUF              |     9|
++------+------------------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:21 ; elapsed = 00:00:21 . Memory (MB): peak = 3266.430 ; gain = 1008.953 ; free physical = 41384 ; free virtual = 111485
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 13 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:20 ; elapsed = 00:00:21 . Memory (MB): peak = 3266.430 ; gain = 908.180 ; free physical = 41386 ; free virtual = 111487
+Synthesis Optimization Complete : Time (s): cpu = 00:00:21 ; elapsed = 00:00:22 . Memory (MB): peak = 3266.430 ; gain = 1008.953 ; free physical = 41386 ; free virtual = 111487
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00.02 ; elapsed = 00:00:00.03 . Memory (MB): peak = 3266.430 ; gain = 0.000 ; free physical = 41556 ; free virtual = 111657
+INFO: [Netlist 29-17] Analyzing 185 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 3311.816 ; gain = 0.000 ; free physical = 41542 ; free virtual = 111643
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 21 instances were transformed.
+  BUFG => BUFGCE: 1 instance 
+  IBUF => IBUF (IBUFCTRL, INBUF): 7 instances
+  IDDRE1 => ISERDESE3 (inverted pins: CLK_B): 5 instances
+  IOBUF => IOBUF (IBUFCTRL, INBUF, OBUFT): 1 instance 
+  LD => LDCE: 1 instance 
+  ODDRE1 => OSERDESE3: 6 instances
+
+Synth Design complete | Checksum: 94f3f457
+INFO: [Common 17-83] Releasing license: Synthesis
+127 Infos, 48 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:27 ; elapsed = 00:00:25 . Memory (MB): peak = 3311.852 ; gain = 1617.293 ; free physical = 41540 ; free virtual = 111642
+INFO: [Common 17-2834] synth_design peak Physical Memory [PSS] (MB): overall = 2385.948; main = 2278.938; forked = 236.709
+INFO: [Common 17-2834] synth_design peak Virtual Memory [VSS] (MB): overall = 4145.496; main = 3311.820; forked = 997.875
+Write ShapeDB Complete: Time (s): cpu = 00:00:00.02 ; elapsed = 00:00:00.01 . Memory (MB): peak = 3335.828 ; gain = 0.000 ; free physical = 41540 ; free virtual = 111642
+INFO: [Common 17-1381] The checkpoint '/home/yrzal0/_FPGA/12_ethernet_test/12_ethernet_test.runs/synth_2/top.dcp' has been generated.
+INFO: [Vivado 12-24828] Executing command : report_utilization -file top_utilization_synth.rpt -pb top_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Fri Apr 17 22:30:13 2026...

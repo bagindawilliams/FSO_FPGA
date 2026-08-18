@@ -1,0 +1,40 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  --include "../../../../../../../../../2025.2/2025.2/data/rsb/busdef" \
+"../../../../src/ip/icmp_rx_ram_8_256/icmp_rx_ram_8_256_sim_netlist.v" \
+"../../../../src/ip/udp_rx_ram_8_2048/udp_rx_ram_8_2048_sim_netlist.v" \
+"../../../../src/ip/udp_checksum_fifo/udp_checksum_fifo_sim_netlist.v" \
+"../../../../src/ip/udp_tx_data_fifo/udp_tx_data_fifo_sim_netlist.v" \
+"../../../../src/ip/len_fifo/len_fifo_sim_netlist.v" \
+"../../../../src/ip/eth_data_fifo/eth_data_fifo_sim_netlist.v" \
+"../../../../src/ip/clk_wiz_0/clk_wiz_0_sim_netlist.v" \
+"../../../../src/new/eth_src/mac/arp_cache.v" \
+"../../../../src/new/eth_src/mac/rx/arp_rx.v" \
+"../../../../src/new/eth_src/mac/tx/arp_tx.v" \
+"../../../../src/new/eth_src/mac/crc.v" \
+"../../../../src/new/eth_src/ethernet_test.v" \
+"../../../../src/new/eth_src/arbi/gmii_arbi.v" \
+"../../../../src/new/eth_src/arbi/gmii_rx_buffer.v" \
+"../../../../src/new/eth_src/arbi/gmii_tx_buffer.v" \
+"../../../../src/new/eth_src/mac/icmp_reply.v" \
+"../../../../src/new/eth_src/mac/rx/ip_rx.v" \
+"../../../../src/new/eth_src/mac/tx/ip_tx.v" \
+"../../../../src/new/eth_src/mac/tx/ip_tx_mode.v" \
+"../../../../src/new/eth_src/mac/rx/mac_rx.v" \
+"../../../../src/new/eth_src/mac/rx/mac_rx_top.v" \
+"../../../../src/new/eth_src/mac/mac_test.v" \
+"../../../../src/new/eth_src/mac/mac_top.v" \
+"../../../../src/new/eth_src/mac/tx/mac_tx.v" \
+"../../../../src/new/eth_src/mac/tx/mac_tx_mode.v" \
+"../../../../src/new/eth_src/mac/tx/mac_tx_top.v" \
+"../../../../src/new/eth_src/mdio/smi_config.v" \
+"../../../../src/new/eth_src/mdio/smi_read_write.v" \
+"../../../../src/new/eth_src/mac/rx/udp_rx.v" \
+"../../../../src/new/eth_src/mac/tx/udp_tx.v" \
+"../../../../src/new/eth_src/util_gmii_to_rgmii.v" \
+"../../../../src/new/top.v" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort

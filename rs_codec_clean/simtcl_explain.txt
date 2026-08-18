@@ -1,0 +1,23 @@
+Perintah 1: 
+Menggerakkan Detak Positif (P):
+add_force {top/sys_clk_p} -radix hex {0 0ns} {1 2.5ns} -repeat 5ns  
+
+Maksudnya: 
+Vivado, tolong paksa (add_force) pin sys_clk_p di modul top untuk bergerak. Mulai dari angka 0 pada detik ke-0, lalu naik menjadi angka 1 pada detik ke-2.5 nanodetik. Ulangi terus gerakan naik-turun ini setiap 5ns.  Kenapa 5ns? Karena 1 dibagi 5 nanodetik sama dengan 200 MHz. Ini persis sama dengan kecepatan osilator fisik di papan Kintex UltraScale Anda!
+
+
+Perintah 2: 
+Menggerakkan Detak Negatif (N):
+add_force {top/sys_clk_n} -radix hex {1 0ns} {0 2.5ns} -repeat 5ns  
+
+Maksudnya: 
+Papan FPGA KCU060 menggunakan Differential Clock (detak ganda P dan N yang saling berlawanan agar sinyal stabil dan kebal noise).Coba perhatikan angkanya: Saat sys_clk_p bernilai 0, sys_clk_n disuruh bernilai 1. Saat p naik ke 1 di 2.5ns, n turun ke 0. Senior Anda membuat tiruan sempurna dari osilator fisik di dalam layar simulasi!  
+
+
+
+Perintah 3: 
+Menjalankan Waktu:
+run 10us  
+
+Maksudnya: 
+Setelah detak jantung buatannya dipasang, Vivado disuruh memutar waktu simulasi ke depan selama 10 mikrodetik (10us). Dalam rentang waktu ini, Anda sudah bisa melihat modul autorun menghitung dan data mengalir di layar gelombang.  

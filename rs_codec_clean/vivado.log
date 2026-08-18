@@ -1,0 +1,1390 @@
+#-----------------------------------------------------------
+# Vivado v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 04:59:54 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Wed Aug 12 17:14:43 2026
+# Process ID: 3806647
+# Current directory: /home/williams/MYFPGA/FPGA Final/rs_codec_clean
+# Command line: vivado
+# Log file: /home/williams/MYFPGA/FPGA Final/rs_codec_clean/vivado.log
+# Journal file: /home/williams/MYFPGA/FPGA Final/rs_codec_clean/vivado.jou
+# Running On: Williams, OS: Linux, CPU Frequency: 5300.000 MHz, CPU Physical cores: 16, Host memory: 67183 MB
+#-----------------------------------------------------------
+start_gui
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vek280_es:part0:1.0 available at /tools/Xilinx/Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vek280/es/1.0/board.xml as part xcve2802-vsvh1760-2lp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vhk158_es:part0:1.0 available at /tools/Xilinx/Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vhk158/es/1.0/board.xml as part xcvh1582-vsva3697-2mp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vpk120_es:part0:1.2 available at /tools/Xilinx/Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vpk120/es/1.2/board.xml as part xcvp1202-vsva2785-2mp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vpk120_es_revb:part0:1.0 available at /tools/Xilinx/Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vpk120_revb/es/1.0/board.xml as part xcvp1202-vsva2785-2mp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vpk180_es:part0:1.0 available at /tools/Xilinx/Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vpk180/es/1.0/board.xml as part xcvp1802-lsvc4072-2mp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu208ld:part0:2.0 available at /tools/Xilinx/Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu208ld/production/2.0/board.xml as part xczu58dr-fsvg1517-2-i specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu216ld:part0:2.0 available at /tools/Xilinx/Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu216ld/production/2.0/board.xml as part xczu59dr-ffvf1760-2-i specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu670:part0:2.0 available at /tools/Xilinx/Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu670/2.0/board.xml as part xczu67dr-fsve1156-2-i specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu670ld:part0:1.0 available at /tools/Xilinx/Vivado/2022.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu670ld/1.0/board.xml as part xczu57dr-fsve1156-2-i specified in board_part file is either invalid or not available
+open_project {/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.xpr}
+Scanning sources...
+Finished scanning sources
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/tools/Xilinx/Vivado/2022.2/data/ip'.
+update_compile_order -fileset sources_1
+open_run synth_1 -name synth_1
+Design is defaulting to impl run constrset: constrs_1
+Design is defaulting to synth run part: xcku060-ffva1156-2-i
+INFO: [Device 21-403] Loading part xcku060-ffva1156-2-i
+INFO: [Project 1-454] Reading design checkpoint '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.dcp' for cell 'clk_wiz_inst'
+INFO: [Project 1-454] Reading design checkpoint '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.gen/sources_1/ip/bram_rs/bram_rs.dcp' for cell 'rs_decoder_inst/bram_rs_inst'
+Netlist sorting complete. Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.01 . Memory (MB): peak = 7938.848 ; gain = 0.000 ; free physical = 573 ; free virtual = 93130
+INFO: [Netlist 29-17] Analyzing 51 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2022.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+WARNING: [Opt 31-32] Removing redundant IBUF since it is not being driven by a top-level port. clk_wiz_inst/inst/clkin1_ibuf 
+Resolution: The tool has removed redundant IBUF. To resolve this warning, check for redundant IBUF in the input design.
+WARNING: [Constraints 18-550] Could not create 'IBUF_LOW_PWR' constraint because net 'clk_wiz_inst/clk_in1' is not directly connected to top level port. Synthesis is ignored for IBUF_LOW_PWR but preserved for implementation.
+Parsing XDC File [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_board.xdc] for cell 'clk_wiz_inst/inst'
+Finished Parsing XDC File [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_board.xdc] for cell 'clk_wiz_inst/inst'
+Parsing XDC File [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc] for cell 'clk_wiz_inst/inst'
+INFO: [Timing 38-35] Done setting XDC timing constraints. [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc:57]
+INFO: [Timing 38-2] Deriving generated clocks [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc:57]
+Finished Parsing XDC File [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc] for cell 'clk_wiz_inst/inst'
+Parsing XDC File [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/constrs_1/new/top.xdc]
+Finished Parsing XDC File [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/constrs_1/new/top.xdc]
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+INFO: [Opt 31-422] The CLOCK_DOMAINS attribute on the BRAM cell rs_decoder_inst/bram_rs_inst/U0/inst_blk_mem_gen/gnbram.gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/prim_noinit.ram/DEVICE_8SERIES.NO_BMM_INFO.SDP.WIDE_PRIM18.ram has been changed from INDEPENDENT to COMMON to match the clocking topology used for the BRAM.
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 8307.355 ; gain = 0.000 ; free physical = 623 ; free virtual = 92984
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 1 instances were transformed.
+  IBUFGDS => IBUFDS (DIFFINBUF, IBUFCTRL): 1 instance 
+
+synth_design -rtl -rtl_skip_mlo -name rtl_1
+Command: synth_design -rtl -rtl_skip_mlo -name rtl_1
+Starting synth_design
+Using part: xcku060-ffva1156-2-i
+Top: top
+INFO: [Synth 8-11241] undeclared symbol 'REGCCE', assumed default net type 'wire' [/tools/Xilinx/Vivado/2022.2/data/verilog/src/unimacro/BRAM_SINGLE_MACRO.v:2170]
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 9288.422 ; gain = 0.000 ; free physical = 593 ; free virtual = 91748
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'top' [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/top.v:27]
+INFO: [Synth 8-6157] synthesizing module 'IBUFGDS' [/tools/Xilinx/Vivado/2022.2/scripts/rt/data/unisim_comp.v:71834]
+INFO: [Synth 8-6155] done synthesizing module 'IBUFGDS' (0#1) [/tools/Xilinx/Vivado/2022.2/scripts/rt/data/unisim_comp.v:71834]
+INFO: [Synth 8-6157] synthesizing module 'clk_wiz_0' [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/.Xil/Vivado-3806647-Williams/realtime/clk_wiz_0_stub.v:5]
+INFO: [Synth 8-6155] done synthesizing module 'clk_wiz_0' (0#1) [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/.Xil/Vivado-3806647-Williams/realtime/clk_wiz_0_stub.v:5]
+INFO: [Synth 8-6157] synthesizing module 'autorun' [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/autorun.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'autorun' (0#1) [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/autorun.v:23]
+INFO: [Synth 8-6157] synthesizing module 'stream_input' [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/stream_input.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'stream_input' (0#1) [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/stream_input.v:23]
+INFO: [Synth 8-6157] synthesizing module 'rs_encoder' [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/rs_encoder.v:23]
+INFO: [Synth 8-6157] synthesizing module 'multiplier' [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/multiplier.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'multiplier' (0#1) [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/multiplier.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'rs_encoder' (0#1) [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/rs_encoder.v:23]
+INFO: [Synth 8-6157] synthesizing module 'error_inject' [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/error_inject.v:23]
+INFO: [Synth 8-3876] $readmem data file 'error.mem' is read successfully [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/error_inject.v:40]
+INFO: [Synth 8-6155] done synthesizing module 'error_inject' (0#1) [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/error_inject.v:23]
+INFO: [Synth 8-6157] synthesizing module 'rs_decoder' [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/rs_codec_clean/rs_decoder.v:23]
+INFO: [Synth 8-6157] synthesizing module 'bram_rs' [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/.Xil/Vivado-3806647-Williams/realtime/bram_rs_stub.v:5]
+INFO: [Synth 8-6155] done synthesizing module 'bram_rs' (0#1) [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/.Xil/Vivado-3806647-Williams/realtime/bram_rs_stub.v:5]
+INFO: [Synth 8-6157] synthesizing module 'syndrome_unit' [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/syndrome_unit.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'syndrome_unit' (0#1) [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/syndrome_unit.v:23]
+INFO: [Synth 8-6157] synthesizing module 'euclid_proc' [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/euclid_proc.v:23]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/euclid_proc.v:149]
+INFO: [Synth 8-6157] synthesizing module 'inverter' [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/inverter.v:23]
+INFO: [Synth 8-3876] $readmem data file 'alpha_value.mem' is read successfully [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/inverter.v:36]
+INFO: [Synth 8-3876] $readmem data file 'decimal_value.mem' is read successfully [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/inverter.v:37]
+INFO: [Synth 8-6155] done synthesizing module 'inverter' (0#1) [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/inverter.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'euclid_proc' (0#1) [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/euclid_proc.v:23]
+INFO: [Synth 8-6157] synthesizing module 'chien_search' [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/chien_search.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'chien_search' (0#1) [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/chien_search.v:23]
+WARNING: [Synth 8-7071] port 'valid' of module 'chien_search' is unconnected for instance 'chien_search_inst' [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/rs_codec_clean/rs_decoder.v:169]
+WARNING: [Synth 8-7023] instance 'chien_search_inst' of module 'chien_search' has 7 connections declared, but only 6 given [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/rs_codec_clean/rs_decoder.v:169]
+INFO: [Synth 8-6157] synthesizing module 'forney_math' [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/forney_math.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'forney_math' (0#1) [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/forney_math.v:23]
+WARNING: [Synth 8-7071] port 'valid' of module 'forney_math' is unconnected for instance 'forney_math_inst' [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/rs_codec_clean/rs_decoder.v:178]
+WARNING: [Synth 8-7023] instance 'forney_math_inst' of module 'forney_math' has 7 connections declared, but only 6 given [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/rs_codec_clean/rs_decoder.v:178]
+INFO: [Synth 8-6155] done synthesizing module 'rs_decoder' (0#1) [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/rs_codec_clean/rs_decoder.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'top' (0#1) [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/top.v:27]
+WARNING: [Synth 8-6014] Unused sequential element reg_T_reg[16] was removed.  [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/euclid_proc.v:125]
+WARNING: [Synth 8-6014] Unused sequential element reg_C_reg[16] was removed.  [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/euclid_proc.v:126]
+WARNING: [Synth 8-6014] Unused sequential element reg_W_reg[16] was removed.  [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/euclid_proc.v:127]
+WARNING: [Synth 8-6014] Unused sequential element reg_Y_reg[16] was removed.  [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/euclid_proc.v:128]
+INFO: [Synth 8-6071] Mark debug on the nets applies keep_hierarchy on instance 'autorun_inst'. This will prevent further optimization [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/top.v:110]
+INFO: [Synth 8-6071] Mark debug on the nets applies keep_hierarchy on instance 'stream_input_inst'. This will prevent further optimization [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/top.v:119]
+INFO: [Synth 8-6071] Mark debug on the nets applies keep_hierarchy on instance 'rs_encoder_inst'. This will prevent further optimization [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/top.v:130]
+INFO: [Synth 8-6071] Mark debug on the nets applies keep_hierarchy on instance 'error_inject_inst'. This will prevent further optimization [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/top.v:142]
+INFO: [Synth 8-6071] Mark debug on the nets applies keep_hierarchy on instance 'rs_decoder_inst'. This will prevent further optimization [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/top.v:154]
+WARNING: [Synth 8-3917] design top has port fan driven by constant 0
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 9377.422 ; gain = 89.000 ; free physical = 876 ; free virtual = 91811
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 9386.328 ; gain = 97.906 ; free physical = 876 ; free virtual = 91811
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 9386.328 ; gain = 97.906 ; free physical = 876 ; free virtual = 91811
+---------------------------------------------------------------------------------
+INFO: [Project 1-454] Reading design checkpoint '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.dcp' for cell 'clk_wiz_inst'
+INFO: [Project 1-454] Reading design checkpoint '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.gen/sources_1/ip/bram_rs/bram_rs.dcp' for cell 'rs_decoder_inst/bram_rs_inst'
+Netlist sorting complete. Time (s): cpu = 00:00:00.05 ; elapsed = 00:00:00.05 . Memory (MB): peak = 9395.234 ; gain = 0.000 ; free physical = 871 ; free virtual = 91806
+INFO: [Netlist 29-17] Analyzing 3 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2022.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+WARNING: [Constraints 18-550] Could not create 'IBUF_LOW_PWR' constraint because net 'clk_wiz_inst/clk_in1' is not directly connected to top level port. Synthesis is ignored for IBUF_LOW_PWR but preserved for implementation.
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_board.xdc] for cell 'clk_wiz_inst/inst'
+Finished Parsing XDC File [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_board.xdc] for cell 'clk_wiz_inst/inst'
+Parsing XDC File [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc] for cell 'clk_wiz_inst/inst'
+Finished Parsing XDC File [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc] for cell 'clk_wiz_inst/inst'
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/top_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/top_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+INFO: [Timing 38-2] Deriving generated clocks
+Parsing XDC File [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/constrs_1/new/top.xdc]
+Finished Parsing XDC File [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/constrs_1/new/top.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/constrs_1/new/top.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/top_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/top_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 9524.035 ; gain = 0.000 ; free physical = 818 ; free virtual = 91753
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 2 instances were transformed.
+  IBUF => IBUF (IBUFCTRL, INBUF): 1 instance 
+  IBUFGDS => IBUFDS (DIFFINBUF, IBUFCTRL): 1 instance 
+
+RTL Elaboration Complete:  : Time (s): cpu = 00:00:06 ; elapsed = 00:00:04 . Memory (MB): peak = 9555.551 ; gain = 267.129 ; free physical = 644 ; free virtual = 91579
+50 Infos, 10 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+current_design synth_1
+close_design
+open_run impl_1
+Netlist sorting complete. Time (s): cpu = 00:00:00.02 ; elapsed = 00:00:00.02 . Memory (MB): peak = 9834.695 ; gain = 0.000 ; free physical = 812 ; free virtual = 91751
+INFO: [Netlist 29-17] Analyzing 152 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2022.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+WARNING: [Constraints 18-550] Could not create 'IBUF_LOW_PWR' constraint because net 'clk_wiz_inst/clk_in1' is not directly connected to top level port. Synthesis is ignored for IBUF_LOW_PWR but preserved for implementation.
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Constraints 18-5170] The checkpoint was created with non-default parameter values which do not match the current Vivado settings.  Mismatching parameters are:
+  tcl.statsThreshold
+INFO: [Project 1-853] Binary constraint restore complete.
+Reading XDEF placement.
+Reading placer database...
+Reading XDEF routing.
+Read XDEF Files: Time (s): cpu = 00:00:00.25 ; elapsed = 00:00:00.26 . Memory (MB): peak = 9834.695 ; gain = 0.000 ; free physical = 660 ; free virtual = 91601
+Restored from archive | CPU: 0.270000 secs | Memory: 10.604790 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:00.26 ; elapsed = 00:00:00.27 . Memory (MB): peak = 9834.695 ; gain = 0.000 ; free physical = 660 ; free virtual = 91601
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 9834.695 ; gain = 0.000 ; free physical = 660 ; free virtual = 91601
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 75 instances were transformed.
+  CFGLUT5 => CFGLUT5 (SRL16E, SRLC32E): 68 instances
+  IBUFGDS => IBUFDS (DIFFINBUF, IBUFCTRL): 1 instance 
+  RAM32M16 => RAM32M16 (RAMD32(x14), RAMS32(x2)): 2 instances
+  RAM32X1D => RAM32X1D (RAMD32(x2)): 4 instances
+
+WARNING: [Timing 38-436] There are set_bus_skew constraint(s) in this design. Please run report_bus_skew to ensure that bus skew requirements are met.
+reset_run synth_1
+INFO: [Project 1-1161] Replacing file /home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/utils_1/imports/synth_1/top.dcp with file /home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.runs/synth_1/top.dcp
+launch_runs synth_1 -jobs 24
+[Wed Aug 12 17:16:28 2026] Launched synth_1...
+Run output will be captured here: /home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.runs/synth_1/runme.log
+launch_runs impl_1 -jobs 24
+[Wed Aug 12 17:17:45 2026] Launched impl_1...
+Run output will be captured here: /home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.runs/impl_1/runme.log
+synth_design -dataflow -name dfv_1
+Command: synth_design -dataflow -name dfv_1
+Starting synth_design
+Using part: xcku060-ffva1156-2-i
+Top: top
+Attempting to get a license for feature 'Synthesis' and/or device 'xcku060'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xcku060'
+INFO: [Synth 8-11241] undeclared symbol 'REGCCE', assumed default net type 'wire' [/tools/Xilinx/Vivado/2022.2/data/verilog/src/unimacro/BRAM_SINGLE_MACRO.v:2170]
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 9872.641 ; gain = 0.000 ; free physical = 516 ; free virtual = 87432
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'top' [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/top.v:27]
+INFO: [Synth 8-6157] synthesizing module 'IBUFGDS' [/tools/Xilinx/Vivado/2022.2/scripts/rt/data/unisim_comp.v:71834]
+INFO: [Synth 8-6155] done synthesizing module 'IBUFGDS' (0#1) [/tools/Xilinx/Vivado/2022.2/scripts/rt/data/unisim_comp.v:71834]
+INFO: [Synth 8-6157] synthesizing module 'clk_wiz_0' [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/.Xil/Vivado-3806647-Williams/realtime/clk_wiz_0_stub.v:5]
+INFO: [Synth 8-6155] done synthesizing module 'clk_wiz_0' (0#1) [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/.Xil/Vivado-3806647-Williams/realtime/clk_wiz_0_stub.v:5]
+INFO: [Synth 8-6157] synthesizing module 'autorun' [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/autorun.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'autorun' (0#1) [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/autorun.v:23]
+INFO: [Synth 8-6157] synthesizing module 'stream_input' [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/stream_input.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'stream_input' (0#1) [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/stream_input.v:23]
+INFO: [Synth 8-6157] synthesizing module 'rs_encoder' [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/rs_encoder.v:23]
+INFO: [Synth 8-6157] synthesizing module 'multiplier' [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/multiplier.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'multiplier' (0#1) [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/multiplier.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'rs_encoder' (0#1) [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/rs_encoder.v:23]
+INFO: [Synth 8-6157] synthesizing module 'error_inject' [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/error_inject.v:23]
+INFO: [Synth 8-3876] $readmem data file 'error.mem' is read successfully [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/error_inject.v:40]
+INFO: [Synth 8-6155] done synthesizing module 'error_inject' (0#1) [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/error_inject.v:23]
+INFO: [Synth 8-6157] synthesizing module 'rs_decoder' [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/rs_codec_clean/rs_decoder.v:23]
+INFO: [Synth 8-6157] synthesizing module 'bram_rs' [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/.Xil/Vivado-3806647-Williams/realtime/bram_rs_stub.v:5]
+INFO: [Synth 8-6155] done synthesizing module 'bram_rs' (0#1) [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/.Xil/Vivado-3806647-Williams/realtime/bram_rs_stub.v:5]
+INFO: [Synth 8-6157] synthesizing module 'syndrome_unit' [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/syndrome_unit.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'syndrome_unit' (0#1) [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/syndrome_unit.v:23]
+INFO: [Synth 8-6157] synthesizing module 'euclid_proc' [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/euclid_proc.v:23]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/euclid_proc.v:149]
+INFO: [Synth 8-6157] synthesizing module 'inverter' [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/inverter.v:23]
+INFO: [Synth 8-3876] $readmem data file 'alpha_value.mem' is read successfully [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/inverter.v:36]
+INFO: [Synth 8-3876] $readmem data file 'decimal_value.mem' is read successfully [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/inverter.v:37]
+INFO: [Synth 8-6155] done synthesizing module 'inverter' (0#1) [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/inverter.v:23]
+WARNING: [Synth 8-6014] Unused sequential element reg_T_reg[16] was removed.  [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/euclid_proc.v:125]
+WARNING: [Synth 8-6014] Unused sequential element reg_C_reg[16] was removed.  [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/euclid_proc.v:126]
+WARNING: [Synth 8-6014] Unused sequential element reg_W_reg[16] was removed.  [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/euclid_proc.v:127]
+WARNING: [Synth 8-6014] Unused sequential element reg_Y_reg[16] was removed.  [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/euclid_proc.v:128]
+INFO: [Synth 8-6155] done synthesizing module 'euclid_proc' (0#1) [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/euclid_proc.v:23]
+INFO: [Synth 8-6157] synthesizing module 'chien_search' [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/chien_search.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'chien_search' (0#1) [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/chien_search.v:23]
+WARNING: [Synth 8-7071] port 'valid' of module 'chien_search' is unconnected for instance 'chien_search_inst' [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/rs_codec_clean/rs_decoder.v:169]
+WARNING: [Synth 8-7023] instance 'chien_search_inst' of module 'chien_search' has 7 connections declared, but only 6 given [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/rs_codec_clean/rs_decoder.v:169]
+INFO: [Synth 8-6157] synthesizing module 'forney_math' [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/forney_math.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'forney_math' (0#1) [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/forney_math.v:23]
+WARNING: [Synth 8-7071] port 'valid' of module 'forney_math' is unconnected for instance 'forney_math_inst' [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/rs_codec_clean/rs_decoder.v:178]
+WARNING: [Synth 8-7023] instance 'forney_math_inst' of module 'forney_math' has 7 connections declared, but only 6 given [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/rs_codec_clean/rs_decoder.v:178]
+INFO: [Synth 8-6155] done synthesizing module 'rs_decoder' (0#1) [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/rs_codec_clean/rs_decoder.v:23]
+INFO: [Synth 8-6071] Mark debug on the nets applies keep_hierarchy on instance 'autorun_inst'. This will prevent further optimization [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/top.v:110]
+INFO: [Synth 8-6071] Mark debug on the nets applies keep_hierarchy on instance 'stream_input_inst'. This will prevent further optimization [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/top.v:119]
+INFO: [Synth 8-6071] Mark debug on the nets applies keep_hierarchy on instance 'rs_encoder_inst'. This will prevent further optimization [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/top.v:130]
+INFO: [Synth 8-6071] Mark debug on the nets applies keep_hierarchy on instance 'error_inject_inst'. This will prevent further optimization [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/top.v:142]
+INFO: [Synth 8-6071] Mark debug on the nets applies keep_hierarchy on instance 'rs_decoder_inst'. This will prevent further optimization [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/top.v:154]
+
+Could not find Selected Down Pin for node 
+
+Could not find Selected Down Pin for node 
+
+Could not find Selected Down Pin for node 
+
+Could not find Selected Down Pin for node 
+
+Could not find Selected Down Pin for node 
+WARNING: [Synth 8-3848] Net a in module/entity rs_encoder does not have driver.
+WARNING: [Synth 8-3848] Net b in module/entity rs_encoder does not have driver.
+WARNING: [Synth 8-3848] Net r in module/entity rs_encoder does not have driver.
+WARNING: [Synth 8-3848] Net a in module/entity euclid_proc does not have driver.
+WARNING: [Synth 8-3848] Net r in module/entity euclid_proc does not have driver.
+WARNING: [Synth 8-3848] Net sys_clk in module/entity top does not have driver.
+WARNING: [Synth 8-3848] Net rst_n in module/entity top does not have driver.
+WARNING: [Synth 8-3848] Net de in module/entity top does not have driver.
+WARNING: [Synth 8-3848] Net data_in in module/entity top does not have driver.
+WARNING: [Synth 8-3848] Net valid in module/entity top does not have driver.
+WARNING: [Synth 8-3848] Net data_out in module/entity top does not have driver.
+WARNING: [Synth 8-3848] Net sys_clk in module/entity top does not have driver.
+WARNING: [Synth 8-3848] Net rst_n in module/entity top does not have driver.
+WARNING: [Synth 8-3848] Net en in module/entity top does not have driver.
+WARNING: [Synth 8-3848] Net valid in module/entity top does not have driver.
+WARNING: [Synth 8-3848] Net data_out in module/entity top does not have driver.
+WARNING: [Synth 8-3848] Net rst_n in module/entity top does not have driver.
+WARNING: [Synth 8-3848] Net sys_clk in module/entity top does not have driver.
+WARNING: [Synth 8-3848] Net flag in module/entity top does not have driver.
+INFO: [Synth 8-6155] done synthesizing module 'top' (0#1) [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/top.v:27]
+WARNING: [Synth 8-7129] Port delta[71] in module chien_search is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[70] in module chien_search is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[69] in module chien_search is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[68] in module chien_search is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[67] in module chien_search is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[66] in module chien_search is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[65] in module chien_search is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[64] in module chien_search is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[55] in module chien_search is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[54] in module chien_search is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[53] in module chien_search is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[52] in module chien_search is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[51] in module chien_search is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[50] in module chien_search is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[49] in module chien_search is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[48] in module chien_search is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[39] in module chien_search is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[38] in module chien_search is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[37] in module chien_search is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[36] in module chien_search is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[35] in module chien_search is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[34] in module chien_search is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[33] in module chien_search is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[32] in module chien_search is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[23] in module chien_search is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[22] in module chien_search is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[21] in module chien_search is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[20] in module chien_search is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[19] in module chien_search is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[18] in module chien_search is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[17] in module chien_search is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[16] in module chien_search is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[7] in module chien_search is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[6] in module chien_search is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[5] in module chien_search is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[4] in module chien_search is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[3] in module chien_search is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[2] in module chien_search is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[1] in module chien_search is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[0] in module chien_search is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[71] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[70] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[69] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[68] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[67] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[66] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[65] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[64] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[63] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[62] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[61] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[60] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[59] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[58] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[57] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[56] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[55] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[54] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[53] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[52] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[51] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[50] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[49] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[48] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[47] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[46] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[45] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[44] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[43] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[42] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[41] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[40] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[39] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[38] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[37] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[36] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[35] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[34] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[33] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[32] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[31] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[30] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[29] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[28] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[27] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[26] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[25] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[24] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[23] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[22] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[21] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[20] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[19] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[18] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[17] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[16] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[15] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[14] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[13] in module euclid_proc is either unconnected or has no load
+WARNING: [Synth 8-7129] Port delta[12] in module euclid_proc is either unconnected or has no load
+INFO: [Common 17-14] Message 'Synth 8-7129' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 9983.137 ; gain = 110.496 ; free physical = 782 ; free virtual = 86335
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 9983.137 ; gain = 110.496 ; free physical = 781 ; free virtual = 86334
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 9983.137 ; gain = 110.496 ; free physical = 781 ; free virtual = 86334
+---------------------------------------------------------------------------------
+INFO: [Project 1-454] Reading design checkpoint '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.dcp' for cell 'clk_wiz_inst'
+INFO: [Project 1-454] Reading design checkpoint '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.gen/sources_1/ip/bram_rs/bram_rs.dcp' for cell 'rs_decoder_inst/bram_rs_inst'
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 9986.105 ; gain = 0.000 ; free physical = 747 ; free virtual = 86300
+INFO: [Netlist 29-17] Analyzing 3 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+WARNING: [Netlist 29-1115] Found multi-term driver net: rs_decoder_inst/data_in[0].
+WARNING: [Netlist 29-1115] Found multi-term driver net: rs_decoder_inst/forney_math_inst/p_0_in[0].
+WARNING: [Netlist 29-1115] Found multi-term driver net: rs_decoder_inst/forney_math_inst/p_0_in[1].
+WARNING: [Netlist 29-1115] Found multi-term driver net: rs_decoder_inst/forney_math_inst/p_0_in[2].
+WARNING: [Netlist 29-1115] Found multi-term driver net: rs_decoder_inst/forney_math_inst/p_0_in[3].
+WARNING: [Netlist 29-1115] Found multi-term driver net: rs_decoder_inst/forney_math_inst/p_0_in[4].
+WARNING: [Netlist 29-1115] Found multi-term driver net: rs_decoder_inst/forney_math_inst/p_0_in[5].
+WARNING: [Netlist 29-1115] Found multi-term driver net: rs_decoder_inst/forney_math_inst/p_0_in[6].
+WARNING: [Netlist 29-1115] Found multi-term driver net: rs_decoder_inst/forney_math_inst/p_0_in[7].
+WARNING: [Netlist 29-1115] Found multi-term driver net: rs_decoder_inst/chien_search_inst/p_0_in[0].
+WARNING: [Netlist 29-1115] Found multi-term driver net: rs_decoder_inst/chien_search_inst/p_0_in[1].
+WARNING: [Netlist 29-1115] Found multi-term driver net: rs_decoder_inst/chien_search_inst/p_0_in[2].
+WARNING: [Netlist 29-1115] Found multi-term driver net: rs_decoder_inst/chien_search_inst/p_0_in[3].
+WARNING: [Netlist 29-1115] Found multi-term driver net: rs_decoder_inst/chien_search_inst/p_0_in[4].
+WARNING: [Netlist 29-1115] Found multi-term driver net: rs_decoder_inst/chien_search_inst/p_0_in[5].
+WARNING: [Netlist 29-1115] Found multi-term driver net: rs_decoder_inst/chien_search_inst/p_0_in[6].
+WARNING: [Netlist 29-1115] Found multi-term driver net: rs_decoder_inst/chien_search_inst/p_0_in[7].
+INFO: [Project 1-479] Netlist was created with Vivado 2022.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+WARNING: [Constraints 18-550] Could not create 'IBUF_LOW_PWR' constraint because net 'clk_wiz_inst/clk_in1' is not directly connected to top level port. Synthesis is ignored for IBUF_LOW_PWR but preserved for implementation.
+WARNING: [Constraints 18-549] Could not create 'IBUF_LOW_PWR' constraint because cell 'sys_clk_inst' is not directly connected to top level port. 'IBUF_LOW_PWR' is ignored by Vivado but preserved inside the database.
+Resolution: It is recommended to apply the I/O constraint directly to the top level port instead of applying the constraint to the cell connected to the port.
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_board.xdc] for cell 'clk_wiz_inst/inst'
+Finished Parsing XDC File [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_board.xdc] for cell 'clk_wiz_inst/inst'
+Parsing XDC File [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc] for cell 'clk_wiz_inst/inst'
+Finished Parsing XDC File [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc] for cell 'clk_wiz_inst/inst'
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/top_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/top_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Parsing XDC File [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/constrs_1/new/top.xdc]
+WARNING: [Vivado 12-584] No ports matched 'sys_clk_p'. [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/constrs_1/new/top.xdc:8]
+WARNING: [Vivado 12-584] No ports matched 'fan'. [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/constrs_1/new/top.xdc:10]
+WARNING: [Vivado 12-584] No ports matched 'sys_clk_p'. [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/constrs_1/new/top.xdc:11]
+WARNING: [Vivado 12-584] No ports matched 'sys_clk_p'. [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/constrs_1/new/top.xdc:13]
+WARNING: [Vivado 12-584] No ports matched 'fan'. [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/constrs_1/new/top.xdc:14]
+Finished Parsing XDC File [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/constrs_1/new/top.xdc]
+WARNING: [Project 1-498] One or more constraints failed evaluation while reading constraint file [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/constrs_1/new/top.xdc] and the design contains unresolved black boxes. These constraints will be read post-synthesis (as long as their source constraint file is marked as used_in_implementation) and should be applied correctly then. You should review the constraints listed in the file [.Xil/top_propImpl.xdc] and check the run log file to verify that these constraints were correctly applied.
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/constrs_1/new/top.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/top_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/top_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 10048.070 ; gain = 0.000 ; free physical = 908 ; free virtual = 85926
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 2 instances were transformed.
+  IBUF => IBUF (IBUFCTRL, INBUF): 1 instance 
+  IBUFGDS => IBUFDS (DIFFINBUF, IBUFCTRL): 1 instance 
+
+RTL Elaboration Complete:  : Time (s): cpu = 00:00:06 ; elapsed = 00:00:04 . Memory (MB): peak = 10118.668 ; gain = 246.027 ; free physical = 826 ; free virtual = 85583
+INFO: [Common 17-83] Releasing license: Synthesis
+52 Infos, 152 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+open_run synth_1 -name synth_1
+Design is defaulting to impl run constrset: constrs_1
+Design is defaulting to synth run part: xcku060-ffva1156-2-i
+INFO: [Project 1-454] Reading design checkpoint '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.dcp' for cell 'clk_wiz_inst'
+INFO: [Project 1-454] Reading design checkpoint '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.gen/sources_1/ip/bram_rs/bram_rs.dcp' for cell 'rs_decoder_inst/bram_rs_inst'
+Netlist sorting complete. Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.01 . Memory (MB): peak = 10145.512 ; gain = 0.000 ; free physical = 685 ; free virtual = 82739
+INFO: [Netlist 29-17] Analyzing 51 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2022.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+WARNING: [Opt 31-32] Removing redundant IBUF since it is not being driven by a top-level port. clk_wiz_inst/inst/clkin1_ibuf 
+Resolution: The tool has removed redundant IBUF. To resolve this warning, check for redundant IBUF in the input design.
+WARNING: [Constraints 18-550] Could not create 'IBUF_LOW_PWR' constraint because net 'clk_wiz_inst/clk_in1' is not directly connected to top level port. Synthesis is ignored for IBUF_LOW_PWR but preserved for implementation.
+Parsing XDC File [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_board.xdc] for cell 'clk_wiz_inst/inst'
+Finished Parsing XDC File [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_board.xdc] for cell 'clk_wiz_inst/inst'
+Parsing XDC File [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc] for cell 'clk_wiz_inst/inst'
+INFO: [Timing 38-35] Done setting XDC timing constraints. [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc:57]
+INFO: [Timing 38-2] Deriving generated clocks [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc:57]
+Finished Parsing XDC File [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc] for cell 'clk_wiz_inst/inst'
+Parsing XDC File [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/constrs_1/new/top.xdc]
+Finished Parsing XDC File [/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/constrs_1/new/top.xdc]
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+INFO: [Opt 31-422] The CLOCK_DOMAINS attribute on the BRAM cell rs_decoder_inst/bram_rs_inst/U0/inst_blk_mem_gen/gnbram.gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/prim_noinit.ram/DEVICE_8SERIES.NO_BMM_INFO.SDP.WIDE_PRIM18.ram has been changed from INDEPENDENT to COMMON to match the clocking topology used for the BRAM.
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 10270.320 ; gain = 0.000 ; free physical = 601 ; free virtual = 82656
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 1 instances were transformed.
+  IBUFGDS => IBUFDS (DIFFINBUF, IBUFCTRL): 1 instance 
+
+current_design impl_1
+refresh_design
+Netlist sorting complete. Time (s): cpu = 00:00:00.07 ; elapsed = 00:00:00.02 . Memory (MB): peak = 10366.848 ; gain = 0.000 ; free physical = 9673 ; free virtual = 91518
+INFO: [Netlist 29-17] Analyzing 152 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2022.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+WARNING: [Constraints 18-550] Could not create 'IBUF_LOW_PWR' constraint because net 'clk_wiz_inst/clk_in1' is not directly connected to top level port. Synthesis is ignored for IBUF_LOW_PWR but preserved for implementation.
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+Reading XDEF placement.
+Reading placer database...
+Reading XDEF routing.
+Read XDEF Files: Time (s): cpu = 00:00:00.27 ; elapsed = 00:00:00.26 . Memory (MB): peak = 10366.848 ; gain = 0.000 ; free physical = 9560 ; free virtual = 91406
+Restored from archive | CPU: 0.280000 secs | Memory: 10.620102 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:00.28 ; elapsed = 00:00:00.28 . Memory (MB): peak = 10366.848 ; gain = 0.000 ; free physical = 9560 ; free virtual = 91406
+WARNING: [Timing 38-436] There are set_bus_skew constraint(s) in this design. Please run report_bus_skew to ensure that bus skew requirements are met.
+current_design synth_1
+delete_debug_core [get_debug_cores {u_ila_0 }]
+create_debug_core u_ila_0 ila
+set_property C_DATA_DEPTH 1024 [get_debug_cores u_ila_0]
+set_property C_TRIGIN_EN false [get_debug_cores u_ila_0]
+set_property C_TRIGOUT_EN false [get_debug_cores u_ila_0]
+set_property C_ADV_TRIGGER false [get_debug_cores u_ila_0]
+set_property C_INPUT_PIPE_STAGES 0 [get_debug_cores u_ila_0]
+set_property C_EN_STRG_QUAL false [get_debug_cores u_ila_0]
+set_property ALL_PROBE_SAME_MU true [get_debug_cores u_ila_0]
+set_property ALL_PROBE_SAME_MU_CNT 1 [get_debug_cores u_ila_0]
+connect_debug_port u_ila_0/clk [get_nets [list clk_wiz_inst/inst/clk_out1 ]]
+set_property port_width 8 [get_debug_ports u_ila_0/probe0]
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe0]
+connect_debug_port u_ila_0/probe0 [get_nets [list {fso_data[0]} {fso_data[1]} {fso_data[2]} {fso_data[3]} {fso_data[4]} {fso_data[5]} {fso_data[6]} {fso_data[7]} ]]
+create_debug_port u_ila_0 probe
+set_property port_width 8 [get_debug_ports u_ila_0/probe1]
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe1]
+connect_debug_port u_ila_0/probe1 [get_nets [list {encoder_data[0]} {encoder_data[1]} {encoder_data[2]} {encoder_data[3]} {encoder_data[4]} {encoder_data[5]} {encoder_data[6]} {encoder_data[7]} ]]
+create_debug_port u_ila_0 probe
+set_property port_width 8 [get_debug_ports u_ila_0/probe2]
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe2]
+connect_debug_port u_ila_0/probe2 [get_nets [list {data_out[0]} {data_out[1]} {data_out[2]} {data_out[3]} {data_out[4]} {data_out[5]} {data_out[6]} {data_out[7]} ]]
+create_debug_port u_ila_0 probe
+set_property port_width 8 [get_debug_ports u_ila_0/probe3]
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe3]
+connect_debug_port u_ila_0/probe3 [get_nets [list {stream_data[0]} {stream_data[1]} {stream_data[2]} {stream_data[3]} {stream_data[4]} {stream_data[5]} {stream_data[6]} {stream_data[7]} ]]
+create_debug_port u_ila_0 probe
+set_property port_width 1 [get_debug_ports u_ila_0/probe4]
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe4]
+connect_debug_port u_ila_0/probe4 [get_nets [list en ]]
+create_debug_port u_ila_0 probe
+set_property port_width 1 [get_debug_ports u_ila_0/probe5]
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe5]
+connect_debug_port u_ila_0/probe5 [get_nets [list encoder_dv ]]
+create_debug_port u_ila_0 probe
+set_property port_width 1 [get_debug_ports u_ila_0/probe6]
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe6]
+connect_debug_port u_ila_0/probe6 [get_nets [list fso_dv ]]
+create_debug_port u_ila_0 probe
+set_property port_width 1 [get_debug_ports u_ila_0/probe7]
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe7]
+connect_debug_port u_ila_0/probe7 [get_nets [list stream_dv ]]
+create_debug_port u_ila_0 probe
+set_property port_width 1 [get_debug_ports u_ila_0/probe8]
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe8]
+connect_debug_port u_ila_0/probe8 [get_nets [list valid ]]
+CRITICAL WARNING: [Chipscope 16-3] Cannot debug net 'sl_iport0_o_0[5]'; it was auto-generated for Vivado debug.
+CRITICAL WARNING: [Chipscope 16-3] Cannot debug net 'sl_oport0_i_0[0]'; it was auto-generated for Vivado debug.
+CRITICAL WARNING: [Chipscope 16-3] Cannot debug net 'sl_iport0_o_0[10]'; it was auto-generated for Vivado debug.
+set_property mark_debug false [get_nets [list {sl_iport0_o_0[27]} {sl_iport0_o_0[17]} {sl_oport0_i_0[11]} {sl_iport0_o_0[35]} {sl_oport0_i_0[6]} <const0> fan {sl_iport0_o_0[28]} {sl_iport0_o_0[24]} {sl_iport0_o_0[23]} {sl_oport0_i_0[15]} {sl_oport0_i_0[9]} sys_clk_in {sl_iport0_o_0[12]} {stream_data[1]} {fso_data[7]} {sl_iport0_o_0[33]} {stream_data[5]} {data_out[3]} {data_out[2]} {sl_iport0_o_0[20]} {sl_iport0_o_0[34]} {sl_iport0_o_0[36]} {fso_data[3]} {sl_iport0_o_0[16]} {sl_iport0_o_0[13]} {sl_oport0_i_0[5]} fso_dv {stream_data[3]} {sl_oport0_i_0[1]} {sl_oport0_i_0[16]} {fso_data[4]} {sl_oport0_i_0[12]} {sl_iport0_o_0[19]} {sl_oport0_i_0[7]} {stream_data[2]} {sl_iport0_o_0[11]} {sl_iport0_o_0[9]} {sl_iport0_o_0[3]} {sl_iport0_o_0[8]} encoder_dv {sl_oport0_i_0[0]} {fso_data[6]} {encoder_data[7]} {data_out[0]} valid {encoder_data[1]} {sl_iport0_o_0[21]} {sl_iport0_o_0[7]} {sl_iport0_o_0[29]} {encoder_data[6]} {sl_oport0_i_0[13]} {encoder_data[5]} sys_clk_n en {encoder_data[0]} {sl_iport0_o_0[32]} {sl_oport0_i_0[10]} {sl_iport0_o_0[30]} {sl_oport0_i_0[8]} {sl_oport0_i_0[2]} {data_out[5]} {fso_data[2]} sys_clk_p {stream_data[6]} {sl_oport0_i_0[14]} {sl_iport0_o_0[5]} {sl_iport0_o_0[4]} {sl_iport0_o_0[1]} {sl_iport0_o_0[6]} {data_out[7]} {sl_iport0_o_0[26]} {sl_iport0_o_0[14]} {sl_iport0_o_0[22]} {sl_iport0_o_0[18]} {sl_iport0_o_0[25]} {sl_iport0_o_0[15]} {sl_iport0_o_0[31]} {sl_oport0_i_0[3]} {encoder_data[2]} {sl_oport0_i_0[4]} {fso_data[5]} <const1> {encoder_data[4]} {stream_data[0]} sys_clk {encoder_data[3]} {stream_data[4]} {data_out[4]} {sl_iport0_o_0[2]} {sl_iport0_o_0[10]} {sl_iport0_o_0[0]} {fso_data[0]} {stream_data[7]} {data_out[6]} {data_out[1]} {fso_data[1]} stream_dv]]
+save_constraints
+launch_simulation
+Command: launch_simulation 
+INFO: [Vivado 12-12493] Simulation top is 'top'
+WARNING: [Vivado 12-13277] Compiled library path does not exist: ''
+INFO: [Vivado 12-5698] Checking validity of IPs in the design for the 'XSim' simulator...
+INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/behav/xsim'
+INFO: [Vivado 12-4795] Using compiled simulation libraries for IPs
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-72] Using boost library from '/tools/Xilinx/Vivado/2022.2/tps/boost_1_72_0'
+INFO: [USF-XSim-7] Finding pre-compiled libraries...
+INFO: [USF-XSim-11] File '/tools/Xilinx/Vivado/2022.2/data/xsim/xsim.ini' copied to run dir:'/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-54] Inspecting design source files for 'top' in fileset 'sim_1'...
+INFO: [SIM-utils-43] Exported '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/behav/xsim/error.mem'
+INFO: [SIM-utils-43] Exported '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/behav/xsim/sample.mem'
+INFO: [SIM-utils-43] Exported '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/behav/xsim/alpha_value.mem'
+INFO: [SIM-utils-43] Exported '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/behav/xsim/sample_head.mem'
+INFO: [SIM-utils-43] Exported '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/behav/xsim/decimal_value.mem'
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/behav/xsim'
+xvlog --incr --relax -prj top_vlog.prj
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.gen/sources_1/ip/bram_rs/sim/bram_rs.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module bram_rs
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_clk_wiz.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module clk_wiz_0_clk_wiz
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module clk_wiz_0
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/autorun.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module autorun
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/chien_search.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module chien_search
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/error_inject.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module error_inject
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/euclid_proc.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module euclid_proc
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/forney_math.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module forney_math
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/inverter.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module inverter
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/multiplier.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module multiplier
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/rs_codec_clean/rs_decoder.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module rs_decoder
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/rs_encoder.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module rs_encoder
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/stream_input.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module stream_input
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/syndrome_unit.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module syndrome_unit
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.srcs/sources_1/imports/new/top.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module top
+Waiting for jobs to finish...
+No pending jobs, compilation finished.
+INFO: [USF-XSim-69] 'compile' step finished in '1' seconds
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/behav/xsim'
+xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L blk_mem_gen_v8_4_5 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot top_behav xil_defaultlib.top xil_defaultlib.glbl -log elaborate.log
+Vivado Simulator v2022.2
+Copyright 1986-1999, 2001-2022 Xilinx, Inc. All Rights Reserved.
+Running: /tools/Xilinx/Vivado/2022.2/bin/unwrapped/lnx64.o/xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L blk_mem_gen_v8_4_5 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot top_behav xil_defaultlib.top xil_defaultlib.glbl -log elaborate.log 
+Using 8 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module unisims_ver.IBUFDS
+Compiling module unisims_ver.IBUFGDS
+Compiling module unisims_ver.IBUF
+Compiling module unisims_ver.MMCME3_ADV(CLKIN1_PERIOD=5.0,CLK...
+Compiling module unisims_ver.BUFG
+Compiling module xil_defaultlib.clk_wiz_0_clk_wiz
+Compiling module xil_defaultlib.clk_wiz_0
+Compiling module xil_defaultlib.autorun
+Compiling module xil_defaultlib.stream_input
+Compiling module xil_defaultlib.multiplier
+Compiling module xil_defaultlib.rs_encoder
+Compiling module xil_defaultlib.error_inject_default
+Compiling module blk_mem_gen_v8_4_5.blk_mem_gen_v8_4_5_output_stage(...
+Compiling module blk_mem_gen_v8_4_5.blk_mem_gen_v8_4_5_output_stage(...
+Compiling module blk_mem_gen_v8_4_5.blk_mem_gen_v8_4_5_softecc_outpu...
+Compiling module blk_mem_gen_v8_4_5.blk_mem_gen_v8_4_5_mem_module(C_...
+Compiling module blk_mem_gen_v8_4_5.blk_mem_axi_regs_fwd_v8_4(C_DATA...
+Compiling module blk_mem_gen_v8_4_5.blk_mem_gen_v8_4_5(C_FAMILY="kin...
+Compiling module xil_defaultlib.bram_rs
+Compiling module xil_defaultlib.syndrome_unit
+Compiling module xil_defaultlib.inverter
+Compiling module xil_defaultlib.euclid_proc_default
+Compiling module xil_defaultlib.chien_search
+Compiling module xil_defaultlib.forney_math
+Compiling module xil_defaultlib.rs_decoder
+Compiling module xil_defaultlib.top
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot top_behav
+INFO: [USF-XSim-69] 'elaborate' step finished in '3' seconds
+INFO: [USF-XSim-4] XSim::Simulate design
+INFO: [USF-XSim-61] Executing 'SIMULATE' step in '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/behav/xsim'
+INFO: [USF-XSim-98] *** Running xsim
+   with args "top_behav -key {Behavioral:sim_1:Functional:top} -tclbatch {top.tcl} -log {simulate.log}"
+INFO: [USF-XSim-8] Loading simulator feature
+Time resolution is 1 ps
+source top.tcl
+# set curr_wave [current_wave_config]
+# if { [string length $curr_wave] == 0 } {
+#   if { [llength [get_objects]] > 0} {
+#     add_wave /
+#     set_property needs_save false [current_wave_config]
+#   } else {
+#      send_msg_id Add_Wave-1 WARNING "No top level signals found. Simulator will start without a wave window. If you want to open a wave window go to 'File->New Waveform Configuration' or type 'create_wave_config' in the TCL console."
+#   }
+# }
+# run 1000ns
+Block Memory Generator module top.rs_decoder_inst.bram_rs_inst.inst.\native_mem_module.blk_mem_gen_v8_4_5_inst  is using a behavioral model for simulation which will not precisely model memory collision behavior.
+INFO: [USF-XSim-96] XSim completed. Design snapshot 'top_behav' loaded.
+INFO: [USF-XSim-97] XSim simulation ran for 1000ns
+launch_simulation: Time (s): cpu = 00:00:07 ; elapsed = 00:00:06 . Memory (MB): peak = 10464.984 ; gain = 30.441 ; free physical = 4168 ; free virtual = 86481
+close_sim
+INFO: [Simtcl 6-16] Simulation closed
+launch_sim
+Command: launch_simulation 
+INFO: [Vivado 12-12493] Simulation top is 'top'
+WARNING: [Vivado 12-13277] Compiled library path does not exist: ''
+INFO: [Vivado 12-5698] Checking validity of IPs in the design for the 'XSim' simulator...
+INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/behav/xsim'
+INFO: [Vivado 12-4795] Using compiled simulation libraries for IPs
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-72] Using boost library from '/tools/Xilinx/Vivado/2022.2/tps/boost_1_72_0'
+INFO: [USF-XSim-7] Finding pre-compiled libraries...
+INFO: [USF-XSim-11] File '/tools/Xilinx/Vivado/2022.2/data/xsim/xsim.ini' copied to run dir:'/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-54] Inspecting design source files for 'top' in fileset 'sim_1'...
+INFO: [SIM-utils-43] Exported '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/behav/xsim/error.mem'
+INFO: [SIM-utils-43] Exported '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/behav/xsim/sample.mem'
+INFO: [SIM-utils-43] Exported '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/behav/xsim/alpha_value.mem'
+INFO: [SIM-utils-43] Exported '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/behav/xsim/sample_head.mem'
+INFO: [SIM-utils-43] Exported '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/behav/xsim/decimal_value.mem'
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/behav/xsim'
+xvlog --incr --relax -prj top_vlog.prj
+Waiting for jobs to finish...
+No pending jobs, compilation finished.
+INFO: [USF-XSim-69] 'compile' step finished in '1' seconds
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/behav/xsim'
+xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L blk_mem_gen_v8_4_5 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot top_behav xil_defaultlib.top xil_defaultlib.glbl -log elaborate.log
+Vivado Simulator v2022.2
+Copyright 1986-1999, 2001-2022 Xilinx, Inc. All Rights Reserved.
+Running: /tools/Xilinx/Vivado/2022.2/bin/unwrapped/lnx64.o/xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L blk_mem_gen_v8_4_5 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot top_behav xil_defaultlib.top xil_defaultlib.glbl -log elaborate.log 
+Using 8 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+INFO: [XSIM 43-4323] No Change in HDL. Linking previously generated obj files to create kernel
+INFO: [USF-XSim-69] 'elaborate' step finished in '0' seconds
+INFO: [USF-XSim-4] XSim::Simulate design
+INFO: [USF-XSim-61] Executing 'SIMULATE' step in '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/behav/xsim'
+INFO: [USF-XSim-98] *** Running xsim
+   with args "top_behav -key {Behavioral:sim_1:Functional:top} -tclbatch {top.tcl} -log {simulate.log}"
+INFO: [USF-XSim-8] Loading simulator feature
+Time resolution is 1 ps
+source top.tcl
+Block Memory Generator module top.rs_decoder_inst.bram_rs_inst.inst.\native_mem_module.blk_mem_gen_v8_4_5_inst  is using a behavioral model for simulation which will not precisely model memory collision behavior.
+INFO: [USF-XSim-96] XSim completed. Design snapshot 'top_behav' loaded.
+INFO: [USF-XSim-97] XSim simulation ran for 1000ns
+add_force {top/sys_clk_p} -radix hex {0 0ns} {1 2.5ns} -repeat 5ns
+force1
+add_force {top/sys_clk_n} -radix hex {1 0ns} {0 2.5ns} -repeat 5ns
+force2
+run 10us
+launch_simulation -mode post-implementation -type timing
+Command: launch_simulation  -mode post-implementation -type timing
+INFO: [Vivado 12-12493] Simulation top is 'top'
+WARNING: [Vivado 12-13277] Compiled library path does not exist: ''
+INFO: [Vivado 12-5698] Checking validity of IPs in the design for the 'XSim' simulator...
+INFO: [Vivado 12-5682] Launching post-implementation timing simulation in '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/impl/timing/xsim'
+INFO: [Vivado 12-4795] Using compiled simulation libraries for IPs
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-72] Using boost library from '/tools/Xilinx/Vivado/2022.2/tps/boost_1_72_0'
+INFO: [SIM-utils-31] Writing simulation netlist file for design 'impl_1'...
+INFO: [SIM-utils-32] write_verilog -mode timesim -nolib -sdf_anno true -force -file "/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/impl/timing/xsim/top_time_impl.v"
+INFO: [SIM-utils-34] Writing SDF file...
+INFO: [SIM-utils-35] write_sdf -mode timesim -process_corner slow -force -file "/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/impl/timing/xsim/top_time_impl.sdf"
+INFO: [SIM-utils-36] Netlist generated:/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/impl/timing/xsim/top_time_impl.v
+INFO: [SIM-utils-37] SDF generated:/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/impl/timing/xsim/top_time_impl.sdf
+INFO: [USF-XSim-7] Finding pre-compiled libraries...
+INFO: [USF-XSim-11] File '/tools/Xilinx/Vivado/2022.2/data/xsim/xsim.ini' copied to run dir:'/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/impl/timing/xsim'
+INFO: [SIM-utils-54] Inspecting design source files for 'top' in fileset 'sim_1'...
+INFO: [SIM-utils-43] Exported '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/impl/timing/xsim/error.mem'
+INFO: [SIM-utils-43] Exported '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/impl/timing/xsim/sample.mem'
+INFO: [SIM-utils-43] Exported '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/impl/timing/xsim/alpha_value.mem'
+INFO: [SIM-utils-43] Exported '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/impl/timing/xsim/sample_head.mem'
+INFO: [SIM-utils-43] Exported '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/impl/timing/xsim/decimal_value.mem'
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/impl/timing/xsim'
+xvlog --incr --relax -prj top_vlog.prj
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/impl/timing/xsim/top_time_impl.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module IBUFDS_UNIQ_BASE_
+INFO: [VRFC 10-311] analyzing module RAM32M16_UNIQ_BASE_
+INFO: [VRFC 10-311] analyzing module RAM32M16_HD185
+INFO: [VRFC 10-311] analyzing module RAM32X1D_UNIQ_BASE_
+INFO: [VRFC 10-311] analyzing module RAM32X1D_HD184
+INFO: [VRFC 10-311] analyzing module RAM32X1D_HD186
+INFO: [VRFC 10-311] analyzing module RAM32X1D_HD187
+INFO: [VRFC 10-311] analyzing module dbg_hub
+INFO: [VRFC 10-311] analyzing module dbg_hub_clk_x_pntrs
+INFO: [VRFC 10-311] analyzing module dbg_hub_clk_x_pntrs_7
+INFO: [VRFC 10-311] analyzing module dbg_hub_dmem
+INFO: [VRFC 10-311] analyzing module dbg_hub_dmem_13
+INFO: [VRFC 10-311] analyzing module dbg_hub_fifo_generator_ramfifo
+INFO: [VRFC 10-311] analyzing module dbg_hub_fifo_generator_ramfifo__parameterized0
+INFO: [VRFC 10-311] analyzing module dbg_hub_fifo_generator_top
+INFO: [VRFC 10-311] analyzing module dbg_hub_fifo_generator_top__parameterized0
+INFO: [VRFC 10-311] analyzing module dbg_hub_fifo_generator_v13_1_4
+INFO: [VRFC 10-311] analyzing module dbg_hub_fifo_generator_v13_1_4__parameterized0
+INFO: [VRFC 10-311] analyzing module dbg_hub_fifo_generator_v13_1_4_synth
+INFO: [VRFC 10-311] analyzing module dbg_hub_fifo_generator_v13_1_4_synth__parameterized0
+INFO: [VRFC 10-311] analyzing module dbg_hub_ltlib_v1_0_0_bscan
+INFO: [VRFC 10-311] analyzing module dbg_hub_ltlib_v1_0_0_generic_mux
+INFO: [VRFC 10-311] analyzing module dbg_hub_memory
+INFO: [VRFC 10-311] analyzing module dbg_hub_memory__parameterized0
+INFO: [VRFC 10-311] analyzing module dbg_hub_rd_bin_cntr
+INFO: [VRFC 10-311] analyzing module dbg_hub_rd_bin_cntr_18
+INFO: [VRFC 10-311] analyzing module dbg_hub_rd_fwft
+INFO: [VRFC 10-311] analyzing module dbg_hub_rd_handshaking_flags
+INFO: [VRFC 10-311] analyzing module dbg_hub_rd_handshaking_flags__parameterized0
+INFO: [VRFC 10-311] analyzing module dbg_hub_rd_logic
+INFO: [VRFC 10-311] analyzing module dbg_hub_rd_logic__parameterized0
+INFO: [VRFC 10-311] analyzing module dbg_hub_rd_status_flags_as
+INFO: [VRFC 10-311] analyzing module dbg_hub_rd_status_flags_as_17
+INFO: [VRFC 10-311] analyzing module dbg_hub_reset_blk_ramfifo
+INFO: [VRFC 10-311] analyzing module dbg_hub_reset_blk_ramfifo_8
+INFO: [VRFC 10-311] analyzing module dbg_hub_synchronizer_ff
+INFO: [VRFC 10-311] analyzing module dbg_hub_synchronizer_ff_1
+INFO: [VRFC 10-311] analyzing module dbg_hub_synchronizer_ff_10
+INFO: [VRFC 10-311] analyzing module dbg_hub_synchronizer_ff_11
+INFO: [VRFC 10-311] analyzing module dbg_hub_synchronizer_ff_12
+INFO: [VRFC 10-311] analyzing module dbg_hub_synchronizer_ff_2
+INFO: [VRFC 10-311] analyzing module dbg_hub_synchronizer_ff_3
+INFO: [VRFC 10-311] analyzing module dbg_hub_synchronizer_ff_9
+INFO: [VRFC 10-311] analyzing module dbg_hub_synchronizer_ff__parameterized0
+INFO: [VRFC 10-311] analyzing module dbg_hub_synchronizer_ff__parameterized0_19
+INFO: [VRFC 10-311] analyzing module dbg_hub_synchronizer_ff__parameterized0_20
+INFO: [VRFC 10-311] analyzing module dbg_hub_synchronizer_ff__parameterized0_21
+INFO: [VRFC 10-311] analyzing module dbg_hub_synchronizer_ff__parameterized0_22
+INFO: [VRFC 10-311] analyzing module dbg_hub_synchronizer_ff__parameterized0_4
+INFO: [VRFC 10-311] analyzing module dbg_hub_synchronizer_ff__parameterized0_5
+INFO: [VRFC 10-311] analyzing module dbg_hub_synchronizer_ff__parameterized0_6
+INFO: [VRFC 10-311] analyzing module dbg_hub_wr_bin_cntr
+INFO: [VRFC 10-311] analyzing module dbg_hub_wr_bin_cntr_16
+INFO: [VRFC 10-311] analyzing module dbg_hub_wr_handshaking_flags
+INFO: [VRFC 10-311] analyzing module dbg_hub_wr_handshaking_flags_15
+INFO: [VRFC 10-311] analyzing module dbg_hub_wr_logic
+INFO: [VRFC 10-311] analyzing module dbg_hub_wr_logic__parameterized0
+INFO: [VRFC 10-311] analyzing module dbg_hub_wr_status_flags_as
+INFO: [VRFC 10-311] analyzing module dbg_hub_wr_status_flags_as_14
+INFO: [VRFC 10-311] analyzing module dbg_hub_xsdbm_v3_0_0_addr_ctl
+INFO: [VRFC 10-311] analyzing module dbg_hub_xsdbm_v3_0_0_bscan_switch
+INFO: [VRFC 10-311] analyzing module dbg_hub_xsdbm_v3_0_0_burst_wdlen_ctl
+INFO: [VRFC 10-311] analyzing module dbg_hub_xsdbm_v3_0_0_bus_ctl
+INFO: [VRFC 10-311] analyzing module dbg_hub_xsdbm_v3_0_0_bus_ctl_cnt
+INFO: [VRFC 10-311] analyzing module dbg_hub_xsdbm_v3_0_0_bus_ctl_flg
+INFO: [VRFC 10-311] analyzing module dbg_hub_xsdbm_v3_0_0_bus_ctl_flg__parameterized0
+INFO: [VRFC 10-311] analyzing module dbg_hub_xsdbm_v3_0_0_bus_mstr2sl_if
+INFO: [VRFC 10-311] analyzing module dbg_hub_xsdbm_v3_0_0_cmd_decode
+INFO: [VRFC 10-311] analyzing module dbg_hub_xsdbm_v3_0_0_ctl_reg
+INFO: [VRFC 10-311] analyzing module dbg_hub_xsdbm_v3_0_0_ctl_reg__parameterized0
+INFO: [VRFC 10-311] analyzing module dbg_hub_xsdbm_v3_0_0_ctl_reg__parameterized1
+INFO: [VRFC 10-311] analyzing module dbg_hub_xsdbm_v3_0_0_ctl_reg__parameterized2
+INFO: [VRFC 10-311] analyzing module dbg_hub_xsdbm_v3_0_0_icon
+INFO: [VRFC 10-311] analyzing module dbg_hub_xsdbm_v3_0_0_icon2xsdb
+INFO: [VRFC 10-311] analyzing module dbg_hub_xsdbm_v3_0_0_if
+INFO: [VRFC 10-311] analyzing module dbg_hub_xsdbm_v3_0_0_if_static_status
+INFO: [VRFC 10-311] analyzing module dbg_hub_xsdbm_v3_0_0_rdfifo
+INFO: [VRFC 10-311] analyzing module dbg_hub_xsdbm_v3_0_0_rdreg
+INFO: [VRFC 10-311] analyzing module dbg_hub_xsdbm_v3_0_0_stat
+INFO: [VRFC 10-311] analyzing module dbg_hub_xsdbm_v3_0_0_stat_reg
+INFO: [VRFC 10-311] analyzing module dbg_hub_xsdbm_v3_0_0_stat_reg__parameterized0
+INFO: [VRFC 10-311] analyzing module dbg_hub_xsdbm_v3_0_0_stat_reg__parameterized0_0
+INFO: [VRFC 10-311] analyzing module dbg_hub_xsdbm_v3_0_0_sync
+INFO: [VRFC 10-311] analyzing module dbg_hub_xsdbm_v3_0_0_wrfifo
+INFO: [VRFC 10-311] analyzing module dbg_hub_xsdbm_v3_0_0_wrreg
+INFO: [VRFC 10-311] analyzing module dbg_hub_xsdbm_v3_0_0_xsdbm
+INFO: [VRFC 10-311] analyzing module dbg_hub_xsdbm_v3_0_0_xsdbm_id
+INFO: [VRFC 10-311] analyzing module u_ila_0
+INFO: [VRFC 10-311] analyzing module u_ila_0_ila_v6_2_12_ila
+INFO: [VRFC 10-311] analyzing module autorun
+INFO: [VRFC 10-311] analyzing module bram_rs
+INFO: [VRFC 10-311] analyzing module chien_search
+INFO: [VRFC 10-311] analyzing module clk_wiz_0
+INFO: [VRFC 10-311] analyzing module clk_wiz_0_clk_wiz
+INFO: [VRFC 10-311] analyzing module error_inject
+INFO: [VRFC 10-311] analyzing module euclid_proc
+INFO: [VRFC 10-311] analyzing module forney_math
+INFO: [VRFC 10-311] analyzing module inverter
+INFO: [VRFC 10-311] analyzing module inverter_0
+INFO: [VRFC 10-311] analyzing module rs_decoder
+INFO: [VRFC 10-311] analyzing module rs_encoder
+INFO: [VRFC 10-311] analyzing module stream_input
+INFO: [VRFC 10-311] analyzing module syndrome_unit
+INFO: [VRFC 10-311] analyzing module top
+INFO: [VRFC 10-311] analyzing module CFGLUT5_UNIQ_BASE_
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD188
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD189
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD190
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD191
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD192
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD193
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD194
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD195
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD196
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD197
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD198
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD199
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD200
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD201
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD202
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD203
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD204
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD205
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD206
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD207
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD208
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD209
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD210
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD211
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD212
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD213
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD214
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD215
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD216
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD217
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD218
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD219
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD220
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD221
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD222
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD223
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD224
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD225
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD226
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD227
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD228
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD229
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD230
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD231
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD232
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD233
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD234
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD235
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD236
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD237
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD238
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD239
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD240
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD241
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD242
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD243
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD244
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD245
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD246
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD247
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD248
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD249
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD250
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD251
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD252
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD253
+INFO: [VRFC 10-311] analyzing module CFGLUT5_HD254
+INFO: [VRFC 10-311] analyzing module u_ila_0_blk_mem_gen_v8_4_5
+INFO: [VRFC 10-311] analyzing module u_ila_0_blk_mem_gen_v8_4_5_blk_mem_gen_generic_cstr
+INFO: [VRFC 10-311] analyzing module u_ila_0_blk_mem_gen_v8_4_5_blk_mem_gen_prim_width
+INFO: [VRFC 10-311] analyzing module u_ila_0_blk_mem_gen_v8_4_5_blk_mem_gen_prim_width__parameterized0
+INFO: [VRFC 10-311] analyzing module u_ila_0_blk_mem_gen_v8_4_5_blk_mem_gen_prim_wrapper
+INFO: [VRFC 10-311] analyzing module u_ila_0_blk_mem_gen_v8_4_5_blk_mem_gen_prim_wrapper__parameterized0
+INFO: [VRFC 10-311] analyzing module u_ila_0_blk_mem_gen_v8_4_5_blk_mem_gen_top
+INFO: [VRFC 10-311] analyzing module u_ila_0_blk_mem_gen_v8_4_5_synth
+INFO: [VRFC 10-311] analyzing module u_ila_0_ila_v6_2_12_ila_cap_addrgen
+INFO: [VRFC 10-311] analyzing module u_ila_0_ila_v6_2_12_ila_cap_ctrl_legacy
+INFO: [VRFC 10-311] analyzing module u_ila_0_ila_v6_2_12_ila_cap_sample_counter
+INFO: [VRFC 10-311] analyzing module u_ila_0_ila_v6_2_12_ila_cap_window_counter
+INFO: [VRFC 10-311] analyzing module u_ila_0_ila_v6_2_12_ila_core
+INFO: [VRFC 10-311] analyzing module u_ila_0_ila_v6_2_12_ila_register
+INFO: [VRFC 10-311] analyzing module u_ila_0_ila_v6_2_12_ila_reset_ctrl
+INFO: [VRFC 10-311] analyzing module u_ila_0_ila_v6_2_12_ila_trace_memory
+INFO: [VRFC 10-311] analyzing module u_ila_0_ila_v6_2_12_ila_trig_match
+INFO: [VRFC 10-311] analyzing module u_ila_0_ila_v6_2_12_ila_trigger
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_all_typeA
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_all_typeA__parameterized0
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_all_typeA__parameterized0_1
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_all_typeA__parameterized0_10
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_all_typeA__parameterized0_12
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_all_typeA__parameterized0_15
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_all_typeA__parameterized0_18
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_all_typeA__parameterized0_21
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_all_typeA__parameterized0_4
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_all_typeA__parameterized0_7
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_all_typeA__parameterized1
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_all_typeA__parameterized1_42
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_all_typeA__parameterized1_46
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_all_typeA_slice
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_all_typeA_slice__parameterized0
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_all_typeA_slice__parameterized0_11
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_all_typeA_slice__parameterized0_13
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_all_typeA_slice__parameterized0_16
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_all_typeA_slice__parameterized0_19
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_all_typeA_slice__parameterized0_2
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_all_typeA_slice__parameterized0_22
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_all_typeA_slice__parameterized0_23
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_all_typeA_slice__parameterized0_5
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_all_typeA_slice__parameterized0_8
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_all_typeA_slice__parameterized1
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_all_typeA_slice__parameterized1_43
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_all_typeA_slice__parameterized1_47
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_all_typeA_slice__parameterized2
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_all_typeA_slice__parameterized2_44
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_all_typeA_slice__parameterized2_48
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_allx_typeA
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_allx_typeA__parameterized0
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_allx_typeA__parameterized0_14
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_allx_typeA__parameterized0_17
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_allx_typeA__parameterized0_20
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_allx_typeA__parameterized1
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_allx_typeA__parameterized1_0
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_allx_typeA__parameterized1_3
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_allx_typeA__parameterized1_6
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_allx_typeA__parameterized1_9
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_allx_typeA_nodelay
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_allx_typeA_nodelay_41
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_allx_typeA_nodelay_45
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_async_edge_xfer
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_async_edge_xfer__1
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_async_edge_xfer__2
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_async_edge_xfer__3
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_cfglut4
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_cfglut4__1
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_cfglut5
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_cfglut5__1
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_cfglut5__2
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_cfglut6
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_cfglut6__1
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_cfglut6__parameterized0
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_cfglut7
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_cfglut7__1
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_generic_memrd
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_match
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_match__parameterized0
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_match__parameterized0__1
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_match__parameterized0__2
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_match__parameterized0__3
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_match__parameterized1
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_match__parameterized1__1
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_match__parameterized1__2
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_match__parameterized1__3
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_match__parameterized1__4
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_match_nodelay
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_match_nodelay__1
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_match_nodelay__2
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_rising_edge_detection
+INFO: [VRFC 10-311] analyzing module u_ila_0_ltlib_v1_0_0_rising_edge_detection__1
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg__parameterized27
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg__parameterized28
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg__parameterized29
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg__parameterized30
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg__parameterized42
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg__parameterized43
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg__parameterized44
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg__parameterized45
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg__parameterized46
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg__parameterized47
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg__parameterized48
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg__parameterized49
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg__parameterized50
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg__parameterized51
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg__parameterized52
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg__parameterized53
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg__parameterized55
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg__parameterized57
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg__parameterized60
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg_ctl
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg_ctl_27
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg_ctl_28
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg_ctl_29
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg_ctl_30
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg_ctl_33
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg_ctl_34
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg_ctl_35
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg_ctl_36
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg_ctl_37
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg_ctl_40
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg_ctl__parameterized0
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg_ctl__parameterized1
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg_ctl__parameterized1_31
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg_ctl__parameterized1_32
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg_p2s
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg_p2s__parameterized0
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg_p2s__parameterized1
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg_p2s__parameterized2
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg_p2s__parameterized3
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg_p2s__parameterized4
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg_p2s__parameterized5
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg_p2s__parameterized6
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg_p2s__parameterized7
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg_p2s__parameterized8
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg_p2s__parameterized9
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg_stat
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg_stat_24
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg_stat_25
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg_stat_26
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg_stat_38
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg_stat_39
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg_stream
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_reg_stream__parameterized0
+INFO: [VRFC 10-311] analyzing module u_ila_0_xsdbs_v1_0_2_xsdbs
+INFO: [VRFC 10-311] analyzing module bram_rs_blk_mem_gen_generic_cstr
+INFO: [VRFC 10-311] analyzing module bram_rs_blk_mem_gen_prim_width
+INFO: [VRFC 10-311] analyzing module bram_rs_blk_mem_gen_prim_wrapper
+INFO: [VRFC 10-311] analyzing module bram_rs_blk_mem_gen_top
+INFO: [VRFC 10-311] analyzing module bram_rs_blk_mem_gen_v8_4_5
+INFO: [VRFC 10-311] analyzing module bram_rs_blk_mem_gen_v8_4_5_synth
+INFO: [VRFC 10-311] analyzing module glbl
+Waiting for jobs to finish...
+No pending jobs, compilation finished.
+INFO: [USF-XSim-69] 'compile' step finished in '1' seconds
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/impl/timing/xsim'
+xelab --incr --debug typical --relax --mt 8 --maxdelay -L xil_defaultlib -L simprims_ver -L secureip --snapshot top_time_impl -transport_int_delays -pulse_r 0 -pulse_int_r 0 -pulse_e 0 -pulse_int_e 0 xil_defaultlib.top xil_defaultlib.glbl -log elaborate.log
+Vivado Simulator v2022.2
+Copyright 1986-1999, 2001-2022 Xilinx, Inc. All Rights Reserved.
+Running: /tools/Xilinx/Vivado/2022.2/bin/unwrapped/lnx64.o/xelab --incr --debug typical --relax --mt 8 --maxdelay -L xil_defaultlib -L simprims_ver -L secureip --snapshot top_time_impl -transport_int_delays -pulse_r 0 -pulse_int_r 0 -pulse_e 0 -pulse_int_e 0 xil_defaultlib.top xil_defaultlib.glbl -log elaborate.log 
+Using 8 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+INFO: [XSIM 43-3451] SDF backannotation process started with SDF file "top_time_impl.sdf", for root module "top".
+INFO: [XSIM 43-3452] SDF backannotation was successful for SDF file "top_time_impl.sdf", for root module "top".
+Time Resolution for simulation is 1ps
+Compiling module simprims_ver.x_lut1_mux2
+Compiling module simprims_ver.LUT1
+Compiling module simprims_ver.x_lut2_mux4
+Compiling module simprims_ver.LUT2
+Compiling module simprims_ver.x_lut3_mux8
+Compiling module simprims_ver.LUT3
+Compiling module simprims_ver.LUT4
+Compiling module simprims_ver.LUT5
+Compiling module simprims_ver.LUT6
+Compiling module simprims_ver.FDRE_default
+Compiling module xil_defaultlib.autorun
+Compiling module simprims_ver.BUFGCE(CE_TYPE="ASYNC")
+Compiling module simprims_ver.MMCME3_ADV(CLKIN1_PERIOD=5.0,CLK...
+Compiling module xil_defaultlib.clk_wiz_0_clk_wiz
+Compiling module xil_defaultlib.clk_wiz_0
+Compiling module simprims_ver.FDRE(XON="FALSE")
+Compiling module xil_defaultlib.dbg_hub_xsdbm_v3_0_0_ctl_reg
+Compiling module xil_defaultlib.dbg_hub_xsdbm_v3_0_0_stat_reg
+Compiling module xil_defaultlib.dbg_hub_xsdbm_v3_0_0_stat_reg__p...
+Compiling module xil_defaultlib.dbg_hub_xsdbm_v3_0_0_ctl_reg__pa...
+Compiling module xil_defaultlib.dbg_hub_xsdbm_v3_0_0_ctl_reg__pa...
+Compiling module simprims_ver.GND
+Compiling module simprims_ver.VCC
+Compiling module simprims_ver.FDCE(XON="FALSE")
+Compiling module xil_defaultlib.dbg_hub_synchronizer_ff__paramet...
+Compiling module xil_defaultlib.dbg_hub_synchronizer_ff__paramet...
+Compiling module xil_defaultlib.dbg_hub_synchronizer_ff__paramet...
+Compiling module xil_defaultlib.dbg_hub_synchronizer_ff__paramet...
+Compiling module simprims_ver.FDCE_default
+Compiling module xil_defaultlib.dbg_hub_clk_x_pntrs_7
+Compiling module simprims_ver.FDPE_default
+Compiling module xil_defaultlib.dbg_hub_rd_fwft
+Compiling module xil_defaultlib.dbg_hub_rd_status_flags_as_17
+Compiling module xil_defaultlib.dbg_hub_rd_handshaking_flags__pa...
+Compiling module xil_defaultlib.dbg_hub_rd_bin_cntr_18
+Compiling module xil_defaultlib.dbg_hub_rd_logic__parameterized0
+Compiling module xil_defaultlib.dbg_hub_wr_status_flags_as_14
+Compiling module xil_defaultlib.dbg_hub_wr_handshaking_flags_15
+Compiling module xil_defaultlib.dbg_hub_wr_bin_cntr_16
+Compiling module xil_defaultlib.dbg_hub_wr_logic__parameterized0
+Compiling module simprims_ver.RAMD32
+Compiling module simprims_ver.RAMS32
+Compiling module xil_defaultlib.RAM32M16_UNIQ_BASE_
+Compiling module xil_defaultlib.RAM32X1D_UNIQ_BASE_
+Compiling module xil_defaultlib.RAM32X1D_HD184
+Compiling module xil_defaultlib.dbg_hub_dmem_13
+Compiling module xil_defaultlib.dbg_hub_memory__parameterized0
+Compiling module xil_defaultlib.dbg_hub_synchronizer_ff_9
+Compiling module xil_defaultlib.dbg_hub_synchronizer_ff_10
+Compiling module xil_defaultlib.dbg_hub_synchronizer_ff_11
+Compiling module xil_defaultlib.dbg_hub_synchronizer_ff_12
+Compiling module simprims_ver.FDPE(XON="FALSE")
+Compiling module xil_defaultlib.dbg_hub_reset_blk_ramfifo_8
+Compiling module xil_defaultlib.dbg_hub_fifo_generator_ramfifo__...
+Compiling module xil_defaultlib.dbg_hub_fifo_generator_top__para...
+Compiling module xil_defaultlib.dbg_hub_fifo_generator_v13_1_4_s...
+Compiling module xil_defaultlib.dbg_hub_fifo_generator_v13_1_4__...
+Compiling module xil_defaultlib.dbg_hub_xsdbm_v3_0_0_rdfifo
+Compiling module xil_defaultlib.dbg_hub_xsdbm_v3_0_0_rdreg
+Compiling module xil_defaultlib.dbg_hub_synchronizer_ff__paramet...
+Compiling module xil_defaultlib.dbg_hub_synchronizer_ff__paramet...
+Compiling module xil_defaultlib.dbg_hub_synchronizer_ff__paramet...
+Compiling module xil_defaultlib.dbg_hub_synchronizer_ff__paramet...
+Compiling module xil_defaultlib.dbg_hub_clk_x_pntrs
+Compiling module xil_defaultlib.dbg_hub_rd_status_flags_as
+Compiling module xil_defaultlib.dbg_hub_rd_handshaking_flags
+Compiling module xil_defaultlib.dbg_hub_rd_bin_cntr
+Compiling module xil_defaultlib.dbg_hub_rd_logic
+Compiling module xil_defaultlib.dbg_hub_wr_status_flags_as
+Compiling module xil_defaultlib.dbg_hub_wr_handshaking_flags
+Compiling module xil_defaultlib.dbg_hub_wr_bin_cntr
+Compiling module xil_defaultlib.dbg_hub_wr_logic
+Compiling module xil_defaultlib.RAM32M16_HD185
+Compiling module xil_defaultlib.RAM32X1D_HD186
+Compiling module xil_defaultlib.RAM32X1D_HD187
+Compiling module xil_defaultlib.dbg_hub_dmem
+Compiling module xil_defaultlib.dbg_hub_memory
+Compiling module xil_defaultlib.dbg_hub_synchronizer_ff
+Compiling module xil_defaultlib.dbg_hub_synchronizer_ff_1
+Compiling module xil_defaultlib.dbg_hub_synchronizer_ff_2
+Compiling module xil_defaultlib.dbg_hub_synchronizer_ff_3
+Compiling module xil_defaultlib.dbg_hub_reset_blk_ramfifo
+Compiling module xil_defaultlib.dbg_hub_fifo_generator_ramfifo
+Compiling module xil_defaultlib.dbg_hub_fifo_generator_top
+Compiling module xil_defaultlib.dbg_hub_fifo_generator_v13_1_4_s...
+Compiling module xil_defaultlib.dbg_hub_fifo_generator_v13_1_4
+Compiling module xil_defaultlib.dbg_hub_xsdbm_v3_0_0_wrfifo
+Compiling module xil_defaultlib.dbg_hub_xsdbm_v3_0_0_wrreg
+Compiling module xil_defaultlib.dbg_hub_xsdbm_v3_0_0_ctl_reg__pa...
+Compiling module xil_defaultlib.dbg_hub_xsdbm_v3_0_0_stat_reg__p...
+Compiling module xil_defaultlib.dbg_hub_xsdbm_v3_0_0_if_static_s...
+Compiling module xil_defaultlib.dbg_hub_xsdbm_v3_0_0_if
+Compiling module simprims_ver.CARRY8
+Compiling module xil_defaultlib.dbg_hub_xsdbm_v3_0_0_addr_ctl
+Compiling module xil_defaultlib.dbg_hub_xsdbm_v3_0_0_burst_wdlen...
+Compiling module xil_defaultlib.dbg_hub_xsdbm_v3_0_0_bus_ctl_flg...
+Compiling module xil_defaultlib.dbg_hub_xsdbm_v3_0_0_bus_ctl_flg
+Compiling module xil_defaultlib.dbg_hub_xsdbm_v3_0_0_bus_ctl_cnt
+Compiling module xil_defaultlib.dbg_hub_xsdbm_v3_0_0_bus_ctl
+Compiling module xil_defaultlib.dbg_hub_ltlib_v1_0_0_generic_mux
+Compiling module xil_defaultlib.dbg_hub_xsdbm_v3_0_0_bus_mstr2sl...
+Compiling module xil_defaultlib.dbg_hub_xsdbm_v3_0_0_icon2xsdb
+Compiling module xil_defaultlib.dbg_hub_xsdbm_v3_0_0_cmd_decode
+Compiling module xil_defaultlib.dbg_hub_xsdbm_v3_0_0_stat
+Compiling module xil_defaultlib.dbg_hub_xsdbm_v3_0_0_sync
+Compiling module xil_defaultlib.dbg_hub_xsdbm_v3_0_0_icon
+Compiling module simprims_ver.BSCANE2
+Compiling module xil_defaultlib.dbg_hub_ltlib_v1_0_0_bscan
+Compiling module simprims_ver.FDSE_default
+Compiling module xil_defaultlib.dbg_hub_xsdbm_v3_0_0_bscan_switc...
+Compiling module xil_defaultlib.dbg_hub_xsdbm_v3_0_0_xsdbm_id
+Compiling module xil_defaultlib.dbg_hub_xsdbm_v3_0_0_xsdbm
+Compiling module xil_defaultlib.dbg_hub
+Compiling module xil_defaultlib.error_inject
+Compiling module simprims_ver.OBUF
+Compiling module simprims_ver.RAMB18E2(CLOCK_DOMAINS="COMMON",...
+Compiling module xil_defaultlib.bram_rs
+Compiling module xil_defaultlib.chien_search
+Compiling module simprims_ver.MUXF8
+Compiling module simprims_ver.MUXF7
+Compiling module xil_defaultlib.inverter_0
+Compiling module xil_defaultlib.euclid_proc
+Compiling module xil_defaultlib.inverter
+Compiling module xil_defaultlib.forney_math
+Compiling module xil_defaultlib.syndrome_unit
+Compiling module xil_defaultlib.rs_decoder
+Compiling module xil_defaultlib.rs_encoder
+Compiling module xil_defaultlib.stream_input
+Compiling module simprims_ver.DIFFINBUF(ISTANDARD="DEFAULT")
+Compiling module simprims_ver.IBUFCTRL_default
+Compiling module xil_defaultlib.IBUFDS_UNIQ_BASE_
+Compiling module simprims_ver.RAMB18E2(CLOCK_DOMAINS="COMMON",...
+Compiling module simprims_ver.RAMB36E2(CLOCK_DOMAINS="COMMON",...
+Compiling module simprims_ver.SRL16E_default
+Compiling module simprims_ver.SRLC32E_default
+Compiling module simprims_ver.SRLC16E_default
+Compiling module xil_defaultlib.u_ila_0_ila_v6_2_12_ila
+Compiling module xil_defaultlib.u_ila_0
+Compiling module xil_defaultlib.top
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot top_time_impl
+execute_script: Time (s): cpu = 00:02:52 ; elapsed = 00:00:57 . Memory (MB): peak = 10479.043 ; gain = 0.000 ; free physical = 3405 ; free virtual = 85970
+INFO: [USF-XSim-69] 'elaborate' step finished in '57' seconds
+INFO: [USF-XSim-4] XSim::Simulate design
+INFO: [USF-XSim-61] Executing 'SIMULATE' step in '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/impl/timing/xsim'
+INFO: [USF-XSim-98] *** Running xsim
+   with args "top_time_impl -key {Post-Implementation:sim_1:Timing:top} -tclbatch {top.tcl} -log {simulate.log}"
+INFO: [USF-XSim-8] Loading simulator feature
+Time resolution is 1 ps
+source top.tcl
+# set curr_wave [current_wave_config]
+# if { [string length $curr_wave] == 0 } {
+#   if { [llength [get_objects]] > 0} {
+#     add_wave /
+#     set_property needs_save false [current_wave_config]
+#   } else {
+#      send_msg_id Add_Wave-1 WARNING "No top level signals found. Simulator will start without a wave window. If you want to open a wave window go to 'File->New Waveform Configuration' or type 'create_wave_config' in the TCL console."
+#   }
+# }
+# run 1000ns
+INFO: [USF-XSim-96] XSim completed. Design snapshot 'top_time_impl' loaded.
+INFO: [USF-XSim-97] XSim simulation ran for 1000ns
+launch_simulation: Time (s): cpu = 00:02:57 ; elapsed = 00:01:01 . Memory (MB): peak = 10526.879 ; gain = 61.895 ; free physical = 3200 ; free virtual = 85822
+close_sim
+INFO: [Simtcl 6-16] Simulation closed
+launch_sim
+Command: launch_simulation 
+INFO: [Vivado 12-12493] Simulation top is 'top'
+ERROR: [Vivado 12-1501] Simulator for snapshot 'Behavioral:sim_1:Functional:top' is already running. To launch simulation, change the snapshot name in the simulation fileset settings or close the current simulation.
+current_wave_config {Untitled 2}
+Untitled 2
+add_wave {{/top/rs_decoder_inst}} 
+close_sim
+INFO: [Simtcl 6-16] Simulation closed
+launch_simulation
+Command: launch_simulation 
+INFO: [Vivado 12-12493] Simulation top is 'top'
+WARNING: [Vivado 12-13277] Compiled library path does not exist: ''
+INFO: [Vivado 12-5698] Checking validity of IPs in the design for the 'XSim' simulator...
+INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/behav/xsim'
+INFO: [Vivado 12-4795] Using compiled simulation libraries for IPs
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-72] Using boost library from '/tools/Xilinx/Vivado/2022.2/tps/boost_1_72_0'
+INFO: [USF-XSim-7] Finding pre-compiled libraries...
+INFO: [USF-XSim-11] File '/tools/Xilinx/Vivado/2022.2/data/xsim/xsim.ini' copied to run dir:'/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-54] Inspecting design source files for 'top' in fileset 'sim_1'...
+INFO: [SIM-utils-43] Exported '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/behav/xsim/error.mem'
+INFO: [SIM-utils-43] Exported '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/behav/xsim/sample.mem'
+INFO: [SIM-utils-43] Exported '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/behav/xsim/alpha_value.mem'
+INFO: [SIM-utils-43] Exported '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/behav/xsim/sample_head.mem'
+INFO: [SIM-utils-43] Exported '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/behav/xsim/decimal_value.mem'
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/behav/xsim'
+xvlog --incr --relax -prj top_vlog.prj
+Waiting for jobs to finish...
+No pending jobs, compilation finished.
+INFO: [USF-XSim-69] 'compile' step finished in '0' seconds
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/behav/xsim'
+xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L blk_mem_gen_v8_4_5 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot top_behav xil_defaultlib.top xil_defaultlib.glbl -log elaborate.log
+Vivado Simulator v2022.2
+Copyright 1986-1999, 2001-2022 Xilinx, Inc. All Rights Reserved.
+Running: /tools/Xilinx/Vivado/2022.2/bin/unwrapped/lnx64.o/xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L blk_mem_gen_v8_4_5 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot top_behav xil_defaultlib.top xil_defaultlib.glbl -log elaborate.log 
+Using 8 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+INFO: [XSIM 43-4323] No Change in HDL. Linking previously generated obj files to create kernel
+INFO: [USF-XSim-69] 'elaborate' step finished in '0' seconds
+INFO: [USF-XSim-4] XSim::Simulate design
+INFO: [USF-XSim-61] Executing 'SIMULATE' step in '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/behav/xsim'
+INFO: [USF-XSim-98] *** Running xsim
+   with args "top_behav -key {Behavioral:sim_1:Functional:top} -tclbatch {top.tcl} -log {simulate.log}"
+INFO: [USF-XSim-8] Loading simulator feature
+Time resolution is 1 ps
+source top.tcl
+# set curr_wave [current_wave_config]
+# if { [string length $curr_wave] == 0 } {
+#   if { [llength [get_objects]] > 0} {
+#     add_wave /
+#     set_property needs_save false [current_wave_config]
+#   } else {
+#      send_msg_id Add_Wave-1 WARNING "No top level signals found. Simulator will start without a wave window. If you want to open a wave window go to 'File->New Waveform Configuration' or type 'create_wave_config' in the TCL console."
+#   }
+# }
+# run 1000ns
+Block Memory Generator module top.rs_decoder_inst.bram_rs_inst.inst.\native_mem_module.blk_mem_gen_v8_4_5_inst  is using a behavioral model for simulation which will not precisely model memory collision behavior.
+INFO: [USF-XSim-96] XSim completed. Design snapshot 'top_behav' loaded.
+INFO: [USF-XSim-97] XSim simulation ran for 1000ns
+current_wave_config {}
+WARNING: [Wavedata 42-16] Error Unable to get wave configuration ''.
+Untitled 4
+add_wave {{/top/rs_decoder_inst}} 
+save_wave_config {/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/top_behav.wcfg}
+add_files -fileset sim_1 -norecurse {{/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/top_behav.wcfg}}
+set_property xsim.view {{/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/top_behav.wcfg}} [get_filesets sim_1]
+close_sim
+INFO: [Simtcl 6-16] Simulation closed
+launch_sim
+Command: launch_simulation 
+INFO: [Vivado 12-12493] Simulation top is 'top'
+WARNING: [Vivado 12-13277] Compiled library path does not exist: ''
+INFO: [Vivado 12-5698] Checking validity of IPs in the design for the 'XSim' simulator...
+INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/behav/xsim'
+INFO: [Vivado 12-4795] Using compiled simulation libraries for IPs
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-72] Using boost library from '/tools/Xilinx/Vivado/2022.2/tps/boost_1_72_0'
+INFO: [USF-XSim-7] Finding pre-compiled libraries...
+INFO: [USF-XSim-11] File '/tools/Xilinx/Vivado/2022.2/data/xsim/xsim.ini' copied to run dir:'/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-54] Inspecting design source files for 'top' in fileset 'sim_1'...
+INFO: [SIM-utils-43] Exported '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/behav/xsim/error.mem'
+INFO: [SIM-utils-43] Exported '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/behav/xsim/sample.mem'
+INFO: [SIM-utils-43] Exported '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/behav/xsim/alpha_value.mem'
+INFO: [SIM-utils-43] Exported '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/behav/xsim/sample_head.mem'
+INFO: [SIM-utils-43] Exported '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/behav/xsim/decimal_value.mem'
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/behav/xsim'
+xvlog --incr --relax -prj top_vlog.prj
+Waiting for jobs to finish...
+No pending jobs, compilation finished.
+INFO: [USF-XSim-69] 'compile' step finished in '0' seconds
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/behav/xsim'
+xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L blk_mem_gen_v8_4_5 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot top_behav xil_defaultlib.top xil_defaultlib.glbl -log elaborate.log
+Vivado Simulator v2022.2
+Copyright 1986-1999, 2001-2022 Xilinx, Inc. All Rights Reserved.
+Running: /tools/Xilinx/Vivado/2022.2/bin/unwrapped/lnx64.o/xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L blk_mem_gen_v8_4_5 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot top_behav xil_defaultlib.top xil_defaultlib.glbl -log elaborate.log 
+Using 8 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+INFO: [XSIM 43-4323] No Change in HDL. Linking previously generated obj files to create kernel
+INFO: [USF-XSim-69] 'elaborate' step finished in '0' seconds
+INFO: [USF-XSim-4] XSim::Simulate design
+INFO: [USF-XSim-61] Executing 'SIMULATE' step in '/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/behav/xsim'
+INFO: [USF-XSim-98] *** Running xsim
+   with args "top_behav -key {Behavioral:sim_1:Functional:top} -tclbatch {top.tcl} -view {{/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/top_behav.wcfg}} -log {simulate.log}"
+INFO: [USF-XSim-8] Loading simulator feature
+Time resolution is 1 ps
+open_wave_config {/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/top_behav.wcfg}
+source top.tcl
+Block Memory Generator module top.rs_decoder_inst.bram_rs_inst.inst.\native_mem_module.blk_mem_gen_v8_4_5_inst  is using a behavioral model for simulation which will not precisely model memory collision behavior.
+INFO: [USF-XSim-96] XSim completed. Design snapshot 'top_behav' loaded.
+INFO: [USF-XSim-97] XSim simulation ran for 1000ns
+add_force {top/sys_clk_p} -radix hex {0 0ns} {1 2.5ns} -repeat 5ns
+force3
+add_force {top/sys_clk_n} -radix hex {1 0ns} {0 2.5ns} -repeat 5ns
+force4
+run 10us
+open_hw_manager

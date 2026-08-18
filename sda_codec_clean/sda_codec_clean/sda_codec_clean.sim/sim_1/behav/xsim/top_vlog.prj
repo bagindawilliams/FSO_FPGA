@@ -1,0 +1,57 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  --include "../../../../sda_codec_clean.gen/sources_1/ip/clk_wiz_0" --include "../../../../sda_codec_clean.gen/sources_1/ip/clk_wiz_1" \
+"../../../../sda_codec_clean.gen/sources_1/ip/serdes_assembler/sim/serdes_assembler.v" \
+"../../../../sda_codec_clean.gen/sources_1/ip/cross_logic_gth_load/sim/cross_logic_gth_load.v" \
+"../../../../sda_codec_clean.gen/sources_1/ip/cross_logic_gth_head/sim/cross_logic_gth_head.v" \
+"../../../../sda_codec_clean.gen/sources_1/ip/delay_rs/sim/delay_rs.v" \
+"../../../../sda_codec_clean.gen/sources_1/ip/cross_gth_logic/sim/cross_gth_logic.v" \
+"../../../../sda_codec_clean.gen/sources_1/ip/cross_logic_gth/sim/cross_logic_gth.v" \
+"../../../../sda_codec_clean.gen/sources_1/ip/delay_combiner/sim/delay_combiner.v" \
+"../../../../sda_codec_clean.gen/sources_1/ip/cross_gth_logic_load/sim/cross_gth_logic_load.v" \
+"../../../../sda_codec_clean.gen/sources_1/ip/cross_gth_logic_head/sim/cross_gth_logic_head.v" \
+"../../../../sda_codec_clean.gen/sources_1/ip/serdes_framer/sim/serdes_framer.v" \
+"../../../../sda_codec_clean.gen/sources_1/ip/clk_wiz_1/clk_wiz_1_clk_wiz.v" \
+"../../../../sda_codec_clean.gen/sources_1/ip/clk_wiz_1/clk_wiz_1.v" \
+"../../../../sda_codec_clean.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_clk_wiz.v" \
+"../../../../sda_codec_clean.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.v" \
+"../../../../sda_codec_clean.srcs/sources_1/imports/Source core file/decoder/assembler.v" \
+"../../../../sda_codec_clean.srcs/sources_1/imports/Source core file/decoder/assembler_top.v" \
+"../../../../sda_codec_clean.srcs/sources_1/imports/Source core file/autorun.v" \
+"../../../../sda_codec_clean.srcs/sources_1/imports/Source core file/rs_codec/chien_search.v" \
+"../../../../sda_codec_clean.srcs/sources_1/imports/Source core file/encoder/combiner.v" \
+"../../../../sda_codec_clean.srcs/sources_1/imports/Source core file/decoder/core_rx.v" \
+"../../../../sda_codec_clean.srcs/sources_1/imports/Source core file/encoder/core_tx.v" \
+"../../../../sda_codec_clean.srcs/sources_1/imports/Source core file/encoder/crc_16.v" \
+"../../../../sda_codec_clean.srcs/sources_1/imports/Source core file/encoder/crc_32.v" \
+"../../../../sda_codec_clean.srcs/sources_1/imports/Source core file/decoder/decoder_top.v" \
+"../../../../sda_codec_clean.srcs/sources_1/imports/Source core file/encoder/encoder_top.v" \
+"../../../../sda_codec_clean.srcs/sources_1/imports/Source core file/error_inject.v" \
+"../../../../sda_codec_clean.srcs/sources_1/imports/Source core file/rs_codec/euclid_proc.v" \
+"../../../../sda_codec_clean.srcs/sources_1/imports/Source core file/rs_codec/forney_math.v" \
+"../../../../sda_codec_clean.srcs/sources_1/imports/Source core file/encoder/framer.v" \
+"../../../../sda_codec_clean.srcs/sources_1/imports/Source core file/encoder/framer_top.v" \
+"../../../../sda_codec_clean.srcs/sources_1/imports/Source core file/rs_codec/inverter.v" \
+"../../../../sda_codec_clean.srcs/sources_1/imports/Source core file/encoder/lpc.v" \
+"../../../../sda_codec_clean.srcs/sources_1/imports/Source core file/decoder/lpc_dec.v" \
+"../../../../sda_codec_clean.srcs/sources_1/imports/Source core file/decoder/lpc_dec_top.v" \
+"../../../../sda_codec_clean.srcs/sources_1/imports/Source core file/encoder/lpc_top.v" \
+"../../../../sda_codec_clean.srcs/sources_1/imports/Source core file/rs_codec/multiplier.v" \
+"../../../../sda_codec_clean.srcs/sources_1/imports/Source core file/rs_codec/rs_decoder.v" \
+"../../../../sda_codec_clean.srcs/sources_1/imports/Source core file/decoder/rs_decoder_64.v" \
+"../../../../sda_codec_clean.srcs/sources_1/imports/Source core file/rs_codec/rs_encoder.v" \
+"../../../../sda_codec_clean.srcs/sources_1/imports/Source core file/encoder/rs_encoder_64.v" \
+"../../../../sda_codec_clean.srcs/sources_1/imports/Source core file/decoder/rx_gth_logic.v" \
+"../../../../sda_codec_clean.srcs/sources_1/imports/Source core file/decoder/rx_logic_gth.v" \
+"../../../../sda_codec_clean.srcs/sources_1/imports/Source core file/encoder/scrambler.v" \
+"../../../../sda_codec_clean.srcs/sources_1/imports/Source core file/decoder/separator.v" \
+"../../../../sda_codec_clean.srcs/sources_1/imports/Source core file/stream_input.v" \
+"../../../../sda_codec_clean.srcs/sources_1/imports/Source core file/rs_codec/syndrome_unit.v" \
+"../../../../sda_codec_clean.srcs/sources_1/imports/Source core file/encoder/x_gth_logic.v" \
+"../../../../sda_codec_clean.srcs/sources_1/imports/Source core file/encoder/x_logic_gth.v" \
+"../../../../sda_codec_clean.srcs/sources_1/imports/Source core file/top.v" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort

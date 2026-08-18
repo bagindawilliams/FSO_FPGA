@@ -1,0 +1,26 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/synth/timing/xsim/top_time_synth.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module IBUFDS_UNIQ_BASE_
+INFO: [VRFC 10-311] analyzing module dbg_hub_CV
+INFO: [VRFC 10-311] analyzing module u_ila_0_CV
+INFO: [VRFC 10-311] analyzing module autorun
+INFO: [VRFC 10-311] analyzing module bram_rs
+INFO: [VRFC 10-311] analyzing module chien_search
+INFO: [VRFC 10-311] analyzing module clk_wiz_0
+INFO: [VRFC 10-311] analyzing module clk_wiz_0_clk_wiz
+INFO: [VRFC 10-311] analyzing module error_inject
+INFO: [VRFC 10-311] analyzing module euclid_proc
+INFO: [VRFC 10-311] analyzing module forney_math
+INFO: [VRFC 10-311] analyzing module inverter
+INFO: [VRFC 10-311] analyzing module inverter_0
+INFO: [VRFC 10-311] analyzing module rs_decoder
+INFO: [VRFC 10-311] analyzing module rs_encoder
+INFO: [VRFC 10-311] analyzing module stream_input
+INFO: [VRFC 10-311] analyzing module syndrome_unit
+INFO: [VRFC 10-311] analyzing module top
+INFO: [VRFC 10-311] analyzing module bram_rs_blk_mem_gen_generic_cstr
+INFO: [VRFC 10-311] analyzing module bram_rs_blk_mem_gen_prim_width
+INFO: [VRFC 10-311] analyzing module bram_rs_blk_mem_gen_prim_wrapper
+INFO: [VRFC 10-311] analyzing module bram_rs_blk_mem_gen_top
+INFO: [VRFC 10-311] analyzing module bram_rs_blk_mem_gen_v8_4_5
+INFO: [VRFC 10-311] analyzing module bram_rs_blk_mem_gen_v8_4_5_synth
+INFO: [VRFC 10-311] analyzing module glbl

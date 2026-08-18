@@ -1,0 +1,10 @@
+set_property SRC_FILE_INFO {cfile:{/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.gen/sources_1/ip/gt/synth/gt.xdc} rfile:../../../gt_ex.gen/sources_1/ip/gt/synth/gt.xdc id:1 order:EARLY scoped_inst:inst} [current_design]
+current_instance inst
+set_property src_info {type:SCOPED_XDC file:1 line:57 export:INPUT save:INPUT read:READ} [current_design]
+set_property LOC GTHE3_CHANNEL_X1Y8 [get_cells -hierarchical -filter {NAME =~ *gen_channel_container[26].*gen_gthe3_channel_inst[0].GTHE3_CHANNEL_PRIM_INST}]
+set_property src_info {type:SCOPED_XDC file:1 line:70 export:INPUT save:INPUT read:READ} [current_design]
+set_property LOC GTHE3_CHANNEL_X1Y9 [get_cells -hierarchical -filter {NAME =~ *gen_channel_container[26].*gen_gthe3_channel_inst[1].GTHE3_CHANNEL_PRIM_INST}]
+set_property src_info {type:SCOPED_XDC file:1 line:83 export:INPUT save:INPUT read:READ} [current_design]
+set_property LOC GTHE3_CHANNEL_X1Y10 [get_cells -hierarchical -filter {NAME =~ *gen_channel_container[26].*gen_gthe3_channel_inst[2].GTHE3_CHANNEL_PRIM_INST}]
+set_property src_info {type:SCOPED_XDC file:1 line:96 export:INPUT save:INPUT read:READ} [current_design]
+set_property LOC GTHE3_CHANNEL_X1Y11 [get_cells -hierarchical -filter {NAME =~ *gen_channel_container[26].*gen_gthe3_channel_inst[3].GTHE3_CHANNEL_PRIM_INST}]

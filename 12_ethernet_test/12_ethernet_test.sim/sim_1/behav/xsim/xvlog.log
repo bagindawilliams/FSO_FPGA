@@ -1,0 +1,174 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/src/ip/icmp_rx_ram_8_256/icmp_rx_ram_8_256_sim_netlist.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module icmp_rx_ram_8_256
+INFO: [VRFC 10-311] analyzing module icmp_rx_ram_8_256_blk_mem_gen_generic_cstr
+INFO: [VRFC 10-311] analyzing module icmp_rx_ram_8_256_blk_mem_gen_prim_width
+INFO: [VRFC 10-311] analyzing module icmp_rx_ram_8_256_blk_mem_gen_prim_wrapper
+INFO: [VRFC 10-311] analyzing module icmp_rx_ram_8_256_blk_mem_gen_top
+INFO: [VRFC 10-311] analyzing module icmp_rx_ram_8_256_blk_mem_gen_v8_4_12
+INFO: [VRFC 10-311] analyzing module icmp_rx_ram_8_256_blk_mem_gen_v8_4_12_synth
+INFO: [VRFC 10-311] analyzing module glbl
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/src/ip/udp_rx_ram_8_2048/udp_rx_ram_8_2048_sim_netlist.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module udp_rx_ram_8_2048
+INFO: [VRFC 10-311] analyzing module udp_rx_ram_8_2048_blk_mem_gen_generic_cstr
+INFO: [VRFC 10-311] analyzing module udp_rx_ram_8_2048_blk_mem_gen_prim_width
+INFO: [VRFC 10-311] analyzing module udp_rx_ram_8_2048_blk_mem_gen_prim_wrapper
+INFO: [VRFC 10-311] analyzing module udp_rx_ram_8_2048_blk_mem_gen_top
+INFO: [VRFC 10-311] analyzing module udp_rx_ram_8_2048_blk_mem_gen_v8_4_12
+INFO: [VRFC 10-311] analyzing module udp_rx_ram_8_2048_blk_mem_gen_v8_4_12_synth
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/src/ip/udp_checksum_fifo/udp_checksum_fifo_sim_netlist.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module udp_checksum_fifo
+INFO: [VRFC 10-311] analyzing module udp_checksum_fifo_xpm_cdc_async_rst
+INFO: [VRFC 10-311] analyzing module udp_checksum_fifo_blk_mem_gen_generic_cstr
+INFO: [VRFC 10-311] analyzing module udp_checksum_fifo_blk_mem_gen_prim_width
+INFO: [VRFC 10-311] analyzing module udp_checksum_fifo_blk_mem_gen_prim_wrapper
+INFO: [VRFC 10-311] analyzing module udp_checksum_fifo_blk_mem_gen_top
+INFO: [VRFC 10-311] analyzing module udp_checksum_fifo_blk_mem_gen_v8_4_12
+INFO: [VRFC 10-311] analyzing module udp_checksum_fifo_blk_mem_gen_v8_4_12_synth
+INFO: [VRFC 10-311] analyzing module udp_checksum_fifo_dc_ss
+INFO: [VRFC 10-311] analyzing module udp_checksum_fifo_fifo_generator_ramfifo
+INFO: [VRFC 10-311] analyzing module udp_checksum_fifo_fifo_generator_top
+INFO: [VRFC 10-311] analyzing module udp_checksum_fifo_fifo_generator_v13_2_14
+INFO: [VRFC 10-311] analyzing module udp_checksum_fifo_fifo_generator_v13_2_14_synth
+INFO: [VRFC 10-311] analyzing module udp_checksum_fifo_memory
+INFO: [VRFC 10-311] analyzing module udp_checksum_fifo_rd_bin_cntr
+INFO: [VRFC 10-311] analyzing module udp_checksum_fifo_rd_logic
+INFO: [VRFC 10-311] analyzing module udp_checksum_fifo_rd_status_flags_ss
+INFO: [VRFC 10-311] analyzing module udp_checksum_fifo_reset_blk_ramfifo
+INFO: [VRFC 10-311] analyzing module udp_checksum_fifo_updn_cntr
+INFO: [VRFC 10-311] analyzing module udp_checksum_fifo_wr_bin_cntr
+INFO: [VRFC 10-311] analyzing module udp_checksum_fifo_wr_logic
+INFO: [VRFC 10-311] analyzing module udp_checksum_fifo_wr_status_flags_ss
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/src/ip/udp_tx_data_fifo/udp_tx_data_fifo_sim_netlist.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module udp_tx_data_fifo
+INFO: [VRFC 10-311] analyzing module udp_tx_data_fifo_xpm_cdc_async_rst
+INFO: [VRFC 10-311] analyzing module udp_tx_data_fifo_blk_mem_gen_generic_cstr
+INFO: [VRFC 10-311] analyzing module udp_tx_data_fifo_blk_mem_gen_prim_width
+INFO: [VRFC 10-311] analyzing module udp_tx_data_fifo_blk_mem_gen_prim_wrapper
+INFO: [VRFC 10-311] analyzing module udp_tx_data_fifo_blk_mem_gen_top
+INFO: [VRFC 10-311] analyzing module udp_tx_data_fifo_blk_mem_gen_v8_4_12
+INFO: [VRFC 10-311] analyzing module udp_tx_data_fifo_blk_mem_gen_v8_4_12_synth
+INFO: [VRFC 10-311] analyzing module udp_tx_data_fifo_compare
+INFO: [VRFC 10-311] analyzing module udp_tx_data_fifo_compare_0
+INFO: [VRFC 10-311] analyzing module udp_tx_data_fifo_compare_1
+INFO: [VRFC 10-311] analyzing module udp_tx_data_fifo_compare_2
+INFO: [VRFC 10-311] analyzing module udp_tx_data_fifo_compare_3
+INFO: [VRFC 10-311] analyzing module udp_tx_data_fifo_dc_ss
+INFO: [VRFC 10-311] analyzing module udp_tx_data_fifo_fifo_generator_ramfifo
+INFO: [VRFC 10-311] analyzing module udp_tx_data_fifo_fifo_generator_top
+INFO: [VRFC 10-311] analyzing module udp_tx_data_fifo_fifo_generator_v13_2_14
+INFO: [VRFC 10-311] analyzing module udp_tx_data_fifo_fifo_generator_v13_2_14_synth
+INFO: [VRFC 10-311] analyzing module udp_tx_data_fifo_memory
+INFO: [VRFC 10-311] analyzing module udp_tx_data_fifo_rd_bin_cntr
+INFO: [VRFC 10-311] analyzing module udp_tx_data_fifo_rd_logic
+INFO: [VRFC 10-311] analyzing module udp_tx_data_fifo_rd_status_flags_ss
+INFO: [VRFC 10-311] analyzing module udp_tx_data_fifo_reset_blk_ramfifo
+INFO: [VRFC 10-311] analyzing module udp_tx_data_fifo_updn_cntr
+INFO: [VRFC 10-311] analyzing module udp_tx_data_fifo_wr_bin_cntr
+INFO: [VRFC 10-311] analyzing module udp_tx_data_fifo_wr_logic
+INFO: [VRFC 10-311] analyzing module udp_tx_data_fifo_wr_status_flags_ss
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/src/ip/len_fifo/len_fifo_sim_netlist.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module len_fifo
+INFO: [VRFC 10-311] analyzing module len_fifo_xpm_cdc_async_rst
+INFO: [VRFC 10-311] analyzing module len_fifo_blk_mem_gen_generic_cstr
+INFO: [VRFC 10-311] analyzing module len_fifo_blk_mem_gen_prim_width
+INFO: [VRFC 10-311] analyzing module len_fifo_blk_mem_gen_prim_wrapper
+INFO: [VRFC 10-311] analyzing module len_fifo_blk_mem_gen_top
+INFO: [VRFC 10-311] analyzing module len_fifo_blk_mem_gen_v8_4_12
+INFO: [VRFC 10-311] analyzing module len_fifo_blk_mem_gen_v8_4_12_synth
+INFO: [VRFC 10-311] analyzing module len_fifo_dc_ss
+INFO: [VRFC 10-311] analyzing module len_fifo_fifo_generator_ramfifo
+INFO: [VRFC 10-311] analyzing module len_fifo_fifo_generator_top
+INFO: [VRFC 10-311] analyzing module len_fifo_fifo_generator_v13_2_14
+INFO: [VRFC 10-311] analyzing module len_fifo_fifo_generator_v13_2_14_synth
+INFO: [VRFC 10-311] analyzing module len_fifo_memory
+INFO: [VRFC 10-311] analyzing module len_fifo_rd_bin_cntr
+INFO: [VRFC 10-311] analyzing module len_fifo_rd_logic
+INFO: [VRFC 10-311] analyzing module len_fifo_rd_status_flags_ss
+INFO: [VRFC 10-311] analyzing module len_fifo_reset_blk_ramfifo
+INFO: [VRFC 10-311] analyzing module len_fifo_updn_cntr
+INFO: [VRFC 10-311] analyzing module len_fifo_wr_bin_cntr
+INFO: [VRFC 10-311] analyzing module len_fifo_wr_logic
+INFO: [VRFC 10-311] analyzing module len_fifo_wr_status_flags_ss
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/src/ip/eth_data_fifo/eth_data_fifo_sim_netlist.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module eth_data_fifo
+INFO: [VRFC 10-311] analyzing module eth_data_fifo_xpm_cdc_async_rst
+INFO: [VRFC 10-311] analyzing module eth_data_fifo_blk_mem_gen_generic_cstr
+INFO: [VRFC 10-311] analyzing module eth_data_fifo_blk_mem_gen_prim_width
+INFO: [VRFC 10-311] analyzing module eth_data_fifo_blk_mem_gen_prim_wrapper
+INFO: [VRFC 10-311] analyzing module eth_data_fifo_blk_mem_gen_top
+INFO: [VRFC 10-311] analyzing module eth_data_fifo_blk_mem_gen_v8_4_12
+INFO: [VRFC 10-311] analyzing module eth_data_fifo_blk_mem_gen_v8_4_12_synth
+INFO: [VRFC 10-311] analyzing module eth_data_fifo_compare
+INFO: [VRFC 10-311] analyzing module eth_data_fifo_compare_0
+INFO: [VRFC 10-311] analyzing module eth_data_fifo_compare_1
+INFO: [VRFC 10-311] analyzing module eth_data_fifo_compare_2
+INFO: [VRFC 10-311] analyzing module eth_data_fifo_dc_ss
+INFO: [VRFC 10-311] analyzing module eth_data_fifo_fifo_generator_ramfifo
+INFO: [VRFC 10-311] analyzing module eth_data_fifo_fifo_generator_top
+INFO: [VRFC 10-311] analyzing module eth_data_fifo_fifo_generator_v13_2_14
+INFO: [VRFC 10-311] analyzing module eth_data_fifo_fifo_generator_v13_2_14_synth
+INFO: [VRFC 10-311] analyzing module eth_data_fifo_memory
+INFO: [VRFC 10-311] analyzing module eth_data_fifo_rd_bin_cntr
+INFO: [VRFC 10-311] analyzing module eth_data_fifo_rd_logic
+INFO: [VRFC 10-311] analyzing module eth_data_fifo_rd_status_flags_ss
+INFO: [VRFC 10-311] analyzing module eth_data_fifo_reset_blk_ramfifo
+INFO: [VRFC 10-311] analyzing module eth_data_fifo_updn_cntr
+INFO: [VRFC 10-311] analyzing module eth_data_fifo_wr_bin_cntr
+INFO: [VRFC 10-311] analyzing module eth_data_fifo_wr_logic
+INFO: [VRFC 10-311] analyzing module eth_data_fifo_wr_status_flags_ss
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/src/ip/clk_wiz_0/clk_wiz_0_sim_netlist.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module clk_wiz_0
+INFO: [VRFC 10-311] analyzing module clk_wiz_0_clk_wiz
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/src/new/eth_src/mac/arp_cache.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module arp_cache
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/src/new/eth_src/mac/rx/arp_rx.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module arp_rx
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/src/new/eth_src/mac/tx/arp_tx.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module arp_tx
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/src/new/eth_src/mac/crc.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module crc
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/src/new/eth_src/ethernet_test.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ethernet_test
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/src/new/eth_src/arbi/gmii_arbi.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module gmii_arbi
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/src/new/eth_src/arbi/gmii_rx_buffer.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module gmii_rx_buffer
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/src/new/eth_src/arbi/gmii_tx_buffer.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module gmii_tx_buffer
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/src/new/eth_src/mac/icmp_reply.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module icmp_reply
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/src/new/eth_src/mac/rx/ip_rx.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ip_rx
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/src/new/eth_src/mac/tx/ip_tx.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ip_tx
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/src/new/eth_src/mac/tx/ip_tx_mode.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module ip_tx_mode
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/src/new/eth_src/mac/rx/mac_rx.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mac_rx
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/src/new/eth_src/mac/rx/mac_rx_top.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mac_rx_top
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/src/new/eth_src/mac/mac_test.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mac_test
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/src/new/eth_src/mac/mac_top.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mac_top
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/src/new/eth_src/mac/tx/mac_tx.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mac_tx
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/src/new/eth_src/mac/tx/mac_tx_mode.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mac_tx_mode
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/src/new/eth_src/mac/tx/mac_tx_top.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mac_tx_top
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/src/new/eth_src/mdio/smi_config.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module smi_config
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/src/new/eth_src/mdio/smi_read_write.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module smi_read_write
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/src/new/eth_src/mac/rx/udp_rx.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module udp_rx
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/src/new/eth_src/mac/tx/udp_tx.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module udp_tx
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/src/new/eth_src/util_gmii_to_rgmii.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module util_gmii_to_rgmii
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/src/new/top.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module top
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/12_ethernet_test.sim/sim_1/behav/xsim/glbl.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module glbl
+WARNING: [VRFC 10-3609] overwriting previous definition of module 'glbl' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/12_ethernet_test/12_ethernet_test.sim/sim_1/behav/xsim/glbl.v:6]

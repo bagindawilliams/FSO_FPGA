@@ -1,0 +1,1427 @@
+#-----------------------------------------------------------
+# Vivado v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 12:34:56 MST 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Tue Aug 11 23:53:16 2026
+# Process ID         : 2750814
+# Current directory  : /home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.runs/synth_1
+# Command line       : vivado -log top.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source top.tcl
+# Log file           : /home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.runs/synth_1/top.vds
+# Journal file       : /home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.runs/synth_1/vivado.jou
+# Running On         : Williams
+# Platform           : Ubuntu
+# Operating System   : Ubuntu 22.04.5 LTS
+# Processor Detail   : 13th Gen Intel(R) Core(TM) i7-13700K
+# CPU Frequency      : 5300.000 MHz
+# CPU Physical cores : 16
+# CPU Logical cores  : 24
+# Host memory        : 67183 MB
+# Swap memory        : 63999 MB
+# Total Virtual      : 131182 MB
+# Available Virtual  : 115315 MB
+#-----------------------------------------------------------
+source top.tcl -notrace
+Command: synth_design -top top -part xcku060-ffva1156-2-i
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xcku060'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xcku060'
+INFO: [Device 21-403] Loading part xcku060-ffva1156-2-i
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 7 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 2750882
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 2616.336 ; gain = 414.688 ; free physical = 454 ; free virtual = 108261
+---------------------------------------------------------------------------------
+INFO: [Synth 8-11241] undeclared symbol 'wr_en', assumed default net type 'wire' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/rs_decoder.v:157]
+INFO: [Synth 8-11241] undeclared symbol 'rd_en', assumed default net type 'wire' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/rs_decoder.v:158]
+INFO: [Synth 8-11241] undeclared symbol 'tx0_data', assumed default net type 'wire' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/top.v:192]
+INFO: [Synth 8-11241] undeclared symbol 'tx0_kchar', assumed default net type 'wire' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/top.v:193]
+INFO: [Synth 8-11241] undeclared symbol 'rx0_clk', assumed default net type 'wire' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/top.v:194]
+INFO: [Synth 8-11241] undeclared symbol 'rx0_data', assumed default net type 'wire' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/top.v:195]
+INFO: [Synth 8-11241] undeclared symbol 'rx0_kchar', assumed default net type 'wire' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/top.v:196]
+INFO: [Synth 8-11241] undeclared symbol 'tx2_clk', assumed default net type 'wire' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/top.v:207]
+INFO: [Synth 8-11241] undeclared symbol 'gt2_txfsmresetdone', assumed default net type 'wire' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/top.v:208]
+INFO: [Synth 8-11241] undeclared symbol 'gt2_rxfsmresetdone', assumed default net type 'wire' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/top.v:209]
+INFO: [Synth 8-11241] undeclared symbol 'tx3_clk', assumed default net type 'wire' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/top.v:216]
+INFO: [Synth 8-11241] undeclared symbol 'tx3_data', assumed default net type 'wire' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/top.v:219]
+INFO: [Synth 8-11241] undeclared symbol 'tx3_kchar', assumed default net type 'wire' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/top.v:220]
+INFO: [Synth 8-11241] undeclared symbol 'rx3_clk', assumed default net type 'wire' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/top.v:221]
+INFO: [Synth 8-11241] undeclared symbol 'rx3_data', assumed default net type 'wire' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/top.v:222]
+INFO: [Synth 8-11241] undeclared symbol 'rx3_kchar', assumed default net type 'wire' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/top.v:223]
+INFO: [Synth 8-6157] synthesizing module 'top' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/top.v:2]
+INFO: [Synth 8-6157] synthesizing module 'IBUFGDS' [/2025.2/2025.2/Vivado/scripts/rt/data/unisim_comp.v:83467]
+INFO: [Synth 8-6155] done synthesizing module 'IBUFGDS' (0#1) [/2025.2/2025.2/Vivado/scripts/rt/data/unisim_comp.v:83467]
+INFO: [Synth 8-6157] synthesizing module 'clk_wiz_0' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.runs/synth_1/.Xil/Vivado-2750814-Williams/realtime/clk_wiz_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'clk_wiz_0' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.runs/synth_1/.Xil/Vivado-2750814-Williams/realtime/clk_wiz_0_stub.v:6]
+WARNING: [Synth 8-7071] port 'reset' of module 'clk_wiz_0' is unconnected for instance 'clk_wiz_0_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/top.v:80]
+WARNING: [Synth 8-7071] port 'locked' of module 'clk_wiz_0' is unconnected for instance 'clk_wiz_0_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/top.v:80]
+WARNING: [Synth 8-7023] instance 'clk_wiz_0_inst' of module 'clk_wiz_0' has 5 connections declared, but only 3 given [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/top.v:80]
+INFO: [Synth 8-6157] synthesizing module 'autorun' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/autorun.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'autorun' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/autorun.v:23]
+INFO: [Synth 8-6157] synthesizing module 'stream_input' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/stream_input.v:23]
+INFO: [Synth 8-3876] $readmem data file 'sample.mem' is read successfully [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/stream_input.v:36]
+INFO: [Synth 8-6155] done synthesizing module 'stream_input' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/stream_input.v:23]
+INFO: [Synth 8-6157] synthesizing module 'encoder_top' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/encoder_top.v:23]
+INFO: [Synth 8-6157] synthesizing module 'framer_top' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/framer_top.v:23]
+INFO: [Synth 8-6157] synthesizing module 'framer' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/framer.v:23]
+INFO: [Synth 8-6157] synthesizing module 'serdes_framer' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.runs/synth_1/.Xil/Vivado-2750814-Williams/realtime/serdes_framer_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'serdes_framer' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.runs/synth_1/.Xil/Vivado-2750814-Williams/realtime/serdes_framer_stub.v:6]
+WARNING: [Synth 8-7071] port 'full' of module 'serdes_framer' is unconnected for instance 'serdes_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/framer.v:177]
+WARNING: [Synth 8-7071] port 'empty' of module 'serdes_framer' is unconnected for instance 'serdes_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/framer.v:177]
+WARNING: [Synth 8-7071] port 'wr_rst_busy' of module 'serdes_framer' is unconnected for instance 'serdes_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/framer.v:177]
+WARNING: [Synth 8-7071] port 'rd_rst_busy' of module 'serdes_framer' is unconnected for instance 'serdes_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/framer.v:177]
+WARNING: [Synth 8-7023] instance 'serdes_inst' of module 'serdes_framer' has 10 connections declared, but only 6 given [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/framer.v:177]
+INFO: [Synth 8-6155] done synthesizing module 'framer' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/framer.v:23]
+INFO: [Synth 8-6157] synthesizing module 'crc_16' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/crc_16.v:23]
+	Parameter max bound to: 15 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'crc_16' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/crc_16.v:23]
+INFO: [Synth 8-6157] synthesizing module 'crc_32' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/crc_32.v:23]
+	Parameter max bound to: 477 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'crc_32' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/crc_32.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'framer_top' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/framer_top.v:23]
+INFO: [Synth 8-6157] synthesizing module 'x_gth_logic' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/x_gth_logic.v:23]
+INFO: [Synth 8-6157] synthesizing module 'cross_gth_logic_head' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.runs/synth_1/.Xil/Vivado-2750814-Williams/realtime/cross_gth_logic_head_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'cross_gth_logic_head' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.runs/synth_1/.Xil/Vivado-2750814-Williams/realtime/cross_gth_logic_head_stub.v:6]
+WARNING: [Synth 8-7071] port 'full' of module 'cross_gth_logic_head' is unconnected for instance 'cross_head_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/x_gth_logic.v:122]
+WARNING: [Synth 8-7071] port 'empty' of module 'cross_gth_logic_head' is unconnected for instance 'cross_head_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/x_gth_logic.v:122]
+WARNING: [Synth 8-7071] port 'wr_rst_busy' of module 'cross_gth_logic_head' is unconnected for instance 'cross_head_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/x_gth_logic.v:122]
+WARNING: [Synth 8-7071] port 'rd_rst_busy' of module 'cross_gth_logic_head' is unconnected for instance 'cross_head_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/x_gth_logic.v:122]
+WARNING: [Synth 8-7023] instance 'cross_head_inst' of module 'cross_gth_logic_head' has 11 connections declared, but only 7 given [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/x_gth_logic.v:122]
+INFO: [Synth 8-6157] synthesizing module 'cross_gth_logic_load' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.runs/synth_1/.Xil/Vivado-2750814-Williams/realtime/cross_gth_logic_load_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'cross_gth_logic_load' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.runs/synth_1/.Xil/Vivado-2750814-Williams/realtime/cross_gth_logic_load_stub.v:6]
+WARNING: [Synth 8-7071] port 'full' of module 'cross_gth_logic_load' is unconnected for instance 'cross_load_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/x_gth_logic.v:132]
+WARNING: [Synth 8-7071] port 'empty' of module 'cross_gth_logic_load' is unconnected for instance 'cross_load_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/x_gth_logic.v:132]
+WARNING: [Synth 8-7071] port 'wr_rst_busy' of module 'cross_gth_logic_load' is unconnected for instance 'cross_load_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/x_gth_logic.v:132]
+WARNING: [Synth 8-7071] port 'rd_rst_busy' of module 'cross_gth_logic_load' is unconnected for instance 'cross_load_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/x_gth_logic.v:132]
+WARNING: [Synth 8-7023] instance 'cross_load_inst' of module 'cross_gth_logic_load' has 11 connections declared, but only 7 given [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/x_gth_logic.v:132]
+INFO: [Synth 8-6155] done synthesizing module 'x_gth_logic' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/x_gth_logic.v:23]
+INFO: [Synth 8-6157] synthesizing module 'core_tx' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/core_tx.v:23]
+INFO: [Synth 8-6157] synthesizing module 'rs_encoder' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/rs_encoder.v:23]
+	Parameter max bound to: 31 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'multiplier' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/multiplier.v:23]
+INFO: [Synth 8-3876] $readmem data file 'alpha_value.mem' is read successfully [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/multiplier.v:39]
+INFO: [Synth 8-3876] $readmem data file 'decimal_value.mem' is read successfully [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/multiplier.v:40]
+INFO: [Synth 8-6155] done synthesizing module 'multiplier' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/multiplier.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'rs_encoder' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/rs_encoder.v:23]
+INFO: [Synth 8-6157] synthesizing module 'rs_encoder_64' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/rs_encoder_64.v:23]
+INFO: [Synth 8-6157] synthesizing module 'rs_encoder__parameterized0' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/rs_encoder.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'rs_encoder__parameterized0' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/rs_encoder.v:23]
+WARNING: [Synth 8-7071] port 'flag' of module 'rs_encoder' is unconnected for instance 'rs_encoder_6' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/rs_encoder_64.v:41]
+WARNING: [Synth 8-7023] instance 'rs_encoder_6' of module 'rs_encoder' has 6 connections declared, but only 5 given [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/rs_encoder_64.v:41]
+WARNING: [Synth 8-7071] port 'flag' of module 'rs_encoder' is unconnected for instance 'rs_encoder_5' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/rs_encoder_64.v:49]
+WARNING: [Synth 8-7023] instance 'rs_encoder_5' of module 'rs_encoder' has 6 connections declared, but only 5 given [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/rs_encoder_64.v:49]
+WARNING: [Synth 8-7071] port 'flag' of module 'rs_encoder' is unconnected for instance 'rs_encoder_4' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/rs_encoder_64.v:57]
+WARNING: [Synth 8-7023] instance 'rs_encoder_4' of module 'rs_encoder' has 6 connections declared, but only 5 given [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/rs_encoder_64.v:57]
+WARNING: [Synth 8-7071] port 'flag' of module 'rs_encoder' is unconnected for instance 'rs_encoder_3' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/rs_encoder_64.v:65]
+WARNING: [Synth 8-7023] instance 'rs_encoder_3' of module 'rs_encoder' has 6 connections declared, but only 5 given [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/rs_encoder_64.v:65]
+WARNING: [Synth 8-7071] port 'flag' of module 'rs_encoder' is unconnected for instance 'rs_encoder_2' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/rs_encoder_64.v:73]
+WARNING: [Synth 8-7023] instance 'rs_encoder_2' of module 'rs_encoder' has 6 connections declared, but only 5 given [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/rs_encoder_64.v:73]
+WARNING: [Synth 8-7071] port 'flag' of module 'rs_encoder' is unconnected for instance 'rs_encoder_1' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/rs_encoder_64.v:81]
+WARNING: [Synth 8-7023] instance 'rs_encoder_1' of module 'rs_encoder' has 6 connections declared, but only 5 given [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/rs_encoder_64.v:81]
+WARNING: [Synth 8-7071] port 'flag' of module 'rs_encoder' is unconnected for instance 'rs_encoder_0' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/rs_encoder_64.v:89]
+WARNING: [Synth 8-7023] instance 'rs_encoder_0' of module 'rs_encoder' has 6 connections declared, but only 5 given [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/rs_encoder_64.v:89]
+INFO: [Synth 8-6155] done synthesizing module 'rs_encoder_64' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/rs_encoder_64.v:23]
+INFO: [Synth 8-6157] synthesizing module 'combiner' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/combiner.v:23]
+INFO: [Synth 8-6157] synthesizing module 'delay_combiner' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.runs/synth_1/.Xil/Vivado-2750814-Williams/realtime/delay_combiner_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'delay_combiner' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.runs/synth_1/.Xil/Vivado-2750814-Williams/realtime/delay_combiner_stub.v:6]
+WARNING: [Synth 8-7071] port 'full' of module 'delay_combiner' is unconnected for instance 'delay_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/combiner.v:123]
+WARNING: [Synth 8-7071] port 'empty' of module 'delay_combiner' is unconnected for instance 'delay_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/combiner.v:123]
+WARNING: [Synth 8-7071] port 'wr_rst_busy' of module 'delay_combiner' is unconnected for instance 'delay_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/combiner.v:123]
+WARNING: [Synth 8-7071] port 'rd_rst_busy' of module 'delay_combiner' is unconnected for instance 'delay_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/combiner.v:123]
+WARNING: [Synth 8-7023] instance 'delay_inst' of module 'delay_combiner' has 10 connections declared, but only 6 given [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/combiner.v:123]
+INFO: [Synth 8-6155] done synthesizing module 'combiner' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/combiner.v:23]
+INFO: [Synth 8-6157] synthesizing module 'scrambler' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/scrambler.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'scrambler' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/scrambler.v:23]
+INFO: [Synth 8-6157] synthesizing module 'lpc_top' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/lpc_top.v:23]
+INFO: [Synth 8-6157] synthesizing module 'lpc' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/lpc.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'lpc' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/lpc.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'lpc_top' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/lpc_top.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'core_tx' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/core_tx.v:23]
+INFO: [Synth 8-6157] synthesizing module 'x_logic_gth' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/x_logic_gth.v:23]
+INFO: [Synth 8-6157] synthesizing module 'cross_logic_gth' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.runs/synth_1/.Xil/Vivado-2750814-Williams/realtime/cross_logic_gth_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'cross_logic_gth' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.runs/synth_1/.Xil/Vivado-2750814-Williams/realtime/cross_logic_gth_stub.v:6]
+WARNING: [Synth 8-7071] port 'full' of module 'cross_logic_gth' is unconnected for instance 'cross_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/x_logic_gth.v:99]
+WARNING: [Synth 8-7071] port 'empty' of module 'cross_logic_gth' is unconnected for instance 'cross_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/x_logic_gth.v:99]
+WARNING: [Synth 8-7071] port 'wr_rst_busy' of module 'cross_logic_gth' is unconnected for instance 'cross_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/x_logic_gth.v:99]
+WARNING: [Synth 8-7071] port 'rd_rst_busy' of module 'cross_logic_gth' is unconnected for instance 'cross_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/x_logic_gth.v:99]
+WARNING: [Synth 8-7023] instance 'cross_inst' of module 'cross_logic_gth' has 11 connections declared, but only 7 given [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/x_logic_gth.v:99]
+INFO: [Synth 8-6155] done synthesizing module 'x_logic_gth' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/x_logic_gth.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'encoder_top' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/encoder_top.v:23]
+INFO: [Synth 8-6157] synthesizing module 'error_inject' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/error_inject.v:23]
+INFO: [Synth 8-3876] $readmem data file 'error.mem' is read successfully [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/error_inject.v:40]
+INFO: [Synth 8-6155] done synthesizing module 'error_inject' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/error_inject.v:23]
+INFO: [Synth 8-6157] synthesizing module 'decoder_top' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/decoder_top.v:23]
+INFO: [Synth 8-6157] synthesizing module 'rx_gth_logic' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/rx_gth_logic.v:23]
+INFO: [Synth 8-6157] synthesizing module 'cross_gth_logic' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.runs/synth_1/.Xil/Vivado-2750814-Williams/realtime/cross_gth_logic_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'cross_gth_logic' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.runs/synth_1/.Xil/Vivado-2750814-Williams/realtime/cross_gth_logic_stub.v:6]
+WARNING: [Synth 8-7071] port 'full' of module 'cross_gth_logic' is unconnected for instance 'cross_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/rx_gth_logic.v:128]
+WARNING: [Synth 8-7071] port 'empty' of module 'cross_gth_logic' is unconnected for instance 'cross_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/rx_gth_logic.v:128]
+WARNING: [Synth 8-7071] port 'wr_rst_busy' of module 'cross_gth_logic' is unconnected for instance 'cross_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/rx_gth_logic.v:128]
+WARNING: [Synth 8-7071] port 'rd_rst_busy' of module 'cross_gth_logic' is unconnected for instance 'cross_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/rx_gth_logic.v:128]
+WARNING: [Synth 8-7023] instance 'cross_inst' of module 'cross_gth_logic' has 11 connections declared, but only 7 given [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/rx_gth_logic.v:128]
+INFO: [Synth 8-6155] done synthesizing module 'rx_gth_logic' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/rx_gth_logic.v:23]
+INFO: [Synth 8-6157] synthesizing module 'core_rx' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/core_rx.v:23]
+INFO: [Synth 8-6157] synthesizing module 'lpc_dec_top' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/lpc_dec_top.v:23]
+INFO: [Synth 8-6157] synthesizing module 'lpc_dec' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/lpc_dec.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'lpc_dec' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/lpc_dec.v:23]
+WARNING: [Synth 8-7071] port 'error_pos' of module 'lpc_dec' is unconnected for instance 'lpc_3' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/lpc_dec_top.v:32]
+WARNING: [Synth 8-7023] instance 'lpc_3' of module 'lpc_dec' has 7 connections declared, but only 6 given [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/lpc_dec_top.v:32]
+WARNING: [Synth 8-7071] port 'error_pos' of module 'lpc_dec' is unconnected for instance 'lpc_2' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/lpc_dec_top.v:41]
+WARNING: [Synth 8-7023] instance 'lpc_2' of module 'lpc_dec' has 7 connections declared, but only 6 given [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/lpc_dec_top.v:41]
+WARNING: [Synth 8-7071] port 'error_pos' of module 'lpc_dec' is unconnected for instance 'lpc_1' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/lpc_dec_top.v:50]
+WARNING: [Synth 8-7023] instance 'lpc_1' of module 'lpc_dec' has 7 connections declared, but only 6 given [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/lpc_dec_top.v:50]
+WARNING: [Synth 8-7071] port 'error_pos' of module 'lpc_dec' is unconnected for instance 'lpc_0' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/lpc_dec_top.v:59]
+WARNING: [Synth 8-7023] instance 'lpc_0' of module 'lpc_dec' has 7 connections declared, but only 6 given [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/lpc_dec_top.v:59]
+INFO: [Synth 8-6155] done synthesizing module 'lpc_dec_top' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/lpc_dec_top.v:23]
+INFO: [Synth 8-6157] synthesizing module 'separator' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/separator.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'separator' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/separator.v:23]
+INFO: [Synth 8-6157] synthesizing module 'rs_decoder' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/rs_decoder.v:23]
+	Parameter max_rd bound to: 33 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'delay_rs' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.runs/synth_1/.Xil/Vivado-2750814-Williams/realtime/delay_rs_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'delay_rs' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.runs/synth_1/.Xil/Vivado-2750814-Williams/realtime/delay_rs_stub.v:6]
+WARNING: [Synth 8-7071] port 'full' of module 'delay_rs' is unconnected for instance 'delay_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/rs_decoder.v:163]
+WARNING: [Synth 8-7071] port 'empty' of module 'delay_rs' is unconnected for instance 'delay_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/rs_decoder.v:163]
+WARNING: [Synth 8-7071] port 'wr_rst_busy' of module 'delay_rs' is unconnected for instance 'delay_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/rs_decoder.v:163]
+WARNING: [Synth 8-7071] port 'rd_rst_busy' of module 'delay_rs' is unconnected for instance 'delay_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/rs_decoder.v:163]
+WARNING: [Synth 8-7023] instance 'delay_inst' of module 'delay_rs' has 10 connections declared, but only 6 given [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/rs_decoder.v:163]
+INFO: [Synth 8-6157] synthesizing module 'syndrome_unit' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/syndrome_unit.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'syndrome_unit' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/syndrome_unit.v:23]
+INFO: [Synth 8-6157] synthesizing module 'euclid_proc' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v:23]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v:190]
+INFO: [Synth 8-6157] synthesizing module 'inverter' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/inverter.v:23]
+INFO: [Synth 8-3876] $readmem data file 'alpha_value.mem' is read successfully [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/inverter.v:37]
+INFO: [Synth 8-3876] $readmem data file 'decimal_value.mem' is read successfully [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/inverter.v:38]
+INFO: [Synth 8-6155] done synthesizing module 'inverter' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/inverter.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'euclid_proc' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v:23]
+INFO: [Synth 8-6157] synthesizing module 'chien_search' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/chien_search.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'chien_search' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/chien_search.v:23]
+WARNING: [Synth 8-7071] port 'flag' of module 'chien_search' is unconnected for instance 'chien_search_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/rs_decoder.v:191]
+WARNING: [Synth 8-7023] instance 'chien_search_inst' of module 'chien_search' has 7 connections declared, but only 6 given [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/rs_decoder.v:191]
+INFO: [Synth 8-6157] synthesizing module 'forney_math' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/forney_math.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'forney_math' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/forney_math.v:23]
+WARNING: [Synth 8-7071] port 'flag' of module 'forney_math' is unconnected for instance 'forney_math_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/rs_decoder.v:200]
+WARNING: [Synth 8-7023] instance 'forney_math_inst' of module 'forney_math' has 7 connections declared, but only 6 given [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/rs_decoder.v:200]
+INFO: [Synth 8-6155] done synthesizing module 'rs_decoder' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/rs_decoder.v:23]
+INFO: [Synth 8-6157] synthesizing module 'rs_decoder_64' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/rs_decoder_64.v:23]
+INFO: [Synth 8-6157] synthesizing module 'rs_decoder__parameterized0' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/rs_decoder.v:23]
+WARNING: [Synth 8-7071] port 'full' of module 'delay_rs' is unconnected for instance 'delay_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/rs_decoder.v:163]
+WARNING: [Synth 8-7071] port 'empty' of module 'delay_rs' is unconnected for instance 'delay_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/rs_decoder.v:163]
+WARNING: [Synth 8-7071] port 'wr_rst_busy' of module 'delay_rs' is unconnected for instance 'delay_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/rs_decoder.v:163]
+WARNING: [Synth 8-7071] port 'rd_rst_busy' of module 'delay_rs' is unconnected for instance 'delay_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/rs_decoder.v:163]
+WARNING: [Synth 8-7023] instance 'delay_inst' of module 'delay_rs' has 10 connections declared, but only 6 given [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/rs_decoder.v:163]
+WARNING: [Synth 8-7071] port 'flag' of module 'chien_search' is unconnected for instance 'chien_search_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/rs_decoder.v:191]
+WARNING: [Synth 8-7023] instance 'chien_search_inst' of module 'chien_search' has 7 connections declared, but only 6 given [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/rs_decoder.v:191]
+WARNING: [Synth 8-7071] port 'flag' of module 'forney_math' is unconnected for instance 'forney_math_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/rs_decoder.v:200]
+WARNING: [Synth 8-7023] instance 'forney_math_inst' of module 'forney_math' has 7 connections declared, but only 6 given [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/rs_decoder.v:200]
+INFO: [Synth 8-6155] done synthesizing module 'rs_decoder__parameterized0' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/rs_decoder.v:23]
+WARNING: [Synth 8-7071] port 'flag' of module 'rs_decoder' is unconnected for instance 'rs_decoder_2' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/rs_decoder_64.v:77]
+WARNING: [Synth 8-7023] instance 'rs_decoder_2' of module 'rs_decoder' has 6 connections declared, but only 5 given [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/rs_decoder_64.v:77]
+INFO: [Synth 8-6155] done synthesizing module 'rs_decoder_64' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/rs_decoder_64.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'core_rx' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/core_rx.v:23]
+INFO: [Synth 8-6157] synthesizing module 'rx_logic_gth' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/rx_logic_gth.v:23]
+INFO: [Synth 8-6157] synthesizing module 'cross_logic_gth_head' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.runs/synth_1/.Xil/Vivado-2750814-Williams/realtime/cross_logic_gth_head_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'cross_logic_gth_head' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.runs/synth_1/.Xil/Vivado-2750814-Williams/realtime/cross_logic_gth_head_stub.v:6]
+WARNING: [Synth 8-7071] port 'full' of module 'cross_logic_gth_head' is unconnected for instance 'cross_head_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/rx_logic_gth.v:114]
+WARNING: [Synth 8-7071] port 'empty' of module 'cross_logic_gth_head' is unconnected for instance 'cross_head_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/rx_logic_gth.v:114]
+WARNING: [Synth 8-7071] port 'wr_rst_busy' of module 'cross_logic_gth_head' is unconnected for instance 'cross_head_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/rx_logic_gth.v:114]
+WARNING: [Synth 8-7071] port 'rd_rst_busy' of module 'cross_logic_gth_head' is unconnected for instance 'cross_head_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/rx_logic_gth.v:114]
+WARNING: [Synth 8-7023] instance 'cross_head_inst' of module 'cross_logic_gth_head' has 11 connections declared, but only 7 given [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/rx_logic_gth.v:114]
+INFO: [Synth 8-6157] synthesizing module 'cross_logic_gth_load' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.runs/synth_1/.Xil/Vivado-2750814-Williams/realtime/cross_logic_gth_load_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'cross_logic_gth_load' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.runs/synth_1/.Xil/Vivado-2750814-Williams/realtime/cross_logic_gth_load_stub.v:6]
+WARNING: [Synth 8-7071] port 'full' of module 'cross_logic_gth_load' is unconnected for instance 'cross_payload_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/rx_logic_gth.v:124]
+WARNING: [Synth 8-7071] port 'empty' of module 'cross_logic_gth_load' is unconnected for instance 'cross_payload_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/rx_logic_gth.v:124]
+WARNING: [Synth 8-7071] port 'wr_rst_busy' of module 'cross_logic_gth_load' is unconnected for instance 'cross_payload_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/rx_logic_gth.v:124]
+WARNING: [Synth 8-7071] port 'rd_rst_busy' of module 'cross_logic_gth_load' is unconnected for instance 'cross_payload_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/rx_logic_gth.v:124]
+WARNING: [Synth 8-7023] instance 'cross_payload_inst' of module 'cross_logic_gth_load' has 11 connections declared, but only 7 given [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/rx_logic_gth.v:124]
+INFO: [Synth 8-6155] done synthesizing module 'rx_logic_gth' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/rx_logic_gth.v:23]
+INFO: [Synth 8-6157] synthesizing module 'assembler_top' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/assembler_top.v:23]
+INFO: [Synth 8-6157] synthesizing module 'crc_16__parameterized0' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/crc_16.v:23]
+	Parameter max bound to: 16 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'crc_16__parameterized0' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/crc_16.v:23]
+INFO: [Synth 8-6157] synthesizing module 'crc_32__parameterized0' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/crc_32.v:23]
+	Parameter max bound to: 478 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'crc_32__parameterized0' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/crc_32.v:23]
+INFO: [Synth 8-6157] synthesizing module 'assembler' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/assembler.v:23]
+INFO: [Synth 8-6157] synthesizing module 'serdes_assembler' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.runs/synth_1/.Xil/Vivado-2750814-Williams/realtime/serdes_assembler_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'serdes_assembler' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.runs/synth_1/.Xil/Vivado-2750814-Williams/realtime/serdes_assembler_stub.v:6]
+WARNING: [Synth 8-7071] port 'full' of module 'serdes_assembler' is unconnected for instance 'serdes_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/assembler.v:205]
+WARNING: [Synth 8-7071] port 'empty' of module 'serdes_assembler' is unconnected for instance 'serdes_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/assembler.v:205]
+WARNING: [Synth 8-7071] port 'wr_rst_busy' of module 'serdes_assembler' is unconnected for instance 'serdes_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/assembler.v:205]
+WARNING: [Synth 8-7071] port 'rd_rst_busy' of module 'serdes_assembler' is unconnected for instance 'serdes_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/assembler.v:205]
+WARNING: [Synth 8-7023] instance 'serdes_inst' of module 'serdes_assembler' has 10 connections declared, but only 6 given [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/assembler.v:205]
+INFO: [Synth 8-6155] done synthesizing module 'assembler' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/assembler.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'assembler_top' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/assembler_top.v:23]
+INFO: [Synth 8-6155] done synthesizing module 'decoder_top' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/decoder_top.v:23]
+INFO: [Synth 8-6157] synthesizing module 'reset_0' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.runs/synth_1/.Xil/Vivado-2750814-Williams/realtime/reset_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'reset_0' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.runs/synth_1/.Xil/Vivado-2750814-Williams/realtime/reset_0_stub.v:6]
+INFO: [Synth 8-6157] synthesizing module 'packet_send' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/packet_send.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'packet_send' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/packet_send.v:1]
+INFO: [Synth 8-6157] synthesizing module 'packet_rec' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/packet_rec.v:1]
+INFO: [Synth 8-6157] synthesizing module 'word_align' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/word_align.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'word_align' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/word_align.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'packet_rec' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/packet_rec.v:1]
+INFO: [Synth 8-6157] synthesizing module 'gt_example_top' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/imports/gt_example_top.v:58]
+INFO: [Synth 8-6157] synthesizing module 'IBUF' [/2025.2/2025.2/Vivado/scripts/rt/data/unisim_comp.v:82804]
+INFO: [Synth 8-6155] done synthesizing module 'IBUF' (0#1) [/2025.2/2025.2/Vivado/scripts/rt/data/unisim_comp.v:82804]
+INFO: [Synth 8-6157] synthesizing module 'BUFG' [/2025.2/2025.2/Vivado/scripts/rt/data/unisim_comp.v:2678]
+INFO: [Synth 8-6155] done synthesizing module 'BUFG' (0#1) [/2025.2/2025.2/Vivado/scripts/rt/data/unisim_comp.v:2678]
+INFO: [Synth 8-6157] synthesizing module 'IBUFDS_GTE3' [/2025.2/2025.2/Vivado/scripts/rt/data/unisim_comp.v:83063]
+	Parameter REFCLK_EN_TX_PATH bound to: 1'b0 
+	Parameter REFCLK_HROW_CK_SEL bound to: 2'b00 
+	Parameter REFCLK_ICNTL_RX bound to: 2'b00 
+INFO: [Synth 8-6155] done synthesizing module 'IBUFDS_GTE3' (0#1) [/2025.2/2025.2/Vivado/scripts/rt/data/unisim_comp.v:83063]
+INFO: [Synth 8-6157] synthesizing module 'gt_example_reset_synchronizer' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/imports/gt_example_reset_sync.v:58]
+INFO: [Synth 8-6155] done synthesizing module 'gt_example_reset_synchronizer' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/imports/gt_example_reset_sync.v:58]
+WARNING: [Synth 8-589] replacing case/wildcard equality operator !== with logical equality operator != [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/imports/gt_example_top.v:1001]
+WARNING: [Synth 8-589] replacing case/wildcard equality operator !== with logical equality operator != [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/imports/gt_example_top.v:1016]
+INFO: [Synth 8-6157] synthesizing module 'gt_example_bit_synchronizer' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/imports/gt_example_bit_sync.v:58]
+INFO: [Synth 8-6155] done synthesizing module 'gt_example_bit_synchronizer' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/imports/gt_example_bit_sync.v:58]
+INFO: [Synth 8-6157] synthesizing module 'gt_example_init' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/imports/gt_example_init.v:59]
+INFO: [Synth 8-6155] done synthesizing module 'gt_example_init' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/imports/gt_example_init.v:59]
+INFO: [Synth 8-6157] synthesizing module 'gt_vio_0' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.runs/synth_1/.Xil/Vivado-2750814-Williams/realtime/gt_vio_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'gt_vio_0' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.runs/synth_1/.Xil/Vivado-2750814-Williams/realtime/gt_vio_0_stub.v:6]
+WARNING: [Synth 8-7071] port 'probe_out6' of module 'gt_vio_0' is unconnected for instance 'gt_vio_0_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/imports/gt_example_top.v:1301]
+WARNING: [Synth 8-7071] port 'probe_out7' of module 'gt_vio_0' is unconnected for instance 'gt_vio_0_inst' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/imports/gt_example_top.v:1301]
+WARNING: [Synth 8-7023] instance 'gt_vio_0_inst' of module 'gt_vio_0' has 19 connections declared, but only 17 given [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/imports/gt_example_top.v:1301]
+INFO: [Synth 8-6157] synthesizing module 'gt_example_wrapper' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/imports/gt_example_wrapper.v:57]
+INFO: [Synth 8-6157] synthesizing module 'gt_example_gtwiz_userclk_tx' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/imports/gt_example_gtwiz_userclk_tx.v:60]
+INFO: [Synth 8-6157] synthesizing module 'BUFG_GT' [/2025.2/2025.2/Vivado/scripts/rt/data/unisim_comp.v:2855]
+INFO: [Synth 8-6155] done synthesizing module 'BUFG_GT' (0#1) [/2025.2/2025.2/Vivado/scripts/rt/data/unisim_comp.v:2855]
+INFO: [Synth 8-6155] done synthesizing module 'gt_example_gtwiz_userclk_tx' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/imports/gt_example_gtwiz_userclk_tx.v:60]
+INFO: [Synth 8-6157] synthesizing module 'gt_example_gtwiz_userclk_rx' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/imports/gt_example_gtwiz_userclk_rx.v:60]
+INFO: [Synth 8-6155] done synthesizing module 'gt_example_gtwiz_userclk_rx' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/imports/gt_example_gtwiz_userclk_rx.v:60]
+INFO: [Synth 8-6157] synthesizing module 'gt' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.runs/synth_1/.Xil/Vivado-2750814-Williams/realtime/gt_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'gt' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.runs/synth_1/.Xil/Vivado-2750814-Williams/realtime/gt_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'gt_example_wrapper' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/imports/gt_example_wrapper.v:57]
+INFO: [Synth 8-6155] done synthesizing module 'gt_example_top' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/imports/gt_example_top.v:58]
+WARNING: [Synth 8-689] width (1) of port connection 'tx0_data' does not match port width (32) of module 'gt_example_top' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/top.v:192]
+WARNING: [Synth 8-689] width (1) of port connection 'tx0_kchar' does not match port width (4) of module 'gt_example_top' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/top.v:193]
+WARNING: [Synth 8-689] width (1) of port connection 'rx0_data' does not match port width (32) of module 'gt_example_top' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/top.v:195]
+WARNING: [Synth 8-689] width (1) of port connection 'rx0_kchar' does not match port width (4) of module 'gt_example_top' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/top.v:196]
+WARNING: [Synth 8-689] width (1) of port connection 'tx3_data' does not match port width (32) of module 'gt_example_top' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/top.v:219]
+WARNING: [Synth 8-689] width (1) of port connection 'tx3_kchar' does not match port width (4) of module 'gt_example_top' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/top.v:220]
+WARNING: [Synth 8-689] width (1) of port connection 'rx3_data' does not match port width (32) of module 'gt_example_top' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/top.v:222]
+WARNING: [Synth 8-689] width (1) of port connection 'rx3_kchar' does not match port width (4) of module 'gt_example_top' [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/top.v:223]
+INFO: [Synth 8-6155] done synthesizing module 'top' (0#1) [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/top.v:2]
+WARNING: [Synth 8-7137] Register P_reg in module lpc has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/lpc.v:60]
+WARNING: [Synth 8-7137] Register P_reg in module lpc has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/lpc.v:60]
+WARNING: [Synth 8-7137] Register P_reg in module lpc has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/lpc.v:73]
+WARNING: [Synth 8-7137] Register P_reg in module lpc has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/lpc.v:90]
+WARNING: [Synth 8-7137] Register P_reg in module lpc has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/lpc.v:107]
+WARNING: [Synth 8-7137] Register P_reg in module lpc has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/lpc.v:124]
+WARNING: [Synth 8-7137] Register P_reg in module lpc has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/lpc.v:141]
+WARNING: [Synth 8-7137] Register P_reg in module lpc has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/lpc.v:158]
+WARNING: [Synth 8-7137] Register P_reg in module lpc_dec has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/lpc_dec.v:69]
+WARNING: [Synth 8-7137] Register P_reg in module lpc_dec has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/lpc_dec.v:69]
+WARNING: [Synth 8-7137] Register P_reg in module lpc_dec has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/lpc_dec.v:82]
+WARNING: [Synth 8-7137] Register P_reg in module lpc_dec has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/lpc_dec.v:99]
+WARNING: [Synth 8-7137] Register P_reg in module lpc_dec has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/lpc_dec.v:116]
+WARNING: [Synth 8-7137] Register P_reg in module lpc_dec has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/lpc_dec.v:133]
+WARNING: [Synth 8-7137] Register P_reg in module lpc_dec has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/lpc_dec.v:150]
+WARNING: [Synth 8-7137] Register P_reg in module lpc_dec has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/lpc_dec.v:167]
+WARNING: [Synth 8-6014] Unused sequential element reg_C_reg[16] was removed.  [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v:146]
+WARNING: [Synth 8-6014] Unused sequential element reg_W_reg[16] was removed.  [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v:148]
+WARNING: [Synth 8-6014] Unused sequential element reg_Y_reg[16] was removed.  [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v:149]
+WARNING: [Synth 8-6014] Unused sequential element reg_T_reg[16] was removed.  [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v:150]
+WARNING: [Synth 8-7137] Register len_packet_reg in module assembler has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/assembler.v:147]
+INFO: [Synth 8-6071] Mark debug on the nets applies keep_hierarchy on instance 'rx_gth_logic_inst'. This will prevent further optimization [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/decoder_top.v:46]
+INFO: [Synth 8-6071] Mark debug on the nets applies keep_hierarchy on instance 'core_rx_inst'. This will prevent further optimization [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/decoder_top.v:56]
+INFO: [Synth 8-6071] Mark debug on the nets applies keep_hierarchy on instance 'rx_logic_gth_inst'. This will prevent further optimization [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/decoder_top.v:67]
+INFO: [Synth 8-6071] Mark debug on the nets applies keep_hierarchy on instance 'assembler_top_inst'. This will prevent further optimization [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/decoder_top.v:81]
+WARNING: [Synth 8-6014] Unused sequential element packet_type_reg was removed.  [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/packet_rec.v:70]
+INFO: [Synth 8-6071] Mark debug on the nets applies keep_hierarchy on instance 'gt_vio_0_inst'. This will prevent further optimization [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/imports/gt_example_top.v:1301]
+INFO: [Synth 8-6071] Mark debug on the nets applies keep_hierarchy on instance 'example_init_inst'. This will prevent further optimization [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/imports/gt_example_top.v:1085]
+WARNING: [Synth 8-3848] Net prbs_match_int in module/entity gt_example_top does not have driver. [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/imports/gt_example_top.v:854]
+INFO: [Synth 8-6071] Mark debug on the nets applies keep_hierarchy on instance 'packet_send_m0'. This will prevent further optimization [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/top.v:159]
+INFO: [Synth 8-6071] Mark debug on the nets applies keep_hierarchy on instance 'gtx_exdes_m0'. This will prevent further optimization [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/top.v:186]
+INFO: [Synth 8-6071] Mark debug on the nets applies keep_hierarchy on instance 'packet_rec_m0'. This will prevent further optimization [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/top.v:173]
+INFO: [Synth 8-6071] Mark debug on the nets applies keep_hierarchy on instance 'decoder_top_inst'. This will prevent further optimization [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/top.v:119]
+INFO: [Synth 8-6071] Mark debug on the nets applies keep_hierarchy on instance 'autorun_inst'. This will prevent further optimization [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/top.v:86]
+INFO: [Synth 8-6071] Mark debug on the nets applies keep_hierarchy on instance 'stream_input_inst'. This will prevent further optimization [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/top.v:92]
+INFO: [Synth 8-6071] Mark debug on the nets applies keep_hierarchy on instance 'encoder_top_inst'. This will prevent further optimization [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/top.v:100]
+INFO: [Synth 8-6071] Mark debug on the nets applies keep_hierarchy on instance 'error_inject_inst'. This will prevent further optimization [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/top.v:110]
+WARNING: [Synth 8-3848] Net tx0_data in module/entity top does not have driver. [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/top.v:192]
+WARNING: [Synth 8-3848] Net tx0_kchar in module/entity top does not have driver. [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/top.v:193]
+WARNING: [Synth 8-3848] Net tx3_data in module/entity top does not have driver. [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/top.v:219]
+WARNING: [Synth 8-3848] Net tx3_kchar in module/entity top does not have driver. [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/top.v:220]
+WARNING: [Synth 8-3917] design top has port tx_disable[1] driven by constant 0
+WARNING: [Synth 8-3917] design top has port tx_disable[0] driven by constant 0
+WARNING: [Synth 8-3917] design top has port fan driven by constant 0
+WARNING: [Synth 8-7129] Port rst in module word_align is either unconnected or has no load
+WARNING: [Synth 8-7129] Port en_head in module assembler is either unconnected or has no load
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 2787.273 ; gain = 585.625 ; free physical = 541 ; free virtual = 108156
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 2787.273 ; gain = 585.625 ; free physical = 541 ; free virtual = 108156
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 2787.273 ; gain = 585.625 ; free physical = 541 ; free virtual = 108156
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:00.2 ; elapsed = 00:00:00.19 . Memory (MB): peak = 2787.273 ; gain = 0.000 ; free physical = 548 ; free virtual = 108163
+INFO: [Netlist 29-17] Analyzing 3 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.gen/sources_1/ip/gt_vio_0/gt_vio_0/gt_vio_0_in_context.xdc] for cell 'gtx_exdes_m0/gt_vio_0_inst'
+Finished Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.gen/sources_1/ip/gt_vio_0/gt_vio_0/gt_vio_0_in_context.xdc] for cell 'gtx_exdes_m0/gt_vio_0_inst'
+Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.gen/sources_1/ip/reset_0/reset_0/reset_0_in_context.xdc] for cell 'tx_reset_m0'
+Finished Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.gen/sources_1/ip/reset_0/reset_0/reset_0_in_context.xdc] for cell 'tx_reset_m0'
+Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.gen/sources_1/ip/reset_0/reset_0/reset_0_in_context.xdc] for cell 'rx_reset_m0'
+Finished Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.gen/sources_1/ip/reset_0/reset_0/reset_0_in_context.xdc] for cell 'rx_reset_m0'
+Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/serdes_assembler/serdes_assembler/serdes_assembler_in_context.xdc] for cell 'decoder_top_inst/assembler_top_inst/assembler_inst/serdes_inst'
+Finished Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/serdes_assembler/serdes_assembler/serdes_assembler_in_context.xdc] for cell 'decoder_top_inst/assembler_top_inst/assembler_inst/serdes_inst'
+Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/cross_logic_gth_load/cross_logic_gth_load/cross_logic_gth_load_in_context.xdc] for cell 'decoder_top_inst/rx_logic_gth_inst/cross_payload_inst'
+Finished Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/cross_logic_gth_load/cross_logic_gth_load/cross_logic_gth_load_in_context.xdc] for cell 'decoder_top_inst/rx_logic_gth_inst/cross_payload_inst'
+Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head/cross_logic_gth_head_in_context.xdc] for cell 'decoder_top_inst/rx_logic_gth_inst/cross_head_inst'
+Finished Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head/cross_logic_gth_head_in_context.xdc] for cell 'decoder_top_inst/rx_logic_gth_inst/cross_head_inst'
+Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/delay_rs/delay_rs/delay_rs_in_context.xdc] for cell 'decoder_top_inst/core_rx_inst/rs_decoder_inst/delay_inst'
+Finished Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/delay_rs/delay_rs/delay_rs_in_context.xdc] for cell 'decoder_top_inst/core_rx_inst/rs_decoder_inst/delay_inst'
+Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/delay_rs/delay_rs/delay_rs_in_context.xdc] for cell 'decoder_top_inst/core_rx_inst/rs_decoder_64_inst/rs_decoder_7/delay_inst'
+Finished Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/delay_rs/delay_rs/delay_rs_in_context.xdc] for cell 'decoder_top_inst/core_rx_inst/rs_decoder_64_inst/rs_decoder_7/delay_inst'
+Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/delay_rs/delay_rs/delay_rs_in_context.xdc] for cell 'decoder_top_inst/core_rx_inst/rs_decoder_64_inst/rs_decoder_6/delay_inst'
+Finished Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/delay_rs/delay_rs/delay_rs_in_context.xdc] for cell 'decoder_top_inst/core_rx_inst/rs_decoder_64_inst/rs_decoder_6/delay_inst'
+Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/delay_rs/delay_rs/delay_rs_in_context.xdc] for cell 'decoder_top_inst/core_rx_inst/rs_decoder_64_inst/rs_decoder_5/delay_inst'
+Finished Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/delay_rs/delay_rs/delay_rs_in_context.xdc] for cell 'decoder_top_inst/core_rx_inst/rs_decoder_64_inst/rs_decoder_5/delay_inst'
+Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/delay_rs/delay_rs/delay_rs_in_context.xdc] for cell 'decoder_top_inst/core_rx_inst/rs_decoder_64_inst/rs_decoder_4/delay_inst'
+Finished Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/delay_rs/delay_rs/delay_rs_in_context.xdc] for cell 'decoder_top_inst/core_rx_inst/rs_decoder_64_inst/rs_decoder_4/delay_inst'
+Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/delay_rs/delay_rs/delay_rs_in_context.xdc] for cell 'decoder_top_inst/core_rx_inst/rs_decoder_64_inst/rs_decoder_3/delay_inst'
+Finished Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/delay_rs/delay_rs/delay_rs_in_context.xdc] for cell 'decoder_top_inst/core_rx_inst/rs_decoder_64_inst/rs_decoder_3/delay_inst'
+Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/delay_rs/delay_rs/delay_rs_in_context.xdc] for cell 'decoder_top_inst/core_rx_inst/rs_decoder_64_inst/rs_decoder_2/delay_inst'
+Finished Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/delay_rs/delay_rs/delay_rs_in_context.xdc] for cell 'decoder_top_inst/core_rx_inst/rs_decoder_64_inst/rs_decoder_2/delay_inst'
+Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/delay_rs/delay_rs/delay_rs_in_context.xdc] for cell 'decoder_top_inst/core_rx_inst/rs_decoder_64_inst/rs_decoder_1/delay_inst'
+Finished Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/delay_rs/delay_rs/delay_rs_in_context.xdc] for cell 'decoder_top_inst/core_rx_inst/rs_decoder_64_inst/rs_decoder_1/delay_inst'
+Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/delay_rs/delay_rs/delay_rs_in_context.xdc] for cell 'decoder_top_inst/core_rx_inst/rs_decoder_64_inst/rs_decoder_0/delay_inst'
+Finished Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/delay_rs/delay_rs/delay_rs_in_context.xdc] for cell 'decoder_top_inst/core_rx_inst/rs_decoder_64_inst/rs_decoder_0/delay_inst'
+Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/cross_gth_logic/cross_gth_logic/cross_gth_logic_in_context.xdc] for cell 'decoder_top_inst/rx_gth_logic_inst/cross_inst'
+Finished Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/cross_gth_logic/cross_gth_logic/cross_gth_logic_in_context.xdc] for cell 'decoder_top_inst/rx_gth_logic_inst/cross_inst'
+Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/cross_logic_gth/cross_logic_gth/cross_logic_gth_in_context.xdc] for cell 'encoder_top_inst/x_logic_gth_inst/cross_inst'
+Finished Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/cross_logic_gth/cross_logic_gth/cross_logic_gth_in_context.xdc] for cell 'encoder_top_inst/x_logic_gth_inst/cross_inst'
+Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/delay_combiner/delay_combiner/delay_combiner_in_context.xdc] for cell 'encoder_top_inst/core_tx_inst/combiner_inst/delay_inst'
+Finished Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/delay_combiner/delay_combiner/delay_combiner_in_context.xdc] for cell 'encoder_top_inst/core_tx_inst/combiner_inst/delay_inst'
+Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/cross_gth_logic_load/cross_gth_logic_load/cross_gth_logic_load_in_context.xdc] for cell 'encoder_top_inst/x_gth_logic_inst/cross_load_inst'
+Finished Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/cross_gth_logic_load/cross_gth_logic_load/cross_gth_logic_load_in_context.xdc] for cell 'encoder_top_inst/x_gth_logic_inst/cross_load_inst'
+Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/cross_gth_logic_head/cross_gth_logic_head/cross_gth_logic_head_in_context.xdc] for cell 'encoder_top_inst/x_gth_logic_inst/cross_head_inst'
+Finished Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/cross_gth_logic_head/cross_gth_logic_head/cross_gth_logic_head_in_context.xdc] for cell 'encoder_top_inst/x_gth_logic_inst/cross_head_inst'
+Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/serdes_framer/serdes_framer/serdes_framer_in_context.xdc] for cell 'encoder_top_inst/framer_top_inst/framer_inst/serdes_inst'
+Finished Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/serdes_framer/serdes_framer/serdes_framer_in_context.xdc] for cell 'encoder_top_inst/framer_top_inst/framer_inst/serdes_inst'
+Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.gen/sources_1/ip/clk_wiz_0/clk_wiz_0/clk_wiz_0_in_context.xdc] for cell 'clk_wiz_0_inst'
+Finished Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.gen/sources_1/ip/clk_wiz_0/clk_wiz_0/clk_wiz_0_in_context.xdc] for cell 'clk_wiz_0_inst'
+Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.gen/sources_1/ip/gt/gt/gt_in_context.xdc] for cell 'gtx_exdes_m0/example_wrapper_inst/gt_inst'
+Finished Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.gen/sources_1/ip/gt/gt/gt_in_context.xdc] for cell 'gtx_exdes_m0/example_wrapper_inst/gt_inst'
+Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/imports/gt_example_top.xdc]
+Finished Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/imports/gt_example_top.xdc]
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/imports/gt_example_top.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/top_propImpl.xdc].
+Resolution: To avoid this warning, move constraints listed in [.Xil/top_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
+Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.runs/synth_1/dont_touch.xdc]
+Finished Parsing XDC File [/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.runs/synth_1/dont_touch.xdc]
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.01 . Memory (MB): peak = 2880.105 ; gain = 0.000 ; free physical = 558 ; free virtual = 108173
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 3 instances were transformed.
+  BUFG => BUFGCE: 1 instance 
+  IBUF => IBUF (IBUFCTRL, INBUF): 1 instance 
+  IBUFGDS => IBUFDS (DIFFINBUF, IBUFCTRL): 1 instance 
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:00.13 ; elapsed = 00:00:00.13 . Memory (MB): peak = 2880.141 ; gain = 0.000 ; free physical = 558 ; free virtual = 108173
+WARNING: [Timing 38-316] Clock period '10.000' specified during out-of-context synthesis of instance 'rx_reset_m0' at clock pin 'slowest_sync_clk' is different from the actual clock period '4.000', this can lead to different synthesis results.
+WARNING: [Timing 38-316] Clock period '10.000' specified during out-of-context synthesis of instance 'tx_reset_m0' at clock pin 'slowest_sync_clk' is different from the actual clock period '4.000', this can lead to different synthesis results.
+WARNING: [Timing 38-316] Clock period '10.000' specified during out-of-context synthesis of instance 'decoder_top_inst/assembler_top_inst/assembler_inst/serdes_inst' at clock pin 'clk' is different from the actual clock period '4.000', this can lead to different synthesis results.
+WARNING: [Timing 38-316] Clock period '10.000' specified during out-of-context synthesis of instance 'decoder_top_inst/core_rx_inst/rs_decoder_64_inst/rs_decoder_0/delay_inst' at clock pin 'clk' is different from the actual clock period '5.000', this can lead to different synthesis results.
+WARNING: [Timing 38-316] Clock period '10.000' specified during out-of-context synthesis of instance 'decoder_top_inst/core_rx_inst/rs_decoder_64_inst/rs_decoder_1/delay_inst' at clock pin 'clk' is different from the actual clock period '5.000', this can lead to different synthesis results.
+WARNING: [Timing 38-316] Clock period '10.000' specified during out-of-context synthesis of instance 'decoder_top_inst/core_rx_inst/rs_decoder_64_inst/rs_decoder_2/delay_inst' at clock pin 'clk' is different from the actual clock period '5.000', this can lead to different synthesis results.
+WARNING: [Timing 38-316] Clock period '10.000' specified during out-of-context synthesis of instance 'decoder_top_inst/core_rx_inst/rs_decoder_64_inst/rs_decoder_3/delay_inst' at clock pin 'clk' is different from the actual clock period '5.000', this can lead to different synthesis results.
+WARNING: [Timing 38-316] Clock period '10.000' specified during out-of-context synthesis of instance 'decoder_top_inst/core_rx_inst/rs_decoder_64_inst/rs_decoder_4/delay_inst' at clock pin 'clk' is different from the actual clock period '5.000', this can lead to different synthesis results.
+WARNING: [Timing 38-316] Clock period '10.000' specified during out-of-context synthesis of instance 'decoder_top_inst/core_rx_inst/rs_decoder_64_inst/rs_decoder_5/delay_inst' at clock pin 'clk' is different from the actual clock period '5.000', this can lead to different synthesis results.
+WARNING: [Timing 38-316] Clock period '10.000' specified during out-of-context synthesis of instance 'decoder_top_inst/core_rx_inst/rs_decoder_64_inst/rs_decoder_6/delay_inst' at clock pin 'clk' is different from the actual clock period '5.000', this can lead to different synthesis results.
+WARNING: [Timing 38-316] Clock period '10.000' specified during out-of-context synthesis of instance 'decoder_top_inst/core_rx_inst/rs_decoder_64_inst/rs_decoder_7/delay_inst' at clock pin 'clk' is different from the actual clock period '5.000', this can lead to different synthesis results.
+WARNING: [Timing 38-316] Clock period '10.000' specified during out-of-context synthesis of instance 'decoder_top_inst/core_rx_inst/rs_decoder_inst/delay_inst' at clock pin 'clk' is different from the actual clock period '5.000', this can lead to different synthesis results.
+WARNING: [Timing 38-316] Clock period '10.000' specified during out-of-context synthesis of instance 'encoder_top_inst/core_tx_inst/combiner_inst/delay_inst' at clock pin 'clk' is different from the actual clock period '5.000', this can lead to different synthesis results.
+WARNING: [Timing 38-316] Clock period '10.000' specified during out-of-context synthesis of instance 'encoder_top_inst/framer_top_inst/framer_inst/serdes_inst' at clock pin 'clk' is different from the actual clock period '4.000', this can lead to different synthesis results.
+WARNING: [Timing 38-316] Clock period '5.000' specified during out-of-context synthesis of instance 'encoder_top_inst/x_logic_gth_inst/cross_inst' at clock pin 'rd_clk' is different from the actual clock period '4.000', this can lead to different synthesis results.
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:10 ; elapsed = 00:00:09 . Memory (MB): peak = 2880.141 ; gain = 678.492 ; free physical = 590 ; free virtual = 108207
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xcku060-ffva1156-2-i
+INFO: [Synth 8-6742] Reading net delay rules and data
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:10 ; elapsed = 00:00:09 . Memory (MB): peak = 2888.109 ; gain = 686.461 ; free physical = 590 ; free virtual = 108207
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 2888.109 ; gain = 686.461 ; free physical = 591 ; free virtual = 108207
+---------------------------------------------------------------------------------
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'stream_input'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'framer'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'crc_16'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'crc_32'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'x_gth_logic'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'rs_encoder'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'rs_encoder__parameterized0'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'combiner'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'scrambler'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'x_logic_gth'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'rx_gth_logic'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'separator'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'syndrome_unit'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'euclid_proc'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'chien_search'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'forney_math'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'rs_decoder'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'rs_decoder__parameterized0'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'rs_decoder__parameterized0__xdcDup__7'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'rs_decoder__parameterized0__xdcDup__6'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'rs_decoder__parameterized0__xdcDup__5'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'rs_decoder__parameterized0__xdcDup__4'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'rs_decoder__parameterized0__xdcDup__3'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'rs_decoder__parameterized0__xdcDup__2'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'rs_decoder__parameterized0__xdcDup__1'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'rx_logic_gth'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'crc_16__parameterized0'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'crc_32__parameterized0'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'assembler'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'packet_send'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'packet_rec'
+INFO: [Synth 8-802] inferred FSM for state register 'sm_init_reg' in module 'gt_example_init'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                              001 |                              001
+                  ACTIVE |                              010 |                              010
+                     END |                              100 |                              100
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'stream_input'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                              001 |                              001
+                  ACTIVE |                              010 |                              010
+                     END |                              100 |                              100
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'framer'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                              001 |                              001
+                  ACTIVE |                              010 |                              010
+                     END |                              100 |                              100
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'crc_16'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                              001 |                              001
+                  ACTIVE |                              010 |                              010
+                     END |                              100 |                              100
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'crc_32'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                              001 |                              001
+                  ACTIVE |                              010 |                              010
+                     END |                              100 |                              100
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'x_gth_logic'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                             0001 |                             0001
+                  ACTIVE |                             0010 |                             0010
+                   FLUSH |                             0100 |                             0100
+                     END |                             1000 |                             1000
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'rs_encoder'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                             0001 |                             0001
+                  ACTIVE |                             0010 |                             0010
+                   FLUSH |                             0100 |                             0100
+                     END |                             1000 |                             1000
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'rs_encoder__parameterized0'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                             0001 |                             0001
+                   WRITE |                             0010 |                             0010
+                    READ |                             0100 |                             0100
+                     END |                             1000 |                             1000
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'combiner'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                              001 |                              001
+                  ACTIVE |                              010 |                              010
+                     END |                              100 |                              100
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'scrambler'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                              001 |                              001
+                  ACTIVE |                              010 |                              010
+                     END |                              100 |                              100
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'x_logic_gth'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                             0001 |                             0001
+                   WRITE |                             0010 |                             0010
+                    READ |                             0100 |                             0100
+                     END |                             1000 |                             1000
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'rx_gth_logic'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                              001 |                              001
+                  ACTIVE |                              010 |                              010
+                     END |                              100 |                              100
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'separator'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                              001 |                              001
+                  ACTIVE |                              010 |                              010
+                     END |                              100 |                              100
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'syndrome_unit'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                             0001 |                             0001
+                    INIT |                             0010 |                             0010
+                  ACTIVE |                             0100 |                             0100
+                     END |                             1000 |                             1000
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'euclid_proc'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                              001 |                              001
+                  ACTIVE |                              010 |                              010
+                     END |                              100 |                              100
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'chien_search'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                              001 |                              001
+                  ACTIVE |                              010 |                              010
+                     END |                              100 |                              100
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'forney_math'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                            00001 |                            00001
+                   WRITE |                            00010 |                            00010
+                    HOLD |                            00100 |                            00100
+                    READ |                            01000 |                            01000
+                     END |                            10000 |                            10000
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'rs_decoder'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                            00001 |                            00001
+                   WRITE |                            00010 |                            00010
+                    HOLD |                            00100 |                            00100
+                    READ |                            01000 |                            01000
+                     END |                            10000 |                            10000
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'rs_decoder__parameterized0'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                            00001 |                            00001
+                   WRITE |                            00010 |                            00010
+                    HOLD |                            00100 |                            00100
+                    READ |                            01000 |                            01000
+                     END |                            10000 |                            10000
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'rs_decoder__parameterized0__xdcDup__7'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                            00001 |                            00001
+                   WRITE |                            00010 |                            00010
+                    HOLD |                            00100 |                            00100
+                    READ |                            01000 |                            01000
+                     END |                            10000 |                            10000
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'rs_decoder__parameterized0__xdcDup__6'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                            00001 |                            00001
+                   WRITE |                            00010 |                            00010
+                    HOLD |                            00100 |                            00100
+                    READ |                            01000 |                            01000
+                     END |                            10000 |                            10000
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'rs_decoder__parameterized0__xdcDup__5'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                            00001 |                            00001
+                   WRITE |                            00010 |                            00010
+                    HOLD |                            00100 |                            00100
+                    READ |                            01000 |                            01000
+                     END |                            10000 |                            10000
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'rs_decoder__parameterized0__xdcDup__4'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                            00001 |                            00001
+                   WRITE |                            00010 |                            00010
+                    HOLD |                            00100 |                            00100
+                    READ |                            01000 |                            01000
+                     END |                            10000 |                            10000
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'rs_decoder__parameterized0__xdcDup__3'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                            00001 |                            00001
+                   WRITE |                            00010 |                            00010
+                    HOLD |                            00100 |                            00100
+                    READ |                            01000 |                            01000
+                     END |                            10000 |                            10000
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'rs_decoder__parameterized0__xdcDup__2'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                            00001 |                            00001
+                   WRITE |                            00010 |                            00010
+                    HOLD |                            00100 |                            00100
+                    READ |                            01000 |                            01000
+                     END |                            10000 |                            10000
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'rs_decoder__parameterized0__xdcDup__1'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                              001 |                              001
+                  ACTIVE |                              010 |                              010
+                     END |                              100 |                              100
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'rx_logic_gth'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                              001 |                              001
+                  ACTIVE |                              010 |                              010
+                     END |                              100 |                              100
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'crc_16__parameterized0'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                              001 |                              001
+                  ACTIVE |                              010 |                              010
+                     END |                              100 |                              100
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'crc_32__parameterized0'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                             0001 |                             0001
+                   CHECK |                             0010 |                             0010
+                  ACTIVE |                             0100 |                             0100
+                     END |                             1000 |                             1000
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'assembler'
+INFO: [Synth 8-6159] Found Keep on FSM register 'state_reg' in module 'packet_send', re-encoding will not be performed
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+*
+                    IDLE |                             0000 |                             0000
+         SEND_CORRECTION |                             0010 |                             0010
+              SEND_DUMMY |                             0011 |                             0011
+             SEND_HEADER |                             0100 |                             0100
+            SEND_SEQ_NUM |                             0101 |                             0101
+               SEND_CTRL |                             0110 |                             0110
+               SEND_DATA |                             0111 |                             0111
+           SEND_DATA_END |                             1001 |                             1001
+              SEND_CHECK |                             1000 |                             1000
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                              000 |                              000
+             WAIT_HEADER |                              001 |                              001
+                 SEQ_NUM |                              010 |                              011
+                    CTRL |                              011 |                              100
+                    DATA |                              100 |                              101
+                   CHECK |                              101 |                              110
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'sequential' in module 'packet_rec'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                ST_START |                               00 |                               00
+              ST_TX_WAIT |                               01 |                               01
+              ST_RX_WAIT |                               10 |                               10
+              ST_MONITOR |                               11 |                               11
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'sm_init_reg' using encoding 'sequential' in module 'gt_example_init'
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 2888.109 ; gain = 686.461 ; free physical = 568 ; free virtual = 108192
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input   32 Bit       Adders := 3     
+	   2 Input   16 Bit       Adders := 36    
+	   2 Input   14 Bit       Adders := 3     
+	   2 Input   11 Bit       Adders := 1     
+	   2 Input    9 Bit       Adders := 1008  
+	   2 Input    8 Bit       Adders := 57    
+	   3 Input    8 Bit       Adders := 18    
+	   2 Input    7 Bit       Adders := 1     
+	   2 Input    6 Bit       Adders := 1     
+	   2 Input    5 Bit       Adders := 1     
+	   2 Input    4 Bit       Adders := 1     
+	   2 Input    3 Bit       Adders := 9     
++---XORs : 
+	   2 Input     64 Bit         XORs := 2     
+	   2 Input     32 Bit         XORs := 1     
+	   2 Input      8 Bit         XORs := 846   
+	   9 Input      8 Bit         XORs := 9     
+	   4 Input      8 Bit         XORs := 9     
+	   8 Input      8 Bit         XORs := 9     
+	   2 Input      1 Bit         XORs := 4340  
+	   3 Input      1 Bit         XORs := 42    
+	   4 Input      1 Bit         XORs := 86    
+	   5 Input      1 Bit         XORs := 8     
+	  12 Input      1 Bit         XORs := 12    
+	  16 Input      1 Bit         XORs := 8     
+	  15 Input      1 Bit         XORs := 10    
+	  28 Input      1 Bit         XORs := 2     
+	  22 Input      1 Bit         XORs := 2     
+	  18 Input      1 Bit         XORs := 8     
+	  14 Input      1 Bit         XORs := 6     
+	  20 Input      1 Bit         XORs := 2     
+	  19 Input      1 Bit         XORs := 4     
+	  13 Input      1 Bit         XORs := 2     
+	   8 Input      1 Bit         XORs := 10    
+	  17 Input      1 Bit         XORs := 4     
+	  21 Input      1 Bit         XORs := 2     
+	  10 Input      1 Bit         XORs := 2     
+	   7 Input      1 Bit         XORs := 8     
+	   6 Input      1 Bit         XORs := 8     
++---Registers : 
+	              256 Bit    Registers := 2     
+	              192 Bit    Registers := 1     
+	              128 Bit    Registers := 9     
+	              112 Bit    Registers := 3     
+	               72 Bit    Registers := 9     
+	               65 Bit    Registers := 2     
+	               64 Bit    Registers := 16    
+	               32 Bit    Registers := 21    
+	               24 Bit    Registers := 4     
+	               16 Bit    Registers := 50    
+	               14 Bit    Registers := 4     
+	                8 Bit    Registers := 1459  
+	                7 Bit    Registers := 1     
+	                4 Bit    Registers := 7     
+	                1 Bit    Registers := 261   
++---Muxes : 
+	   2 Input   96 Bit        Muxes := 1     
+	   2 Input   72 Bit        Muxes := 9     
+	   2 Input   65 Bit        Muxes := 2     
+	   2 Input   64 Bit        Muxes := 19    
+	   2 Input   32 Bit        Muxes := 18    
+	  49 Input   32 Bit        Muxes := 1     
+	   3 Input   32 Bit        Muxes := 2     
+	  10 Input   32 Bit        Muxes := 1     
+	   6 Input   32 Bit        Muxes := 1     
+	   2 Input   16 Bit        Muxes := 34    
+	  10 Input   16 Bit        Muxes := 1     
+	   6 Input   16 Bit        Muxes := 1     
+	   2 Input   14 Bit        Muxes := 2     
+	   2 Input   11 Bit        Muxes := 1     
+	   2 Input    8 Bit        Muxes := 2594  
+	   3 Input    7 Bit        Muxes := 1     
+	   5 Input    5 Bit        Muxes := 9     
+	   2 Input    5 Bit        Muxes := 36    
+	   4 Input    4 Bit        Muxes := 21    
+	   2 Input    4 Bit        Muxes := 58    
+	  10 Input    4 Bit        Muxes := 2     
+	   3 Input    4 Bit        Muxes := 1     
+	   3 Input    3 Bit        Muxes := 39    
+	   2 Input    3 Bit        Muxes := 98    
+	   6 Input    3 Bit        Muxes := 1     
+	   4 Input    2 Bit        Muxes := 1     
+	   2 Input    2 Bit        Muxes := 4     
+	   2 Input    1 Bit        Muxes := 120   
+	   3 Input    1 Bit        Muxes := 54    
+	   5 Input    1 Bit        Muxes := 36    
+	   4 Input    1 Bit        Muxes := 11    
+	  10 Input    1 Bit        Muxes := 6     
+	   6 Input    1 Bit        Muxes := 5     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 2760 (col length:120)
+BRAMs: 2160 (col length: RAMB18 120 RAMB36 60)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-3917] design top has port tx_disable[1] driven by constant 0
+WARNING: [Synth 8-3917] design top has port tx_disable[0] driven by constant 0
+WARNING: [Synth 8-3917] design top has port fan driven by constant 0
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:02:28 ; elapsed = 00:02:29 . Memory (MB): peak = 3615.227 ; gain = 1413.578 ; free physical = 540 ; free virtual = 107411
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+ROM: Preliminary Mapping Report
++-------------+---------------+---------------+----------------+
+|Module Name  | RTL Object    | Depth x Width | Implemented As | 
++-------------+---------------+---------------+----------------+
+|stream_input | sample        | 256x32        | LUT            | 
+|multiplier   | alpha_value   | 256x8         | LUT            | 
+|multiplier   | alpha_value   | 256x8         | LUT            | 
+|multiplier   | decimal_value | 256x8         | LUT            | 
+|inverter     | alpha_value   | 256x8         | LUT            | 
+|inverter     | decimal_value | 256x8         | LUT            | 
+|rs_encoder   | p_0_out       | 256x8         | LUT            | 
+|rs_encoder   | p_0_out       | 256x8         | LUT            | 
+|rs_encoder   | p_0_out       | 256x8         | LUT            | 
+|rs_encoder   | p_0_out       | 256x8         | LUT            | 
+|rs_encoder   | p_0_out       | 256x8         | LUT            | 
+|rs_encoder   | p_0_out       | 256x8         | LUT            | 
+|rs_encoder   | p_0_out       | 256x8         | LUT            | 
+|rs_encoder   | p_0_out       | 256x8         | LUT            | 
+|rs_encoder   | p_0_out       | 256x8         | LUT            | 
+|rs_encoder   | p_0_out       | 256x8         | LUT            | 
+|rs_encoder   | p_0_out       | 256x8         | LUT            | 
+|rs_encoder   | p_0_out       | 256x8         | LUT            | 
+|rs_encoder   | p_0_out       | 256x8         | LUT            | 
+|rs_encoder   | p_0_out       | 256x8         | LUT            | 
+|rs_encoder   | p_0_out       | 256x8         | LUT            | 
+|rs_encoder   | p_0_out       | 256x8         | LUT            | 
+|rs_encoder   | p_0_out       | 256x8         | LUT            | 
+|rs_encoder   | p_0_out       | 256x8         | LUT            | 
+|rs_encoder   | p_0_out       | 256x8         | LUT            | 
+|rs_encoder   | p_0_out       | 256x8         | LUT            | 
+|rs_encoder   | p_0_out       | 256x8         | LUT            | 
+|rs_encoder   | p_0_out       | 256x8         | LUT            | 
+|rs_encoder   | p_0_out       | 256x8         | LUT            | 
+|rs_encoder   | p_0_out       | 256x8         | LUT            | 
+|rs_encoder   | p_0_out       | 256x8         | LUT            | 
+|rs_encoder   | p_0_out       | 256x8         | LUT            | 
+|rs_encoder   | p_0_out       | 256x8         | LUT            | 
+|rs_encoder   | p_0_out       | 256x8         | LUT            | 
+|rs_encoder   | p_0_out       | 256x8         | LUT            | 
+|rs_encoder   | p_0_out       | 256x8         | LUT            | 
+|rs_encoder   | p_0_out       | 256x8         | LUT            | 
+|rs_encoder   | p_0_out       | 256x8         | LUT            | 
+|rs_encoder   | p_0_out       | 256x8         | LUT            | 
+|rs_encoder   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|inverter     | p_0_out       | 256x8         | LUT            | 
+|inverter     | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|inverter     | p_0_out       | 256x8         | LUT            | 
+|inverter     | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|multiplier   | p_0_out       | 256x8         | LUT            | 
+|stream_input | p_0_out       | 256x32        | LUT            | 
++-------------+---------------+---------------+----------------+
+
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:02:30 ; elapsed = 00:02:31 . Memory (MB): peak = 3625.867 ; gain = 1424.219 ; free physical = 666 ; free virtual = 107538
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:02:32 ; elapsed = 00:02:33 . Memory (MB): peak = 3625.867 ; gain = 1424.219 ; free physical = 676 ; free virtual = 107546
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:02:43 ; elapsed = 00:02:44 . Memory (MB): peak = 3625.867 ; gain = 1424.219 ; free physical = 715 ; free virtual = 107580
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+CRITICAL WARNING: [Synth 8-4442] BlackBox module clk_wiz_0_inst has unconnected pin reset
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:02:47 ; elapsed = 00:02:48 . Memory (MB): peak = 3625.867 ; gain = 1424.219 ; free physical = 729 ; free virtual = 107598
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:02:47 ; elapsed = 00:02:48 . Memory (MB): peak = 3625.867 ; gain = 1424.219 ; free physical = 716 ; free virtual = 107591
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:02:53 ; elapsed = 00:02:54 . Memory (MB): peak = 3625.867 ; gain = 1424.219 ; free physical = 434 ; free virtual = 107347
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:02:54 ; elapsed = 00:02:55 . Memory (MB): peak = 3625.867 ; gain = 1424.219 ; free physical = 455 ; free virtual = 107366
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:02:55 ; elapsed = 00:02:56 . Memory (MB): peak = 3625.867 ; gain = 1424.219 ; free physical = 473 ; free virtual = 107383
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:02:55 ; elapsed = 00:02:56 . Memory (MB): peak = 3625.867 ; gain = 1424.219 ; free physical = 473 ; free virtual = 107383
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+Static Shift Register Report:
++--------------+---------------------------------+--------+-------+--------------+--------------------+-------------------+--------+---------+
+|Module Name   | RTL Name                        | Length | Width | Reset Signal | Pull out first Reg | Pull out last Reg | SRL16E | SRLC32E | 
++--------------+---------------------------------+--------+-------+--------------+--------------------+-------------------+--------+---------+
+|assembler_top | assembler_inst/load_out_reg[31] | 3      | 16    | NO           | NO                 | YES               | 16     | 0       | 
+|packet_send   | temp_reg[191]                   | 6      | 32    | YES          | NO                 | YES               | 32     | 0       | 
++--------------+---------------------------------+--------+-------+--------------+--------------------+-------------------+--------+---------+
+
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++------+---------------------+----------+
+|      |BlackBox name        |Instances |
++------+---------------------+----------+
+|1     |delay_combiner       |         1|
+|2     |serdes_framer        |         1|
+|3     |cross_gth_logic_head |         1|
+|4     |cross_gth_logic_load |         1|
+|5     |cross_logic_gth      |         1|
+|6     |delay_rs             |         9|
+|7     |cross_gth_logic      |         1|
+|8     |cross_logic_gth_head |         1|
+|9     |cross_logic_gth_load |         1|
+|10    |serdes_assembler     |         1|
+|11    |gt_vio_0             |         1|
+|12    |gt                   |         1|
+|13    |clk_wiz_0            |         1|
+|14    |reset_0              |         2|
++------+---------------------+----------+
+
+Report Cell Usage: 
++------+---------------------+------+
+|      |Cell                 |Count |
++------+---------------------+------+
+|1     |clk_wiz              |     1|
+|2     |cross_gth_logic      |     1|
+|3     |cross_gth_logic_head |     1|
+|4     |cross_gth_logic_load |     1|
+|5     |cross_logic_gth      |     1|
+|6     |cross_logic_gth_head |     1|
+|7     |cross_logic_gth_load |     1|
+|8     |delay_combiner       |     1|
+|9     |delay_rs             |     9|
+|18    |gt                   |     1|
+|19    |gt_vio               |     1|
+|20    |reset                |     1|
+|21    |reset_0              |     1|
+|22    |serdes_assembler     |     1|
+|23    |serdes_framer        |     1|
+|24    |BUFG                 |     1|
+|25    |BUFG_GT              |     2|
+|26    |CARRY8               |  1761|
+|27    |IBUFDS_GTE3          |     1|
+|28    |LUT1                 |   107|
+|29    |LUT2                 |  7875|
+|30    |LUT3                 |  6951|
+|31    |LUT4                 |  5719|
+|32    |LUT5                 | 18289|
+|33    |LUT6                 | 81110|
+|34    |MUXF7                | 19564|
+|35    |MUXF8                |  6204|
+|36    |SRL16E               |    48|
+|37    |FDCE                 |   323|
+|38    |FDPE                 |    42|
+|39    |FDRE                 | 16328|
+|40    |FDSE                 |     2|
+|41    |IBUF                 |     1|
+|42    |IBUFGDS              |     1|
+|43    |OBUF                 |     3|
++------+---------------------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:02:55 ; elapsed = 00:02:56 . Memory (MB): peak = 3625.867 ; gain = 1424.219 ; free physical = 472 ; free virtual = 107372
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 1 critical warnings and 3 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:02:52 ; elapsed = 00:02:53 . Memory (MB): peak = 3625.867 ; gain = 1331.352 ; free physical = 473 ; free virtual = 107373
+Synthesis Optimization Complete : Time (s): cpu = 00:02:55 ; elapsed = 00:02:56 . Memory (MB): peak = 3625.867 ; gain = 1424.219 ; free physical = 473 ; free virtual = 107373
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00.56 ; elapsed = 00:00:00.56 . Memory (MB): peak = 3625.867 ; gain = 0.000 ; free physical = 665 ; free virtual = 107567
+INFO: [Netlist 29-17] Analyzing 27532 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+WARNING: [Opt 31-32] Removing redundant IBUF since it is not being driven by a top-level port. gtx_exdes_m0/ibuf_hb_gtwiz_reset_all_inst 
+Resolution: The tool has removed redundant IBUF. To resolve this warning, check for redundant IBUF in the input design.
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00.02 ; elapsed = 00:00:00.02 . Memory (MB): peak = 3671.254 ; gain = 0.000 ; free physical = 697 ; free virtual = 107595
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 2 instances were transformed.
+  BUFG => BUFGCE: 1 instance 
+  IBUFGDS => IBUFDS (DIFFINBUF, IBUFCTRL): 1 instance 
+
+Synth Design complete | Checksum: bd4051ce
+INFO: [Common 17-83] Releasing license: Synthesis
+255 Infos, 154 Warnings, 1 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+INFO: [Common 17-600] The following parameters have non-default value.
+tcl.statsThreshold
+INFO: [runtcl-6] Synthesis results are not added to the cache due to CRITICAL_WARNING
+Write ShapeDB Complete: Time (s): cpu = 00:00:00.41 ; elapsed = 00:00:00.14 . Memory (MB): peak = 3695.266 ; gain = 0.000 ; free physical = 571 ; free virtual = 107514
+INFO: [Common 17-1381] The checkpoint '/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.runs/synth_1/top.dcp' has been generated.
+INFO: [Vivado 12-24828] Executing command : report_utilization -file top_utilization_synth.rpt -pb top_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Tue Aug 11 23:56:32 2026...

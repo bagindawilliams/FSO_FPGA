@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2017.4 (64-bit)
+# SW Build 2086221 on Fri Dec 15 20:55:39 MST 2017
+# IP Build 2085800 on Fri Dec 15 22:25:07 MST 2017
+# Start of session at: Tue Jun  7 15:36:06 2022
+# Process ID: 31524
+# Current directory: E:/ax/ku042/12_ethernet_test/12_ethernet_test.runs/synth_1
+# Command line: vivado.exe -log top.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source top.tcl
+# Log file: E:/ax/ku042/12_ethernet_test/12_ethernet_test.runs/synth_1/top.vds
+# Journal file: E:/ax/ku042/12_ethernet_test/12_ethernet_test.runs/synth_1\vivado.jou
+#-----------------------------------------------------------
+source top.tcl -notrace

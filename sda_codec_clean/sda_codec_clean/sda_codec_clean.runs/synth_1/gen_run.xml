@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenRun Id="synth_1" LaunchPart="xcku060-ffva1156-2-i" LaunchTime="1786002712">
+  <File Type="VDS-TIMINGSUMMARY" Name="top_timing_summary_synth.rpt"/>
+  <File Type="RDS-DCP" Name="top.dcp"/>
+  <File Type="RDS-UTIL-PB" Name="top_utilization_synth.pb"/>
+  <File Type="RDS-UTIL" Name="top_utilization_synth.rpt"/>
+  <File Type="VDS-TIMING-PB" Name="top_timing_summary_synth.pb"/>
+  <File Type="PA-TCL" Name="top.tcl"/>
+  <File Type="REPORTS-TCL" Name="top_reports.tcl"/>
+  <File Type="RDS-RDS" Name="top.vds"/>
+  <File Type="RDS-PROPCONSTRS" Name="top_drc_synth.rpt"/>
+  <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1" RelGenDir="$PGENDIR/sources_1">
+    <Filter Type="Srcs"/>
+    <File Path="$PSRCDIR/sources_1/imports/Source core file/decoder/assembler.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Source core file/decoder/assembler.v"/>
+        <Attr Name="ImportTime" Val="1784714186"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/Source core file/decoder/assembler_top.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Source core file/decoder/assembler_top.v"/>
+        <Attr Name="ImportTime" Val="1784714186"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/Source core file/autorun.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Source core file/autorun.v"/>
+        <Attr Name="ImportTime" Val="1784714186"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/Source core file/rs_codec/chien_search.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Source core file/rs_codec/chien_search.v"/>
+        <Attr Name="ImportTime" Val="1784714186"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/Source core file/encoder/combiner.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Source core file/encoder/combiner.v"/>
+        <Attr Name="ImportTime" Val="1784714186"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/Source core file/decoder/core_rx.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Source core file/decoder/core_rx.v"/>
+        <Attr Name="ImportTime" Val="1784714186"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/Source core file/encoder/core_tx.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Source core file/encoder/core_tx.v"/>
+        <Attr Name="ImportTime" Val="1784714186"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/Source core file/encoder/crc_16.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Source core file/encoder/crc_16.v"/>
+        <Attr Name="ImportTime" Val="1784714186"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/Source core file/encoder/crc_32.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Source core file/encoder/crc_32.v"/>
+        <Attr Name="ImportTime" Val="1784714186"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/Source core file/decoder/decoder_top.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Source core file/decoder/decoder_top.v"/>
+        <Attr Name="ImportTime" Val="1784714186"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/Source core file/encoder/encoder_top.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Source core file/encoder/encoder_top.v"/>
+        <Attr Name="ImportTime" Val="1784714186"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/Source core file/error_inject.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Source core file/error_inject.v"/>
+        <Attr Name="ImportTime" Val="1784714186"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/Source core file/rs_codec/euclid_proc.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Source core file/rs_codec/euclid_proc.v"/>
+        <Attr Name="ImportTime" Val="1784714186"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/Source core file/rs_codec/forney_math.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Source core file/rs_codec/forney_math.v"/>
+        <Attr Name="ImportTime" Val="1784714186"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/Source core file/encoder/framer.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Source core file/encoder/framer.v"/>
+        <Attr Name="ImportTime" Val="1784714186"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/Source core file/encoder/framer_top.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Source core file/encoder/framer_top.v"/>
+        <Attr Name="ImportTime" Val="1784714186"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/Source core file/rs_codec/inverter.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Source core file/rs_codec/inverter.v"/>
+        <Attr Name="ImportTime" Val="1784714186"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/Source core file/encoder/lpc.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Source core file/encoder/lpc.v"/>
+        <Attr Name="ImportTime" Val="1784714186"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/Source core file/decoder/lpc_dec.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Source core file/decoder/lpc_dec.v"/>
+        <Attr Name="ImportTime" Val="1784714186"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/Source core file/decoder/lpc_dec_top.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Source core file/decoder/lpc_dec_top.v"/>
+        <Attr Name="ImportTime" Val="1784714186"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/Source core file/encoder/lpc_top.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Source core file/encoder/lpc_top.v"/>
+        <Attr Name="ImportTime" Val="1784714186"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/Source core file/rs_codec/multiplier.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Source core file/rs_codec/multiplier.v"/>
+        <Attr Name="ImportTime" Val="1784714186"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/Source core file/rs_codec/rs_decoder.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Source core file/rs_codec/rs_decoder.v"/>
+        <Attr Name="ImportTime" Val="1784714186"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/Source core file/decoder/rs_decoder_64.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Source core file/decoder/rs_decoder_64.v"/>
+        <Attr Name="ImportTime" Val="1784714186"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/Source core file/rs_codec/rs_encoder.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Source core file/rs_codec/rs_encoder.v"/>
+        <Attr Name="ImportTime" Val="1784714186"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/Source core file/encoder/rs_encoder_64.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Source core file/encoder/rs_encoder_64.v"/>
+        <Attr Name="ImportTime" Val="1784714186"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/Source core file/decoder/rx_gth_logic.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Source core file/decoder/rx_gth_logic.v"/>
+        <Attr Name="ImportTime" Val="1784714186"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/Source core file/decoder/rx_logic_gth.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Source core file/decoder/rx_logic_gth.v"/>
+        <Attr Name="ImportTime" Val="1784714186"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/Source core file/encoder/scrambler.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Source core file/encoder/scrambler.v"/>
+        <Attr Name="ImportTime" Val="1784714186"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/Source core file/decoder/separator.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Source core file/decoder/separator.v"/>
+        <Attr Name="ImportTime" Val="1784714186"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/Source core file/stream_input.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Source core file/stream_input.v"/>
+        <Attr Name="ImportTime" Val="1784714186"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/Source core file/rs_codec/syndrome_unit.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Source core file/rs_codec/syndrome_unit.v"/>
+        <Attr Name="ImportTime" Val="1784714186"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/Source core file/encoder/x_gth_logic.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Source core file/encoder/x_gth_logic.v"/>
+        <Attr Name="ImportTime" Val="1784714186"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/Source core file/encoder/x_logic_gth.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Source core file/encoder/x_logic_gth.v"/>
+        <Attr Name="ImportTime" Val="1784714186"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/Source core file/top.v">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Source core file/top.v"/>
+        <Attr Name="ImportTime" Val="1784714186"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <Config>
+      <Option Name="DesignMode" Val="RTL"/>
+      <Option Name="TopModule" Val="top"/>
+      <Option Name="TopAutoSet" Val="TRUE"/>
+    </Config>
+  </FileSet>
+  <FileSet Name="constrs_in" Type="Constrs" RelSrcDir="$PSRCDIR/constrs_1">
+    <Filter Type="Constrs"/>
+    <File Path="$PSRCDIR/constrs_1/imports/File xdc/sda_top.xdc">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../File xdc/sda_top.xdc"/>
+        <Attr Name="ImportTime" Val="1785821350"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+      </FileInfo>
+    </File>
+    <Config>
+      <Option Name="TargetConstrsFile" Val="$PSRCDIR/constrs_1/imports/File xdc/sda_top.xdc"/>
+      <Option Name="ConstrsType" Val="XDC"/>
+    </Config>
+  </FileSet>
+  <FileSet Name="utils" Type="Utils" RelSrcDir="$PSRCDIR/utils_1">
+    <Filter Type="Utils"/>
+    <Config>
+      <Option Name="TopAutoSet" Val="TRUE"/>
+    </Config>
+  </FileSet>
+  <Strategy Version="1" Minor="2">
+    <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2022">
+      <Desc>Vivado Synthesis Defaults</Desc>
+    </StratHandle>
+    <Step Id="synth_design"/>
+  </Strategy>
+  <BlockFileSet Type="BlockSrcs" Name="serdes_framer"/>
+  <BlockFileSet Type="BlockSrcs" Name="serdes_assembler"/>
+  <BlockFileSet Type="BlockSrcs" Name="delay_rs"/>
+  <BlockFileSet Type="BlockSrcs" Name="delay_combiner"/>
+  <BlockFileSet Type="BlockSrcs" Name="cross_logic_gth_load"/>
+  <BlockFileSet Type="BlockSrcs" Name="cross_logic_gth_head"/>
+  <BlockFileSet Type="BlockSrcs" Name="cross_logic_gth"/>
+  <BlockFileSet Type="BlockSrcs" Name="cross_gth_logic_head"/>
+  <BlockFileSet Type="BlockSrcs" Name="cross_gth_logic"/>
+  <BlockFileSet Type="BlockSrcs" Name="clk_wiz_1"/>
+  <BlockFileSet Type="BlockSrcs" Name="cross_gth_logic_load"/>
+  <BlockFileSet Type="BlockSrcs" Name="clk_wiz_0"/>
+</GenRun>

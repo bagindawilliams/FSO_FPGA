@@ -1,0 +1,5 @@
+0.7
+2020.2
+Oct 14 2022
+05:07:14
+/home/williams/MYFPGA/FPGA Final/rs_codec_clean/rs_codec_clean/rs_codec_clean.sim/sim_1/synth/timing/xsim/top_time_synth.v,1786022421,verilog,,,,IBUFDS_UNIQ_BASE_;autorun;bram_rs;bram_rs_blk_mem_gen_generic_cstr;bram_rs_blk_mem_gen_prim_width;bram_rs_blk_mem_gen_prim_wrapper;bram_rs_blk_mem_gen_top;bram_rs_blk_mem_gen_v8_4_5;bram_rs_blk_mem_gen_v8_4_5_synth;chien_search;clk_wiz_0;clk_wiz_0_clk_wiz;dbg_hub_CV;error_inject;euclid_proc;forney_math;glbl;inverter;inverter_0;rs_decoder;rs_encoder;stream_input;syndrome_unit;top;u_ila_0_CV,,,../../../../../rs_codec_clean.gen/sources_1/ip/clk_wiz_0,,,,,

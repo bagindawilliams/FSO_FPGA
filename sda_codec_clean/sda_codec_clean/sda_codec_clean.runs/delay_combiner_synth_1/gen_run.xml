@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenRun Id="delay_combiner_synth_1" LaunchPart="xcku060-ffva1156-2-i" LaunchTime="1786001906">
+  <File Type="VDS-TIMINGSUMMARY" Name="delay_combiner_timing_summary_synth.rpt"/>
+  <File Type="RDS-DCP" Name="delay_combiner.dcp"/>
+  <File Type="RDS-UTIL-PB" Name="delay_combiner_utilization_synth.pb"/>
+  <File Type="RDS-UTIL" Name="delay_combiner_utilization_synth.rpt"/>
+  <File Type="VDS-TIMING-PB" Name="delay_combiner_timing_summary_synth.pb"/>
+  <File Type="PA-TCL" Name="delay_combiner.tcl"/>
+  <File Type="REPORTS-TCL" Name="delay_combiner_reports.tcl"/>
+  <File Type="RDS-RDS" Name="delay_combiner.vds"/>
+  <File Type="RDS-PROPCONSTRS" Name="delay_combiner_drc_synth.rpt"/>
+  <FileSet Name="sources" Type="BlockSrcs" RelSrcDir="$PSRCDIR/delay_combiner">
+    <File Path="$PSRCDIR/sources_1/ip/delay_combiner/delay_combiner.xci">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../File xci/delay_combiner.xci"/>
+        <Attr Name="ImportTime" Val="1785818116"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <Config>
+      <Option Name="TopModule" Val="delay_combiner"/>
+      <Option Name="UseBlackboxStub" Val="1"/>
+    </Config>
+  </FileSet>
+  <FileSet Name="constrs_in" Type="BlockSrcs" RelSrcDir="$PSRCDIR/delay_combiner">
+    <File Path="$PSRCDIR/sources_1/ip/delay_combiner/delay_combiner.xci">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../File xci/delay_combiner.xci"/>
+        <Attr Name="ImportTime" Val="1785818116"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <Config>
+      <Option Name="TopModule" Val="delay_combiner"/>
+      <Option Name="UseBlackboxStub" Val="1"/>
+    </Config>
+  </FileSet>
+  <FileSet Name="utils" Type="Utils" RelSrcDir="$PSRCDIR/utils_1">
+    <Filter Type="Utils"/>
+    <Config>
+      <Option Name="TopAutoSet" Val="TRUE"/>
+    </Config>
+  </FileSet>
+  <Strategy Version="1" Minor="2">
+    <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2022">
+      <Desc>Vivado Synthesis Defaults</Desc>
+    </StratHandle>
+    <Step Id="synth_design"/>
+  </Strategy>
+</GenRun>

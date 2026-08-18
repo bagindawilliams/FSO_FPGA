@@ -1,0 +1,289 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (lin64) Build 6299465 Fri Nov 14 12:34:56 MST 2025
+| Date         : Fri Apr 17 22:24:29 2026
+| Host         : yrzal-linux running 64-bit Ubuntu 22.04.5 LTS
+| Command      : upgrade_ip
+| Device       : xcku060-ffva1156-2-i
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'clk_wiz_0'
+
+1. Summary
+----------
+
+SUCCESS in the upgrade of clk_wiz_0 from xilinx.com:ip:clk_wiz:5.4 (Rev. 3) to xilinx.com:ip:clk_wiz:6.0 (Rev. 17)
+
+
+
+
+
+
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (lin64) Build 6299465 Fri Nov 14 12:34:56 MST 2025
+| Date         : Fri Apr 17 22:23:42 2026
+| Host         : yrzal-linux running 64-bit Ubuntu 22.04.5 LTS
+| Command      : upgrade_ip
+| Device       : xcku060-ffva1156-2-i
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'udp_tx_data_fifo'
+
+1. Summary
+----------
+
+SUCCESS in the upgrade of udp_tx_data_fifo (xilinx.com:ip:fifo_generator:13.2) from (Rev. 1) to (Rev. 14)
+
+
+
+
+
+
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (lin64) Build 6299465 Fri Nov 14 12:34:56 MST 2025
+| Date         : Fri Apr 17 22:23:42 2026
+| Host         : yrzal-linux running 64-bit Ubuntu 22.04.5 LTS
+| Command      : upgrade_ip
+| Device       : xcku060-ffva1156-2-i
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'udp_rx_ram_8_2048'
+
+1. Summary
+----------
+
+SUCCESS in the upgrade of udp_rx_ram_8_2048 (xilinx.com:ip:blk_mem_gen:8.4) from (Rev. 1) to (Rev. 12)
+
+
+
+
+
+
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (lin64) Build 6299465 Fri Nov 14 12:34:56 MST 2025
+| Date         : Fri Apr 17 22:23:41 2026
+| Host         : yrzal-linux running 64-bit Ubuntu 22.04.5 LTS
+| Command      : upgrade_ip
+| Device       : xcku060-ffva1156-2-i
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'udp_checksum_fifo'
+
+1. Summary
+----------
+
+SUCCESS in the upgrade of udp_checksum_fifo (xilinx.com:ip:fifo_generator:13.2) from (Rev. 1) to (Rev. 14)
+
+
+
+
+
+
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (lin64) Build 6299465 Fri Nov 14 12:34:56 MST 2025
+| Date         : Fri Apr 17 22:23:41 2026
+| Host         : yrzal-linux running 64-bit Ubuntu 22.04.5 LTS
+| Command      : upgrade_ip
+| Device       : xcku060-ffva1156-2-i
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'len_fifo'
+
+1. Summary
+----------
+
+SUCCESS in the upgrade of len_fifo (xilinx.com:ip:fifo_generator:13.2) from (Rev. 1) to (Rev. 14)
+
+
+
+
+
+
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (lin64) Build 6299465 Fri Nov 14 12:34:56 MST 2025
+| Date         : Fri Apr 17 22:23:41 2026
+| Host         : yrzal-linux running 64-bit Ubuntu 22.04.5 LTS
+| Command      : upgrade_ip
+| Device       : xcku060-ffva1156-2-i
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'icmp_rx_ram_8_256'
+
+1. Summary
+----------
+
+SUCCESS in the upgrade of icmp_rx_ram_8_256 (xilinx.com:ip:blk_mem_gen:8.4) from (Rev. 1) to (Rev. 12)
+
+
+
+
+
+
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (lin64) Build 6299465 Fri Nov 14 12:34:56 MST 2025
+| Date         : Fri Apr 17 22:23:40 2026
+| Host         : yrzal-linux running 64-bit Ubuntu 22.04.5 LTS
+| Command      : upgrade_ip
+| Device       : xcku060-ffva1156-2-i
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'eth_data_fifo'
+
+1. Summary
+----------
+
+SUCCESS in the upgrade of eth_data_fifo (xilinx.com:ip:fifo_generator:13.2) from (Rev. 1) to (Rev. 14)
+
+
+
+
+
+
+Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2017.4 (win64) Build 2086221 Fri Dec 15 20:55:39 MST 2017
+| Date         : Wed Jul  6 14:59:14 2022
+| Host         : DESKTOP-C3F5G4E running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xcku060-ffva1156-2-i
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'udp_tx_data_fifo'
+
+1. Summary
+----------
+
+SUCCESS in the conversion of udp_tx_data_fifo (xilinx.com:ip:fifo_generator:13.2 (Rev. 1)) to Vivado generation flows.
+
+
+
+
+
+
+Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2017.4 (win64) Build 2086221 Fri Dec 15 20:55:39 MST 2017
+| Date         : Wed Jul  6 14:59:13 2022
+| Host         : DESKTOP-C3F5G4E running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xcku060-ffva1156-2-i
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'udp_rx_ram_8_2048'
+
+1. Summary
+----------
+
+SUCCESS in the conversion of udp_rx_ram_8_2048 (xilinx.com:ip:blk_mem_gen:8.4 (Rev. 1)) to Vivado generation flows.
+
+
+
+
+
+
+Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2017.4 (win64) Build 2086221 Fri Dec 15 20:55:39 MST 2017
+| Date         : Wed Jul  6 14:59:12 2022
+| Host         : DESKTOP-C3F5G4E running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xcku060-ffva1156-2-i
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'udp_checksum_fifo'
+
+1. Summary
+----------
+
+SUCCESS in the conversion of udp_checksum_fifo (xilinx.com:ip:fifo_generator:13.2 (Rev. 1)) to Vivado generation flows.
+
+
+
+
+
+
+Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2017.4 (win64) Build 2086221 Fri Dec 15 20:55:39 MST 2017
+| Date         : Wed Jul  6 14:59:12 2022
+| Host         : DESKTOP-C3F5G4E running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xcku060-ffva1156-2-i
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'len_fifo'
+
+1. Summary
+----------
+
+SUCCESS in the conversion of len_fifo (xilinx.com:ip:fifo_generator:13.2 (Rev. 1)) to Vivado generation flows.
+
+
+
+
+
+
+Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2017.4 (win64) Build 2086221 Fri Dec 15 20:55:39 MST 2017
+| Date         : Wed Jul  6 14:59:11 2022
+| Host         : DESKTOP-C3F5G4E running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xcku060-ffva1156-2-i
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'icmp_rx_ram_8_256'
+
+1. Summary
+----------
+
+SUCCESS in the conversion of icmp_rx_ram_8_256 (xilinx.com:ip:blk_mem_gen:8.4 (Rev. 1)) to Vivado generation flows.
+
+
+
+
+
+
+Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2017.4 (win64) Build 2086221 Fri Dec 15 20:55:39 MST 2017
+| Date         : Wed Jul  6 14:59:10 2022
+| Host         : DESKTOP-C3F5G4E running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xcku060-ffva1156-2-i
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'eth_data_fifo'
+
+1. Summary
+----------
+
+SUCCESS in the conversion of eth_data_fifo (xilinx.com:ip:fifo_generator:13.2 (Rev. 1)) to Vivado generation flows.
+
+
+
+
+
+
+Copyright 1986-2017 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2017.4 (win64) Build 2086221 Fri Dec 15 20:55:39 MST 2017
+| Date         : Wed Jul  6 14:59:09 2022
+| Host         : DESKTOP-C3F5G4E running 64-bit major release  (build 9200)
+| Command      : upgrade_ip
+| Device       : xcku060-ffva1156-2-i
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'clk_wiz_0'
+
+1. Summary
+----------
+
+SUCCESS in the conversion of clk_wiz_0 (xilinx.com:ip:clk_wiz:5.4 (Rev. 3)) to Vivado generation flows.
+
