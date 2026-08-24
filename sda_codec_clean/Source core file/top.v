@@ -1,13 +1,13 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: Kookmin University / ETRI Daejon
-// Engineer: Irzal Zaini
+// Engineer: 
 // 
-// Create Date: 2025/12/04 11:09:22 AM
+// Create Date: 2026/08/20 11:09:22 AM
 // Design Name: 
 // Module Name: top
 // Project Name: ETRI FSO Channel Coding
-// Target Devices: Kintex Ultrascale KCU60
+// Target Devices: 
 // Tool Versions: Vivado 2025.1
 // Description: 
 // 
@@ -18,7 +18,6 @@
 // Additional Comments:
 // 
 //////////////////////////////////////////////////////////////////////////////////
-
 
 module top(
     input       sys_clk_p,
@@ -109,7 +108,5 @@ decoder_top decoder_top_inst (
 
 
 endmodule
-
-
 
 

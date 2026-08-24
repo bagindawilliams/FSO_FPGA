@@ -1,10 +1,11 @@
 // Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+// Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
-// Tool Version: Vivado v.2022.2 (lin64) Build 3671981 Fri Oct 14 04:59:54 MDT 2022
-// Date        : Thu Aug  6 16:38:55 2026
+// Tool Version: Vivado v.2025.2 (lin64) Build 6299465 Fri Nov 14 12:34:56 MST 2025
+// Date        : Wed Aug 19 11:22:16 2026
 // Host        : Williams running 64-bit Ubuntu 22.04.5 LTS
-// Command     : write_verilog -force -mode funcsim {/home/williams/MYFPGA/FPGA
-//               Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_sim_netlist.v}
+// Command     : write_verilog -force -mode funcsim -rename_top clk_wiz_0 -prefix
+//               clk_wiz_0_ clk_wiz_0_sim_netlist.v
 // Design      : clk_wiz_0
 // Purpose     : This verilog netlist is a functional simulation representation of the design and should not be modified
 //               or synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -22,12 +23,12 @@ module clk_wiz_0
   (* IBUF_LOW_PWR *) wire clk_in1;
   wire clk_out1;
 
-  clk_wiz_0_clk_wiz inst
+  clk_wiz_0_clk_wiz_0_clk_wiz inst
        (.clk_in1(clk_in1),
         .clk_out1(clk_out1));
 endmodule
 
-module clk_wiz_0_clk_wiz
+module clk_wiz_0_clk_wiz_0_clk_wiz
    (clk_out1,
     clk_in1);
   output clk_out1;
@@ -63,7 +64,6 @@ module clk_wiz_0_clk_wiz
   (* IBUF_DELAY_VALUE = "0" *) 
   (* IFD_DELAY_VALUE = "AUTO" *) 
   IBUF #(
-    .CCIO_EN("TRUE"),
     .IOSTANDARD("DEFAULT")) 
     clkin1_ibuf
        (.I(clk_in1),

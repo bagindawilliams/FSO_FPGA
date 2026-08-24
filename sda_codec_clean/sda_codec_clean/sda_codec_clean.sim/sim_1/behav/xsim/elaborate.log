@@ -1,8 +1,161 @@
-Vivado Simulator v2022.2
-Copyright 1986-1999, 2001-2022 Xilinx, Inc. All Rights Reserved.
-Running: /tools/Xilinx/Vivado/2022.2/bin/unwrapped/lnx64.o/xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L fifo_generator_v13_2_7 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot top_behav xil_defaultlib.top xil_defaultlib.glbl -log elaborate.log 
+Vivado Simulator v2025.2
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+Running: /2025.2/2025.2/Vivado/bin/unwrapped/lnx64.o/xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L fifo_generator_v13_2_14 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot top_behav xil_defaultlib.top xil_defaultlib.glbl -log elaborate.log 
 Using 8 slave threads.
+WARNING: [XSIM 43-3431] One or more environment variables have been detected which affect the operation of the C compiler. These are typically not set in standard installations and are not tested by AMD, however they may be appropriate for your system, so the flow will attempt to continue.  If errors occur, try running xelab with the "-mt off -v 1" switches to see more information from the C compiler. The following environment variables have been detected:
 Starting static elaboration
 Pass Through NonSizing Optimizer
 Completed static elaboration
-INFO: [XSIM 43-4323] No Change in HDL. Linking previously generated obj files to create kernel
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling package std.standard
+Compiling package std.textio
+Compiling package ieee.std_logic_1164
+Compiling package ieee.std_logic_arith
+Compiling package ieee.std_logic_unsigned
+Compiling package synopsys.attributes
+Compiling package ieee.std_logic_misc
+Compiling package fifo_generator_v13_2_14.fifo_generator_v13_2_14_pkg
+Compiling package xpm.vcomponents
+Compiling package ieee.numeric_std
+Compiling package unisim.vcomponents
+Compiling package ieee.vital_timing
+Compiling package ieee.vital_primitives
+Compiling package unisim.vpkg
+Compiling module unisims_ver.IBUFDS
+Compiling module unisims_ver.IBUFGDS
+Compiling module unisims_ver.IBUF
+Compiling module unisims_ver.MMCME3_ADV(CLKFBOUT_MULT_F=40.62...
+Compiling module unisims_ver.BUFG
+Compiling module xil_defaultlib.clk_wiz_0_clk_wiz
+Compiling module xil_defaultlib.clk_wiz_0
+Compiling module unisims_ver.MMCME3_ADV(CLKIN1_PERIOD=5.0,CLK...
+Compiling module xil_defaultlib.clk_wiz_1_clk_wiz
+Compiling module xil_defaultlib.clk_wiz_1
+Compiling module xil_defaultlib.autorun
+Compiling module xil_defaultlib.stream_input
+Compiling architecture fifo36e2_v of entity unisim.FIFO36E2 [\FIFO36E2(clock_domains="COMMON"...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.builtin_prim [\builtin_prim(c_din_width=64,c_d...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.builtin_extdepth [\builtin_extdepth(c_family="8SER...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.builtin_top [\builtin_top(c_family="8SERIES",...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.input_blk [\input_blk(c_din_width=64,c_pktf...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.output_blk [\output_blk(c_dout_width=32,c_pk...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.fifo_generator_v13_2_14_builtin [\fifo_generator_v13_2_14_builtin...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.fifo_generator_top [\fifo_generator_top(c_family="vi...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.fifo_generator_v13_2_14_synth [\fifo_generator_v13_2_14_synth(c...]
+Compiling module xil_defaultlib.serdes_framer
+Compiling module xil_defaultlib.framer
+Compiling module xil_defaultlib.crc_16
+Compiling module xil_defaultlib.crc_32
+Compiling module xil_defaultlib.framer_top
+Compiling architecture fifo18e2_v of entity unisim.FIFO18E2 [\FIFO18E2(prog_empty_thresh=5,pr...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.builtin_prim [\builtin_prim(c_din_width=8,c_do...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.builtin_extdepth [\builtin_extdepth(c_family="8SER...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.builtin_top [\builtin_top(c_family="8SERIES",...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.input_blk [\input_blk(c_common_clock=0,c_rd...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.output_blk [\output_blk(c_byte_strb_width=8)...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.fifo_generator_v13_2_14_builtin [\fifo_generator_v13_2_14_builtin...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.fifo_generator_top [\fifo_generator_top(c_family="vi...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.fifo_generator_v13_2_14_synth [\fifo_generator_v13_2_14_synth(c...]
+Compiling module xil_defaultlib.cross_gth_logic_head
+Compiling architecture fifo36e2_v of entity unisim.FIFO36E2 [\FIFO36E2(init="1111111100000000...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.builtin_prim [\builtin_prim(c_din_width=32,c_d...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.builtin_extdepth [\builtin_extdepth(c_family="8SER...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.builtin_top [\builtin_top(c_family="8SERIES",...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.input_blk [\input_blk(c_common_clock=0,c_di...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.output_blk [\output_blk(c_dout_width=64,c_pk...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.fifo_generator_v13_2_14_builtin [\fifo_generator_v13_2_14_builtin...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.fifo_generator_top [\fifo_generator_top(c_family="vi...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.fifo_generator_v13_2_14_synth [\fifo_generator_v13_2_14_synth(c...]
+Compiling module xil_defaultlib.cross_gth_logic_load
+Compiling module xil_defaultlib.x_gth_logic
+Compiling module xil_defaultlib.multiplier
+Compiling module xil_defaultlib.rs_encoder(max=31)
+Compiling module xil_defaultlib.rs_encoder
+Compiling module xil_defaultlib.rs_encoder_64
+Compiling architecture fifo36e2_v of entity unisim.FIFO36E2 [\FIFO36E2(clock_domains="COMMON"...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.builtin_prim [\builtin_prim(c_din_width=8,c_do...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.builtin_extdepth [\builtin_extdepth(c_family="8SER...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.builtin_top [\builtin_top(c_family="8SERIES",...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.input_blk [\input_blk(c_dout_width=64,c_rd_...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.fifo_generator_v13_2_14_builtin [\fifo_generator_v13_2_14_builtin...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.fifo_generator_top [\fifo_generator_top(c_family="vi...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.fifo_generator_v13_2_14_synth [\fifo_generator_v13_2_14_synth(c...]
+Compiling module xil_defaultlib.delay_combiner
+Compiling module xil_defaultlib.combiner_default
+Compiling module xil_defaultlib.scrambler
+Compiling module xil_defaultlib.lpc
+Compiling module xil_defaultlib.lpc_top
+Compiling module xil_defaultlib.core_tx
+Compiling architecture fifo36e2_v of entity unisim.FIFO36E2 [\FIFO36E2(prog_empty_thresh=2,pr...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.builtin_prim [\builtin_prim(c_din_width=128,c_...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.builtin_extdepth [\builtin_extdepth(c_family="8SER...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.builtin_top [\builtin_top(c_family="8SERIES",...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.input_blk [\input_blk(c_common_clock=0,c_di...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.fifo_generator_v13_2_14_builtin [\fifo_generator_v13_2_14_builtin...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.fifo_generator_top [\fifo_generator_top(c_family="vi...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.fifo_generator_v13_2_14_synth [\fifo_generator_v13_2_14_synth(c...]
+Compiling module xil_defaultlib.cross_logic_gth
+Compiling module xil_defaultlib.x_logic_gth_default
+Compiling module xil_defaultlib.encoder_top
+Compiling module xil_defaultlib.error_inject_default
+Compiling architecture fifo36e2_v of entity unisim.FIFO36E2 [\FIFO36E2(init="1111111100000000...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.builtin_prim [\builtin_prim(c_din_width=32,c_d...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.builtin_extdepth [\builtin_extdepth(c_family="8SER...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.builtin_top [\builtin_top(c_family="8SERIES",...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.input_blk [\input_blk(c_common_clock=0,c_di...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.output_blk [\output_blk(c_dout_width=128,c_p...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.fifo_generator_v13_2_14_builtin [\fifo_generator_v13_2_14_builtin...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.fifo_generator_top [\fifo_generator_top(c_family="vi...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.fifo_generator_v13_2_14_synth [\fifo_generator_v13_2_14_synth(c...]
+Compiling module xil_defaultlib.cross_gth_logic
+Compiling module xil_defaultlib.rx_gth_logic
+Compiling module xil_defaultlib.lpc_dec
+Compiling module xil_defaultlib.lpc_dec_top
+Compiling module xil_defaultlib.separator
+Compiling architecture fifo18e2_v of entity unisim.FIFO18E2 [\FIFO18E2(clock_domains="COMMON"...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.builtin_prim [\builtin_prim(c_din_width=8,c_do...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.builtin_extdepth [\builtin_extdepth(c_family="8SER...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.builtin_top [\builtin_top(c_family="8SERIES",...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.input_blk [\input_blk(c_rd_pntr_width=9,c_w...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.fifo_generator_v13_2_14_builtin [\fifo_generator_v13_2_14_builtin...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.fifo_generator_top [\fifo_generator_top(c_family="vi...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.fifo_generator_v13_2_14_synth [\fifo_generator_v13_2_14_synth(c...]
+Compiling module xil_defaultlib.delay_rs
+Compiling module xil_defaultlib.syndrome_unit
+Compiling module xil_defaultlib.inverter
+Compiling module xil_defaultlib.euclid_proc
+Compiling module xil_defaultlib.chien_search
+Compiling module xil_defaultlib.forney_math
+Compiling module xil_defaultlib.rs_decoder(max_rd=33)
+Compiling module xil_defaultlib.rs_decoder
+Compiling module xil_defaultlib.rs_decoder_64
+Compiling module xil_defaultlib.core_rx
+Compiling module xil_defaultlib.cross_logic_gth_head
+Compiling architecture fifo36e2_v of entity unisim.FIFO36E2 [\FIFO36E2(prog_empty_thresh=2,pr...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.builtin_prim [\builtin_prim(c_din_width=64,c_d...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.builtin_extdepth [\builtin_extdepth(c_family="8SER...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.builtin_top [\builtin_top(c_family="8SERIES",...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.input_blk [\input_blk(c_common_clock=0,c_di...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.fifo_generator_v13_2_14_builtin [\fifo_generator_v13_2_14_builtin...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.fifo_generator_top [\fifo_generator_top(c_family="vi...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.fifo_generator_v13_2_14_synth [\fifo_generator_v13_2_14_synth(c...]
+Compiling module xil_defaultlib.cross_logic_gth_load
+Compiling module xil_defaultlib.rx_logic_gth
+Compiling architecture fifo36e2_v of entity unisim.FIFO36E2 [\FIFO36E2(clock_domains="COMMON"...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.builtin_prim [\builtin_prim(c_din_width=32,c_d...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.builtin_extdepth [\builtin_extdepth(c_family="8SER...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.builtin_top [\builtin_top(c_family="8SERIES",...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.input_blk [\input_blk(c_din_width=32,c_pktf...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.fifo_generator_v13_2_14_builtin [\fifo_generator_v13_2_14_builtin...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.fifo_generator_top [\fifo_generator_top(c_family="vi...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.fifo_generator_v13_2_14_synth [\fifo_generator_v13_2_14_synth(c...]
+Compiling module xil_defaultlib.serdes_assembler
+Compiling module xil_defaultlib.assembler
+Compiling module xil_defaultlib.assembler_top
+Compiling module xil_defaultlib.decoder_top
+Compiling module xil_defaultlib.top
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot top_behav

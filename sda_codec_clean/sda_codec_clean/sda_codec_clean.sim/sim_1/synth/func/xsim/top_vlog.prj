@@ -1,0 +1,6 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  --include "../../../../../../../../../2025_vivado/2025.2/data/rsb/busdef" --include "../../../../../sda_codec_clean.ip_user_files/ipstatic" \
+"top_func_synth.v" \
+
+# Do not sort compile order
+nosort

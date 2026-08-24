@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2025.2 (lin64) Build 6299465 Fri Nov 14 12:34:56 MST 2025
-| Date         : Tue Aug 11 23:56:31 2026
+| Date         : Mon Aug 24 16:38:04 2026
 | Host         : Williams running 64-bit Ubuntu 22.04.5 LTS
 | Command      : report_utilization -file top_utilization_synth.rpt -pb top_utilization_synth.pb
 | Design       : top
@@ -32,13 +32,13 @@ Table of Contents
 +----------------------------+--------+-------+------------+-----------+-------+
 |          Site Type         |  Used  | Fixed | Prohibited | Available | Util% |
 +----------------------------+--------+-------+------------+-----------+-------+
-| CLB LUTs*                  | 110069 |     0 |          0 |    331680 | 33.19 |
-|   LUT as Logic             | 110021 |     0 |          0 |    331680 | 33.17 |
+| CLB LUTs*                  | 110185 |     0 |          0 |    331680 | 33.22 |
+|   LUT as Logic             | 110137 |     0 |          0 |    331680 | 33.21 |
 |   LUT as Memory            |     48 |     0 |          0 |    146880 |  0.03 |
 |     LUT as Distributed RAM |      0 |     0 |            |           |       |
 |     LUT as Shift Register  |     48 |     0 |            |           |       |
-| CLB Registers              |  16695 |     0 |          0 |    663360 |  2.52 |
-|   Register as Flip Flop    |  16695 |     0 |          0 |    663360 |  2.52 |
+| CLB Registers              |  16696 |     0 |          0 |    663360 |  2.52 |
+|   Register as Flip Flop    |  16696 |     0 |          0 |    663360 |  2.52 |
 |   Register as Latch        |      0 |     0 |          0 |    663360 |  0.00 |
 | CARRY8                     |   1761 |     0 |          0 |     41460 |  4.25 |
 | F7 Muxes                   |  19564 |     0 |          0 |    165840 | 11.80 |
@@ -67,7 +67,7 @@ Warning! For any ECO changes, please run place_design if there are unplaced inst
 | 42    |          Yes |           - |          Set |
 | 323   |          Yes |           - |        Reset |
 | 2     |          Yes |         Set |            - |
-| 16328 |          Yes |       Reset |            - |
+| 16329 |          Yes |       Reset |            - |
 +-------+--------------+-------------+--------------+
 
 
@@ -168,17 +168,17 @@ Warning! For any ECO changes, please run place_design if there are unplaced inst
 +-------------+-------+---------------------+
 |   Ref Name  |  Used | Functional Category |
 +-------------+-------+---------------------+
-| LUT6        | 81110 |                 CLB |
+| LUT6        | 81174 |                 CLB |
 | MUXF7       | 19564 |                 CLB |
-| LUT5        | 18289 |                 CLB |
-| FDRE        | 16328 |            Register |
-| LUT2        |  7875 |                 CLB |
-| LUT3        |  6951 |                 CLB |
+| LUT5        | 18347 |                 CLB |
+| FDRE        | 16329 |            Register |
+| LUT2        |  7791 |                 CLB |
+| LUT3        |  6904 |                 CLB |
 | MUXF8       |  6204 |                 CLB |
-| LUT4        |  5719 |                 CLB |
+| LUT4        |  5800 |                 CLB |
 | CARRY8      |  1761 |                 CLB |
 | FDCE        |   323 |            Register |
-| LUT1        |   107 |                 CLB |
+| LUT1        |   106 |                 CLB |
 | SRL16E      |    48 |                 CLB |
 | FDPE        |    42 |            Register |
 | OBUF        |     3 |                 I/O |
@@ -197,7 +197,7 @@ Warning! For any ECO changes, please run place_design if there are unplaced inst
 +----------------------+------+
 |       Ref Name       | Used |
 +----------------------+------+
-| delay_rs             |    9 |
+| bram_rs              |    9 |
 | reset_0              |    2 |
 | serdes_framer        |    1 |
 | serdes_assembler     |    1 |

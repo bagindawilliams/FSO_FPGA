@@ -1,0 +1,29 @@
+#-----------------------------------------------------------
+# Vivado v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 12:34:56 MST 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Wed Aug 19 11:17:45 2026
+# Process ID         : 268469
+# Current directory  : /home/williams/MYFPGA/FPGA Final/sda_codec_clean
+# Command line       : vivado
+# Log file           : /home/williams/MYFPGA/FPGA Final/sda_codec_clean/vivado.log
+# Journal file       : /home/williams/MYFPGA/FPGA Final/sda_codec_clean/vivado.jou
+# Running On         : Williams
+# Platform           : Ubuntu
+# Operating System   : Ubuntu 22.04.5 LTS
+# Processor Detail   : 13th Gen Intel(R) Core(TM) i7-13700K
+# CPU Frequency      : 5300.000 MHz
+# CPU Physical cores : 16
+# CPU Logical cores  : 24
+# Host memory        : 67183 MB
+# Swap memory        : 63999 MB
+# Total Virtual      : 131182 MB
+# Available Virtual  : 120734 MB
+#-----------------------------------------------------------
+start_gui
+open_project {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.xpr}
+update_compile_order -fileset sources_1
+report_ip_status -name ip_status 
+upgrade_ip -srcset clk_wiz_0 [get_ips  {clk_wiz_0 clk_wiz_1 cross_gth_logic cross_gth_logic_head cross_gth_logic_load cross_logic_gth cross_logic_gth_head cross_logic_gth_load delay_combiner delay_rs serdes_assembler serdes_framer}] -log ip_upgrade.log
+upgrade_ip -srcset clk_wiz_0 [get_ips  {clk_wiz_0 clk_wiz_1 cross_gth_logic cross_gth_logic_head cross_gth_logic_load cross_logic_gth cross_logic_gth_head cross_logic_gth_load delay_combiner delay_rs serdes_assembler serdes_framer}] -log ip_upgrade.log

@@ -1,25 +1,87 @@
 #-----------------------------------------------------------
-# Vivado v2022.2 (64-bit)
-# SW Build 3671981 on Fri Oct 14 04:59:54 MDT 2022
-# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
-# Start of session at: Thu Aug  6 16:22:01 2026
-# Process ID: 1391345
-# Current directory: /home/williams/MYFPGA/FPGA Final/sda_codec_clean
-# Command line: vivado
-# Log file: /home/williams/MYFPGA/FPGA Final/sda_codec_clean/vivado.log
-# Journal file: /home/williams/MYFPGA/FPGA Final/sda_codec_clean/vivado.jou
-# Running On: Williams, OS: Linux, CPU Frequency: 5300.000 MHz, CPU Physical cores: 16, Host memory: 67183 MB
+# Vivado v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 12:34:56 MST 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Mon Aug 24 15:57:40 2026
+# Process ID         : 379063
+# Current directory  : /home/williams/MYFPGA/FSO FPGA/sda_codec_clean
+# Command line       : vivado
+# Log file           : /home/williams/MYFPGA/FSO FPGA/sda_codec_clean/vivado.log
+# Journal file       : /home/williams/MYFPGA/FSO FPGA/sda_codec_clean/vivado.jou
+# Running On         : Williams
+# Platform           : Ubuntu
+# Operating System   : Ubuntu 22.04.5 LTS
+# Processor Detail   : 13th Gen Intel(R) Core(TM) i7-13700K
+# CPU Frequency      : 5300.000 MHz
+# CPU Physical cores : 16
+# CPU Logical cores  : 24
+# Host memory        : 67183 MB
+# Swap memory        : 63999 MB
+# Total Virtual      : 131182 MB
+# Available Virtual  : 118288 MB
 #-----------------------------------------------------------
 start_gui
-create_project sda_codec_clean {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean} -part xcku060-ffva1156-2-i
-import_files {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/File xci/cross_gth_logic_head.xci} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/File xci/delay_rs.xci} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/File xci/cross_gth_logic.xci} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/File xci/clk_wiz_1.xci} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/File xci/delay_combiner.xci} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/File xci/cross_gth_logic_load.xci} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/File xci/serdes_assembler.xci} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/File xci/clk_wiz_0.xci} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/File xci/serdes_framer.xci} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/File xci/cross_logic_gth_head.xci} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/File xci/cross_logic_gth.xci} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/File xci/cross_logic_gth_load.xci}}
-export_ip_user_files -of_objects  [get_files  {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic_head/cross_gth_logic_head.xci} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/delay_rs/delay_rs.xci} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic/cross_gth_logic.xci} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/clk_wiz_1/clk_wiz_1.xci} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/delay_combiner/delay_combiner.xci} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic_load/cross_gth_logic_load.xci} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/serdes_assembler/serdes_assembler.xci} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/serdes_framer/serdes_framer.xci} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head.xci} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth/cross_logic_gth.xci} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth_load/cross_logic_gth_load.xci}}] -lib_map_path [list {modelsim=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/modelsim} {questa=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/questa} {xcelium=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/xcelium} {vcs=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/vcs} {riviera=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/riviera}] -force -quiet
-import_files {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/Source core file/decoder/assembler.v} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/Source core file/decoder/decoder_top.v} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/Source core file/decoder/core_rx.v} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/Source core file/decoder/separator.v} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/Source core file/rs_codec/chien_search.v} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/Source core file/decoder/lpc_dec_top.v} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/Source core file/encoder/scrambler.v} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/Source core file/encoder/combiner.v} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/Source core file/top.v} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/Source core file/encoder/framer.v} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/Source core file/decoder/rx_gth_logic.v} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/Source core file/encoder/core_tx.v} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/Source core file/rs_codec/rs_decoder.v} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/Source core file/encoder/framer_top.v} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/Source core file/stream_input.v} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/Source core file/encoder/x_logic_gth.v} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/Source core file/rs_codec/inverter.v} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/Source core file/rs_codec/forney_math.v} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/Source core file/encoder/rs_encoder_64.v} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/Source core file/rs_codec/euclid_proc.v} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/Source core file/encoder/lpc_top.v} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/Source core file/decoder/rx_logic_gth.v} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/Source core file/encoder/encoder_top.v} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/Source core file/encoder/crc_16.v} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/Source core file/rs_codec/rs_encoder.v} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/Source core file/decoder/assembler_top.v} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/Source core file/encoder/x_gth_logic.v} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/Source core file/rs_codec/syndrome_unit.v} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/Source core file/autorun.v} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/Source core file/decoder/lpc_dec.v} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/Source core file/rs_codec/multiplier.v} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/Source core file/decoder/rs_decoder_64.v} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/Source core file/encoder/lpc.v} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/Source core file/encoder/crc_32.v} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/Source core file/error_inject.v}}
+open_project {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.xpr}
 update_compile_order -fileset sources_1
+export_ip_user_files -of_objects  [get_files {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/delay_rs/delay_rs.xci}}] -no_script -reset -force -quiet
+remove_files  -fileset delay_rs {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/delay_rs/delay_rs.xci}}
+file delete -force {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/delay_rs}
+file delete -force {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/delay_rs}
+file delete -force {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/ip/delay_rs} {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/sim_scripts/delay_rs}
+create_ip -name blk_mem_gen -vendor xilinx.com -library ip -version 8.4 -module_name bram_rs
+set_property -dict [list \
+  CONFIG.Memory_Type {Simple_Dual_Port_RAM} \
+  CONFIG.Write_Depth_A {256} \
+  CONFIG.Write_Width_A {8} \
+] [get_ips bram_rs]
+generate_target {instantiation_template} [get_files {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/bram_rs/bram_rs.xci}}]
+generate_target all [get_files  {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/bram_rs/bram_rs.xci}}]
+catch { config_ip_cache -export [get_ips -all bram_rs] }
+export_ip_user_files -of_objects [get_files {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/bram_rs/bram_rs.xci}}] -no_script -sync -force -quiet
+create_ip_run [get_files -of_objects [get_fileset sources_1] {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/bram_rs/bram_rs.xci}}]
+launch_runs bram_rs_synth_1 -jobs 24
+wait_on_run bram_rs_synth_1
+export_simulation -lib_map_path [list {modelsim=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/modelsim} {questa=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/questa} {xcelium=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/xcelium} {vcs=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/vcs} {riviera=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/riviera}] -of_objects [get_files {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/bram_rs/bram_rs.xci}}] -directory {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/sim_scripts} -ip_user_files_dir {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files} -ipstatic_source_dir {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/ipstatic} -use_ip_compiled_libs -force -quiet
+reset_target all [get_files  {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth/cross_logic_gth.xci}}]
+export_ip_user_files -of_objects  [get_files  {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth/cross_logic_gth.xci}}] -sync -no_script -force -quiet
+reset_target all [get_files  {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head.xci}}]
+export_ip_user_files -of_objects  [get_files  {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head.xci}}] -sync -no_script -force -quiet
+reset_target all [get_files  {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth_load/cross_logic_gth_load.xci}}]
+export_ip_user_files -of_objects  [get_files  {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth_load/cross_logic_gth_load.xci}}] -sync -no_script -force -quiet
+reset_target all [get_files  {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/delay_combiner/delay_combiner.xci}}]
+export_ip_user_files -of_objects  [get_files  {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/delay_combiner/delay_combiner.xci}}] -sync -no_script -force -quiet
+reset_target all [get_files  {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/serdes_assembler/serdes_assembler.xci}}]
+export_ip_user_files -of_objects  [get_files  {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/serdes_assembler/serdes_assembler.xci}}] -sync -no_script -force -quiet
+reset_target all [get_files  {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/serdes_framer/serdes_framer.xci}}]
+export_ip_user_files -of_objects  [get_files  {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/serdes_framer/serdes_framer.xci}}] -sync -no_script -force -quiet
+reset_target all [get_files  {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci}}]
+export_ip_user_files -of_objects  [get_files  {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci}}] -sync -no_script -force -quiet
+reset_target all [get_files  {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/clk_wiz_1/clk_wiz_1.xci}}]
+export_ip_user_files -of_objects  [get_files  {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/clk_wiz_1/clk_wiz_1.xci}}] -sync -no_script -force -quiet
+reset_target all [get_files  {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic/cross_gth_logic.xci}}]
+export_ip_user_files -of_objects  [get_files  {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic/cross_gth_logic.xci}}] -sync -no_script -force -quiet
+reset_target all [get_files  {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic_head/cross_gth_logic_head.xci}}]
+export_ip_user_files -of_objects  [get_files  {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic_head/cross_gth_logic_head.xci}}] -sync -no_script -force -quiet
+reset_target all [get_files  {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic_load/cross_gth_logic_load.xci}}]
+export_ip_user_files -of_objects  [get_files  {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic_load/cross_gth_logic_load.xci}}] -sync -no_script -force -quiet
+reset_target all [get_files  {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/bram_rs/bram_rs.xci}}]
+export_ip_user_files -of_objects  [get_files  {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/bram_rs/bram_rs.xci}}] -sync -no_script -force -quiet
+delete_ip_run [get_files -of_objects [get_fileset bram_rs] {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/bram_rs/bram_rs.xci}}]
+delete_ip_run [get_files -of_objects [get_fileset clk_wiz_0] {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci}}]
+delete_ip_run [get_files -of_objects [get_fileset clk_wiz_1] {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/clk_wiz_1/clk_wiz_1.xci}}]
+delete_ip_run [get_files -of_objects [get_fileset cross_gth_logic] {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic/cross_gth_logic.xci}}]
+delete_ip_run [get_files -of_objects [get_fileset cross_gth_logic_head] {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic_head/cross_gth_logic_head.xci}}]
+delete_ip_run [get_files -of_objects [get_fileset cross_gth_logic_load] {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic_load/cross_gth_logic_load.xci}}]
+delete_ip_run [get_files -of_objects [get_fileset cross_logic_gth] {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth/cross_logic_gth.xci}}]
+delete_ip_run [get_files -of_objects [get_fileset cross_logic_gth_head] {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head.xci}}]
+delete_ip_run [get_files -of_objects [get_fileset cross_logic_gth_load] {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth_load/cross_logic_gth_load.xci}}]
+delete_ip_run [get_files -of_objects [get_fileset delay_combiner] {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/delay_combiner/delay_combiner.xci}}]
+delete_ip_run [get_files -of_objects [get_fileset serdes_assembler] {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/serdes_assembler/serdes_assembler.xci}}]
+delete_ip_run [get_files -of_objects [get_fileset serdes_framer] {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/serdes_framer/serdes_framer.xci}}]
 update_compile_order -fileset sources_1
-add_files -fileset constrs_1 -norecurse {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/File xdc/sda_top.xdc}}
-import_files -fileset constrs_1 {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/File xdc/sda_top.xdc}}
-generate_target all [get_files  {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/clk_wiz_1/clk_wiz_1.xci} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic/cross_gth_logic.xci} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic_head/cross_gth_logic_head.xci} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic_load/cross_gth_logic_load.xci} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth/cross_logic_gth.xci} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head.xci} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth_load/cross_logic_gth_load.xci} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/delay_combiner/delay_combiner.xci} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/delay_rs/delay_rs.xci} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/serdes_assembler/serdes_assembler.xci} {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/serdes_framer/serdes_framer.xci}}]
+generate_target all [get_files  {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/bram_rs/bram_rs.xci} {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci} {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/clk_wiz_1/clk_wiz_1.xci} {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic/cross_gth_logic.xci} {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic_head/cross_gth_logic_head.xci} {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic_load/cross_gth_logic_load.xci} {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth/cross_logic_gth.xci} {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head.xci} {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth_load/cross_logic_gth_load.xci} {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/delay_combiner/delay_combiner.xci} {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/serdes_assembler/serdes_assembler.xci} {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/serdes_framer/serdes_framer.xci}}]
+catch { config_ip_cache -export [get_ips -all bram_rs] }
 catch { config_ip_cache -export [get_ips -all clk_wiz_0] }
 catch { config_ip_cache -export [get_ips -all clk_wiz_1] }
 catch { config_ip_cache -export [get_ips -all cross_gth_logic] }
@@ -29,313 +91,50 @@ catch { config_ip_cache -export [get_ips -all cross_logic_gth] }
 catch { config_ip_cache -export [get_ips -all cross_logic_gth_head] }
 catch { config_ip_cache -export [get_ips -all cross_logic_gth_load] }
 catch { config_ip_cache -export [get_ips -all delay_combiner] }
-catch { config_ip_cache -export [get_ips -all delay_rs] }
 catch { config_ip_cache -export [get_ips -all serdes_assembler] }
 catch { config_ip_cache -export [get_ips -all serdes_framer] }
-export_ip_user_files -of_objects [get_files {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci}}] -no_script -sync -force -quiet
-export_ip_user_files -of_objects [get_files {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/clk_wiz_1/clk_wiz_1.xci}}] -no_script -sync -force -quiet
-export_ip_user_files -of_objects [get_files {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic/cross_gth_logic.xci}}] -no_script -sync -force -quiet
-export_ip_user_files -of_objects [get_files {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic_head/cross_gth_logic_head.xci}}] -no_script -sync -force -quiet
-export_ip_user_files -of_objects [get_files {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic_load/cross_gth_logic_load.xci}}] -no_script -sync -force -quiet
-export_ip_user_files -of_objects [get_files {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth/cross_logic_gth.xci}}] -no_script -sync -force -quiet
-export_ip_user_files -of_objects [get_files {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head.xci}}] -no_script -sync -force -quiet
-export_ip_user_files -of_objects [get_files {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth_load/cross_logic_gth_load.xci}}] -no_script -sync -force -quiet
-export_ip_user_files -of_objects [get_files {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/delay_combiner/delay_combiner.xci}}] -no_script -sync -force -quiet
-export_ip_user_files -of_objects [get_files {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/delay_rs/delay_rs.xci}}] -no_script -sync -force -quiet
-export_ip_user_files -of_objects [get_files {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/serdes_assembler/serdes_assembler.xci}}] -no_script -sync -force -quiet
-export_ip_user_files -of_objects [get_files {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/serdes_framer/serdes_framer.xci}}] -no_script -sync -force -quiet
-create_ip_run [get_files -of_objects [get_fileset sources_1] {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci}}]
-create_ip_run [get_files -of_objects [get_fileset sources_1] {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/clk_wiz_1/clk_wiz_1.xci}}]
-create_ip_run [get_files -of_objects [get_fileset sources_1] {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic/cross_gth_logic.xci}}]
-create_ip_run [get_files -of_objects [get_fileset sources_1] {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic_head/cross_gth_logic_head.xci}}]
-create_ip_run [get_files -of_objects [get_fileset sources_1] {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic_load/cross_gth_logic_load.xci}}]
-create_ip_run [get_files -of_objects [get_fileset sources_1] {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth/cross_logic_gth.xci}}]
-create_ip_run [get_files -of_objects [get_fileset sources_1] {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head.xci}}]
-create_ip_run [get_files -of_objects [get_fileset sources_1] {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth_load/cross_logic_gth_load.xci}}]
-create_ip_run [get_files -of_objects [get_fileset sources_1] {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/delay_combiner/delay_combiner.xci}}]
-create_ip_run [get_files -of_objects [get_fileset sources_1] {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/delay_rs/delay_rs.xci}}]
-create_ip_run [get_files -of_objects [get_fileset sources_1] {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/serdes_assembler/serdes_assembler.xci}}]
-create_ip_run [get_files -of_objects [get_fileset sources_1] {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/serdes_framer/serdes_framer.xci}}]
-launch_runs clk_wiz_0_synth_1 clk_wiz_1_synth_1 cross_gth_logic_synth_1 cross_gth_logic_head_synth_1 cross_gth_logic_load_synth_1 cross_logic_gth_synth_1 cross_logic_gth_head_synth_1 cross_logic_gth_load_synth_1 delay_combiner_synth_1 delay_rs_synth_1 serdes_assembler_synth_1 serdes_framer_synth_1 -jobs 24
-wait_on_run clk_wiz_0_synth_1
-wait_on_run clk_wiz_1_synth_1
-wait_on_run cross_gth_logic_synth_1
+export_ip_user_files -of_objects [get_files {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/bram_rs/bram_rs.xci}}] -no_script -sync -force -quiet
+export_ip_user_files -of_objects [get_files {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci}}] -no_script -sync -force -quiet
+export_ip_user_files -of_objects [get_files {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/clk_wiz_1/clk_wiz_1.xci}}] -no_script -sync -force -quiet
+export_ip_user_files -of_objects [get_files {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic/cross_gth_logic.xci}}] -no_script -sync -force -quiet
+export_ip_user_files -of_objects [get_files {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic_head/cross_gth_logic_head.xci}}] -no_script -sync -force -quiet
+export_ip_user_files -of_objects [get_files {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic_load/cross_gth_logic_load.xci}}] -no_script -sync -force -quiet
+export_ip_user_files -of_objects [get_files {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth/cross_logic_gth.xci}}] -no_script -sync -force -quiet
+export_ip_user_files -of_objects [get_files {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head.xci}}] -no_script -sync -force -quiet
+export_ip_user_files -of_objects [get_files {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth_load/cross_logic_gth_load.xci}}] -no_script -sync -force -quiet
+export_ip_user_files -of_objects [get_files {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/delay_combiner/delay_combiner.xci}}] -no_script -sync -force -quiet
+export_ip_user_files -of_objects [get_files {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/serdes_assembler/serdes_assembler.xci}}] -no_script -sync -force -quiet
+export_ip_user_files -of_objects [get_files {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/serdes_framer/serdes_framer.xci}}] -no_script -sync -force -quiet
+create_ip_run [get_files -of_objects [get_fileset sources_1] {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/bram_rs/bram_rs.xci}}]
+create_ip_run [get_files -of_objects [get_fileset sources_1] {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci}}]
+create_ip_run [get_files -of_objects [get_fileset sources_1] {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/clk_wiz_1/clk_wiz_1.xci}}]
+create_ip_run [get_files -of_objects [get_fileset sources_1] {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic/cross_gth_logic.xci}}]
+create_ip_run [get_files -of_objects [get_fileset sources_1] {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic_head/cross_gth_logic_head.xci}}]
+create_ip_run [get_files -of_objects [get_fileset sources_1] {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic_load/cross_gth_logic_load.xci}}]
+create_ip_run [get_files -of_objects [get_fileset sources_1] {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth/cross_logic_gth.xci}}]
+create_ip_run [get_files -of_objects [get_fileset sources_1] {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head.xci}}]
+create_ip_run [get_files -of_objects [get_fileset sources_1] {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth_load/cross_logic_gth_load.xci}}]
+create_ip_run [get_files -of_objects [get_fileset sources_1] {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/delay_combiner/delay_combiner.xci}}]
+create_ip_run [get_files -of_objects [get_fileset sources_1] {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/serdes_assembler/serdes_assembler.xci}}]
+create_ip_run [get_files -of_objects [get_fileset sources_1] {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/serdes_framer/serdes_framer.xci}}]
+launch_runs cross_gth_logic_head_synth_1 cross_logic_gth_head_synth_1 -jobs 24
 wait_on_run cross_gth_logic_head_synth_1
-wait_on_run cross_gth_logic_load_synth_1
-wait_on_run cross_logic_gth_synth_1
 wait_on_run cross_logic_gth_head_synth_1
-wait_on_run cross_logic_gth_load_synth_1
-wait_on_run delay_combiner_synth_1
-wait_on_run delay_rs_synth_1
-wait_on_run serdes_assembler_synth_1
-wait_on_run serdes_framer_synth_1
-export_simulation -of_objects [get_files {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci}}] -directory {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/sim_scripts} -ip_user_files_dir {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files} -ipstatic_source_dir {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/ipstatic} -lib_map_path [list {modelsim=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/modelsim} {questa=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/questa} {xcelium=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/xcelium} {vcs=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/vcs} {riviera=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/riviera}] -use_ip_compiled_libs -force -quiet
-export_simulation -of_objects [get_files {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/clk_wiz_1/clk_wiz_1.xci}}] -directory {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/sim_scripts} -ip_user_files_dir {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files} -ipstatic_source_dir {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/ipstatic} -lib_map_path [list {modelsim=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/modelsim} {questa=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/questa} {xcelium=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/xcelium} {vcs=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/vcs} {riviera=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/riviera}] -use_ip_compiled_libs -force -quiet
-export_simulation -of_objects [get_files {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic/cross_gth_logic.xci}}] -directory {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/sim_scripts} -ip_user_files_dir {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files} -ipstatic_source_dir {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/ipstatic} -lib_map_path [list {modelsim=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/modelsim} {questa=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/questa} {xcelium=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/xcelium} {vcs=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/vcs} {riviera=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/riviera}] -use_ip_compiled_libs -force -quiet
-export_simulation -of_objects [get_files {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic_head/cross_gth_logic_head.xci}}] -directory {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/sim_scripts} -ip_user_files_dir {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files} -ipstatic_source_dir {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/ipstatic} -lib_map_path [list {modelsim=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/modelsim} {questa=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/questa} {xcelium=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/xcelium} {vcs=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/vcs} {riviera=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/riviera}] -use_ip_compiled_libs -force -quiet
-export_simulation -of_objects [get_files {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic_load/cross_gth_logic_load.xci}}] -directory {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/sim_scripts} -ip_user_files_dir {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files} -ipstatic_source_dir {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/ipstatic} -lib_map_path [list {modelsim=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/modelsim} {questa=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/questa} {xcelium=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/xcelium} {vcs=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/vcs} {riviera=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/riviera}] -use_ip_compiled_libs -force -quiet
-export_simulation -of_objects [get_files {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth/cross_logic_gth.xci}}] -directory {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/sim_scripts} -ip_user_files_dir {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files} -ipstatic_source_dir {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/ipstatic} -lib_map_path [list {modelsim=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/modelsim} {questa=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/questa} {xcelium=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/xcelium} {vcs=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/vcs} {riviera=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/riviera}] -use_ip_compiled_libs -force -quiet
-export_simulation -of_objects [get_files {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head.xci}}] -directory {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/sim_scripts} -ip_user_files_dir {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files} -ipstatic_source_dir {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/ipstatic} -lib_map_path [list {modelsim=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/modelsim} {questa=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/questa} {xcelium=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/xcelium} {vcs=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/vcs} {riviera=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/riviera}] -use_ip_compiled_libs -force -quiet
-export_simulation -of_objects [get_files {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth_load/cross_logic_gth_load.xci}}] -directory {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/sim_scripts} -ip_user_files_dir {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files} -ipstatic_source_dir {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/ipstatic} -lib_map_path [list {modelsim=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/modelsim} {questa=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/questa} {xcelium=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/xcelium} {vcs=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/vcs} {riviera=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/riviera}] -use_ip_compiled_libs -force -quiet
-export_simulation -of_objects [get_files {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/delay_combiner/delay_combiner.xci}}] -directory {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/sim_scripts} -ip_user_files_dir {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files} -ipstatic_source_dir {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/ipstatic} -lib_map_path [list {modelsim=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/modelsim} {questa=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/questa} {xcelium=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/xcelium} {vcs=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/vcs} {riviera=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/riviera}] -use_ip_compiled_libs -force -quiet
-export_simulation -of_objects [get_files {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/delay_rs/delay_rs.xci}}] -directory {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/sim_scripts} -ip_user_files_dir {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files} -ipstatic_source_dir {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/ipstatic} -lib_map_path [list {modelsim=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/modelsim} {questa=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/questa} {xcelium=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/xcelium} {vcs=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/vcs} {riviera=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/riviera}] -use_ip_compiled_libs -force -quiet
-export_simulation -of_objects [get_files {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/serdes_assembler/serdes_assembler.xci}}] -directory {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/sim_scripts} -ip_user_files_dir {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files} -ipstatic_source_dir {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/ipstatic} -lib_map_path [list {modelsim=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/modelsim} {questa=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/questa} {xcelium=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/xcelium} {vcs=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/vcs} {riviera=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/riviera}] -use_ip_compiled_libs -force -quiet
-export_simulation -of_objects [get_files {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/serdes_framer/serdes_framer.xci}}] -directory {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/sim_scripts} -ip_user_files_dir {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files} -ipstatic_source_dir {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/ipstatic} -lib_map_path [list {modelsim=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/modelsim} {questa=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/questa} {xcelium=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/xcelium} {vcs=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/vcs} {riviera=/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/riviera}] -use_ip_compiled_libs -force -quiet
-launch_runs impl_1 -jobs 24
-wait_on_run impl_1
+export_simulation -lib_map_path [list {modelsim=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/modelsim} {questa=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/questa} {xcelium=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/xcelium} {vcs=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/vcs} {riviera=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/riviera}] -of_objects [get_files {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/bram_rs/bram_rs.xci}}] -directory {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/sim_scripts} -ip_user_files_dir {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files} -ipstatic_source_dir {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/ipstatic} -use_ip_compiled_libs -force -quiet
+export_simulation -lib_map_path [list {modelsim=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/modelsim} {questa=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/questa} {xcelium=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/xcelium} {vcs=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/vcs} {riviera=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/riviera}] -of_objects [get_files {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci}}] -directory {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/sim_scripts} -ip_user_files_dir {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files} -ipstatic_source_dir {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/ipstatic} -use_ip_compiled_libs -force -quiet
+export_simulation -lib_map_path [list {modelsim=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/modelsim} {questa=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/questa} {xcelium=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/xcelium} {vcs=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/vcs} {riviera=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/riviera}] -of_objects [get_files {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/clk_wiz_1/clk_wiz_1.xci}}] -directory {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/sim_scripts} -ip_user_files_dir {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files} -ipstatic_source_dir {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/ipstatic} -use_ip_compiled_libs -force -quiet
+export_simulation -lib_map_path [list {modelsim=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/modelsim} {questa=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/questa} {xcelium=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/xcelium} {vcs=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/vcs} {riviera=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/riviera}] -of_objects [get_files {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic/cross_gth_logic.xci}}] -directory {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/sim_scripts} -ip_user_files_dir {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files} -ipstatic_source_dir {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/ipstatic} -use_ip_compiled_libs -force -quiet
+export_simulation -lib_map_path [list {modelsim=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/modelsim} {questa=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/questa} {xcelium=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/xcelium} {vcs=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/vcs} {riviera=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/riviera}] -of_objects [get_files {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic_head/cross_gth_logic_head.xci}}] -directory {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/sim_scripts} -ip_user_files_dir {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files} -ipstatic_source_dir {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/ipstatic} -use_ip_compiled_libs -force -quiet
+export_simulation -lib_map_path [list {modelsim=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/modelsim} {questa=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/questa} {xcelium=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/xcelium} {vcs=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/vcs} {riviera=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/riviera}] -of_objects [get_files {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic_load/cross_gth_logic_load.xci}}] -directory {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/sim_scripts} -ip_user_files_dir {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files} -ipstatic_source_dir {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/ipstatic} -use_ip_compiled_libs -force -quiet
+export_simulation -lib_map_path [list {modelsim=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/modelsim} {questa=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/questa} {xcelium=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/xcelium} {vcs=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/vcs} {riviera=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/riviera}] -of_objects [get_files {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth/cross_logic_gth.xci}}] -directory {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/sim_scripts} -ip_user_files_dir {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files} -ipstatic_source_dir {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/ipstatic} -use_ip_compiled_libs -force -quiet
+export_simulation -lib_map_path [list {modelsim=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/modelsim} {questa=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/questa} {xcelium=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/xcelium} {vcs=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/vcs} {riviera=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/riviera}] -of_objects [get_files {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head.xci}}] -directory {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/sim_scripts} -ip_user_files_dir {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files} -ipstatic_source_dir {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/ipstatic} -use_ip_compiled_libs -force -quiet
+export_simulation -lib_map_path [list {modelsim=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/modelsim} {questa=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/questa} {xcelium=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/xcelium} {vcs=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/vcs} {riviera=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/riviera}] -of_objects [get_files {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth_load/cross_logic_gth_load.xci}}] -directory {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/sim_scripts} -ip_user_files_dir {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files} -ipstatic_source_dir {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/ipstatic} -use_ip_compiled_libs -force -quiet
+export_simulation -lib_map_path [list {modelsim=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/modelsim} {questa=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/questa} {xcelium=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/xcelium} {vcs=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/vcs} {riviera=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/riviera}] -of_objects [get_files {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/delay_combiner/delay_combiner.xci}}] -directory {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/sim_scripts} -ip_user_files_dir {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files} -ipstatic_source_dir {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/ipstatic} -use_ip_compiled_libs -force -quiet
+export_simulation -lib_map_path [list {modelsim=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/modelsim} {questa=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/questa} {xcelium=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/xcelium} {vcs=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/vcs} {riviera=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/riviera}] -of_objects [get_files {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/serdes_assembler/serdes_assembler.xci}}] -directory {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/sim_scripts} -ip_user_files_dir {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files} -ipstatic_source_dir {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/ipstatic} -use_ip_compiled_libs -force -quiet
+export_simulation -lib_map_path [list {modelsim=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/modelsim} {questa=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/questa} {xcelium=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/xcelium} {vcs=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/vcs} {riviera=/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/compile_simlib/riviera}] -of_objects [get_files {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/serdes_framer/serdes_framer.xci}}] -directory {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/sim_scripts} -ip_user_files_dir {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files} -ipstatic_source_dir {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.ip_user_files/ipstatic} -use_ip_compiled_libs -force -quiet
+reset_run synth_1
 launch_runs impl_1 -to_step write_bitstream -jobs 24
 wait_on_run impl_1
-open_run impl_1
-close_design
 open_run synth_1 -name synth_1
-delete_debug_core [get_debug_cores {u_ila_0 }]
-create_debug_core u_ila_0 ila
-set_property C_DATA_DEPTH 1024 [get_debug_cores u_ila_0]
-set_property C_TRIGIN_EN false [get_debug_cores u_ila_0]
-set_property C_TRIGOUT_EN false [get_debug_cores u_ila_0]
-set_property C_ADV_TRIGGER false [get_debug_cores u_ila_0]
-set_property C_INPUT_PIPE_STAGES 0 [get_debug_cores u_ila_0]
-set_property C_EN_STRG_QUAL false [get_debug_cores u_ila_0]
-set_property ALL_PROBE_SAME_MU true [get_debug_cores u_ila_0]
-set_property ALL_PROBE_SAME_MU_CNT 1 [get_debug_cores u_ila_0]
-connect_debug_port u_ila_0/clk [get_nets [list clk_wiz_0_inst/inst/clk_out1 ]]
-set_property port_width 32 [get_debug_ports u_ila_0/probe0]
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe0]
-connect_debug_port u_ila_0/probe0 [get_nets [list {tx_data[0]} {tx_data[1]} {tx_data[2]} {tx_data[3]} {tx_data[4]} {tx_data[5]} {tx_data[6]} {tx_data[7]} {tx_data[8]} {tx_data[9]} {tx_data[10]} {tx_data[11]} {tx_data[12]} {tx_data[13]} {tx_data[14]} {tx_data[15]} {tx_data[16]} {tx_data[17]} {tx_data[18]} {tx_data[19]} {tx_data[20]} {tx_data[21]} {tx_data[22]} {tx_data[23]} {tx_data[24]} {tx_data[25]} {tx_data[26]} {tx_data[27]} {tx_data[28]} {tx_data[29]} {tx_data[30]} {tx_data[31]} ]]
-create_debug_port u_ila_0 probe
-set_property port_width 32 [get_debug_ports u_ila_0/probe1]
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe1]
-connect_debug_port u_ila_0/probe1 [get_nets [list {fso_data[0]} {fso_data[1]} {fso_data[2]} {fso_data[3]} {fso_data[4]} {fso_data[5]} {fso_data[6]} {fso_data[7]} {fso_data[8]} {fso_data[9]} {fso_data[10]} {fso_data[11]} {fso_data[12]} {fso_data[13]} {fso_data[14]} {fso_data[15]} {fso_data[16]} {fso_data[17]} {fso_data[18]} {fso_data[19]} {fso_data[20]} {fso_data[21]} {fso_data[22]} {fso_data[23]} {fso_data[24]} {fso_data[25]} {fso_data[26]} {fso_data[27]} {fso_data[28]} {fso_data[29]} {fso_data[30]} {fso_data[31]} ]]
-create_debug_port u_ila_0 probe
-set_property port_width 32 [get_debug_ports u_ila_0/probe2]
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe2]
-connect_debug_port u_ila_0/probe2 [get_nets [list {data_out[0]} {data_out[1]} {data_out[2]} {data_out[3]} {data_out[4]} {data_out[5]} {data_out[6]} {data_out[7]} {data_out[8]} {data_out[9]} {data_out[10]} {data_out[11]} {data_out[12]} {data_out[13]} {data_out[14]} {data_out[15]} {data_out[16]} {data_out[17]} {data_out[18]} {data_out[19]} {data_out[20]} {data_out[21]} {data_out[22]} {data_out[23]} {data_out[24]} {data_out[25]} {data_out[26]} {data_out[27]} {data_out[28]} {data_out[29]} {data_out[30]} {data_out[31]} ]]
-create_debug_port u_ila_0 probe
-set_property port_width 32 [get_debug_ports u_ila_0/probe3]
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe3]
-connect_debug_port u_ila_0/probe3 [get_nets [list {data_in[0]} {data_in[1]} {data_in[2]} {data_in[3]} {data_in[4]} {data_in[5]} {data_in[6]} {data_in[7]} {data_in[8]} {data_in[9]} {data_in[10]} {data_in[11]} {data_in[12]} {data_in[13]} {data_in[14]} {data_in[15]} {data_in[16]} {data_in[17]} {data_in[18]} {data_in[19]} {data_in[20]} {data_in[21]} {data_in[22]} {data_in[23]} {data_in[24]} {data_in[25]} {data_in[26]} {data_in[27]} {data_in[28]} {data_in[29]} {data_in[30]} {data_in[31]} ]]
-create_debug_port u_ila_0 probe
-set_property port_width 16 [get_debug_ports u_ila_0/probe4]
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe4]
-connect_debug_port u_ila_0/probe4 [get_nets [list {autorun_inst/count[0]} {autorun_inst/count[1]} {autorun_inst/count[2]} {autorun_inst/count[3]} {autorun_inst/count[4]} {autorun_inst/count[5]} {autorun_inst/count[6]} {autorun_inst/count[7]} {autorun_inst/count[8]} {autorun_inst/count[9]} {autorun_inst/count[10]} {autorun_inst/count[11]} {autorun_inst/count[12]} {autorun_inst/count[13]} {autorun_inst/count[14]} {autorun_inst/count[15]} ]]
-create_debug_port u_ila_0 probe
-set_property port_width 1 [get_debug_ports u_ila_0/probe5]
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe5]
-connect_debug_port u_ila_0/probe5 [get_nets [list data_dv ]]
-create_debug_port u_ila_0 probe
-set_property port_width 1 [get_debug_ports u_ila_0/probe6]
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe6]
-connect_debug_port u_ila_0/probe6 [get_nets [list en ]]
-create_debug_port u_ila_0 probe
-set_property port_width 1 [get_debug_ports u_ila_0/probe7]
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe7]
-connect_debug_port u_ila_0/probe7 [get_nets [list flag ]]
-create_debug_port u_ila_0 probe
-set_property port_width 1 [get_debug_ports u_ila_0/probe8]
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe8]
-connect_debug_port u_ila_0/probe8 [get_nets [list fso_dv ]]
-create_debug_port u_ila_0 probe
-set_property port_width 1 [get_debug_ports u_ila_0/probe9]
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe9]
-connect_debug_port u_ila_0/probe9 [get_nets [list tx_dv ]]
-set_property target_constrs_file {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/constrs_1/imports/File xdc/sda_top.xdc} [current_fileset -constrset]
-save_constraints -force
-launch_simulation
-source top.tcl
-close_sim
-launch_sim
-source top.tcl
-add_force {top/sys_clk_p} -radix hex {0 0ns} {1 2.5ns} -repeat 5ns
-add_force {top/sys_clk_n} -radix hex {1 0ns} {0 2.5ns} -repeat 5ns
-run 10us
-open_hw_manager
-connect_hw_server -allow_non_jtag
-disconnect_hw_server localhost:3121
-connect_hw_server -allow_non_jtag
-open_hw_target
-set_property PROGRAM.FILE {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.runs/impl_1/top.bit} [get_hw_devices xcku060_0]
-set_property PROBES.FILE {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.runs/impl_1/top.ltx} [get_hw_devices xcku060_0]
-set_property FULL_PROBES.FILE {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.runs/impl_1/top.ltx} [get_hw_devices xcku060_0]
-current_hw_device [get_hw_devices xcku060_0]
-refresh_hw_device [lindex [get_hw_devices xcku060_0] 0]
-set_property PROBES.FILE {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.runs/impl_1/top.ltx} [get_hw_devices xcku060_0]
-set_property FULL_PROBES.FILE {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.runs/impl_1/top.ltx} [get_hw_devices xcku060_0]
-set_property PROGRAM.FILE {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.runs/impl_1/top.bit} [get_hw_devices xcku060_0]
-program_hw_devices [get_hw_devices xcku060_0]
-refresh_hw_device [lindex [get_hw_devices xcku060_0] 0]
-display_hw_ila_data [ get_hw_ila_data hw_ila_data_1 -of_objects [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]
-display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xcku060_0] -filter {CELL_NAME=~"u_ila_0"}]]
-close_sim
+report_power -name {power_1}
+report_utilization -hierarchical_min_primitive_count 50 -name utilization_1

@@ -26,7 +26,8 @@ module crc_32 # (parameter max = 477) (
     input               en,
     input   [31:0]      data_in,
     output              flag,
-    output  [31:0]      data_out
+    output  [31:0]      data_out,
+    output  [15:0]      count_out // Port output agar count bisa dibaca dari luar
 );
 
 reg     [15:0]   count  = 16'd0;
@@ -107,10 +108,10 @@ begin
         crc_out     <= 32'b0;
     else if (state == ACTIVE)
         begin
-            if (count < max)
+            if (count < max - 1)
                 crc_out     <= temp;
-            else if (count == max)
-                crc_out     <= Q;
+            else if (count == max - 1)
+                crc_out     <= D; 
         end
 end
 
@@ -149,7 +150,7 @@ assign  D[31] = Q[5] ^ Q[8] ^ Q[9] ^ Q[11] ^ Q[15] ^ Q[23] ^ Q[24] ^ Q[25] ^ Q[2
 
 assign  flag        = (count != 0);
 assign  data_out    = (flag) ? crc_out : 32'b0;
-
+assign  count_out   = count; 
 
 
 

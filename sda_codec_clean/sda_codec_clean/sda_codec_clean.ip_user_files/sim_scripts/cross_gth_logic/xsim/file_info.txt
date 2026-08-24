@@ -1,0 +1,2 @@
+cross_gth_logic.v,verilog,xil_defaultlib,../../../../sda_codec_clean.gen/sources_1/ip/cross_gth_logic/sim/cross_gth_logic.v,incdir="../../../../../../../../2025_vivado/2025.2/data/rsb/busdef"
+glbl.v,Verilog,xil_defaultlib,glbl.v

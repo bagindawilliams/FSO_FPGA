@@ -1,16 +1,136 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="synth_1" LaunchPart="xcku060-ffva1156-2-i" LaunchTime="1786002712">
+<GenRun Id="synth_1" LaunchPart="xcku060-ffva1156-2-i" LaunchTime="1787555771" LaunchIncrCheckpoint="$PSRCDIR/utils_1/imports/synth_1/top.dcp">
+  <File Type="VDS-TIMING-PB" Name="top_timing_summary_synth.pb"/>
   <File Type="VDS-TIMINGSUMMARY" Name="top_timing_summary_synth.rpt"/>
   <File Type="RDS-DCP" Name="top.dcp"/>
   <File Type="RDS-UTIL-PB" Name="top_utilization_synth.pb"/>
   <File Type="RDS-UTIL" Name="top_utilization_synth.rpt"/>
-  <File Type="VDS-TIMING-PB" Name="top_timing_summary_synth.pb"/>
-  <File Type="PA-TCL" Name="top.tcl"/>
-  <File Type="REPORTS-TCL" Name="top_reports.tcl"/>
-  <File Type="RDS-RDS" Name="top.vds"/>
   <File Type="RDS-PROPCONSTRS" Name="top_drc_synth.rpt"/>
+  <File Type="RDS-RDS" Name="top.vds"/>
+  <File Type="REPORTS-TCL" Name="top_reports.tcl"/>
+  <File Type="PA-TCL" Name="top.tcl"/>
   <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1" RelGenDir="$PGENDIR/sources_1">
     <Filter Type="Srcs"/>
+    <File Path="$PSRCDIR/sources_1/imports/Source core file/sample.mem">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Source core file/sample.mem"/>
+        <Attr Name="ImportTime" Val="1784714186"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/Source core file/error.mem">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Source core file/error.mem"/>
+        <Attr Name="ImportTime" Val="1784714186"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/Source core file/rs_codec/decimal_value.mem">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Source core file/rs_codec/decimal_value.mem"/>
+        <Attr Name="ImportTime" Val="1784714186"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/imports/Source core file/rs_codec/alpha_value.mem">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../Source core file/rs_codec/alpha_value.mem"/>
+        <Attr Name="ImportTime" Val="1784714186"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/ip/serdes_assembler/serdes_assembler.xci">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../File xci/serdes_assembler.xci"/>
+        <Attr Name="ImportTime" Val="1785818216"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/ip/cross_logic_gth_load/cross_logic_gth_load.xci">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../File xci/cross_logic_gth_load.xci"/>
+        <Attr Name="ImportTime" Val="1785820205"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/ip/bram_rs/bram_rs.xci">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/ip/cross_gth_logic/cross_gth_logic.xci">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../File xci/cross_gth_logic.xci"/>
+        <Attr Name="ImportTime" Val="1785819910"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/ip/cross_logic_gth/cross_logic_gth.xci">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../File xci/cross_logic_gth.xci"/>
+        <Attr Name="ImportTime" Val="1785820094"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/ip/delay_combiner/delay_combiner.xci">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../File xci/delay_combiner.xci"/>
+        <Attr Name="ImportTime" Val="1785818116"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/ip/cross_gth_logic_load/cross_gth_logic_load.xci">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../File xci/cross_gth_logic_load.xci"/>
+        <Attr Name="ImportTime" Val="1785819446"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/ip/serdes_framer/serdes_framer.xci">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../File xci/serdes_framer.xci"/>
+        <Attr Name="ImportTime" Val="1785818243"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/ip/clk_wiz_1/clk_wiz_1.xci">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../File xci/clk_wiz_1.xci"/>
+        <Attr Name="ImportTime" Val="1785818480"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
+    <File Path="$PSRCDIR/sources_1/ip/clk_wiz_0/clk_wiz_0.xci">
+      <FileInfo>
+        <Attr Name="ImportPath" Val="$PPRDIR/../File xci/clk_wiz_0.xci"/>
+        <Attr Name="ImportTime" Val="1785818424"/>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedIn" Val="simulation"/>
+      </FileInfo>
+    </File>
     <File Path="$PSRCDIR/sources_1/imports/Source core file/decoder/assembler.v">
       <FileInfo>
         <Attr Name="ImportPath" Val="$PPRDIR/../Source core file/decoder/assembler.v"/>
@@ -329,10 +449,9 @@
     <Config>
       <Option Name="DesignMode" Val="RTL"/>
       <Option Name="TopModule" Val="top"/>
-      <Option Name="TopAutoSet" Val="TRUE"/>
     </Config>
   </FileSet>
-  <FileSet Name="constrs_in" Type="Constrs" RelSrcDir="$PSRCDIR/constrs_1">
+  <FileSet Name="constrs_in" Type="Constrs" RelSrcDir="$PSRCDIR/constrs_1" RelGenDir="$PGENDIR/constrs_1">
     <Filter Type="Constrs"/>
     <File Path="$PSRCDIR/constrs_1/imports/File xdc/sda_top.xdc">
       <FileInfo>
@@ -347,28 +466,24 @@
       <Option Name="ConstrsType" Val="XDC"/>
     </Config>
   </FileSet>
-  <FileSet Name="utils" Type="Utils" RelSrcDir="$PSRCDIR/utils_1">
+  <FileSet Name="utils" Type="Utils" RelSrcDir="$PSRCDIR/utils_1" RelGenDir="$PGENDIR/utils_1">
     <Filter Type="Utils"/>
+    <File Path="$PSRCDIR/utils_1/imports/synth_1/top.dcp">
+      <FileInfo>
+        <Attr Name="UsedIn" Val="synthesis"/>
+        <Attr Name="UsedIn" Val="implementation"/>
+        <Attr Name="UsedInSteps" Val="synth_1"/>
+        <Attr Name="AutoDcp" Val="1"/>
+      </FileInfo>
+    </File>
     <Config>
       <Option Name="TopAutoSet" Val="TRUE"/>
     </Config>
   </FileSet>
   <Strategy Version="1" Minor="2">
-    <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2022">
-      <Desc>Vivado Synthesis Defaults</Desc>
-    </StratHandle>
+    <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2022"/>
     <Step Id="synth_design"/>
   </Strategy>
-  <BlockFileSet Type="BlockSrcs" Name="serdes_framer"/>
-  <BlockFileSet Type="BlockSrcs" Name="serdes_assembler"/>
-  <BlockFileSet Type="BlockSrcs" Name="delay_rs"/>
-  <BlockFileSet Type="BlockSrcs" Name="delay_combiner"/>
-  <BlockFileSet Type="BlockSrcs" Name="cross_logic_gth_load"/>
   <BlockFileSet Type="BlockSrcs" Name="cross_logic_gth_head"/>
-  <BlockFileSet Type="BlockSrcs" Name="cross_logic_gth"/>
   <BlockFileSet Type="BlockSrcs" Name="cross_gth_logic_head"/>
-  <BlockFileSet Type="BlockSrcs" Name="cross_gth_logic"/>
-  <BlockFileSet Type="BlockSrcs" Name="clk_wiz_1"/>
-  <BlockFileSet Type="BlockSrcs" Name="cross_gth_logic_load"/>
-  <BlockFileSet Type="BlockSrcs" Name="clk_wiz_0"/>
 </GenRun>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GenRun Id="bram_rs_synth_1" LaunchPart="xcku060-ffva1156-2-i" LaunchTime="1785937716">
   <File Type="RDS-DCP" Name="bram_rs.dcp"/>
+  <File Type="RDS-RDS" Name="bram_rs.vds"/>
+  <File Type="RDS-UTIL" Name="bram_rs_utilization_synth.rpt"/>
   <File Type="RDS-UTIL-PB" Name="bram_rs_utilization_synth.pb"/>
   <File Type="PA-TCL" Name="bram_rs.tcl"/>
-  <File Type="RDS-UTIL" Name="bram_rs_utilization_synth.rpt"/>
   <File Type="REPORTS-TCL" Name="bram_rs_reports.tcl"/>
-  <File Type="RDS-RDS" Name="bram_rs.vds"/>
   <FileSet Name="sources" Type="BlockSrcs" RelSrcDir="$PSRCDIR/bram_rs">
     <File Path="$PSRCDIR/sources_1/ip/bram_rs/bram_rs.xci">
       <FileInfo>

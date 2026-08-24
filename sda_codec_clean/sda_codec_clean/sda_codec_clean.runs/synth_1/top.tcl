@@ -4,7 +4,7 @@
 
 set TIME_start [clock seconds] 
 namespace eval ::optrace {
-  variable script "/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.runs/synth_1/top.tcl"
+  variable script "/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.runs/synth_1/top.tcl"
   variable category "vivado_synth"
 }
 
@@ -55,22 +55,9 @@ if {$::dispatch::connected} {
   }
 }
 
-proc create_report { reportName command } {
-  set status "."
-  append status $reportName ".fail"
-  if { [file exists $status] } {
-    eval file delete [glob $status]
-  }
-  send_msg_id runtcl-4 info "Executing : $command"
-  set retval [eval catch { $command } msg]
-  if { $retval != 0 } {
-    set fp [open $status w]
-    close $fp
-    send_msg_id runtcl-5 warning "$msg"
-  }
-}
 OPTRACE "synth_1" START { ROLLUP_AUTO }
 set_param tcl.statsThreshold 360
+set_param general.usePosixSpawnForFork 1
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xcku060-ffva1156-2-i
 
@@ -78,107 +65,112 @@ set_param project.singleFileAddWarning.threshold 0
 set_param project.compositeFile.enableAutoGeneration 0
 set_param synth.vivado.isSynthRun true
 set_msg_config -source 4 -id {IP_Flow 19-2162} -severity warning -new_severity info
-set_property webtalk.parent_dir {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/wt} [current_project]
-set_property parent.project_path {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.xpr} [current_project]
+set_property webtalk.parent_dir {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/wt} [current_project]
+set_property parent.project_path {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.xpr} [current_project]
 set_property XPM_LIBRARIES {XPM_CDC XPM_MEMORY} [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language Verilog [current_project]
-set_property ip_output_repo {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/ip} [current_project]
+set_property ip_output_repo {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.cache/ip} [current_project]
 set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
-read_verilog -library xil_defaultlib {
-  {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/decoder/assembler.v}
-  {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/decoder/assembler_top.v}
-  {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/autorun.v}
-  {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/rs_codec/chien_search.v}
-  {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/encoder/combiner.v}
-  {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/decoder/core_rx.v}
-  {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/encoder/core_tx.v}
-  {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/encoder/crc_16.v}
-  {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/encoder/crc_32.v}
-  {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/decoder/decoder_top.v}
-  {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/encoder/encoder_top.v}
-  {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/error_inject.v}
-  {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/rs_codec/euclid_proc.v}
-  {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/rs_codec/forney_math.v}
-  {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/encoder/framer.v}
-  {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/encoder/framer_top.v}
-  {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/rs_codec/inverter.v}
-  {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/encoder/lpc.v}
-  {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/decoder/lpc_dec.v}
-  {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/decoder/lpc_dec_top.v}
-  {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/encoder/lpc_top.v}
-  {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/rs_codec/multiplier.v}
-  {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/rs_codec/rs_decoder.v}
-  {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/decoder/rs_decoder_64.v}
-  {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/rs_codec/rs_encoder.v}
-  {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/encoder/rs_encoder_64.v}
-  {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/decoder/rx_gth_logic.v}
-  {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/decoder/rx_logic_gth.v}
-  {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/encoder/scrambler.v}
-  {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/decoder/separator.v}
-  {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/stream_input.v}
-  {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/rs_codec/syndrome_unit.v}
-  {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/encoder/x_gth_logic.v}
-  {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/encoder/x_logic_gth.v}
-  {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/top.v}
+read_mem {
+  {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/sample.mem}
+  {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/error.mem}
+  {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/rs_codec/decimal_value.mem}
+  {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/rs_codec/alpha_value.mem}
 }
-read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci}}
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_board.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_ooc.xdc}}]
+read_verilog -library xil_defaultlib {
+  {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/decoder/assembler.v}
+  {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/decoder/assembler_top.v}
+  {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/autorun.v}
+  {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/rs_codec/chien_search.v}
+  {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/encoder/combiner.v}
+  {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/decoder/core_rx.v}
+  {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/encoder/core_tx.v}
+  {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/encoder/crc_16.v}
+  {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/encoder/crc_32.v}
+  {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/decoder/decoder_top.v}
+  {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/encoder/encoder_top.v}
+  {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/error_inject.v}
+  {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/rs_codec/euclid_proc.v}
+  {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/rs_codec/forney_math.v}
+  {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/encoder/framer.v}
+  {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/encoder/framer_top.v}
+  {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/rs_codec/inverter.v}
+  {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/encoder/lpc.v}
+  {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/decoder/lpc_dec.v}
+  {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/decoder/lpc_dec_top.v}
+  {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/encoder/lpc_top.v}
+  {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/rs_codec/multiplier.v}
+  {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/rs_codec/rs_decoder.v}
+  {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/decoder/rs_decoder_64.v}
+  {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/rs_codec/rs_encoder.v}
+  {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/encoder/rs_encoder_64.v}
+  {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/decoder/rx_gth_logic.v}
+  {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/decoder/rx_logic_gth.v}
+  {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/encoder/scrambler.v}
+  {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/decoder/separator.v}
+  {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/stream_input.v}
+  {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/rs_codec/syndrome_unit.v}
+  {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/encoder/x_gth_logic.v}
+  {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/encoder/x_logic_gth.v}
+  {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/imports/Source core file/top.v}
+}
+read_ip -quiet {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/serdes_assembler/serdes_assembler.xci}}
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/serdes_assembler/serdes_assembler.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/serdes_assembler/serdes_assembler_ooc.xdc}}]
 
-read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/clk_wiz_1/clk_wiz_1.xci}}
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/clk_wiz_1/clk_wiz_1_board.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/clk_wiz_1/clk_wiz_1.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/clk_wiz_1/clk_wiz_1_ooc.xdc}}]
+read_ip -quiet {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth_load/cross_logic_gth_load.xci}}
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_logic_gth_load/cross_logic_gth_load.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_logic_gth_load/cross_logic_gth_load_clocks.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_logic_gth_load/cross_logic_gth_load_ooc.xdc}}]
 
-read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic/cross_gth_logic.xci}}
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_gth_logic/cross_gth_logic.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_gth_logic/cross_gth_logic_clocks.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_gth_logic/cross_gth_logic_ooc.xdc}}]
+read_ip -quiet {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/bram_rs/bram_rs.xci}}
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/bram_rs/bram_rs_ooc.xdc}}]
 
-read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic_head/cross_gth_logic_head.xci}}
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_gth_logic_head/cross_gth_logic_head.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_gth_logic_head/cross_gth_logic_head_clocks.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_gth_logic_head/cross_gth_logic_head_ooc.xdc}}]
+read_ip -quiet {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic/cross_gth_logic.xci}}
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_gth_logic/cross_gth_logic.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_gth_logic/cross_gth_logic_clocks.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_gth_logic/cross_gth_logic_ooc.xdc}}]
 
-read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic_load/cross_gth_logic_load.xci}}
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_gth_logic_load/cross_gth_logic_load.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_gth_logic_load/cross_gth_logic_load_clocks.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_gth_logic_load/cross_gth_logic_load_ooc.xdc}}]
+read_ip -quiet {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth/cross_logic_gth.xci}}
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_logic_gth/cross_logic_gth.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_logic_gth/cross_logic_gth_clocks.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_logic_gth/cross_logic_gth_ooc.xdc}}]
 
-read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth/cross_logic_gth.xci}}
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_logic_gth/cross_logic_gth.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_logic_gth/cross_logic_gth_clocks.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_logic_gth/cross_logic_gth_ooc.xdc}}]
+read_ip -quiet {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/delay_combiner/delay_combiner.xci}}
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/delay_combiner/delay_combiner.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/delay_combiner/delay_combiner_ooc.xdc}}]
 
-read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head.xci}}
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head_clocks.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head_ooc.xdc}}]
+read_ip -quiet {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic_load/cross_gth_logic_load.xci}}
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_gth_logic_load/cross_gth_logic_load.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_gth_logic_load/cross_gth_logic_load_clocks.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_gth_logic_load/cross_gth_logic_load_ooc.xdc}}]
 
-read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth_load/cross_logic_gth_load.xci}}
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_logic_gth_load/cross_logic_gth_load.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_logic_gth_load/cross_logic_gth_load_clocks.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_logic_gth_load/cross_logic_gth_load_ooc.xdc}}]
+read_ip -quiet {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/serdes_framer/serdes_framer.xci}}
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/serdes_framer/serdes_framer.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/serdes_framer/serdes_framer_ooc.xdc}}]
 
-read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/delay_combiner/delay_combiner.xci}}
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/delay_combiner/delay_combiner.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/delay_combiner/delay_combiner_ooc.xdc}}]
+read_ip -quiet {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/clk_wiz_1/clk_wiz_1.xci}}
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/clk_wiz_1/clk_wiz_1_board.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/clk_wiz_1/clk_wiz_1.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/clk_wiz_1/clk_wiz_1_ooc.xdc}}]
 
-read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/delay_rs/delay_rs.xci}}
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/delay_rs/delay_rs.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/delay_rs/delay_rs_ooc.xdc}}]
+read_ip -quiet {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci}}
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_board.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_ooc.xdc}}]
 
-read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/serdes_assembler/serdes_assembler.xci}}
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/serdes_assembler/serdes_assembler.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/serdes_assembler/serdes_assembler_ooc.xdc}}]
+read_ip -quiet {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_gth_logic_head/cross_gth_logic_head.xci}}
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_gth_logic_head/cross_gth_logic_head.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_gth_logic_head/cross_gth_logic_head_clocks.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_gth_logic_head/cross_gth_logic_head_ooc.xdc}}]
 
-read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/serdes_framer/serdes_framer.xci}}
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/serdes_framer/serdes_framer.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/serdes_framer/serdes_framer_ooc.xdc}}]
+read_ip -quiet {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head.xci}}
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head_clocks.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head_ooc.xdc}}]
 
 OPTRACE "Adding files" END { }
 # Mark all dcp files as not used in implementation to prevent them from being
@@ -189,10 +181,14 @@ OPTRACE "Adding files" END { }
 foreach dcp [get_files -quiet -all -filter file_type=="Design\ Checkpoint"] {
   set_property used_in_implementation false $dcp
 }
-read_xdc {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/constrs_1/imports/File xdc/sda_top.xdc}}
-set_property used_in_implementation false [get_files {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/constrs_1/imports/File xdc/sda_top.xdc}}]
+read_xdc {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/constrs_1/imports/File xdc/sda_top.xdc}}
+set_property used_in_implementation false [get_files {{/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/constrs_1/imports/File xdc/sda_top.xdc}}]
 
+read_xdc dont_touch.xdc
+set_property used_in_implementation false [get_files dont_touch.xdc]
 set_param ips.enableIPCacheLiteLoad 1
+
+read_checkpoint -auto_incremental -incremental {/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/utils_1/imports/synth_1/top.dcp}
 close [open __synthesis_is_running__ w]
 
 OPTRACE "synth_design" START { }
@@ -209,7 +205,7 @@ set_param constraints.enableBinaryConstraints false
 write_checkpoint -force -noxdef top.dcp
 OPTRACE "write_checkpoint" END { }
 OPTRACE "synth reports" START { REPORT }
-create_report "synth_1_synth_report_utilization_0" "report_utilization -file top_utilization_synth.rpt -pb top_utilization_synth.pb"
+generate_parallel_reports -reports { "report_utilization -file top_utilization_synth.rpt -pb top_utilization_synth.pb"  } 
 OPTRACE "synth reports" END { }
 file delete __synthesis_is_running__
 close [open __synthesis_is_complete__ w]

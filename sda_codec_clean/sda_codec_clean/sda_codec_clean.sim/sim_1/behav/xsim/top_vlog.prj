@@ -1,5 +1,5 @@
 # compile verilog/system verilog design source files
-verilog xil_defaultlib  --include "../../../../sda_codec_clean.gen/sources_1/ip/clk_wiz_0" --include "../../../../sda_codec_clean.gen/sources_1/ip/clk_wiz_1" \
+verilog xil_defaultlib  --include "../../../../../../../../../../2025.2/2025.2/data/rsb/busdef" --include "../../../../sda_codec_clean.ip_user_files/ipstatic" \
 "../../../../sda_codec_clean.gen/sources_1/ip/serdes_assembler/sim/serdes_assembler.v" \
 "../../../../sda_codec_clean.gen/sources_1/ip/cross_logic_gth_load/sim/cross_logic_gth_load.v" \
 "../../../../sda_codec_clean.gen/sources_1/ip/cross_logic_gth_head/sim/cross_logic_gth_head.v" \

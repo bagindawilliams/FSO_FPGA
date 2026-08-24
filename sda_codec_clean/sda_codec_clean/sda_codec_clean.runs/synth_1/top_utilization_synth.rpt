@@ -1,14 +1,14 @@
-Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
--------------------------------------------------------------------------------------------------
-| Tool Version : Vivado v.2022.2 (lin64) Build 3671981 Fri Oct 14 04:59:54 MDT 2022
-| Date         : Thu Aug  6 16:40:43 2026
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (lin64) Build 6299465 Fri Nov 14 12:34:56 MST 2025
+| Date         : Mon Aug 24 16:19:28 2026
 | Host         : Williams running 64-bit Ubuntu 22.04.5 LTS
 | Command      : report_utilization -file top_utilization_synth.rpt -pb top_utilization_synth.pb
 | Design       : top
 | Device       : xcku060-ffva1156-2-i
 | Speed File   : -2
 | Design State : Synthesized
--------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------
 
 Utilization Design Information
 
@@ -29,22 +29,25 @@ Table of Contents
 1. CLB Logic
 ------------
 
-+-------------------------+------+-------+------------+-----------+-------+
-|        Site Type        | Used | Fixed | Prohibited | Available | Util% |
-+-------------------------+------+-------+------------+-----------+-------+
-| CLB LUTs*               | 8990 |     0 |          0 |    331680 |  2.71 |
-|   LUT as Logic          | 8990 |     0 |          0 |    331680 |  2.71 |
-|   LUT as Memory         |    0 |     0 |          0 |    146880 |  0.00 |
-| CLB Registers           | 8242 |     0 |          0 |    663360 |  1.24 |
-|   Register as Flip Flop | 8242 |     0 |          0 |    663360 |  1.24 |
-|   Register as Latch     |    0 |     0 |          0 |    663360 |  0.00 |
-| CARRY8                  |    0 |     0 |          0 |     41460 |  0.00 |
-| F7 Muxes                |   32 |     0 |          0 |    165840 |  0.02 |
-| F8 Muxes                |    0 |     0 |          0 |     82920 |  0.00 |
-| F9 Muxes                |    0 |     0 |          0 |     41460 |  0.00 |
-+-------------------------+------+-------+------------+-----------+-------+
++-------------------------+--------+-------+------------+-----------+-------+
+|        Site Type        |  Used  | Fixed | Prohibited | Available | Util% |
++-------------------------+--------+-------+------------+-----------+-------+
+| CLB LUTs*               | 109823 |     0 |          0 |    331680 | 33.11 |
+|   LUT as Logic          | 109823 |     0 |          0 |    331680 | 33.11 |
+|   LUT as Memory         |      0 |     0 |          0 |    146880 |  0.00 |
+| CLB Registers           |  16040 |     0 |          0 |    663360 |  2.42 |
+|   Register as Flip Flop |  16040 |     0 |          0 |    663360 |  2.42 |
+|   Register as Latch     |      0 |     0 |          0 |    663360 |  0.00 |
+| CARRY8                  |   1728 |     0 |          0 |     41460 |  4.17 |
+| F7 Muxes                |  19564 |     0 |          0 |    165840 | 11.80 |
+| F8 Muxes                |   6204 |     0 |          0 |     82920 |  7.48 |
+| F9 Muxes                |      0 |     0 |          0 |     41460 |  0.00 |
+| Unique Control Sets     |     95 |       |          0 |     82920 |  0.11 |
++-------------------------+--------+-------+------------+-----------+-------+
 * Warning! The Final LUT count, after physical optimizations and full implementation, is typically lower. Run opt_design after synthesis, if not already completed, for a more realistic count.
 Warning! LUT value is adjusted to account for LUT combining.
+Warning! For any ECO changes, please run place_design if there are unplaced instances
+** Note: Available Control Sets calculated as Slices * 2, Review the Control Sets Report for more information regarding control sets.
 
 
 1.1 Summary of Registers by Type
@@ -60,9 +63,9 @@ Warning! LUT value is adjusted to account for LUT combining.
 | 0     |            _ |       Reset |            - |
 | 0     |          Yes |           - |            - |
 | 130   |          Yes |           - |          Set |
-| 7971  |          Yes |           - |        Reset |
+| 15761 |          Yes |           - |        Reset |
 | 0     |          Yes |         Set |            - |
-| 141   |          Yes |       Reset |            - |
+| 149   |          Yes |       Reset |            - |
 +-------+--------------+-------------+--------------+
 
 
@@ -92,27 +95,36 @@ Warning! LUT value is adjusted to account for LUT combining.
 4. I/O
 ------
 
-+------------+------+-------+------------+-----------+-------+
-|  Site Type | Used | Fixed | Prohibited | Available | Util% |
-+------------+------+-------+------------+-----------+-------+
-| Bonded IOB |    3 |     0 |          0 |       520 |  0.58 |
-+------------+------+-------+------------+-----------+-------+
++------------------+------+-------+------------+-----------+-------+
+|     Site Type    | Used | Fixed | Prohibited | Available | Util% |
++------------------+------+-------+------------+-----------+-------+
+| Bonded IOB       |    3 |     0 |          0 |       520 |  0.58 |
+|   HPIOB          |    0 |     0 |          0 |       416 |  0.00 |
+|   HRIO           |    0 |     0 |          0 |       104 |  0.00 |
+| HPIOBDIFFINBUF   |    0 |     0 |          0 |       240 |  0.00 |
+| HPIOBDIFFOUTBUF  |    0 |     0 |          0 |       240 |  0.00 |
+| HRIODIFFINBUF    |    0 |     0 |          0 |        48 |  0.00 |
+| HRIODIFFOUTBUF   |    0 |     0 |          0 |        48 |  0.00 |
+| BITSLICE_CONTROL |    0 |     0 |          0 |        96 |  0.00 |
+| BITSLICE_RX_TX   |    0 |     0 |          0 |      3744 |  0.00 |
+| BITSLICE_TX      |    0 |     0 |          0 |        96 |  0.00 |
+| RIU_OR           |    0 |     0 |          0 |        48 |  0.00 |
++------------------+------+-------+------------+-----------+-------+
 
 
 5. CLOCK
 --------
 
-+----------------------+------+-------+------------+-----------+-------+
-|       Site Type      | Used | Fixed | Prohibited | Available | Util% |
-+----------------------+------+-------+------------+-----------+-------+
-| GLOBAL CLOCK BUFFERs |    0 |     0 |          0 |       624 |  0.00 |
-|   BUFGCE             |    0 |     0 |          0 |       288 |  0.00 |
-|   BUFGCE_DIV         |    0 |     0 |          0 |        48 |  0.00 |
-|   BUFG_GT            |    0 |     0 |          0 |       192 |  0.00 |
-|   BUFGCTRL*          |    0 |     0 |          0 |        96 |  0.00 |
-| PLLE3_ADV            |    0 |     0 |          0 |        24 |  0.00 |
-| MMCME3_ADV           |    0 |     0 |          0 |        12 |  0.00 |
-+----------------------+------+-------+------------+-----------+-------+
++------------+------+-------+------------+-----------+-------+
+|  Site Type | Used | Fixed | Prohibited | Available | Util% |
++------------+------+-------+------------+-----------+-------+
+| BUFGCE     |    0 |     0 |          0 |       288 |  0.00 |
+| BUFGCE_DIV |    0 |     0 |          0 |        48 |  0.00 |
+| BUFG_GT    |    0 |     0 |          0 |       192 |  0.00 |
+| BUFGCTRL*  |    0 |     0 |          0 |        96 |  0.00 |
+| PLLE3_ADV  |    0 |     0 |          0 |        24 |  0.00 |
+| MMCME3_ADV |    0 |     0 |          0 |        12 |  0.00 |
++------------+------+-------+------------+-----------+-------+
 * Note: Each used BUFGCTRL counts as two GLOBAL CLOCK BUFFERs. This table does not include global clocking resources, only buffer cell usage. See the Clock Utilization Report (report_clock_utilization) for detailed accounting of global clocking resource availability.
 
 
@@ -151,23 +163,25 @@ Warning! LUT value is adjusted to account for LUT combining.
 8. Primitives
 -------------
 
-+-----------+------+---------------------+
-|  Ref Name | Used | Functional Category |
-+-----------+------+---------------------+
-| FDCE      | 7971 |            Register |
-| LUT6      | 3597 |                 CLB |
-| LUT3      | 2704 |                 CLB |
-| LUT2      | 1469 |                 CLB |
-| LUT5      | 1424 |                 CLB |
-| LUT4      | 1140 |                 CLB |
-| FDRE      |  141 |            Register |
-| FDPE      |  130 |            Register |
-| LUT1      |   35 |                 CLB |
-| MUXF7     |   32 |                 CLB |
-| OBUF      |    1 |                 I/O |
-| IBUFCTRL  |    1 |              Others |
-| DIFFINBUF |    1 |                 I/O |
-+-----------+------+---------------------+
++-----------+-------+---------------------+
+|  Ref Name |  Used | Functional Category |
++-----------+-------+---------------------+
+| LUT6      | 81159 |                 CLB |
+| MUXF7     | 19564 |                 CLB |
+| LUT5      | 18235 |                 CLB |
+| FDCE      | 15761 |            Register |
+| LUT2      |  7554 |                 CLB |
+| LUT3      |  6870 |                 CLB |
+| MUXF8     |  6204 |                 CLB |
+| LUT4      |  5720 |                 CLB |
+| CARRY8    |  1728 |                 CLB |
+| FDRE      |   149 |            Register |
+| FDPE      |   130 |            Register |
+| LUT1      |   103 |                 CLB |
+| OBUF      |     1 |                 I/O |
+| IBUFCTRL  |     1 |              Others |
+| DIFFINBUF |     1 |                 I/O |
++-----------+-------+---------------------+
 
 
 9. Black Boxes
@@ -176,7 +190,7 @@ Warning! LUT value is adjusted to account for LUT combining.
 +----------------------+------+
 |       Ref Name       | Used |
 +----------------------+------+
-| delay_rs             |    9 |
+| bram_rs              |    9 |
 | serdes_framer        |    1 |
 | serdes_assembler     |    1 |
 | delay_combiner       |    1 |

@@ -2,29 +2,32 @@
 *** Running vivado
     with args -log cross_logic_gth_head.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source cross_logic_gth_head.tcl
 
+/2025.2/2025.2/Vivado/bin/setupEnv.sh: line 236: [: /home/williams/MYFPGA/FSO: binary operator expected
 
-****** Vivado v2022.2 (64-bit)
-  **** SW Build 3671981 on Fri Oct 14 04:59:54 MDT 2022
-  **** IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+****** Vivado v2025.2 (64-bit)
+  **** SW Build 6299465 on Fri Nov 14 12:34:56 MST 2025
+  **** IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+  **** SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+  **** Start of session at: Mon Aug 24 16:11:11 2026
     ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 
 source cross_logic_gth_head.tcl -notrace
-INFO: [IP_Flow 19-6924] IPCACHE: Running cache check for IP inst: cross_logic_gth_head
+WARNING: [IP_Flow 19-5242] IP Cache entry (cache-ID 0dd7d99d1417ac38) does not have the required number of cached files and is not valid. Please delete this entry using the TCL command: 'config_ip_cache -remove [get_ips cross_logic_gth_head]'
 Command: synth_design -top cross_logic_gth_head -part xcku060-ffva1156-2-i -incremental_mode off -mode out_of_context
 Starting synth_design
 Attempting to get a license for feature 'Synthesis' and/or device 'xcku060'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xcku060'
+INFO: [Common 17-86] Your Synthesis license expires in 28 day(s)
 INFO: [Device 21-403] Loading part xcku060-ffva1156-2-i
-INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 4 processes.
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 7 processes.
 INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
-INFO: [Synth 8-7075] Helper process launched with PID 1395282
-INFO: [Synth 8-11241] undeclared symbol 'REGCCE', assumed default net type 'wire' [/tools/Xilinx/Vivado/2022.2/data/verilog/src/unimacro/BRAM_SINGLE_MACRO.v:2170]
+INFO: [Synth 8-7075] Helper process launched with PID 385212
+/2025.2/2025.2/Vivado/bin/setupEnv.sh: line 236: [: /home/williams/MYFPGA/FSO: binary operator expected
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 3069.367 ; gain = 363.801 ; free physical = 561 ; free virtual = 86380
-Synthesis current peak Physical Memory [PSS] (MB): peak = 2255.456; parent = 2129.810; children = 125.646
-Synthesis current peak Virtual Memory [VSS] (MB): peak = 4049.238; parent = 3072.340; children = 976.898
+Starting RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 2591.160 ; gain = 415.688 ; free physical = 39977 ; free virtual = 109178
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-638] synthesizing module 'cross_logic_gth_head' [/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_logic_gth_head/synth/cross_logic_gth_head.vhd:75]
+INFO: [Synth 8-638] synthesizing module 'cross_logic_gth_head' [/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_logic_gth_head/synth/cross_logic_gth_head.vhd:75]
 	Parameter C_COMMON_CLOCK bound to: 0 - type: integer 
 	Parameter C_SELECT_XPM bound to: 0 - type: integer 
 	Parameter C_COUNT_TYPE bound to: 0 - type: integer 
@@ -227,153 +230,146 @@ INFO: [Synth 8-638] synthesizing module 'cross_logic_gth_head' [/home/williams/M
 	Parameter C_REG_SLICE_MODE_RACH bound to: 0 - type: integer 
 	Parameter C_REG_SLICE_MODE_RDCH bound to: 0 - type: integer 
 	Parameter C_REG_SLICE_MODE_AXIS bound to: 0 - type: integer 
-INFO: [Synth 8-3491] module 'fifo_generator_v13_2_7' declared at '/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_logic_gth_head/hdl/fifo_generator_v13_2_vhsyn_rfs.vhd:38604' bound to instance 'U0' of component 'fifo_generator_v13_2_7' [/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_logic_gth_head/synth/cross_logic_gth_head.vhd:545]
-INFO: [Synth 8-256] done synthesizing module 'cross_logic_gth_head' (0#1) [/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_logic_gth_head/synth/cross_logic_gth_head.vhd:75]
-WARNING: [Synth 8-7129] Port ALMOST_FULL_I in module output_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_FULL_I in module output_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port ALMOST_EMPTY_I in module output_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_EMPTY_I in module output_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port WR_ACK_I in module output_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port VALID_I in module output_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port OVERFLOW_I in module output_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port UNDERFLOW_I in module output_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port DATA_COUNT_I[8] in module output_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port DATA_COUNT_I[7] in module output_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port DATA_COUNT_I[6] in module output_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port DATA_COUNT_I[5] in module output_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port DATA_COUNT_I[4] in module output_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port DATA_COUNT_I[3] in module output_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port DATA_COUNT_I[2] in module output_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port DATA_COUNT_I[1] in module output_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port DATA_COUNT_I[0] in module output_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port WR_DATA_COUNT_I[8] in module output_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port WR_DATA_COUNT_I[7] in module output_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port WR_DATA_COUNT_I[6] in module output_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port WR_DATA_COUNT_I[5] in module output_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port WR_DATA_COUNT_I[4] in module output_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port WR_DATA_COUNT_I[3] in module output_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port WR_DATA_COUNT_I[2] in module output_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port WR_DATA_COUNT_I[1] in module output_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port WR_DATA_COUNT_I[0] in module output_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port RD_DATA_COUNT_I[8] in module output_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port RD_DATA_COUNT_I[7] in module output_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port RD_DATA_COUNT_I[6] in module output_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port RD_DATA_COUNT_I[5] in module output_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port RD_DATA_COUNT_I[4] in module output_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port RD_DATA_COUNT_I[3] in module output_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port RD_DATA_COUNT_I[2] in module output_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port RD_DATA_COUNT_I[1] in module output_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port RD_DATA_COUNT_I[0] in module output_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port SBITERR_I in module output_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port DBITERR_I in module output_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port SBITERR in module builtin_prim is either unconnected or has no load
-WARNING: [Synth 8-7129] Port DBITERR in module builtin_prim is either unconnected or has no load
-WARNING: [Synth 8-7129] Port ECCPARITY[7] in module builtin_prim is either unconnected or has no load
-WARNING: [Synth 8-7129] Port ECCPARITY[6] in module builtin_prim is either unconnected or has no load
-WARNING: [Synth 8-7129] Port ECCPARITY[5] in module builtin_prim is either unconnected or has no load
-WARNING: [Synth 8-7129] Port ECCPARITY[4] in module builtin_prim is either unconnected or has no load
-WARNING: [Synth 8-7129] Port ECCPARITY[3] in module builtin_prim is either unconnected or has no load
-WARNING: [Synth 8-7129] Port ECCPARITY[2] in module builtin_prim is either unconnected or has no load
-WARNING: [Synth 8-7129] Port ECCPARITY[1] in module builtin_prim is either unconnected or has no load
-WARNING: [Synth 8-7129] Port ECCPARITY[0] in module builtin_prim is either unconnected or has no load
-WARNING: [Synth 8-7129] Port INJECTDBITERR in module builtin_prim is either unconnected or has no load
-WARNING: [Synth 8-7129] Port INJECTSBITERR in module builtin_prim is either unconnected or has no load
-WARNING: [Synth 8-7129] Port INT_CLK in module builtin_extdepth is either unconnected or has no load
-WARNING: [Synth 8-7129] Port WR_RST in module builtin_extdepth is either unconnected or has no load
-WARNING: [Synth 8-7129] Port RD_RST in module builtin_extdepth is either unconnected or has no load
-WARNING: [Synth 8-7129] Port CLK in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port INT_CLK in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_EMPTY_THRESH[8] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_EMPTY_THRESH[7] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_EMPTY_THRESH[6] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_EMPTY_THRESH[5] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_EMPTY_THRESH[4] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_EMPTY_THRESH[3] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_EMPTY_THRESH[2] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_EMPTY_THRESH[1] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_EMPTY_THRESH[0] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_EMPTY_THRESH_ASSERT[8] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_EMPTY_THRESH_ASSERT[7] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_EMPTY_THRESH_ASSERT[6] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_EMPTY_THRESH_ASSERT[5] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_EMPTY_THRESH_ASSERT[4] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_EMPTY_THRESH_ASSERT[3] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_EMPTY_THRESH_ASSERT[2] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_EMPTY_THRESH_ASSERT[1] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_EMPTY_THRESH_ASSERT[0] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_EMPTY_THRESH_NEGATE[8] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_EMPTY_THRESH_NEGATE[7] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_EMPTY_THRESH_NEGATE[6] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_EMPTY_THRESH_NEGATE[5] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_EMPTY_THRESH_NEGATE[4] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_EMPTY_THRESH_NEGATE[3] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_EMPTY_THRESH_NEGATE[2] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_EMPTY_THRESH_NEGATE[1] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_EMPTY_THRESH_NEGATE[0] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_FULL_THRESH[8] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_FULL_THRESH[7] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_FULL_THRESH[6] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_FULL_THRESH[5] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_FULL_THRESH[4] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_FULL_THRESH[3] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_FULL_THRESH[2] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_FULL_THRESH[1] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_FULL_THRESH[0] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_FULL_THRESH_ASSERT[8] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_FULL_THRESH_ASSERT[7] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_FULL_THRESH_ASSERT[6] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_FULL_THRESH_ASSERT[5] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_FULL_THRESH_ASSERT[4] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_FULL_THRESH_ASSERT[3] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_FULL_THRESH_ASSERT[2] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_FULL_THRESH_ASSERT[1] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_FULL_THRESH_ASSERT[0] in module input_blk is either unconnected or has no load
-WARNING: [Synth 8-7129] Port PROG_FULL_THRESH_NEGATE[8] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-3491] module 'fifo_generator_v13_2_14' declared at '/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_logic_gth_head/hdl/fifo_generator_v13_2_vhsyn_rfs.vhd:38308' bound to instance 'U0' of component 'fifo_generator_v13_2_14' [/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_logic_gth_head/synth/cross_logic_gth_head.vhd:550]
+INFO: [Synth 8-256] done synthesizing module 'cross_logic_gth_head' (0#1) [/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_logic_gth_head/synth/cross_logic_gth_head.vhd:75]
+INFO: [Synth 8-7129] Port ALMOST_FULL_I in module output_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_FULL_I in module output_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port ALMOST_EMPTY_I in module output_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_EMPTY_I in module output_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port WR_ACK_I in module output_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port VALID_I in module output_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port OVERFLOW_I in module output_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port UNDERFLOW_I in module output_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port DATA_COUNT_I[8] in module output_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port DATA_COUNT_I[7] in module output_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port DATA_COUNT_I[6] in module output_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port DATA_COUNT_I[5] in module output_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port DATA_COUNT_I[4] in module output_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port DATA_COUNT_I[3] in module output_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port DATA_COUNT_I[2] in module output_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port DATA_COUNT_I[1] in module output_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port DATA_COUNT_I[0] in module output_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port WR_DATA_COUNT_I[8] in module output_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port WR_DATA_COUNT_I[7] in module output_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port WR_DATA_COUNT_I[6] in module output_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port WR_DATA_COUNT_I[5] in module output_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port WR_DATA_COUNT_I[4] in module output_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port WR_DATA_COUNT_I[3] in module output_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port WR_DATA_COUNT_I[2] in module output_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port WR_DATA_COUNT_I[1] in module output_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port WR_DATA_COUNT_I[0] in module output_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port RD_DATA_COUNT_I[8] in module output_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port RD_DATA_COUNT_I[7] in module output_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port RD_DATA_COUNT_I[6] in module output_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port RD_DATA_COUNT_I[5] in module output_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port RD_DATA_COUNT_I[4] in module output_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port RD_DATA_COUNT_I[3] in module output_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port RD_DATA_COUNT_I[2] in module output_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port RD_DATA_COUNT_I[1] in module output_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port RD_DATA_COUNT_I[0] in module output_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port SBITERR_I in module output_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port DBITERR_I in module output_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port SBITERR in module builtin_prim is either unconnected or has no load
+INFO: [Synth 8-7129] Port DBITERR in module builtin_prim is either unconnected or has no load
+INFO: [Synth 8-7129] Port ECCPARITY[7] in module builtin_prim is either unconnected or has no load
+INFO: [Synth 8-7129] Port ECCPARITY[6] in module builtin_prim is either unconnected or has no load
+INFO: [Synth 8-7129] Port ECCPARITY[5] in module builtin_prim is either unconnected or has no load
+INFO: [Synth 8-7129] Port ECCPARITY[4] in module builtin_prim is either unconnected or has no load
+INFO: [Synth 8-7129] Port ECCPARITY[3] in module builtin_prim is either unconnected or has no load
+INFO: [Synth 8-7129] Port ECCPARITY[2] in module builtin_prim is either unconnected or has no load
+INFO: [Synth 8-7129] Port ECCPARITY[1] in module builtin_prim is either unconnected or has no load
+INFO: [Synth 8-7129] Port ECCPARITY[0] in module builtin_prim is either unconnected or has no load
+INFO: [Synth 8-7129] Port INJECTDBITERR in module builtin_prim is either unconnected or has no load
+INFO: [Synth 8-7129] Port INJECTSBITERR in module builtin_prim is either unconnected or has no load
+INFO: [Synth 8-7129] Port INT_CLK in module builtin_extdepth is either unconnected or has no load
+INFO: [Synth 8-7129] Port WR_RST in module builtin_extdepth is either unconnected or has no load
+INFO: [Synth 8-7129] Port RD_RST in module builtin_extdepth is either unconnected or has no load
+INFO: [Synth 8-7129] Port CLK in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port INT_CLK in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_EMPTY_THRESH[8] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_EMPTY_THRESH[7] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_EMPTY_THRESH[6] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_EMPTY_THRESH[5] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_EMPTY_THRESH[4] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_EMPTY_THRESH[3] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_EMPTY_THRESH[2] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_EMPTY_THRESH[1] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_EMPTY_THRESH[0] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_EMPTY_THRESH_ASSERT[8] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_EMPTY_THRESH_ASSERT[7] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_EMPTY_THRESH_ASSERT[6] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_EMPTY_THRESH_ASSERT[5] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_EMPTY_THRESH_ASSERT[4] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_EMPTY_THRESH_ASSERT[3] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_EMPTY_THRESH_ASSERT[2] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_EMPTY_THRESH_ASSERT[1] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_EMPTY_THRESH_ASSERT[0] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_EMPTY_THRESH_NEGATE[8] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_EMPTY_THRESH_NEGATE[7] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_EMPTY_THRESH_NEGATE[6] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_EMPTY_THRESH_NEGATE[5] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_EMPTY_THRESH_NEGATE[4] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_EMPTY_THRESH_NEGATE[3] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_EMPTY_THRESH_NEGATE[2] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_EMPTY_THRESH_NEGATE[1] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_EMPTY_THRESH_NEGATE[0] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_FULL_THRESH[8] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_FULL_THRESH[7] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_FULL_THRESH[6] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_FULL_THRESH[5] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_FULL_THRESH[4] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_FULL_THRESH[3] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_FULL_THRESH[2] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_FULL_THRESH[1] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_FULL_THRESH[0] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_FULL_THRESH_ASSERT[8] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_FULL_THRESH_ASSERT[7] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_FULL_THRESH_ASSERT[6] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_FULL_THRESH_ASSERT[5] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_FULL_THRESH_ASSERT[4] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_FULL_THRESH_ASSERT[3] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_FULL_THRESH_ASSERT[2] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_FULL_THRESH_ASSERT[1] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_FULL_THRESH_ASSERT[0] in module input_blk is either unconnected or has no load
+INFO: [Synth 8-7129] Port PROG_FULL_THRESH_NEGATE[8] in module input_blk is either unconnected or has no load
 INFO: [Common 17-14] Message 'Synth 8-7129' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 3240.305 ; gain = 534.738 ; free physical = 829 ; free virtual = 85602
-Synthesis current peak Physical Memory [PSS] (MB): peak = 2255.456; parent = 2129.810; children = 125.646
-Synthesis current peak Virtual Memory [VSS] (MB): peak = 4217.207; parent = 3240.309; children = 976.898
+Finished RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 2784.098 ; gain = 608.625 ; free physical = 39787 ; free virtual = 108983
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 3243.273 ; gain = 537.707 ; free physical = 782 ; free virtual = 85555
-Synthesis current peak Physical Memory [PSS] (MB): peak = 2255.456; parent = 2129.810; children = 125.646
-Synthesis current peak Virtual Memory [VSS] (MB): peak = 4220.176; parent = 3243.277; children = 976.898
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 2784.098 ; gain = 608.625 ; free physical = 39787 ; free virtual = 108983
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 3243.273 ; gain = 537.707 ; free physical = 730 ; free virtual = 85503
-Synthesis current peak Physical Memory [PSS] (MB): peak = 2255.456; parent = 2129.810; children = 125.646
-Synthesis current peak Virtual Memory [VSS] (MB): peak = 4220.176; parent = 3243.277; children = 976.898
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 2784.098 ; gain = 608.625 ; free physical = 39787 ; free virtual = 108983
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 3246.242 ; gain = 0.000 ; free physical = 620 ; free virtual = 85393
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.01 . Memory (MB): peak = 2784.098 ; gain = 0.000 ; free physical = 39787 ; free virtual = 108983
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
 Initializing timing engine
-Parsing XDC File [/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head_ooc.xdc] for cell 'U0'
-Finished Parsing XDC File [/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head_ooc.xdc] for cell 'U0'
-Parsing XDC File [/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head.xdc] for cell 'U0'
-Finished Parsing XDC File [/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head.xdc] for cell 'U0'
-Parsing XDC File [/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.runs/cross_logic_gth_head_synth_1/dont_touch.xdc]
-Finished Parsing XDC File [/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.runs/cross_logic_gth_head_synth_1/dont_touch.xdc]
-Parsing XDC File [/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head_clocks.xdc] for cell 'U0'
-Finished Parsing XDC File [/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head_clocks.xdc] for cell 'U0'
+Parsing XDC File [/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head_ooc.xdc] for cell 'U0'
+Finished Parsing XDC File [/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head_ooc.xdc] for cell 'U0'
+Parsing XDC File [/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head.xdc] for cell 'U0'
+Finished Parsing XDC File [/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head.xdc] for cell 'U0'
+Parsing XDC File [/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.runs/cross_logic_gth_head_synth_1/dont_touch.xdc]
+Finished Parsing XDC File [/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.runs/cross_logic_gth_head_synth_1/dont_touch.xdc]
+Parsing XDC File [/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head_clocks.xdc] for cell 'U0'
+Finished Parsing XDC File [/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.gen/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head_clocks.xdc] for cell 'U0'
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 3317.906 ; gain = 0.000 ; free physical = 437 ; free virtual = 85210
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2835.090 ; gain = 0.000 ; free physical = 39788 ; free virtual = 108984
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.01 . Memory (MB): peak = 3317.906 ; gain = 0.000 ; free physical = 427 ; free virtual = 85200
+lscpu: bad usage
+Try 'lscpu --help' for more information.
+Constraint Validation Runtime : Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.01 . Memory (MB): peak = 2835.125 ; gain = 0.000 ; free physical = 39797 ; free virtual = 108993
 INFO: [Designutils 20-5008] Incremental synthesis strategy off
-INFO: [Synth 8-11241] undeclared symbol 'REGCCE', assumed default net type 'wire' [/tools/Xilinx/Vivado/2022.2/data/verilog/src/unimacro/BRAM_SINGLE_MACRO.v:2170]
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 3317.906 ; gain = 612.340 ; free physical = 655 ; free virtual = 84925
-Synthesis current peak Physical Memory [PSS] (MB): peak = 2255.456; parent = 2129.810; children = 125.646
-Synthesis current peak Virtual Memory [VSS] (MB): peak = 4262.793; parent = 3285.895; children = 976.898
+Finished Constraint Validation : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 2835.125 ; gain = 659.652 ; free physical = 39821 ; free virtual = 109017
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
@@ -381,30 +377,20 @@ Start Loading Part and Timing Information
 Loading part: xcku060-ffva1156-2-i
 INFO: [Synth 8-6742] Reading net delay rules and data
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 3317.906 ; gain = 612.340 ; free physical = 635 ; free virtual = 84906
-Synthesis current peak Physical Memory [PSS] (MB): peak = 2255.456; parent = 2129.810; children = 125.646
-Synthesis current peak Virtual Memory [VSS] (MB): peak = 4262.793; parent = 3285.895; children = 976.898
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 2843.094 ; gain = 667.621 ; free physical = 39821 ; free virtual = 109017
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
-Applied set_property KEEP_HIERARCHY = SOFT for U0. (constraint file  {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.runs/cross_logic_gth_head_synth_1/dont_touch.xdc}, line 9).
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 3317.906 ; gain = 612.340 ; free physical = 634 ; free virtual = 84905
-Synthesis current peak Physical Memory [PSS] (MB): peak = 2255.456; parent = 2129.810; children = 125.646
-Synthesis current peak Virtual Memory [VSS] (MB): peak = 4262.793; parent = 3285.895; children = 976.898
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 2843.094 ; gain = 667.621 ; free physical = 39821 ; free virtual = 109017
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 3317.906 ; gain = 612.340 ; free physical = 625 ; free virtual = 84897
-Synthesis current peak Physical Memory [PSS] (MB): peak = 2255.456; parent = 2129.810; children = 125.646
-Synthesis current peak Virtual Memory [VSS] (MB): peak = 4262.793; parent = 3285.895; children = 976.898
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 2843.094 ; gain = 667.621 ; free physical = 39819 ; free virtual = 109016
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start RTL Component Statistics 
 ---------------------------------------------------------------------------------
-Detailed RTL Component Info : 
-+---Registers : 
-	                1 Bit    Registers := 2     
 ---------------------------------------------------------------------------------
 Finished RTL Component Statistics 
 ---------------------------------------------------------------------------------
@@ -420,35 +406,26 @@ Finished Part Resource Summary
 ---------------------------------------------------------------------------------
 Start Cross Boundary and Area Optimization
 ---------------------------------------------------------------------------------
-WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 3317.906 ; gain = 612.340 ; free physical = 512 ; free virtual = 84787
-Synthesis current peak Physical Memory [PSS] (MB): peak = 2255.456; parent = 2129.810; children = 125.646
-Synthesis current peak Virtual Memory [VSS] (MB): peak = 4262.793; parent = 3285.895; children = 976.898
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 2843.094 ; gain = 667.621 ; free physical = 39836 ; free virtual = 109032
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:12 ; elapsed = 00:00:13 . Memory (MB): peak = 3317.906 ; gain = 612.340 ; free physical = 570 ; free virtual = 83820
-Synthesis current peak Physical Memory [PSS] (MB): peak = 2424.606; parent = 2300.788; children = 125.646
-Synthesis current peak Virtual Memory [VSS] (MB): peak = 4273.395; parent = 3296.496; children = 976.898
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 2935.430 ; gain = 759.957 ; free physical = 39756 ; free virtual = 108953
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:12 ; elapsed = 00:00:13 . Memory (MB): peak = 3317.906 ; gain = 612.340 ; free physical = 559 ; free virtual = 83809
-Synthesis current peak Physical Memory [PSS] (MB): peak = 2424.647; parent = 2300.829; children = 125.646
-Synthesis current peak Virtual Memory [VSS] (MB): peak = 4273.395; parent = 3296.496; children = 976.898
+Finished Timing Optimization : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 2936.430 ; gain = 760.957 ; free physical = 39756 ; free virtual = 108953
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:12 ; elapsed = 00:00:13 . Memory (MB): peak = 3317.906 ; gain = 612.340 ; free physical = 533 ; free virtual = 83783
-Synthesis current peak Physical Memory [PSS] (MB): peak = 2424.859; parent = 2301.041; children = 125.646
-Synthesis current peak Virtual Memory [VSS] (MB): peak = 4273.395; parent = 3296.496; children = 976.898
+Finished Technology Mapping : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 2945.445 ; gain = 769.973 ; free physical = 39748 ; free virtual = 108945
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start IO Insertion
@@ -466,49 +443,37 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:13 ; elapsed = 00:00:15 . Memory (MB): peak = 3317.906 ; gain = 612.340 ; free physical = 1288 ; free virtual = 84541
-Synthesis current peak Physical Memory [PSS] (MB): peak = 2428.603; parent = 2302.831; children = 125.771
-Synthesis current peak Virtual Memory [VSS] (MB): peak = 4273.395; parent = 3296.496; children = 976.898
+Finished IO Insertion : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 3133.258 ; gain = 957.785 ; free physical = 39585 ; free virtual = 108790
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:13 ; elapsed = 00:00:15 . Memory (MB): peak = 3317.906 ; gain = 612.340 ; free physical = 1271 ; free virtual = 84524
-Synthesis current peak Physical Memory [PSS] (MB): peak = 2428.603; parent = 2302.832; children = 125.771
-Synthesis current peak Virtual Memory [VSS] (MB): peak = 4273.395; parent = 3296.496; children = 976.898
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 3133.258 ; gain = 957.785 ; free physical = 39585 ; free virtual = 108790
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:13 ; elapsed = 00:00:15 . Memory (MB): peak = 3317.906 ; gain = 612.340 ; free physical = 1256 ; free virtual = 84509
-Synthesis current peak Physical Memory [PSS] (MB): peak = 2428.635; parent = 2302.884; children = 125.771
-Synthesis current peak Virtual Memory [VSS] (MB): peak = 4273.395; parent = 3296.496; children = 976.898
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 3133.258 ; gain = 957.785 ; free physical = 39585 ; free virtual = 108790
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:13 ; elapsed = 00:00:15 . Memory (MB): peak = 3317.906 ; gain = 612.340 ; free physical = 1232 ; free virtual = 84485
-Synthesis current peak Physical Memory [PSS] (MB): peak = 2428.684; parent = 2302.912; children = 125.771
-Synthesis current peak Virtual Memory [VSS] (MB): peak = 4273.395; parent = 3296.496; children = 976.898
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 3133.258 ; gain = 957.785 ; free physical = 39585 ; free virtual = 108790
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:13 ; elapsed = 00:00:15 . Memory (MB): peak = 3317.906 ; gain = 612.340 ; free physical = 1236 ; free virtual = 84489
-Synthesis current peak Physical Memory [PSS] (MB): peak = 2428.684; parent = 2302.912; children = 125.771
-Synthesis current peak Virtual Memory [VSS] (MB): peak = 4273.395; parent = 3296.496; children = 976.898
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 3133.258 ; gain = 957.785 ; free physical = 39585 ; free virtual = 108790
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:13 ; elapsed = 00:00:15 . Memory (MB): peak = 3317.906 ; gain = 612.340 ; free physical = 1222 ; free virtual = 84476
-Synthesis current peak Physical Memory [PSS] (MB): peak = 2428.684; parent = 2302.912; children = 125.771
-Synthesis current peak Virtual Memory [VSS] (MB): peak = 4273.395; parent = 3296.496; children = 976.898
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 3133.258 ; gain = 957.785 ; free physical = 39585 ; free virtual = 108790
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -528,30 +493,29 @@ Report Cell Usage:
 |2     |LUT1     |     4|
 +------+---------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:13 ; elapsed = 00:00:15 . Memory (MB): peak = 3317.906 ; gain = 612.340 ; free physical = 1235 ; free virtual = 84489
-Synthesis current peak Physical Memory [PSS] (MB): peak = 2428.687; parent = 2302.936; children = 125.771
-Synthesis current peak Virtual Memory [VSS] (MB): peak = 4273.395; parent = 3296.496; children = 976.898
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 3133.258 ; gain = 957.785 ; free physical = 39585 ; free virtual = 108790
 ---------------------------------------------------------------------------------
-Synthesis finished with 0 errors, 0 critical warnings and 478 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 3317.906 ; gain = 537.707 ; free physical = 1289 ; free virtual = 84546
-Synthesis Optimization Complete : Time (s): cpu = 00:00:13 ; elapsed = 00:00:15 . Memory (MB): peak = 3317.906 ; gain = 612.340 ; free physical = 1367 ; free virtual = 84625
+Synthesis finished with 0 errors, 0 critical warnings and 0 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 3133.258 ; gain = 906.758 ; free physical = 39585 ; free virtual = 108790
+Synthesis Optimization Complete : Time (s): cpu = 00:00:11 ; elapsed = 00:00:12 . Memory (MB): peak = 3133.258 ; gain = 957.785 ; free physical = 39585 ; free virtual = 108790
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 3317.906 ; gain = 0.000 ; free physical = 1369 ; free virtual = 84627
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 3133.258 ; gain = 0.000 ; free physical = 39585 ; free virtual = 108790
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 3327.211 ; gain = 0.000 ; free physical = 1309 ; free virtual = 84562
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 3133.258 ; gain = 0.000 ; free physical = 39710 ; free virtual = 108915
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Synth Design complete, checksum: faf86a3e
+lscpu: bad usage
+Try 'lscpu --help' for more information.
+Synth Design complete | Checksum: 42cb0c95
 INFO: [Common 17-83] Releasing license: Synthesis
-21 Infos, 101 Warnings, 0 Critical Warnings and 0 Errors encountered.
+119 Infos, 1 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
 INFO: [Common 17-600] The following parameters have non-default value.
 tcl.statsThreshold
-INFO: [Common 17-1381] The checkpoint '/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.runs/cross_logic_gth_head_synth_1/cross_logic_gth_head.dcp' has been generated.
-INFO: [Coretcl 2-1648] Added synthesis output to IP cache for IP cross_logic_gth_head, cache-ID = 12bd85272ae9e8b7
+INFO: [Common 17-1381] The checkpoint '/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.runs/cross_logic_gth_head_synth_1/cross_logic_gth_head.dcp' has been generated.
 INFO: [Coretcl 2-1174] Renamed 7 cell refs.
-INFO: [Common 17-1381] The checkpoint '/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.runs/cross_logic_gth_head_synth_1/cross_logic_gth_head.dcp' has been generated.
-INFO: [runtcl-4] Executing : report_utilization -file cross_logic_gth_head_utilization_synth.rpt -pb cross_logic_gth_head_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Thu Aug  6 16:38:53 2026...
+INFO: [Common 17-1381] The checkpoint '/home/williams/MYFPGA/FSO FPGA/sda_codec_clean/sda_codec_clean/sda_codec_clean.runs/cross_logic_gth_head_synth_1/cross_logic_gth_head.dcp' has been generated.
+INFO: [Vivado 12-24828] Executing command : report_utilization -file cross_logic_gth_head_utilization_synth.rpt -pb cross_logic_gth_head_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Mon Aug 24 16:11:28 2026...

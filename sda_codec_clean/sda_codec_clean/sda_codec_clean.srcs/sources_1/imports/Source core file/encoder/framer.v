@@ -3,7 +3,7 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 12/09/2025 04:18:56 PM
+// Create Date: 20/08/2026 01:18:56 PM
 // Design Name: 
 // Module Name: fso_framer
 // Project Name: 
@@ -14,26 +14,27 @@
 // Dependencies: 
 // 
 // Revision:
-// Revision 0.01 - File Created
+// Revision 1 - File Created
 // Additional Comments:
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
 
 module framer(
-    input               clk,
-    input               rst_n,
-    input               en,
-    input   [31:0]      data_in,
-    output              header_dv,
-    output  [7:0]       header,
-    output              payload_dv,
-    output  [31:0]      payload
+    input                   clk,
+    input                   rst_n,
+    input                   en,
+    input   [31:0]          data_in,
+    output                  header_dv,
+    output  [7:0]           header,
+    output                  payload_dv,
+    output  [31:0]          payload,
+    output  [15:0]          count_out 
 );
 
-parameter   max         = 487;
+parameter   max         = 477;
 parameter   thres       = 246;
-reg     [15:0]  count   = 16'd0;
+(* mark_debug = "true", keep = "true" *) reg     [15:0]  count   = 16'd0;
 
 parameter   IDLE        = 3'b001;
 parameter   ACTIVE      = 3'b010;
@@ -88,12 +89,19 @@ begin
                                 next_state  <= IDLE;
                         end
         ACTIVE:         begin
-                            if (count < max)
+                            if (count < max - 1)
                                 next_state  <= ACTIVE;
                             else
                                 next_state  <= END;
                         end
-        END:            next_state  <= IDLE;
+        // --- MODIFIKASI KONTINYU SESUAI STANDAR SDA-OISL ---
+        // Langsung mengecek 'en' dari state END agar tidak ada jeda / pause kosong
+        END:            begin
+                            if (en)
+                                next_state  <= ACTIVE;
+                            else
+                                next_state  <= IDLE;
+                        end
         default:        next_state  <= IDLE;
     endcase
 end
@@ -183,21 +191,6 @@ serdes_framer serdes_inst (
     ,.dout          (serdes_out)
 );
 
-
-
-
-
-
+assign  count_out       = count;
 
 endmodule
-
-
-
-
-
-
-
-
-
-
-

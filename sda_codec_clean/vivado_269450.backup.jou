@@ -1,0 +1,16 @@
+#-----------------------------------------------------------
+# Vivado v2022.2 (64-bit)
+# SW Build 3671981 on Fri Oct 14 04:59:54 MDT 2022
+# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
+# Start of session at: Wed Aug 19 11:18:46 2026
+# Process ID: 268872
+# Current directory: /home/williams/MYFPGA/FPGA Final/sda_codec_clean
+# Command line: vivado
+# Log file: /home/williams/MYFPGA/FPGA Final/sda_codec_clean/vivado.log
+# Journal file: /home/williams/MYFPGA/FPGA Final/sda_codec_clean/vivado.jou
+# Running On: Williams, OS: Linux, CPU Frequency: 5300.000 MHz, CPU Physical cores: 16, Host memory: 67183 MB
+#-----------------------------------------------------------
+start_gui
+open_project {/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.xpr}
+update_compile_order -fileset sources_1
+reset_target all [get_files  {{/home/williams/MYFPGA/FPGA Final/sda_codec_clean/sda_codec_clean/sda_codec_clean.srcs/sources_1/ip/delay_combiner/delay_combiner.xci}}]

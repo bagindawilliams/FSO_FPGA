@@ -1,24 +1,19 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: Kookmin University / ETRI Daejon
-// Engineer: Irzal Zaini
+// Engineer: Irzal Zaini & Williams (WiComAI Lab)
 // 
-// Create Date: 2025/12/04 11:09:22 AM
+// Create Date: 2026/08/24 11:09:22 AM
 // Design Name: 
 // Module Name: rs_decoder
 // Project Name: ETRI FSO Channel Coding
 // Target Devices: Kintex Ultrascale KCU60
 // Tool Versions: Vivado 2025.1
-// Description: 
+// Description: RS Decoder with BRAM Integration for Power Optimization
 // 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
+// Dependencies: bram_rs.xci
 // 
 //////////////////////////////////////////////////////////////////////////////////
-
 
 module rs_decoder #(parameter max_rd = 256) (
     input           clk,
@@ -160,14 +155,22 @@ assign  rd_en       = (state == READ);
 assign  flag        = (con_rd > 1 && con_rd < max_rd - 15);
 assign  data_out    = (flag) ? decode_out : 8'b0;
 
-delay_rs delay_inst (
-    .srst           (1'b0)
-    ,.clk           (clk)
-    ,.din           (data_d0)
-    ,.wr_en         (wr_en)
-    ,.rd_en         (rd_en)
-    ,.dout          (data_delay)
+// =========================================================================
+// INTEGRASI BRAM (Pengganti delay_rs untuk Power Optimization)
+// =========================================================================
+bram_rs bram_rs_inst (
+    .clka           (clk),
+    .ena            (wr_en),         // Enable Write aktif mengikuti State Machine
+    .wea            (1'b1),          // Write Enable diikat High (dikendalikan oleh ena)
+    .addra          (con_wr[7:0]),   // Pointer Address masuk menggunakan con_wr
+    .dina           (data_d0),       // Data masuk
+
+    .clkb           (clk),
+    .enb            (rd_en),         // Enable Read aktif mengikuti State Machine
+    .addrb          (con_rd[7:0]),   // Pointer Address keluar menggunakan con_rd
+    .doutb          (data_delay)     // Data tertahan keluar ke dekoder (Latency = 1 clock)
 );
+// =========================================================================
 
 syndrome_unit syndrome_unit_inst (
     .clk            (clk)
@@ -205,11 +208,5 @@ forney_math forney_math_inst (
     ,.chien         (chien)
     ,.forney        (forney)
 );
-
-
-
-
-
-
 
 endmodule

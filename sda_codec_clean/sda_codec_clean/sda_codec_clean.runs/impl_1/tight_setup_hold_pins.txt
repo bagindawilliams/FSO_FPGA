@@ -1,0 +1,21 @@
++====================+====================+===================================================================================================+
+| Launch Setup Clock | Launch Hold Clock  | Pin                                                                                               |
++====================+====================+===================================================================================================+
+| clk_out1_clk_wiz_0 | clk_out1_clk_wiz_0 | encoder_top_inst/x_gth_logic_inst/en_d1_reg/D                                                     |
+| clk_out1_clk_wiz_0 | clk_out1_clk_wiz_0 | decoder_top_inst/rx_gth_logic_inst/en_d1_reg/D                                                    |
+| clk_out1_clk_wiz_1 | clk_out1_clk_wiz_1 | decoder_top_inst/core_rx_inst/rs_decoder_64_inst/rs_decoder_2/euclid_proc_inst/reg_S_reg[15][3]/D |
+| clk_out1_clk_wiz_1 | clk_out1_clk_wiz_1 | decoder_top_inst/core_rx_inst/rs_decoder_inst/euclid_proc_inst/reg_S_reg[3][3]/D                  |
+| clk_out1_clk_wiz_1 | clk_out1_clk_wiz_1 | decoder_top_inst/core_rx_inst/rs_decoder_64_inst/rs_decoder_6/euclid_proc_inst/reg_T_reg[5][1]/D  |
+| clk_out1_clk_wiz_1 | clk_out1_clk_wiz_1 | decoder_top_inst/core_rx_inst/rs_decoder_64_inst/rs_decoder_3/euclid_proc_inst/reg_C_reg[8][6]/D  |
+| clk_out1_clk_wiz_1 | clk_out1_clk_wiz_1 | decoder_top_inst/core_rx_inst/rs_decoder_inst/euclid_proc_inst/reg_C_reg[15][2]/D                 |
+| clk_out1_clk_wiz_1 | clk_out1_clk_wiz_1 | decoder_top_inst/core_rx_inst/rs_decoder_64_inst/rs_decoder_1/euclid_proc_inst/reg_Y_reg[2][1]/D  |
+| clk_out1_clk_wiz_1 | clk_out1_clk_wiz_1 | encoder_top_inst/core_tx_inst/rs_encoder_64_inst/rs_encoder_4/Q_reg[13][7]/D                      |
+| clk_out1_clk_wiz_1 | clk_out1_clk_wiz_1 | decoder_top_inst/core_rx_inst/rs_decoder_64_inst/rs_decoder_3/euclid_proc_inst/reg_S_reg[12][1]/D |
+| clk_out1_clk_wiz_1 | clk_out1_clk_wiz_1 | decoder_top_inst/core_rx_inst/rs_decoder_64_inst/rs_decoder_6/euclid_proc_inst/reg_T_reg[5][0]/D  |
+| clk_out1_clk_wiz_1 | clk_out1_clk_wiz_1 | decoder_top_inst/core_rx_inst/rs_decoder_inst/euclid_proc_inst/reg_C_reg[15][3]/D                 |
+| clk_out1_clk_wiz_1 | clk_out1_clk_wiz_1 | decoder_top_inst/core_rx_inst/rs_decoder_64_inst/rs_decoder_0/euclid_proc_inst/reg_S_reg[3][5]/D  |
+| clk_out1_clk_wiz_1 | clk_out1_clk_wiz_1 | decoder_top_inst/core_rx_inst/rs_decoder_64_inst/rs_decoder_6/euclid_proc_inst/reg_T_reg[5][3]/D  |
+| clk_out1_clk_wiz_1 | clk_out1_clk_wiz_1 | decoder_top_inst/core_rx_inst/rs_decoder_64_inst/rs_decoder_6/euclid_proc_inst/reg_T_reg[5][2]/D  |
+| clk_out1_clk_wiz_1 | clk_out1_clk_wiz_1 | encoder_top_inst/core_tx_inst/rs_encoder_64_inst/rs_encoder_4/Q_reg[13][6]/D                      |
+| clk_out1_clk_wiz_1 | clk_out1_clk_wiz_1 | decoder_top_inst/core_rx_inst/rs_decoder_64_inst/rs_decoder_1/forney_math_inst/Q_reg[7][7]/D      |
++--------------------+--------------------+---------------------------------------------------------------------------------------------------+

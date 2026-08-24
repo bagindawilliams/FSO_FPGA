@@ -1,0 +1,247 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (lin64) Build 6299465 Fri Nov 14 12:34:56 MST 2025
+| Date         : Wed Aug 19 11:21:42 2026
+| Host         : Williams running 64-bit Ubuntu 22.04.5 LTS
+| Command      : upgrade_ip
+| Device       : xcku060-ffva1156-2-i
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'serdes_framer'
+
+1. Summary
+----------
+
+SUCCESS in the upgrade of serdes_framer (xilinx.com:ip:fifo_generator:13.2) from (Rev. 7) to (Rev. 14)
+
+
+
+
+
+
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (lin64) Build 6299465 Fri Nov 14 12:34:56 MST 2025
+| Date         : Wed Aug 19 11:21:42 2026
+| Host         : Williams running 64-bit Ubuntu 22.04.5 LTS
+| Command      : upgrade_ip
+| Device       : xcku060-ffva1156-2-i
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'serdes_assembler'
+
+1. Summary
+----------
+
+SUCCESS in the upgrade of serdes_assembler (xilinx.com:ip:fifo_generator:13.2) from (Rev. 7) to (Rev. 14)
+
+
+
+
+
+
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (lin64) Build 6299465 Fri Nov 14 12:34:56 MST 2025
+| Date         : Wed Aug 19 11:21:41 2026
+| Host         : Williams running 64-bit Ubuntu 22.04.5 LTS
+| Command      : upgrade_ip
+| Device       : xcku060-ffva1156-2-i
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'delay_rs'
+
+1. Summary
+----------
+
+SUCCESS in the upgrade of delay_rs (xilinx.com:ip:fifo_generator:13.2) from (Rev. 7) to (Rev. 14)
+
+
+
+
+
+
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (lin64) Build 6299465 Fri Nov 14 12:34:56 MST 2025
+| Date         : Wed Aug 19 11:21:41 2026
+| Host         : Williams running 64-bit Ubuntu 22.04.5 LTS
+| Command      : upgrade_ip
+| Device       : xcku060-ffva1156-2-i
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'delay_combiner'
+
+1. Summary
+----------
+
+SUCCESS in the upgrade of delay_combiner (xilinx.com:ip:fifo_generator:13.2) from (Rev. 7) to (Rev. 14)
+
+
+
+
+
+
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (lin64) Build 6299465 Fri Nov 14 12:34:56 MST 2025
+| Date         : Wed Aug 19 11:21:41 2026
+| Host         : Williams running 64-bit Ubuntu 22.04.5 LTS
+| Command      : upgrade_ip
+| Device       : xcku060-ffva1156-2-i
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'cross_logic_gth_load'
+
+1. Summary
+----------
+
+SUCCESS in the upgrade of cross_logic_gth_load (xilinx.com:ip:fifo_generator:13.2) from (Rev. 7) to (Rev. 14)
+
+
+
+
+
+
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (lin64) Build 6299465 Fri Nov 14 12:34:56 MST 2025
+| Date         : Wed Aug 19 11:21:41 2026
+| Host         : Williams running 64-bit Ubuntu 22.04.5 LTS
+| Command      : upgrade_ip
+| Device       : xcku060-ffva1156-2-i
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'cross_logic_gth_head'
+
+1. Summary
+----------
+
+SUCCESS in the upgrade of cross_logic_gth_head (xilinx.com:ip:fifo_generator:13.2) from (Rev. 7) to (Rev. 14)
+
+
+
+
+
+
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (lin64) Build 6299465 Fri Nov 14 12:34:56 MST 2025
+| Date         : Wed Aug 19 11:21:41 2026
+| Host         : Williams running 64-bit Ubuntu 22.04.5 LTS
+| Command      : upgrade_ip
+| Device       : xcku060-ffva1156-2-i
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'cross_logic_gth'
+
+1. Summary
+----------
+
+SUCCESS in the upgrade of cross_logic_gth (xilinx.com:ip:fifo_generator:13.2) from (Rev. 7) to (Rev. 14)
+
+
+
+
+
+
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (lin64) Build 6299465 Fri Nov 14 12:34:56 MST 2025
+| Date         : Wed Aug 19 11:21:41 2026
+| Host         : Williams running 64-bit Ubuntu 22.04.5 LTS
+| Command      : upgrade_ip
+| Device       : xcku060-ffva1156-2-i
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'cross_gth_logic_load'
+
+1. Summary
+----------
+
+SUCCESS in the upgrade of cross_gth_logic_load (xilinx.com:ip:fifo_generator:13.2) from (Rev. 7) to (Rev. 14)
+
+
+
+
+
+
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (lin64) Build 6299465 Fri Nov 14 12:34:56 MST 2025
+| Date         : Wed Aug 19 11:21:41 2026
+| Host         : Williams running 64-bit Ubuntu 22.04.5 LTS
+| Command      : upgrade_ip
+| Device       : xcku060-ffva1156-2-i
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'cross_gth_logic_head'
+
+1. Summary
+----------
+
+SUCCESS in the upgrade of cross_gth_logic_head (xilinx.com:ip:fifo_generator:13.2) from (Rev. 7) to (Rev. 14)
+
+
+
+
+
+
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (lin64) Build 6299465 Fri Nov 14 12:34:56 MST 2025
+| Date         : Wed Aug 19 11:21:40 2026
+| Host         : Williams running 64-bit Ubuntu 22.04.5 LTS
+| Command      : upgrade_ip
+| Device       : xcku060-ffva1156-2-i
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'cross_gth_logic'
+
+1. Summary
+----------
+
+SUCCESS in the upgrade of cross_gth_logic (xilinx.com:ip:fifo_generator:13.2) from (Rev. 7) to (Rev. 14)
+
+
+
+
+
+
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (lin64) Build 6299465 Fri Nov 14 12:34:56 MST 2025
+| Date         : Wed Aug 19 11:21:40 2026
+| Host         : Williams running 64-bit Ubuntu 22.04.5 LTS
+| Command      : upgrade_ip
+| Device       : xcku060-ffva1156-2-i
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'clk_wiz_1'
+
+1. Summary
+----------
+
+SUCCESS in the upgrade of clk_wiz_1 (xilinx.com:ip:clk_wiz:6.0) from (Rev. 11) to (Rev. 17)
+
+
+
+
+
+
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (lin64) Build 6299465 Fri Nov 14 12:34:56 MST 2025
+| Date         : Wed Aug 19 11:21:40 2026
+| Host         : Williams running 64-bit Ubuntu 22.04.5 LTS
+| Command      : upgrade_ip
+| Device       : xcku060-ffva1156-2-i
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'clk_wiz_0'
+
+1. Summary
+----------
+
+SUCCESS in the upgrade of clk_wiz_0 (xilinx.com:ip:clk_wiz:6.0) from (Rev. 11) to (Rev. 17)
+

@@ -1,4 +1,4 @@
-set_property SRC_FILE_INFO {cfile:{/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/imports/gt_example_top.xdc} rfile:../../../imports/gt_example_top.xdc id:1} [current_design]
+set_property SRC_FILE_INFO {cfile:{/home/williams/MYFPGA/FSO FPGA/sfp_int/sfp_int_0/gt_ex/imports/gt_example_top.xdc} rfile:../../../imports/gt_example_top.xdc id:1} [current_design]
 set_property src_info {type:XDC file:1 line:66 export:INPUT save:INPUT read:READ} [current_design]
 set_property PACKAGE_PIN T6 [get_ports mgtrefclk_p]
 set_property src_info {type:XDC file:1 line:67 export:INPUT save:INPUT read:READ} [current_design]
