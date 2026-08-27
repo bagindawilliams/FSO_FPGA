@@ -1,12 +1,3 @@
 Time resolution is 1 ps
-=====================================================================================================
-The selected configuration may or may not achieve stable PRBS-based link in loopback, due to its use
-of either a disabled or custom comma, modified comma mask, channel bonding sequence(s), or clock
-correction sequence(s). When using these features, user-specified bit patterns cause feature-specific
-behavior that may periodically disrupt the data stream due to coincidental matches of the provided
-PRBS pattern, causing checker mismatches and resulting in no, or lost lock. The IP core therefore
-disables checking of the PRBS-based link status within this simulation testbench. This simulation will
-simply run for a short period of time and then end with a test completed successfully message, but it
-should not be construed to mean that data integrity was observed in this configuration. You may wish
-to extend this simulation period to observe actual behavior, which is not predictable by this IP core.
-=====================================================================================================
+$finish called at time : 134 ns : File "/home/williams/MYFPGA/FPGA Final/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/tb_mux_eth_32.v" Line 73
+INFO: xsimkernel Simulation Memory Usage: 282512 KB (Peak: 339784 KB), Simulation CPU Usage: 640 ms

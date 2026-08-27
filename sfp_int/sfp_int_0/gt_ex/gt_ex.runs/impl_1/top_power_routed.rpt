@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2025.2 (lin64) Build 6299465 Fri Nov 14 12:34:56 MST 2025
-| Date             : Mon Aug 24 16:45:57 2026
+| Date             : Wed Aug 26 20:19:54 2026
 | Host             : Williams running 64-bit Ubuntu 22.04.5 LTS
 | Command          : report_power -file top_power_routed.rpt -pb top_power_summary_routed.pb -rpx top_power_routed.rpx
 | Design           : top
@@ -30,14 +30,14 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 4.083        |
+| Total On-Chip Power (W)  | 4.203        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 3.357        |
-| Device Static (W)        | 0.726        |
+| Dynamic (W)              | 3.476        |
+| Device Static (W)        | 0.727        |
 | Effective TJA (C/W)      | 1.4          |
-| Max Ambient (C)          | 94.3         |
-| Junction Temperature (C) | 30.7         |
+| Max Ambient (C)          | 94.1         |
+| Junction Temperature (C) | 30.9         |
 | Confidence Level         | Low          |
 | Setting File             | ---          |
 | Simulation Activity File | ---          |
@@ -52,22 +52,22 @@ Table of Contents
 +--------------------------+-----------+----------+-----------+-----------------+
 | On-Chip                  | Power (W) | Used     | Available | Utilization (%) |
 +--------------------------+-----------+----------+-----------+-----------------+
-| Clocks                   |     0.277 |       12 |       --- |             --- |
-| CLB Logic                |     1.084 |   182039 |       --- |             --- |
-|   LUT as Logic           |     1.051 |   114728 |    331680 |           34.59 |
-|   LUT as Shift Register  |     0.019 |      916 |    146880 |            0.62 |
-|   Register               |     0.007 |    25389 |    663360 |            3.83 |
+| Clocks                   |     0.295 |       12 |       --- |             --- |
+| CLB Logic                |     1.137 |   184773 |       --- |             --- |
+|   LUT as Logic           |     1.102 |   116504 |    331680 |           35.13 |
+|   LUT as Shift Register  |     0.020 |      917 |    146880 |            0.62 |
+|   Register               |     0.008 |    26053 |    663360 |            3.93 |
 |   CARRY8                 |     0.005 |     1876 |     41460 |            4.52 |
 |   F7/F8 Muxes            |     0.002 |    25811 |    331680 |            7.78 |
 |   LUT as Distributed RAM |    <0.001 |       20 |    146880 |            0.01 |
-|   Others                 |     0.000 |     2270 |       --- |             --- |
-| Signals                  |     0.889 |   127836 |       --- |             --- |
-| Block RAM                |     0.142 |       84 |      1080 |            7.78 |
+|   Others                 |     0.000 |     2274 |       --- |             --- |
+| Signals                  |     0.938 |   130127 |       --- |             --- |
+| Block RAM                |     0.141 |       84 |      1080 |            7.78 |
 | MMCM                     |     0.115 |        1 |        12 |            8.33 |
 | I/O                      |     0.004 |        5 |       520 |            0.96 |
 | GTH                      |     0.846 |        4 |        28 |           14.29 |
-| Static Power             |     0.726 |          |           |                 |
-| Total                    |     4.083 |          |           |                 |
+| Static Power             |     0.727 |          |           |                 |
+| Total                    |     4.203 |          |           |                 |
 +--------------------------+-----------+----------+-----------+-----------------+
 
 
@@ -77,10 +77,10 @@ Table of Contents
 +------------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Source     | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
 +------------+-------------+-----------+-------------+------------+-------------+-------------+------------+
-| Vccint     |       0.950 |     2.877 |       2.625 |      0.252 |       NA    | Unspecified | NA         |
+| Vccint     |       0.950 |     3.003 |       2.750 |      0.253 |       NA    | Unspecified | NA         |
 | Vccaux     |       1.800 |     0.184 |       0.064 |      0.120 |       NA    | Unspecified | NA         |
 | Vccaux_io  |       1.800 |     0.083 |       0.002 |      0.081 |       NA    | Unspecified | NA         |
-| Vccint_io  |       0.950 |     0.022 |       0.001 |      0.022 |       NA    | Unspecified | NA         |
+| Vccint_io  |       0.950 |     0.023 |       0.001 |      0.022 |       NA    | Unspecified | NA         |
 | Vcco33     |       3.300 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco25     |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco18     |       1.800 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
@@ -161,43 +161,45 @@ Table of Contents
 +--------------------------+-----------+
 | Name                     | Power (W) |
 +--------------------------+-----------+
-| top                      |     3.357 |
+| top                      |     3.476 |
 |   clk_wiz_0_inst         |     0.118 |
 |     inst                 |     0.118 |
-|   dbg_hub                |     0.004 |
-|     inst                 |     0.004 |
-|       BSCANID.u_xsdbm_id |     0.004 |
-|   decoder_top_inst       |     1.725 |
+|   dbg_hub                |     0.003 |
+|     inst                 |     0.003 |
+|       BSCANID.u_xsdbm_id |     0.003 |
+|   decoder_top_inst       |     1.778 |
 |     assembler_top_inst   |     0.014 |
 |       assembler_inst     |     0.011 |
 |       crc_16_inst        |     0.001 |
 |       crc_32_inst        |     0.001 |
-|     core_rx_inst         |     1.702 |
+|     core_rx_inst         |     1.755 |
+|       demux_inst         |     0.009 |
 |       lpc_dec_top_inst   |     0.002 |
-|       rs_decoder_64_inst |     1.497 |
-|       rs_decoder_inst    |     0.191 |
-|       scrambler_inst     |     0.003 |
-|       separator_inst     |     0.010 |
+|       rs_decoder_64_inst |     1.527 |
+|       rs_decoder_inst    |     0.197 |
+|       scrambler_inst     |     0.009 |
+|       separator_inst     |     0.012 |
 |     rx_gth_logic_inst    |     0.005 |
 |       cross_inst         |     0.004 |
 |     rx_logic_gth_inst    |     0.004 |
 |       cross_head_inst    |     0.001 |
 |       cross_payload_inst |     0.003 |
-|   encoder_top_inst       |     0.463 |
-|     core_tx_inst         |     0.445 |
+|   encoder_top_inst       |     0.522 |
+|     core_tx_inst         |     0.480 |
 |       combiner_inst      |     0.008 |
-|       lpc_top_inst       |     0.004 |
-|       rs_enc_header_inst |     0.045 |
-|       rs_encoder_64_inst |     0.377 |
-|       scrambler_inst     |     0.010 |
+|       lpc_top_inst       |     0.012 |
+|       rs_enc_header_inst |     0.047 |
+|       rs_encoder_64_inst |     0.401 |
+|       scrambler_inst     |     0.011 |
 |     framer_top_inst      |     0.010 |
-|       crc_16_inst        |     0.001 |
-|       crc_32_inst        |     0.001 |
+|       crc_16_inst        |     0.002 |
+|       crc_32_inst        |     0.002 |
 |       framer_inst        |     0.007 |
+|     mux_inst             |     0.024 |
 |     x_gth_logic_inst     |     0.004 |
 |       cross_head_inst    |     0.003 |
-|     x_logic_gth_inst     |     0.004 |
-|       cross_inst         |     0.004 |
+|     x_logic_gth_inst     |     0.003 |
+|       cross_inst         |     0.003 |
 |   error_inject_inst      |     0.001 |
 |   gtx_exdes_m0           |     0.854 |
 |     example_wrapper_inst |     0.849 |
@@ -206,18 +208,18 @@ Table of Contents
 |       inst               |     0.003 |
 |   packet_rec_m0          |     0.006 |
 |     word_align_m0        |     0.003 |
-|   packet_send_m0         |     0.005 |
+|   packet_send_m0         |     0.006 |
 |   stream_input_inst      |     0.002 |
 |   sys_clk_inst           |     0.004 |
-|   u_ila_0                |     0.076 |
-|     inst                 |     0.076 |
-|       ila_core_inst      |     0.076 |
+|   u_ila_0                |     0.077 |
+|     inst                 |     0.077 |
+|       ila_core_inst      |     0.077 |
 |   u_ila_1                |     0.046 |
 |     inst                 |     0.046 |
 |       ila_core_inst      |     0.046 |
-|   u_ila_2                |     0.054 |
-|     inst                 |     0.054 |
-|       ila_core_inst      |     0.054 |
+|   u_ila_2                |     0.056 |
+|     inst                 |     0.056 |
+|       ila_core_inst      |     0.056 |
 +--------------------------+-----------+
 
 

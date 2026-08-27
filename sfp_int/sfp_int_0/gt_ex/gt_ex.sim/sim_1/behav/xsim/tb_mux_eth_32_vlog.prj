@@ -1,0 +1,11 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  --include "../../../../../../../../../../../2025.2/2025.2/data/rsb/busdef" --include "../../../../gt_ex.ip_user_files/ipstatic" --include "../../../../imports" \
+"../../../../gt_ex.srcs/sources_1/new/eth_preamble_gen.v" \
+"../../../../gt_ex.srcs/sources_1/new/mux_eth_32.v" \
+"../../../../gt_ex.srcs/sources_1/new/tb_mux_eth_32.v" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort

@@ -1,0 +1,10 @@
+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
+
+
+
+
+
+
+git add .
+git commit -m "Update beberapa file terbaru"
+git push

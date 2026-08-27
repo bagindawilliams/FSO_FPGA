@@ -20,6 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
+
 module assembler_top(
     input               clk,
     input               rst_n,
@@ -35,6 +36,11 @@ wire    c16_dv;
 wire    c32_dv;
 wire    [7:0]       crc_16;
 wire    [31:0]      crc_32;
+
+// --- KABEL BARU UNTUK CEGATAN ---
+wire        asm_flag;
+wire [31:0] asm_data;
+wire [63:0] eth_preamble_sfd;
 
 crc_16 #(.max(16)) crc_16_inst(
     .clk            (clk)
@@ -54,6 +60,7 @@ crc_32 #(.max(478)) crc_32_inst(
     ,.data_out      (crc_32)
 );
 
+// OUTPUT CEGATAN (Ubah flag dan data_out menjadi asm_flag dan asm_data)
 assembler assembler_inst (
     .clk                (clk)
     ,.rst_n             (rst_n)
@@ -61,25 +68,24 @@ assembler assembler_inst (
     ,.en_load           (c32_dv)
     ,.header_in         (crc_16)
     ,.payload_in        (crc_32)
-    ,.flag              (flag)
-    ,.data_out          (data_out)
+    ,.flag              (asm_flag)  
+    ,.data_out          (asm_data)  
 );
 
+// --- INSTANSIASI PREAMBLE GENERATOR ---
+eth_preamble_gen eth_pre_gen_inst (
+    .preamble_sfd       (eth_preamble_sfd)
+);
 
-
-
-
+// --- INSTANSIASI MULTIPLEXER TERAKHIR ---
+mux_eth_32 mux_eth_inst (
+    .clk                (clk),
+    .rst_n              (rst_n),
+    .asm_data_in        (asm_data),
+    .asm_valid_in       (asm_flag),
+    .preamble_sfd       (eth_preamble_sfd),
+    .eth_data_out       (data_out),  // Langsung ke output module
+    .eth_valid_out      (flag)       // Langsung ke output module
+);
 
 endmodule
-
-
-
-
-
-
-
-
-
-
-
-

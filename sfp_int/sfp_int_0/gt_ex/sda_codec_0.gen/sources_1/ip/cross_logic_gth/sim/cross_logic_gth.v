@@ -70,11 +70,11 @@ module cross_logic_gth (
 input wire srst;
 (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 write_clk CLK" *)
 (* X_INTERFACE_MODE = "slave" *)
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME write_clk, FREQ_HZ 312000000, FREQ_TOLERANCE_HZ 0, PHASE 0.0, INSERT_VIP 0" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME write_clk, FREQ_HZ 200000000, FREQ_TOLERANCE_HZ 0, PHASE 0.0, INSERT_VIP 0" *)
 input wire wr_clk;
 (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 read_clk CLK" *)
 (* X_INTERFACE_MODE = "slave" *)
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME read_clk, FREQ_HZ 200000000, FREQ_TOLERANCE_HZ 0, PHASE 0.0, INSERT_VIP 0" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME read_clk, FREQ_HZ 312000000, FREQ_TOLERANCE_HZ 0, PHASE 0.0, INSERT_VIP 0" *)
 input wire rd_clk;
 (* X_INTERFACE_INFO = "xilinx.com:interface:fifo_write:1.0 FIFO_WRITE WR_DATA" *)
 (* X_INTERFACE_MODE = "slave" *)
@@ -138,7 +138,7 @@ output wire rd_rst_busy;
     .C_PROG_FULL_TYPE(0),
     .C_RD_DATA_COUNT_WIDTH(11),
     .C_RD_DEPTH(2048),
-    .C_RD_FREQ(200),
+    .C_RD_FREQ(312),
     .C_RD_PNTR_WIDTH(11),
     .C_UNDERFLOW_LOW(0),
     .C_USE_DOUT_RST(1),
@@ -152,7 +152,7 @@ output wire rd_rst_busy;
     .C_WR_ACK_LOW(0),
     .C_WR_DATA_COUNT_WIDTH(9),
     .C_WR_DEPTH(512),
-    .C_WR_FREQ(312),
+    .C_WR_FREQ(200),
     .C_WR_PNTR_WIDTH(9),
     .C_WR_RESPONSE_LATENCY(1),
     .C_MSGON_VAL(1),

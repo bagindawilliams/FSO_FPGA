@@ -20,6 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
+
 module encoder_top(
     input               clk_gth,
     input               clk_logic,
@@ -42,6 +43,11 @@ wire    [63:0]      payload;
 
 wire    core_dv;
 wire    [95:0]      core_data;
+
+// KABEL BARU UNTUK MUX DAN PREAMBLE
+wire    [71:0]      preamble_wire;
+wire    mux_dv;
+wire    [127:0]     mux_data;
 
 framer_top framer_top_inst (
     .clk                (clk_gth)
@@ -79,25 +85,32 @@ core_tx core_tx_inst (
     ,.data_out          (core_data)
 );
 
+// INSTANTIATION MODUL PREAMBLE (BARU)
+preamble_gen preamble_inst (
+    .preamble_out   (preamble_wire)
+);
+
+// INSTANTIATION MUX GEARBOX (BARU)
+mux_gearbox_128 mux_inst (
+    .clk            (clk_logic)
+    ,.rst_n         (rst_n)
+    ,.preamble_data (preamble_wire) // Mengambil dari preamble_gen
+    ,.lpc_data      (core_data)     // Mengambil dari core_tx
+    ,.lpc_valid     (core_dv)
+    ,.cdc_data      (mux_data)
+    ,.cdc_valid     (mux_dv)
+);
+
 x_logic_gth x_logic_gth_inst (
     .clk_gth        (clk_gth)
     ,.clk_logic     (clk_logic)
     ,.rst_n         (rst_n)
-    ,.en            (core_dv)
-    ,.data_in       (core_data)
+    ,.en            (mux_dv)       // UBAH: Di-trigger oleh MUX
+    ,.data_in       (mux_data)     // UBAH: Lebar bus masuk 128-bit
     ,.flag          (flag)
     ,.data_out      (data_out)
 );
 
-
-
-
-
-
 endmodule
-
-
-
-
 
 

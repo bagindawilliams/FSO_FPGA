@@ -31,7 +31,7 @@ module decoder_top(
 );
 
 (*mark_debug = "true" *)wire    core_dv;
-(*mark_debug = "true" *)wire    [95:0]      core_data;
+(*mark_debug = "true" *)wire    [127:0]     core_data;
 
 (*mark_debug = "true" *)wire    rs_head_dv;
 (*mark_debug = "true" *)wire    [7:0]       rs_head;

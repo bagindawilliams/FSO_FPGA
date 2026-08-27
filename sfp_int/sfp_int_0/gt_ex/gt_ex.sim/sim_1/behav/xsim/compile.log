@@ -1,34 +1,7 @@
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.gen/sources_1/ip/gt/sim/gtwizard_ultrascale_v1_7_gthe3_channel.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module gtwizard_ultrascale_v1_7_22_gthe3_channel
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.gen/sources_1/ip/gt/sim/gt_gthe3_channel_wrapper.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module gt_gthe3_channel_wrapper
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.gen/sources_1/ip/gt/sim/gtwizard_ultrascale_v1_7_gthe3_common.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module gtwizard_ultrascale_v1_7_22_gthe3_common
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.gen/sources_1/ip/gt/sim/gt_gthe3_common_wrapper.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module gt_gthe3_common_wrapper
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.gen/sources_1/ip/gt/sim/gt_gtwizard_gthe3.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module gt_gtwizard_gthe3
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.gen/sources_1/ip/gt/sim/gt_gtwizard_top.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module gt_gtwizard_top
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.gen/sources_1/ip/gt/sim/gt.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module gt
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.gen/sources_1/ip/gt_vio_0/sim/gt_vio_0.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module gt_vio_0
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/imports/gt_example_bit_sync.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module gt_example_bit_synchronizer
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/imports/gt_example_gtwiz_userclk_rx.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module gt_example_gtwiz_userclk_rx
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/imports/gt_example_gtwiz_userclk_tx.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module gt_example_gtwiz_userclk_tx
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/imports/gt_example_init.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module gt_example_init
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/imports/gt_example_reset_sync.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module gt_example_reset_synchronizer
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/imports/gt_example_top.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module gt_example_top
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/imports/gt_example_wrapper.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module gt_example_wrapper
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/imports/gt_example_top_sim.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module gt_example_top_sim
-INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.sim/sim_1/behav/xsim/glbl.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module glbl
+/2025.2/2025.2/Vivado/bin/setupEnv.sh: line 236: [: /home/williams/MYFPGA/FPGA: binary operator expected
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Final/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/eth_preamble_gen.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module eth_preamble_gen
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Final/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/mux_eth_32.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mux_eth_32
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Final/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/tb_mux_eth_32.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module tb_mux_eth_32
