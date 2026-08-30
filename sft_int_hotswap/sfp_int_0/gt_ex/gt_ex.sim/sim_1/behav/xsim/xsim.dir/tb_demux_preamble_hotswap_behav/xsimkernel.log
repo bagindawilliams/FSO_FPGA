@@ -1,0 +1,7 @@
+Running: xsim.dir/tb_demux_preamble_hotswap_behav/xsimk -simmode gui -wdb tb_demux_preamble_hotswap_behav.wdb -simrunnum 0 -socket 48655
+Design successfully loaded
+Design Loading Memory Usage: 200524 KB (Peak: 200580 KB)
+Design Loading CPU Usage: 650 ms
+Simulation completed
+Simulation Memory Usage: 282520 KB (Peak: 339792 KB)
+Simulation CPU Usage: 650 ms
