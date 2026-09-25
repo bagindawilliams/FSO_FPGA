@@ -1,0 +1,1 @@
+vopt -64 -l elaborate.log +acc=npr -suppress 10016  -L xil_defaultlib -L xpm -L unisims_ver -L unimacro_ver -L secureip -work xil_defaultlib xil_defaultlib.tb_eth_rx_front_end_top xil_defaultlib.glbl -o tb_eth_rx_front_end_top_opt

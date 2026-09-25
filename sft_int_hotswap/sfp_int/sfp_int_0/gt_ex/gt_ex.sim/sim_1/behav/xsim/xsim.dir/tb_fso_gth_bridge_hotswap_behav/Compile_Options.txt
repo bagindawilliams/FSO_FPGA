@@ -1,0 +1,1 @@
+--incr --debug "typical" --relax --mt "8" -L "xil_defaultlib" -L "gtwizard_ultrascale_v1_7_22" -L "unisims_ver" -L "unimacro_ver" -L "secureip" -L "xpm" --snapshot "tb_fso_gth_bridge_hotswap_behav" "xil_defaultlib.tb_fso_gth_bridge_hotswap" "xil_defaultlib.glbl" -log "elaborate.log" 

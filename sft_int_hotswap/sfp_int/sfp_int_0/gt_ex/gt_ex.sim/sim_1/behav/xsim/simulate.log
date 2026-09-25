@@ -1,0 +1,6 @@
+Time resolution is 1 ps
+Waktu 100000: Power On, menunggu GTH PLL Lock...
+Waktu 5220000: GTH Link Up! Memulai transmisi...
+Waktu 10216000: Simulasi Selesai.
+$finish called at time : 10216 ns : File "/home/williams/MYFPGA/FPGA Final/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/tb_fso_gth_bridge_hotswap.v" Line 105
+INFO: xsimkernel Simulation Memory Usage: 344940 KB (Peak: 398740 KB), Simulation CPU Usage: 1860 ms
