@@ -1,0 +1,39 @@
+Time resolution is 1 ps
+Note: Actual FIFO Depth = 513
+Time: 0 ps  Iteration: 0
+Note: Actual FIFO Depth = 513
+Time: 0 ps  Iteration: 0
+Note:  DEPTH = 512 WIDTH = 72 C_RD_PRIM_WIDTH = 18 C_RD_PRIM_DEPTH = 2304 DEEP = 1 WIDE = 2
+Time: 0 ps  Iteration: 0
+---------------------------------------------------------------
+ ERROR INJECTOR FRAME 1 ACTIVE (SIM_ERR_EN = 1)
+ time_start     : 360.0 ns | time_end : 2853.6 ns
+ Duration       : 2.493600 us (3117 Bytes Continuous)
+ Effective Rate : 6121.270452 Mbps
+ Frame Rate     : 401.026628 kHz  | FCCH Rate: 6.416426 Mbps
+---------------------------------------------------------------
+---------------------------------------------------------------
+ ERROR INJECTOR FRAME 2 ACTIVE (SIM_ERR_EN = 1)
+ time_start     : 2853.6 ns | time_end : 5347.2 ns
+ Duration       : 2.493600 us (3117 Bytes Continuous)
+ Effective Rate : 6121.270452 Mbps
+ Frame Rate     : 401.026628 kHz  | FCCH Rate: 6.416426 Mbps
+---------------------------------------------------------------
+---------------------------------------------------------------
+ ERROR INJECTOR FRAME 3 ACTIVE (SIM_ERR_EN = 1)
+ time_start     : 5347.2 ns | time_end : 7840.8 ns
+ Duration       : 2.493600 us (3117 Bytes Continuous)
+ Effective Rate : 6121.270452 Mbps
+ Frame Rate     : 401.026628 kHz  | FCCH Rate: 6.416426 Mbps
+---------------------------------------------------------------
+---------------------------------------------------------------
+ ERROR INJECTOR FRAME 4 ACTIVE (SIM_ERR_EN = 1)
+ time_start     : 7840.8 ns | time_end : 10334.4 ns
+ Duration       : 2.493600 us (3117 Bytes Continuous)
+ Effective Rate : 6121.270452 Mbps
+ Frame Rate     : 401.026628 kHz  | FCCH Rate: 6.416426 Mbps
+---------------------------------------------------------------
+
+[10834000] ALL 4 FRAMES PASSED THROUGH CDC 2 & ERROR INJECTOR CLEANLY.
+
+$finish called at time : 10834400 ps : File "/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/tb_error_inject.v" Line 279

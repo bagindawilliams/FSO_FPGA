@@ -1,0 +1,41 @@
+Vivado Simulator v2025.2
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+Running: /2025.2/2025.2/Vivado/bin/unwrapped/lnx64.o/xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L fifo_generator_v13_2_14 -L unisims_ver -L unimacro_ver -L secureip -L xpm --snapshot tb_error_inject_behav xil_defaultlib.tb_error_inject xil_defaultlib.glbl -log elaborate.log 
+Using 8 slave threads.
+WARNING: [XSIM 43-3431] One or more environment variables have been detected which affect the operation of the C compiler. These are typically not set in standard installations and are not tested by AMD, however they may be appropriate for your system, so the flow will attempt to continue.  If errors occur, try running xelab with the "-mt off -v 1" switches to see more information from the C compiler. The following environment variables have been detected:
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling package std.standard
+Compiling package std.textio
+Compiling package ieee.std_logic_1164
+Compiling package ieee.std_logic_arith
+Compiling package ieee.std_logic_unsigned
+Compiling package synopsys.attributes
+Compiling package ieee.std_logic_misc
+Compiling package fifo_generator_v13_2_14.fifo_generator_v13_2_14_pkg
+Compiling package xpm.vcomponents
+Compiling package ieee.numeric_std
+Compiling package unisim.vcomponents
+Compiling package ieee.vital_timing
+Compiling package ieee.vital_primitives
+Compiling package unisim.vpkg
+Compiling architecture fifo36e2_v of entity unisim.FIFO36E2 [\FIFO36E2(prog_empty_thresh=2,pr...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.builtin_prim [\builtin_prim(c_din_width=128,c_...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.builtin_extdepth [\builtin_extdepth(c_family="8SER...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.builtin_top [\builtin_top(c_family="8SERIES",...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.input_blk [\input_blk(c_common_clock=0,c_di...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.output_blk [\output_blk(c_dout_width=32,c_pk...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.fifo_generator_v13_2_14_builtin [\fifo_generator_v13_2_14_builtin...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.fifo_generator_top [\fifo_generator_top(c_family="vi...]
+Compiling architecture amd of entity fifo_generator_v13_2_14.fifo_generator_v13_2_14_synth [\fifo_generator_v13_2_14_synth(c...]
+Compiling module xil_defaultlib.cross_logic_gth
+Compiling module xil_defaultlib.x_logic_gth
+Compiling module xil_defaultlib.error_inject_default
+Compiling module xil_defaultlib.tb_error_inject
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot tb_error_inject_behav

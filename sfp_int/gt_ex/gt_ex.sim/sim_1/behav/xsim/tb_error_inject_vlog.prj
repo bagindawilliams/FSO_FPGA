@@ -1,0 +1,12 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  --include "../../../../../../../../../../../../2025.2/2025.2/data/rsb/busdef" --include "../../../../imports" --include "../../../../gt_ex.ip_user_files/ipstatic" \
+"../../../../sda_codec_0.gen/sources_1/ip/cross_logic_gth/sim/cross_logic_gth.v" \
+"../../../../gt_ex.srcs/sources_1/new/error_inject.v" \
+"../../../../gt_ex.srcs/sources_1/new/encoder/x_logic_gth.v" \
+"../../../../gt_ex.srcs/sources_1/new/tb_error_inject.v" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort

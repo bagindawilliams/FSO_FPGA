@@ -1,0 +1,4 @@
+Running: xsim.dir/tb_error_inject_behav/xsimk -simmode gui -wdb tb_error_inject_behav.wdb -simrunnum 0 -socket 43661
+Design successfully loaded
+Design Loading Memory Usage: 201692 KB (Peak: 201700 KB)
+Design Loading CPU Usage: 620 ms

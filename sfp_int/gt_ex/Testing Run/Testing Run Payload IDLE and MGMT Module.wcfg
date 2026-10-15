@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="tb_idle_MGMT_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tb_idle_MGMT" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="1,607.645 ns"></ZoomStartTime>
+      <ZoomEndTime time="1,655.596 ns"></ZoomEndTime>
+      <Cursor1Time time="1,601.045 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="233"></NameColumnWidth>
+      <ValueColumnWidth column_width="66"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="8" />
+   <wvobject type="group" fp_name="group709">
+      <obj_property name="label">System Control</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="logic" fp_name="/tb_idle_MGMT/u_idle_capsule/clk">
+         <obj_property name="ElementShortName">clk</obj_property>
+         <obj_property name="ObjectShortName">clk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_idle_MGMT/rst_n">
+         <obj_property name="ElementShortName">rst_n</obj_property>
+         <obj_property name="ObjectShortName">rst_n</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_idle_MGMT/payload_mux_sel">
+         <obj_property name="ElementShortName">payload_mux_sel[1:0]</obj_property>
+         <obj_property name="ObjectShortName">payload_mux_sel[1:0]</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group710">
+      <obj_property name="label">RAW IDLE Data</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="array" fp_name="/tb_idle_MGMT/u_idle_capsule/raw_tdata">
+         <obj_property name="ElementShortName">raw_tdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">raw_tdata[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_idle_MGMT/u_idle_capsule/raw_tvalid">
+         <obj_property name="ElementShortName">raw_tvalid</obj_property>
+         <obj_property name="ObjectShortName">raw_tvalid</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_idle_MGMT/u_idle_capsule/raw_tready">
+         <obj_property name="ElementShortName">raw_tready</obj_property>
+         <obj_property name="ObjectShortName">raw_tready</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_idle_MGMT/u_idle_capsule/raw_tlast">
+         <obj_property name="ElementShortName">raw_tlast</obj_property>
+         <obj_property name="ObjectShortName">raw_tlast</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_idle_MGMT/u_idle_capsule/word_cnt">
+         <obj_property name="ElementShortName">word_cnt[15:0]</obj_property>
+         <obj_property name="ObjectShortName">word_cnt[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group711">
+      <obj_property name="label">IDLE with CRC 32 to FIFO</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="array" fp_name="/tb_idle_MGMT/u_idle_capsule/crc_tdata">
+         <obj_property name="ElementShortName">crc_tdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">crc_tdata[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_idle_MGMT/u_idle_capsule/crc_tvalid">
+         <obj_property name="ElementShortName">crc_tvalid</obj_property>
+         <obj_property name="ObjectShortName">crc_tvalid</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_idle_MGMT/u_idle_capsule/crc_tlast">
+         <obj_property name="ElementShortName">crc_tlast</obj_property>
+         <obj_property name="ObjectShortName">crc_tlast</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_idle_MGMT/idle_crc_cnt">
+         <obj_property name="ElementShortName">idle_crc_cnt[15:0]</obj_property>
+         <obj_property name="ObjectShortName">idle_crc_cnt[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group712">
+      <obj_property name="label">IDLE Output FIFO to MUX</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="array" fp_name="/tb_idle_MGMT/idle_tdata">
+         <obj_property name="ElementShortName">idle_tdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">idle_tdata[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_idle_MGMT/idle_tvalid">
+         <obj_property name="ElementShortName">idle_tvalid</obj_property>
+         <obj_property name="ObjectShortName">idle_tvalid</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_idle_MGMT/idle_tlast">
+         <obj_property name="ElementShortName">idle_tlast</obj_property>
+         <obj_property name="ObjectShortName">idle_tlast</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_idle_MGMT/idle_tready">
+         <obj_property name="ElementShortName">idle_tready</obj_property>
+         <obj_property name="ObjectShortName">idle_tready</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_idle_MGMT/idle_crc_cnt">
+         <obj_property name="ElementShortName">idle_crc_cnt[15:0]</obj_property>
+         <obj_property name="ObjectShortName">idle_crc_cnt[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group733">
+      <obj_property name="label">MUX Arbi</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="array" fp_name="/tb_idle_MGMT/payload_mux_sel">
+         <obj_property name="ElementShortName">payload_mux_sel[1:0]</obj_property>
+         <obj_property name="ObjectShortName">payload_mux_sel[1:0]</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_idle_MGMT/m_axis_fso_tdata">
+         <obj_property name="ElementShortName">m_axis_fso_tdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">m_axis_fso_tdata[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group718">
+      <obj_property name="label">RAW MGMT Data</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/tb_idle_MGMT/u_mgmt_capsule/mgmt_trigger_1hz">
+         <obj_property name="ElementShortName">mgmt_trigger_1hz</obj_property>
+         <obj_property name="ObjectShortName">mgmt_trigger_1hz</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_idle_MGMT/u_mgmt_capsule/word_cnt">
+         <obj_property name="ElementShortName">word_cnt[15:0]</obj_property>
+         <obj_property name="ObjectShortName">word_cnt[15:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_idle_MGMT/u_mgmt_capsule/raw_tdata">
+         <obj_property name="ElementShortName">raw_tdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">raw_tdata[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_idle_MGMT/u_mgmt_capsule/raw_tvalid">
+         <obj_property name="ElementShortName">raw_tvalid</obj_property>
+         <obj_property name="ObjectShortName">raw_tvalid</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_idle_MGMT/u_mgmt_capsule/raw_tlast">
+         <obj_property name="ElementShortName">raw_tlast</obj_property>
+         <obj_property name="ObjectShortName">raw_tlast</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_idle_MGMT/u_mgmt_capsule/raw_tready">
+         <obj_property name="ElementShortName">raw_tready</obj_property>
+         <obj_property name="ObjectShortName">raw_tready</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group725">
+      <obj_property name="label">MGMT with CRC 32 to FIFO</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_idle_MGMT/mgmt_crc_cnt">
+         <obj_property name="ElementShortName">mgmt_crc_cnt[15:0]</obj_property>
+         <obj_property name="ObjectShortName">mgmt_crc_cnt[15:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_idle_MGMT/u_mgmt_capsule/crc_tdata">
+         <obj_property name="ElementShortName">crc_tdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">crc_tdata[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_idle_MGMT/u_mgmt_capsule/crc_tvalid">
+         <obj_property name="ElementShortName">crc_tvalid</obj_property>
+         <obj_property name="ObjectShortName">crc_tvalid</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_idle_MGMT/u_mgmt_capsule/crc_tlast">
+         <obj_property name="ElementShortName">crc_tlast</obj_property>
+         <obj_property name="ObjectShortName">crc_tlast</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_idle_MGMT/u_mgmt_capsule/crc_tready">
+         <obj_property name="ElementShortName">crc_tready</obj_property>
+         <obj_property name="ObjectShortName">crc_tready</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group730">
+      <obj_property name="label">MGMT Output FIFO to MUX</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_idle_MGMT/mgmt_tdata">
+         <obj_property name="ElementShortName">mgmt_tdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">mgmt_tdata[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_idle_MGMT/mgmt_tvalid">
+         <obj_property name="ElementShortName">mgmt_tvalid</obj_property>
+         <obj_property name="ObjectShortName">mgmt_tvalid</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_idle_MGMT/mgmt_tlast">
+         <obj_property name="ElementShortName">mgmt_tlast</obj_property>
+         <obj_property name="ObjectShortName">mgmt_tlast</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_idle_MGMT/mgmt_tready">
+         <obj_property name="ElementShortName">mgmt_tready</obj_property>
+         <obj_property name="ObjectShortName">mgmt_tready</obj_property>
+      </wvobject>
+   </wvobject>
+</wave_config>
