@@ -3,81 +3,94 @@
 ===========================================================================
 Company      : WiComAI Lab, Kookmin University
 Engineers    : Williamsyah Baginda Miraj & Giovanni Dwi
-Description  : High-Fidelity Testbench for CDC 2 + Error Injector Pipeline.
+Description  : Post-CDC 2 Standalone Testbench for Error Injector (312.5 MHz).
 
-               VALIDATION OBJECTIVES:
-               1. Dual-Mode Verification (SIM_ERR_EN):
-                  - SIM_ERR_EN = 1: Injects 48-word pattern from 'error.mem'
-                    into the Payload region while keeping the 9-Byte Preamble 
-                    and 48-Byte LPC Header 100% uncorrupted.
-                  - SIM_ERR_EN = 0: Clean bypass mode for Hardware testing 
-                    with the Manual VOA (Single-Mode 0.9-1m /t49G/51 LC/PC).
-               2. Continuous 3117-Byte Geometry & Zero-Gap Proof:
-                  Proves that 'err_flag' stays continuously HIGH across all 
-                  4 frames (DAT1, DAT2, IDLE, MGMT) and counts 1 to 3117 bytes.
-               3. SDA OISL Table 2-4 Metrics Alignment:
-                  Displays Frame Duration (2.4936 us), Effective Data Rate 
-                  (6121.270 Mbps), Frame Rate (401.027 kHz), and FCCH (6.416 Mbps)
-                  directly underneath each active frame on the Error Injector output.
+               ARCHITECTURE & WAVEFORM GROUPS:
+               - Group 1: Data In from CDC 2 (312.5 MHz, 32-bit Continuous)
+                 Feeds the exact continuous 3117-Byte/frame stream exiting 
+                 CDC 2 (x_logic_gth) into error_inject.v. Includes 1-by-1 
+                 input byte counter (in_byte_cnt: 1..3117) and input clock 
+                 counter (in_clk_cnt: 1..780).
+               - Group 2: Data Out from Error Inject to GTH TX (312.5 MHz, 32-bit)
+                 Displays the corrupted output stream heading to gth64b66b_tx.v,
+                 proving that the 9B Preamble (55..55D5) and 48B LPC Header 
+                 remain uncorrupted while 48 payload words are XORed with 
+                 'error.mem', maintaining exact SDA OISL Table 2-4 metrics.
 ===========================================================================
 */
 
 module tb_error_inject();
 
     // =======================================================
-    // 1. MASTER MODE SWITCH & SYSTEM CLOCKS
+    // 1. MASTER SWITCH & CLOCK/RESET SIGNALS (312.5 MHz)
     // =======================================================
-    // Set to 1 for Vivado 'error.mem' injection, or 0 for Hardware VOA bypass
-    parameter SIM_ERR_EN = 1;
+    // SIM_MODE = 1: Digital 'error.mem' XOR active (Vivado Simulation)
+    // SIM_MODE = 0: Digital bypass for Physical Manual VOA (/t49G/51 LC/PC)
+    parameter SIM_MODE = 1;
 
-    reg clk_logic; // 200.0 MHz (Period: 5.0 ns)
-    reg clk_gth;   // 312.5 MHz (Period: 3.2 ns)
+    reg clk_logic; // 200.0 MHz ( Drives upstream CDC 2 write side )
+    reg clk_gth;   // 312.5 MHz ( Primary clock for CDC 2 Out -> Error Inject -> GTH )
     reg rst_n;
-    reg en;
+    reg en_upstream;
 
-    // Input from MUX Gearbox Emulator (200 MHz, 128-bit)
-    reg  [127:0] data_in;
-    reg          data_in_dv;
-    reg  [15:0]  cdc_keep;
-
-    // Intermediate Wires: CDC 2 Output -> Error Injector Input (312.5 MHz, 32-bit)
-    wire         cdc2_flag;
-    wire [31:0]  cdc2_data_out;
-
-    // Final Output from Error Injector (312.5 MHz, 32-bit)
-    wire         err_flag;
-    wire [31:0]  err_data_out;
+    // Internal Upstream Stimulus to CDC 2 (Hidden background driver)
+    reg  [127:0] mux_data_in;
+    reg          mux_data_dv;
+    reg  [15:0]  mux_cdc_keep;
 
     // =======================================================
-    // 2. DUT INSTANTIATIONS (CDC 2 -> ERROR INJECTOR)
+    // 2. GROUP 1 SIGNALS: DATA IN FROM CDC 2 (312.5 MHz, 32-bit)
+    // =======================================================
+    wire         cdc2_flag_in;     // Continuous Valid from CDC 2 (312.5 MHz)
+    wire [31:0]  cdc2_data_in;     // Continuous 32-bit Data from CDC 2 (312.5 MHz)
+    wire [7:0]   in_byte_stream   = u_cdc2.byte_out;       // 1-by-1 Byte entering Error Inject
+    wire [15:0]  in_clk_cnt       = u_cdc2.out_clk_cnt;    // 1..780 Clock Counter from CDC 2
+    wire [11:0]  in_byte_cnt      = u_cdc2.frame_byte_cnt; // 1..3117 Byte Counter from CDC 2
+    wire [31:0]  in_frame_id      = u_cdc2.frame_out_id;   // Active Frame ID (1, 2, 3, 4)
+
+    // =======================================================
+    // 3. GROUP 2 SIGNALS: DATA OUT FROM ERROR INJECT TO GTH (312.5 MHz)
+    // =======================================================
+    wire         gth_tx_valid_out; // Continuous Valid to gth64b66b_tx
+    wire [31:0]  gth_tx_data_out;  // 32-bit Data to gth64b66b_tx
+    wire [31:0]  err_mask_applied   = u_error_inject.applied_mask;
+    wire [15:0]  corrupted_word_cnt = u_error_inject.corrupted_word_cnt;
+    wire [7:0]   out_byte_stream    = u_error_inject.byte_out;       // 1-by-1 Byte exiting Error Inject
+    wire [15:0]  out_clk_cnt        = u_error_inject.out_clk_cnt;    // 1..780 Clock Counter to GTH
+    wire [11:0]  frame_byte_cnt     = u_error_inject.frame_byte_cnt; // 1..3117 Byte Counter to GTH
+    wire [31:0]  frame_out_id       = u_error_inject.frame_out_id;   // Active Frame ID (1, 2, 3, 4)
+
+    // =======================================================
+    // 4. DUT INSTANTIATIONS (CDC 2 -> ERROR INJECTOR)
     // =======================================================
     x_logic_gth u_cdc2 (
         .clk_gth    (clk_gth),
         .clk_logic  (clk_logic),
         .rst_n      (rst_n),
-        .en         (en),
-        .data_in    (data_in),
-        .data_in_dv (data_in_dv),
-        .cdc_keep   (cdc_keep),
-        .flag       (cdc2_flag),
-        .data_out   (cdc2_data_out)
+        .en         (en_upstream),
+        .data_in    (mux_data_in),
+        .data_in_dv (mux_data_dv),
+        .cdc_keep   (mux_cdc_keep),
+        .flag       (cdc2_flag_in),
+        .data_out   (cdc2_data_in)
     );
 
     error_inject #(
-        .SIM_ERR_EN (SIM_ERR_EN),
-        .safe_words (15), // Protects first 60 Bytes (9B Preamble + 48B Header LPC + 3B)
+        .SIM_MODE   (SIM_MODE),
+        .safe_words (15), // Protects first 60B (9B Preamble + 48B Header LPC + 3B)
         .max_error  (47)  // 48 words from error.mem
     ) u_error_inject (
         .clk        (clk_gth),
         .rst_n      (rst_n),
-        .en         (cdc2_flag),
-        .data_in    (cdc2_data_out),
-        .flag       (err_flag),
-        .data_out   (err_data_out)
+        .en         (cdc2_flag_in),
+        .stall_in   (1'b0),            // 0 in standalone 312.5 MHz test; driven by gth64b66b_tx later
+        .data_in    (cdc2_data_in),
+        .flag       (gth_tx_valid_out),
+        .data_out   (gth_tx_data_out)
     );
 
     // =======================================================
-    // 3. DUAL CLOCK GENERATION
+    // 5. CLOCK GENERATION
     // =======================================================
     initial begin
         clk_logic = 1'b0;
@@ -86,11 +99,11 @@ module tb_error_inject();
 
     initial begin
         clk_gth = 1'b0;
-        forever #1.6 clk_gth = ~clk_gth;     // 312.5 MHz
+        forever #1.6 clk_gth = ~clk_gth;     // 312.5 MHz (3.2 ns period)
     end
 
     // =======================================================
-    // 4. WRITE DOMAIN FSM: MUX GEARBOX EMULATOR (200 MHz)
+    // 6. UPSTREAM FEEDER (Generates 4 Continuous 3117B Frames)
     // =======================================================
     localparam ST_WAIT_RST = 2'd0;
     localparam ST_STREAM   = 2'd1;
@@ -102,14 +115,14 @@ module tb_error_inject();
     reg [15:0] cycle_cnt;
 
     initial begin
-        rst_n     = 1'b0;
-        en        = 1'b0;
-        tb_state  = ST_WAIT_RST;
-        frame_id  = 4'd0;
-        cycle_cnt = 16'd0;
+        rst_n       = 1'b0;
+        en_upstream = 1'b0;
+        tb_state    = ST_WAIT_RST;
+        frame_id    = 4'd0;
+        cycle_cnt   = 16'd0;
         #100; 
-        rst_n     = 1'b1; 
-        en        = 1'b1;
+        rst_n       = 1'b1; 
+        en_upstream = 1'b1;
     end
 
     always @(posedge clk_logic or negedge rst_n) begin
@@ -121,9 +134,8 @@ module tb_error_inject();
             case (tb_state)
                 ST_WAIT_RST: begin
                     if (!u_cdc2.wr_rst_busy) begin
-                        if (cycle_cnt < 16'd5) begin
-                            cycle_cnt <= cycle_cnt + 1'b1;
-                        end else begin
+                        if (cycle_cnt < 16'd5) cycle_cnt <= cycle_cnt + 1'b1;
+                        else begin
                             tb_state  <= ST_STREAM;
                             frame_id  <= 4'd1;
                             cycle_cnt <= 16'd1;
@@ -131,78 +143,56 @@ module tb_error_inject();
                     end
                 end
                 ST_STREAM: begin
-                    if (cycle_cnt < 16'd195) begin
-                        cycle_cnt <= cycle_cnt + 1'b1;
-                    end else begin
+                    if (cycle_cnt < 16'd195) cycle_cnt <= cycle_cnt + 1'b1;
+                    else begin
                         tb_state  <= ST_GAP;
                         cycle_cnt <= 16'd1;
                     end
                 end
                 ST_GAP: begin
-                    // 304 cycles rate-matching gap (balances 25.6 Gbps burst to 10.0 Gbps line rate)
-                    if (cycle_cnt < 16'd304) begin
-                        cycle_cnt <= cycle_cnt + 1'b1;
-                    end else begin
+                    if (cycle_cnt < 16'd304) cycle_cnt <= cycle_cnt + 1'b1;
+                    else begin
                         if (frame_id < 4'd4) begin
                             frame_id  <= frame_id + 1'b1;
                             tb_state  <= ST_STREAM;
                             cycle_cnt <= 16'd1;
                         end else begin
-                            tb_state  <= ST_DONE;
-                            cycle_cnt <= 16'd0;
-                            en        <= 1'b0;
+                            tb_state    <= ST_DONE;
+                            cycle_cnt   <= 16'd0;
+                            en_upstream <= 1'b0;
                         end
                     end
                 end
-                ST_DONE: begin
-                    en <= 1'b0;
-                end
+                ST_DONE: en_upstream <= 1'b0;
             endcase
         end
     end
 
-    // Realistic Frame Structure: Cycle 1 starts with unscrambled 72-bit Preamble (9B)
     always @(*) begin
-        data_in_dv = 1'b0;
-        data_in    = 128'd0;
-        cdc_keep   = 16'd0;
+        mux_data_dv  = 1'b0;
+        mux_data_in  = 128'd0;
+        mux_cdc_keep = 16'd0;
 
         if (rst_n && (tb_state == ST_STREAM)) begin
-            data_in_dv = 1'b1;
+            mux_data_dv = 1'b1;
             if (cycle_cnt == 16'd1) begin
-                // First 16 Bytes of Frame: 9B Unscrambled Preamble (55..55D5) + 7B Header LPC
-                cdc_keep = 16'hFFFF;
-                data_in  = {72'h55_55_55_55_55_55_55_55_D5, 24'hAA_BB_CC, {12'd0, frame_id}, {16'd1}};
+                // Bytes 1..9: Unscrambled 72-bit Preamble (55_55_55_55_55_55_55_55_D5)
+                // Bytes 10..16: First 7 Bytes of LPC Header
+                mux_cdc_keep = 16'hFFFF;
+                mux_data_in  = {72'h55_55_55_55_55_55_55_55_D5, 24'hAA_BB_CC, {12'd0, frame_id}, 16'd1};
             end else if (cycle_cnt <= 16'd194) begin
-                cdc_keep = 16'hFFFF;
-                data_in  = {32'hAAAA_BBBB, 32'hCCCC_DDDD, {28'd0, frame_id}, {16'd0, cycle_cnt}};
+                mux_cdc_keep = 16'hFFFF;
+                mux_data_in  = {32'hAAAA_BBBB, 32'hCCCC_DDDD, {28'd0, frame_id}, {16'd0, cycle_cnt}};
             end else if (cycle_cnt == 16'd195) begin
-                // 13-Byte Flush ending in 0x33 + 3-Byte Zero Padding (stripped by CDC 2)
-                cdc_keep = 16'h1FFF;
-                data_in  = {104'h9999_8888_7777_6666_5555_4444_33, 24'h000000};
+                // Final 13 Bytes of the 3117-Byte Frame (ending in 0x33)
+                mux_cdc_keep = 16'h1FFF;
+                mux_data_in  = {104'h9999_8888_7777_6666_5555_4444_33, 24'h000000};
             end
         end
     end
 
     // =======================================================
-    // 5. WAVEFORM TRACKERS FOR ALL STAGES
-    // =======================================================
-    // Group 1: Data In from MUX (200 MHz)
-    wire [15:0] in_clk_cnt  = data_in_dv ? cycle_cnt : 16'd0;
-    wire [11:0] in_byte_cnt = data_in_dv ? 
-                              ((cdc_keep == 16'hFFFF) ? (cycle_cnt * 12'd16) : 12'd3117) 
-                              : 12'd0;
-
-    // Group 2: Error Injector Output Trackers (312.5 MHz)
-    wire [31:0] err_mask_applied   = u_error_inject.applied_mask;
-    wire [15:0] corrupted_word_cnt = u_error_inject.corrupted_word_cnt;
-    wire [7:0]  byte_out           = u_error_inject.byte_out;       
-    wire [15:0] out_clk_cnt        = u_error_inject.out_clk_cnt;    
-    wire [11:0] frame_byte_cnt     = u_error_inject.frame_byte_cnt; 
-    wire [31:0] frame_out_id       = u_error_inject.frame_out_id;   
-
-    // =======================================================
-    // 6. FRAME-ALIGNED SDA OISL TABLE 2-4 METRIC ANALYZER
+    // 7. FRAME-ALIGNED SDA OISL TABLE 2-4 METRIC ANALYZER
     // =======================================================
     real last_gth_edge_ns;
     real measured_gth_period_ns;
@@ -238,7 +228,6 @@ module tb_error_inject();
         last_gth_edge_ns = $realtime;
     end
 
-    // Synchronously update Table 2-4 metrics directly under frame_out_id (1, 2, 3, 4)
     always @(frame_out_id) begin
         if (frame_out_id >= 32'd1 && frame_out_id <= 32'd4) begin
             time_start = $realtime;
@@ -250,7 +239,7 @@ module tb_error_inject();
             OISL_FCCH_Mbps                = 16.0 / OISL_Frame_Duration_us;
 
             $display("---------------------------------------------------------------");
-            $display(" ERROR INJECTOR FRAME %0d ACTIVE (SIM_ERR_EN = %0d)", frame_out_id, SIM_ERR_EN);
+            $display(" [ERROR INJECT -> GTH] FRAME %0d ACTIVE (SIM_MODE = %0d)", frame_out_id, SIM_MODE);
             $display(" time_start     : %0.1f ns | time_end : %0.1f ns", time_start, time_end);
             $display(" Duration       : %0.6f us (3117 Bytes Continuous)", OISL_Frame_Duration_us);
             $display(" Effective Rate : %0.6f Mbps", OISL_Effective_Data_Rate_Mbps);
@@ -269,13 +258,13 @@ module tb_error_inject();
     end
 
     // =======================================================
-    // 7. SIMULATION TERMINATION
+    // 8. SIMULATION TERMINATION
     // =======================================================
     initial begin
         wait(tb_state == ST_DONE);
-        wait(err_flag == 1'b0);
+        wait(gth_tx_valid_out == 1'b0);
         #500;
-        $display("\n[%0t] ALL 4 FRAMES PASSED THROUGH CDC 2 & ERROR INJECTOR CLEANLY.\n", $time);
+        $display("\n[%0t] POST-CDC 2 ERROR INJECTOR VERIFICATION COMPLETE.\n", $time);
         $finish;
     end
 
