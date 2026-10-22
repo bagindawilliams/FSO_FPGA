@@ -3,122 +3,137 @@
 ===========================================================================
 Company      : WiComAI Lab, Kookmin University
 Engineers    : Williamsyah Baginda Miraj & Giovanni Dwi
-Description  : ARQ DDR4 Memory Wrapper (Pre-AXI4 MIG IP Core integration).
-               Acts as the ARQ Retransmit RAM interface.
-               - Captures 1912 Bytes (478 words) on ddr4_write_req.
-               - Streams out 1912 Bytes on ddr4_read_req.
-               - Frees memory sectors on ddr4_delete_req.
+Module Name  : arq_ddr4_wrapper
+Description  : Behavioral Circular Block RAM Model for ARQ Retransmission.
+               Stores up to 16 FSO frames (512 words x 32-bit per slot) to 
+               support hardware retransmission upon NAK or holdoff timeout.
+               
+               Revision Notes:
+               1. Changed 's_axis_tready' to an input port so it monitors the 
+                  upstream FIFO handshake in fso_payload.v without creating a 
+                  multi-driven net against fifo_data.s_axis_tready.
+               2. Separated 'ram_storage' array read/write operations into a 
+                  dedicated synchronous 'always @(posedge clk)' block for 
+                  clean Block RAM (BRAM) inference.
 ===========================================================================
 */
 
 module arq_ddr4_wrapper #(
-    parameter MAX_FRAMES = 16,        // Maximum concurrent frames in RAM
-    parameter FRAME_WORDS = 478       // 1912 Bytes = 478 Words (32-bit)
+    parameter DATA_WIDTH = 32,
+    parameter MAX_FRAMES = 16
 )(
-    input  wire        clk,
-    input  wire        rst_n,
+    input  wire                  clk,
+    input  wire                  rst_n,
 
-    // Control Interface from arq_tx_controller.v
-    input  wire        ddr4_write_req,
-    input  wire        ddr4_read_req,
-    input  wire        ddr4_delete_req,
-    input  wire [15:0] ddr4_addr,
+    // Control Interface from ARQ TX Controller / fso_payload.v
+    input  wire                  ddr4_write_req,
+    input  wire                  ddr4_read_req,
+    input  wire                  ddr4_delete_req,
+    input  wire [15:0]           ddr4_addr,
 
-    // AXI-Stream Write Port (Sniffing output of fso_crc_32.v)
-    input  wire [31:0] s_axis_tdata,
-    input  wire        s_axis_tvalid,
-    input  wire        s_axis_tlast,
-    input  wire        s_axis_tready, // Sniffing upstream ready state
+    // AXI-Stream Slave Monitor Input (Payload to be stored into RAM)
+    input  wire [DATA_WIDTH-1:0] s_axis_tdata,
+    input  wire                  s_axis_tvalid,
+    input  wire                  s_axis_tlast,
+    input  wire                  s_axis_tready,
 
-    // AXI-Stream Read Port (Output to fso_payload_mux.v during Retx)
-    output reg  [31:0] m_axis_tdata,
-    output reg         m_axis_tvalid,
-    output reg         m_axis_tlast,
-    input  wire        m_axis_tready
+    // AXI-Stream Master Output (Retransmitted Payload from RAM)
+    output reg  [DATA_WIDTH-1:0] m_axis_tdata,
+    output reg                   m_axis_tvalid,
+    output reg                   m_axis_tlast,
+    input  wire                  m_axis_tready
 );
 
-    // =======================================================
-    // Internal BRAM Storage (Will be replaced by AXI4 MIG)
-    // =======================================================
-    reg [31:0]  ram_storage [0:(MAX_FRAMES * FRAME_WORDS)-1];
-    
-    // Status Trackers
-    reg         write_active;
-    reg [15:0]  write_word_cnt;
-    reg [31:0]  write_base_addr;
+    // 16 Frame Slots x 512 Words = 8192 Words of 32-bit Block RAM
+    (* ram_style = "block" *) reg [DATA_WIDTH-1:0] ram_storage [0:8191];
 
-    reg         read_active;
-    reg [15:0]  read_word_cnt;
-    reg [31:0]  read_base_addr;
+    // Write State Machine Registers
+    reg        writing_state;
+    reg [8:0]  write_word_cnt;
+    reg [12:0] write_base_addr;
 
-    // =======================================================
-    // WRITE FSM (Capturing FSO Frame to RAM)
-    // =======================================================
-    wire data_fire = s_axis_tvalid && s_axis_tready;
+    // Read State Machine Registers
+    reg        reading_state;
+    reg [8:0]  read_word_cnt;
+    reg [12:0] read_base_addr;
 
+    // Purely Synchronous Block RAM Write & Read Port
+    wire                  bram_we    = writing_state && s_axis_tvalid && s_axis_tready;
+    wire [12:0]           bram_waddr = write_base_addr + {4'd0, write_word_cnt};
+    wire [12:0]           bram_raddr = read_base_addr  + {4'd0, read_word_cnt};
+    reg  [DATA_WIDTH-1:0] bram_dout;
+
+    always @(posedge clk) begin
+        if (bram_we) begin
+            ram_storage[bram_waddr] <= s_axis_tdata;
+        end
+        bram_dout <= ram_storage[bram_raddr];
+    end
+
+    // Write Control Logic
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
-            write_active   <= 1'b0;
-            write_word_cnt <= 16'd0;
-            write_base_addr<= 32'd0;
+            writing_state   <= 1'b0;
+            write_word_cnt  <= 9'd0;
+            write_base_addr <= 13'd0;
         end else begin
-            // Trigger Write Process
-            if (ddr4_write_req) begin
-                write_active    <= 1'b1;
-                write_word_cnt  <= 16'd0;
-                // Masking address to fit MAX_FRAMES circular buffer
-                write_base_addr <= (ddr4_addr % MAX_FRAMES) * FRAME_WORDS;
-            end
-
-            // Capture Data if active
-            if (write_active && data_fire) begin
-                ram_storage[write_base_addr + write_word_cnt] <= s_axis_tdata;
-                write_word_cnt <= write_word_cnt + 1'b1;
-                
-                // End of Frame
-                if (s_axis_tlast || write_word_cnt == FRAME_WORDS - 1) begin
-                    write_active <= 1'b0;
+            if (ddr4_write_req && !writing_state) begin
+                writing_state   <= 1'b1;
+                write_word_cnt  <= 9'd0;
+                write_base_addr <= {ddr4_addr[3:0], 9'd0};
+            end else if (writing_state && s_axis_tvalid && s_axis_tready) begin
+                if (s_axis_tlast || (write_word_cnt == 9'd476)) begin
+                    writing_state <= 1'b0;
+                end else begin
+                    write_word_cnt <= write_word_cnt + 9'd1;
                 end
             end
         end
     end
 
-    // =======================================================
-    // READ FSM (Streaming FSO Frame from RAM)
-    // =======================================================
+    // Read Control Logic (Aligned with 1-cycle synchronous BRAM read output)
+    reg reading_d1;
+    reg last_d1;
+
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
-            read_active   <= 1'b0;
-            read_word_cnt <= 16'd0;
-            m_axis_tvalid <= 1'b0;
-            m_axis_tlast  <= 1'b0;
-            m_axis_tdata  <= 32'd0;
+            reading_state  <= 1'b0;
+            read_word_cnt  <= 9'd0;
+            read_base_addr <= 13'd0;
+            reading_d1     <= 1'b0;
+            last_d1        <= 1'b0;
+            m_axis_tvalid  <= 1'b0;
+            m_axis_tlast   <= 1'b0;
+            m_axis_tdata   <= {DATA_WIDTH{1'b0}};
         end else begin
-            if (ddr4_read_req && !read_active) begin
-                read_active    <= 1'b1;
-                read_word_cnt  <= 16'd0;
-                read_base_addr <= (ddr4_addr % MAX_FRAMES) * FRAME_WORDS;
-            end
-
-            if (read_active) begin
-                m_axis_tvalid <= 1'b1;
-                m_axis_tdata  <= ram_storage[read_base_addr + read_word_cnt];
-                
-                // Assert tlast on the final word
-                m_axis_tlast  <= (read_word_cnt == FRAME_WORDS - 1);
-
+            if (ddr4_read_req && !reading_state) begin
+                reading_state  <= 1'b1;
+                read_word_cnt  <= 9'd0;
+                read_base_addr <= {ddr4_addr[3:0], 9'd0};
+                reading_d1     <= 1'b0;
+                last_d1        <= 1'b0;
+                m_axis_tvalid  <= 1'b0;
+                m_axis_tlast   <= 1'b0;
+            end else if (reading_state) begin
                 if (m_axis_tready) begin
-                    if (read_word_cnt == FRAME_WORDS - 1) begin
-                        read_active   <= 1'b0;
-                        m_axis_tvalid <= 1'b0;
-                        m_axis_tlast  <= 1'b0;
+                    reading_d1 <= 1'b1;
+                    last_d1    <= (read_word_cnt == 9'd476);
+
+                    if (read_word_cnt == 9'd476) begin
+                        reading_state <= 1'b0;
                     end else begin
-                        read_word_cnt <= read_word_cnt + 1'b1;
+                        read_word_cnt <= read_word_cnt + 9'd1;
                     end
                 end
             end else begin
-                m_axis_tvalid <= 1'b0;
-                m_axis_tlast  <= 1'b0;
+                reading_d1 <= 1'b0;
+                last_d1    <= 1'b0;
+            end
+
+            if (m_axis_tready) begin
+                m_axis_tvalid <= reading_d1;
+                m_axis_tlast  <= reading_d1 && last_d1;
+                m_axis_tdata  <= reading_d1 ? bram_dout : {DATA_WIDTH{1'b0}};
             end
         end
     end

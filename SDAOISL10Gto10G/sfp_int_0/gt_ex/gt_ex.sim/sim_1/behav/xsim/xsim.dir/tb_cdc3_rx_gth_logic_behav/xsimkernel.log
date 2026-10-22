@@ -1,0 +1,7 @@
+Running: xsim.dir/tb_cdc3_rx_gth_logic_behav/xsimk -simmode gui -wdb tb_cdc3_rx_gth_logic_behav.wdb -simrunnum 0 -socket 44959
+Design successfully loaded
+Design Loading Memory Usage: 201704 KB (Peak: 201712 KB)
+Design Loading CPU Usage: 620 ms
+Simulation completed
+Simulation Memory Usage: 292160 KB (Peak: 340972 KB)
+Simulation CPU Usage: 710 ms

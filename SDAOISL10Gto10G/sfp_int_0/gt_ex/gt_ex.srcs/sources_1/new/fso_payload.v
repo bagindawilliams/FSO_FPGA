@@ -30,7 +30,7 @@ module fso_payload (
     input  wire [31:0] s_axis_eth_tdata,
     input  wire        s_axis_eth_tvalid,
     input  wire        s_axis_eth_tlast,
-    output reg         s_axis_eth_tready, // KOREKSI: Diubah menjadi reg
+    output reg         s_axis_eth_tready, // correction: change to reg
 
     // -------------------------------------------------------
     // ARQ Control Interfaces (from arq_tx_controller.v)

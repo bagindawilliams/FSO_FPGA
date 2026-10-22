@@ -1,1 +1,1 @@
-vopt -64 -l elaborate.log +acc=npr -suppress 10016  -L xil_defaultlib -L xpm -L unisims_ver -L unimacro_ver -L secureip -work xil_defaultlib xil_defaultlib.tb_fso_header_top xil_defaultlib.glbl -o tb_fso_header_top_opt
+vopt -64 -l elaborate.log +acc=npr -suppress 10016  -L xil_defaultlib -L xpm -L gtwizard_ultrascale_v1_7_22 -L fifo_generator_v13_2_14 -L unisims_ver -L unimacro_ver -L secureip -work xil_defaultlib xil_defaultlib.tb_gth64b66b_loopback xil_defaultlib.glbl -o tb_gth64b66b_loopback_opt

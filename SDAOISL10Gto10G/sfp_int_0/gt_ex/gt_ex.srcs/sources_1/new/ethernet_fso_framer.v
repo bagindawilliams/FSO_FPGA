@@ -17,25 +17,31 @@ Description  : Ethernet to FSO Framer Grand Top Module.
                - Fixed Clock Domain Crossing (CDC) Interface. Header AXI-Stream 
                  output is now strictly 8-bit to match x_gth_logic.v requirements.
                  Port mappings have been rigidly aligned to prevent synthesis failures.
-                - Fixed port mapping to arq_tx_controller.v (tx_frame_type,
-                 mgmt_tick_1hz, rx_ack_valid_in, header_gen_busy).
-               - Fixed s_axis_eth_tready handshake directly from fso_payload_top
-                 so the first 2 words of Ethernet are never overwritten during 
-                 0xAB and 0xCDEF FSO header injection.
+               - ETRI Timing Management Compliance: Connected 'tx_ts_in' and 
+                 'ts_applies_in' to the Timestamp Manager with deterministic 
+                 pipeline latency pre-compensation (TX_PIPE_LATENCY_PS = 2,313,200 ps)
+                 so the Header TX_TS reflects the exact physical optical egress time.
 ===========================================================================
 */
 
-module ethernet_fso_framer (
+module ethernet_fso_framer #(
+    // Deterministic delay from Header latch to first Preamble bit exiting GTH TX (in picoseconds)
+    parameter [39:0] TX_PIPE_LATENCY_PS = 40'd2_313_200
+)(
     input  wire        clk,
     input  wire        rst_n,
 
+    // -------------------------------------------------------
     // 1. INPUT: Ethernet Data from XGMII Front-End Segmenter
+    // -------------------------------------------------------
     input  wire [31:0] s_axis_eth_tdata,
     input  wire        s_axis_eth_tvalid,
     input  wire        s_axis_eth_tlast,
     output wire        s_axis_eth_tready,
 
-    // 2. INPUT: Telemetry, PNT, and FCCH
+    // -------------------------------------------------------
+    // 2. INPUT: Telemetry, PNT, and FCCH (From Satellite Subsystems)
+    // -------------------------------------------------------
     input  wire        mgmt_trigger_1hz,
     input  wire [5:0]  rx_phy_ts_sec,
     input  wire [39:0] rx_phy_ts_picosec,
@@ -45,29 +51,39 @@ module ethernet_fso_framer (
     input  wire [31:0] range_ts_sec,
     input  wire [39:0] range_ts_picosec,
     input  wire        ts_valid,
-    input  wire [5:0]  tod_seconds_in,
-    input  wire [3:0]  fcch_opcode,
-    input  wire [15:0] fcch_pl,
+    input  wire [5:0]  tod_seconds_in, // Time of Day for Header Generation
+    input  wire [3:0]  fcch_opcode,    // Fast Control Channel Opcode
+    input  wire [15:0] fcch_pl,        // Fast Control Channel Payload
 
+    // -------------------------------------------------------
     // 3. INPUT: ARQ Feedback (From RX Decoder Path)
-    input  wire [15:0] rx_rxfn_in,
-    input  wire        rx_ack_in,
-    input  wire        rx_ack_valid_in,
+    // -------------------------------------------------------
+    input  wire [15:0] rx_rxfn_in,      // Received Frame Number from space
+    input  wire        rx_ack_in,       // ACK/NAK status from space
+    input  wire        rx_ack_valid_in, // Asserts if the ACK field is valid
 
-    // 4. OUTPUT: To CDC 1 (x_gth_logic.v)
+    // -------------------------------------------------------
+    // 4. OUTPUT: To CDC 1 (Clock Domain Crossing - x_gth_logic.v)
+    // -------------------------------------------------------
+    // Header Output Stream (16 Bytes Total - Sent 1 Byte per cycle)
     output wire [7:0]  m_axis_hdr_tdata,
     output wire        m_axis_hdr_tvalid,
     output wire        m_axis_hdr_tlast,
     input  wire        m_axis_hdr_tready,
 
+    // Payload Output Stream (1912 Bytes Total - Sent 4 Bytes per cycle)
     output wire [31:0] m_axis_fso_tdata,
     output wire        m_axis_fso_tvalid,
     output wire        m_axis_fso_tlast,
     input  wire        m_axis_fso_tready,
     
+    // Status Output
     output wire        eth_data_error_flag
 );
 
+    // =======================================================
+    // INTERNAL INTERCONNECT WIRES
+    // =======================================================
     wire [15:0] tx_txfn_out;
     wire [1:0]  payload_mux_sel;
     wire [1:0]  frame_type_out;
@@ -84,13 +100,11 @@ module ethernet_fso_framer (
     wire        chk_eth_tlast  = s_axis_eth_tlast;
     wire        payload_eth_tready;
 
-    //  FIX: Route backpressure from fso_payload_top (paused during 0xAB/0xCDEF)
     assign s_axis_eth_tready   = payload_eth_tready && !tx_stall_mac;
     assign eth_data_error_flag = 1'b0;
     assign m_axis_hdr_tlast    = 1'b0;
 
     wire hdr_sys_busy;
-    // Keep controller in frame-wait state until the 1912B payload finishes
     reg  payload_streaming;
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) payload_streaming <= 1'b0;
@@ -100,7 +114,17 @@ module ethernet_fso_framer (
 
     wire frame_busy = hdr_sys_busy || payload_streaming;
 
-    // B. ARQ TX CONTROLLER (All ports properly wired)
+    // =======================================================
+    // ETRI TIMING MANAGER: ACTUAL EGRESS TIMESTAMP PREDICTION
+    // Predicts exact physical optical output timestamp at the moment 
+    // the Header is generated by adding deterministic TX pipeline latency.
+    // =======================================================
+    wire [39:0] predicted_egress_tx_ts = tx_phy_ts_picosec + TX_PIPE_LATENCY_PS;
+    wire [2:0]  active_ts_applies      = {2'b00, ts_valid};
+
+    // =======================================================
+    // B. ARQ TX CONTROLLER (The Orchestrator Brain)
+    // =======================================================
     arq_tx_controller u_arq_tx_controller (
         .clk               (clk),
         .rst_n             (rst_n),
@@ -124,30 +148,41 @@ module ethernet_fso_framer (
         .ddr4_addr         (ddr4_addr)
     );
 
+    // =======================================================
     // C. HEADER TOP SUBSYSTEM (16-Byte Formatter)
+    // =======================================================
     fso_header_top u_fso_header_top (
         .clk                 (clk),
         .rst_n               (rst_n),
         .trigger_header_gen  (tx_trigger_gen),
+        
+        // Sequence & Status Inputs (From ARQ & Frame Scheduler)
         .txfn_in             (tx_txfn_out),
         .rxfn_in             (rx_rxfn_in),            
         .ack_in              (rx_ack_in),             
         .ack_valid_in        (rx_ack_valid_in),       
         .frame_type_in       (frame_type_out),
-        .tx_ts_in            (40'd0),
+        
+        // PNT, Timestamp Manager & Control/Status Manager (FCCH)
+        .tx_ts_in            (predicted_egress_tx_ts),
         .tod_seconds_in      (tod_seconds_in),
-        .ts_applies_in       (3'd0),
+        .ts_applies_in       (active_ts_applies),
         .fcch_opcode_in      (fcch_opcode),
         .fcch_pl_in          (fcch_pl),
+        
+        // Standardized 8-bit Output Stream
         .final_header_byte   (m_axis_hdr_tdata),
         .final_header_valid  (m_axis_hdr_tvalid),
         .system_busy         (hdr_sys_busy)
     );
 
+    // =======================================================
     // D. PAYLOAD TOP SUBSYSTEM (1912-Byte Formatter)
+    // =======================================================
     fso_payload_top u_fso_payload_top (
         .clk               (clk),
         .rst_n             (rst_n),
+        
         .s_axis_eth_tdata  (chk_eth_tdata),
         .s_axis_eth_tvalid (chk_eth_tvalid && !tx_stall_mac),
         .s_axis_eth_tlast  (chk_eth_tlast),

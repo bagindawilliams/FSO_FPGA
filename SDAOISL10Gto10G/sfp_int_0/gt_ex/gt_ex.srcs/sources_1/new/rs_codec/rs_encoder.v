@@ -3,18 +3,20 @@
 ===========================================================================
 Company      : WiComAI Lab, Kookmin University
 Engineers    : Williamsyah Baginda Miraj & Giovanni Dwi
-Description  : Reed-Solomon (RS) Encoder Engine.
-               Generates 16 Parity bytes/words for an incoming data stream.
-               
-               CRITICAL REVISION:
-               - Changed default MAX_CYCLE parameter from 254 to 255.
-               - Mathematical alignment: 
-                 Active Data Phase = MAX_CYCLE - 16.
-                 Flush Parity Phase = 16 Cycles.
-                 
-                 Usage:
-                 > For Payload (239 Data + 16 Parity): MAX_CYCLE = 255
-                 > For Header  (16 Data + 16 Parity) : MAX_CYCLE = 32
+Module Name  : rs_encoder
+Description  : Reed-Solomon (RS) Systematic Encoder over GF(2^8).
+               Appends 16 Parity bytes to an incoming data stream using 
+               generator polynomial g(x) = (x + alpha^0)...(x + alpha^15).
+
+               Configuration:
+               - Payload RS(255,239): MAX_CYCLE = 255 (or 254)
+                 -> Active Data Phase = 239 cycles (count = 0..238)
+                 -> Flush Parity Phase = 16 cycles (count = 239..254)
+                 -> Total Output = 255 cycles.
+               - Header RS(32,16)   : MAX_CYCLE = 32 (or 31)
+                 -> Active Data Phase = 16 cycles (count = 0..15)
+                 -> Flush Parity Phase = 16 cycles (count = 16..31)
+                 -> Total Output = 32 cycles.
 ===========================================================================
 */
 

@@ -10,16 +10,15 @@ Description  : Clock Domain Crossing 2 (CDC 2) - Elastic Transmit Buffer.
                   Packs 128-bit words from MSB to LSB to match Xilinx Native 
                   Asymmetric FIFO (128-to-32) extraction order.
                2. Registered Output Alignment (312.5 MHz):
-                  Registers 'data_out' and 'flag' cleanly from 'fifo_out'.
+                  Outputs a 100% continuous 32-bit stream at 312.5 MHz 
+                  (10.0 Gbps net rate -> exact 2.4936 us per 3117-Byte frame).
                3. True Byte-by-Byte Unpacker & Counter (1 to 3117 by 1):
-                  Extracts each of the 4 bytes inside 'data_out[31:0]' one 
-                  by one (every 0.8 ns at 10 Gbps) into 'byte_out[7:0]' and 
-                  increments 'frame_byte_cnt' strictly by 1 (1, 2, ... 3117).
+                  Wrapped in synthesis translate_off/on for clean RTL Schematic.
 ===========================================================================
 */
 
 module x_logic_gth(
-    input               clk_gth,      // 312.5 MHz (Read Domain - GTH 10 Gbps)
+    input               clk_gth,      // 312.5 MHz (Read Domain - 10.0 Gbps Continuous)
     input               clk_logic,    // 200.0 MHz (Write Domain - Baseband)
     input               rst_n,
     input               en,
@@ -88,6 +87,7 @@ module x_logic_gth(
     wire        wr_rst_busy;
     wire        rd_rst_busy;
     wire [31:0] fifo_out;
+    reg         rd_en;
 
     cross_logic_gth cross_inst (
         .srst        (~rst_n),      
@@ -112,7 +112,6 @@ module x_logic_gth(
 
     reg [1:0]  state;
     reg [8:0]  start_delay;
-    reg        rd_en;
     reg        rd_en_d1;
 
     reg [31:0] total_words_written_sync0, total_words_written_sync1;
@@ -122,7 +121,7 @@ module x_logic_gth(
         else if (en && data_in_dv) total_bytes_in_logic <= total_bytes_in_logic + in_bytes;
     end
 
-    wire [31:0] target_gth_words = total_bytes_in_logic[31:2]; // Total bytes / 4
+    wire [31:0] target_gth_words = total_bytes_in_logic[31:2];
     reg  [31:0] gth_words_read;
 
     always @(posedge clk_gth or negedge rst_n) begin
@@ -173,7 +172,6 @@ module x_logic_gth(
         end
     end
 
-    // Align 'flag' and 'data_out' with the valid FIFO output word
     always @(posedge clk_gth or negedge rst_n) begin
         if (!rst_n) begin
             rd_en_d1 <= 1'b0;
@@ -189,9 +187,7 @@ module x_logic_gth(
     // =======================================================
     // 4. TRUE 1-BYTE-BY-1-BYTE UNPACKER & TRACKER (1..3117)
     // =======================================================
-    // Unpacks each 32-bit word (3.2 ns) into its 4 constituent bytes 
-    // (0.8 ns per byte = 10 Gbps rate) so 'frame_byte_cnt' counts 
-    // strictly by 1 (1, 2, 3 ... 3117) and shows exact byte boundaries.
+    // synthesis translate_off
     reg [7:0]  byte_out;
     reg [11:0] frame_byte_cnt;
     reg [15:0] out_clk_cnt;
@@ -230,14 +226,10 @@ module x_logic_gth(
     always @(posedge clk_gth) begin
         if (rst_n) begin
             if (rd_en_d1) begin
-                cur_word = fifo_out; // Capture stable 32-bit word from FIFO
-                // Byte 0 (MSB [31:24]) at +0.0 ns
+                cur_word = fifo_out;
                 step_single_byte(cur_word[31:24], 1'b1);
-                // Byte 1 ([23:16]) at +0.8 ns
                 #0.8 step_single_byte(cur_word[23:16], 1'b0);
-                // Byte 2 ([15:8]) at +1.6 ns
                 #0.8 step_single_byte(cur_word[15:8],  1'b0);
-                // Byte 3 (LSB [7:0]) at +2.4 ns
                 #0.8 step_single_byte(cur_word[7:0],   1'b0);
             end else begin
                 byte_out       <= 8'd0;
@@ -247,5 +239,6 @@ module x_logic_gth(
             end
         end
     end
+    // synthesis translate_on
 
 endmodule
