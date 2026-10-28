@@ -1,0 +1,130 @@
+`timescale 1ns / 1ps
+/*
+===========================================================================
+Company      : WiComAI Lab, Kookmin University
+Engineers    : Williamsyah Baginda Miraj & Giovanni Dwi
+Description  : SDA OISL Frame Header Generator (Data Plane).
+               Assembles the 112-bit (14 Byte) Frame Header strictly adhering 
+               to SDA OISL Standard V2.1.2, Table 2-9 and Table 2-10.
+               
+               Features:
+               - Hardware-level enforcement of "Reserved Bits = 1".
+               - Cycle-accurate 8-bit serialization for CRC-16 processing.
+               - Glitch-free enable signal generation.
+
+Revision History:
+  - Rev 1.0 (Initial) : 14-Byte (112-bit) Table 2-10 Header serializer.
+  - Rev 2.0 (2026-10-27 04:26 KST) : [Target B5.1 - SDA OISL Page 25 Sec. 2.6.3.3.2 & Page 27 Sec. 2.6.3.3.5]
+    1. Enforced Section 2.6.3.3.2 rule: "If ACK valid is zero, then RXFN shall 
+       be set to zero" (std_rxfn = ack_valid ? rxfn : 16'd0) and cleared ack bit 
+       when ack_valid == 0.
+    2. Enforced Section 2.6.3.3.5 rule: when fcch_opcode == 4'b1111 (Not Present),
+       FCCH_PL is forced to all logical ones (16'hFFFF); optional parameter 
+       STRICT_RESERVED_FCCH_ZERO forces Reserved opcodes (0111..1110) to 16'h0000.
+===========================================================================
+*/
+
+module header_generator #(
+    parameter STRICT_RESERVED_FCCH_ZERO = 0
+)(
+    input  wire        clk,
+    input  wire        rst_n,
+    input  wire        trigger_gen,
+
+    // --- ARQ & Control Plane Inputs (SDA OISL Table 2-9) ---
+    input  wire [15:0] txfn,         // Transmit Frame Number
+    input  wire [15:0] rxfn,         // Receive Frame Number (from remote)
+    input  wire        ack,          // Acknowledgment status
+    input  wire        ack_valid,    // Acknowledgment validity flag
+    input  wire [1:0]  frame_type,   // 00=IDLE, 01=DATA, 10=MGMT, 11=RSVD
+    
+    // --- Telemetry, PNT & Timing Inputs ---
+    input  wire [39:0] tx_ts,        // TX Timestamp (Picoseconds precision)
+    input  wire [5:0]  tod_seconds,  // Time of Day (Seconds)
+    input  wire [2:0]  ts_applies,   // Timestamp application flag
+    input  wire [3:0]  fcch_opcode,  // Fast Control Channel Opcode
+    input  wire [15:0] fcch_pl,      // Fast Control Channel Payload
+
+    // --- Serialized Output to CRC-16 ---
+    output reg  [7:0]  header_byte_out,
+    output reg         header_en_out,
+    output wire        gen_busy
+);
+
+    // Internal Registers
+    reg [111:0] full_header_reg;
+    reg [3:0]   byte_counter;
+    reg         is_generating;
+
+    // [Rev 2.0] SDA OISL Sec. 2.6.3.3.2 & Sec. 2.6.3.3.5 Standard Sanitization
+    wire [15:0] std_rxfn        = ack_valid ? rxfn : 16'd0;
+    wire        std_ack         = ack_valid ? ack  : 1'b0;
+    wire        is_fcch_idle_op = (fcch_opcode == 4'b1111);
+    wire        is_fcch_rsvd_op = (fcch_opcode >= 4'b0111) && (fcch_opcode <= 4'b1110);
+    wire [15:0] std_fcch_pl     = is_fcch_idle_op ? 16'hFFFF :
+                                  ((STRICT_RESERVED_FCCH_ZERO && is_fcch_rsvd_op) ? 16'h0000 : fcch_pl);
+
+    // Output assignment for busy flag
+    assign gen_busy = is_generating;
+
+    always @(posedge clk or negedge rst_n) begin
+        if (~rst_n) begin
+            full_header_reg <= 112'd0;
+            byte_counter    <= 4'd0;
+            is_generating   <= 1'b0;
+            header_en_out   <= 1'b0;
+            header_byte_out <= 8'd0;
+        end else begin
+            // -----------------------------------------------------------
+            // STATE 1: Trigger & Data Latch (Setup Phase)
+            // -----------------------------------------------------------
+            if (trigger_gen && !is_generating) begin
+                // Assemble the 112-bit header based on Table 2-10 mapping.
+                // Critical: All reserved bits are forced to 1 per SDA OISL standard.
+                full_header_reg[7:0]     <= txfn[7:0];                                      // d0
+                full_header_reg[15:8]    <= txfn[15:8];                                     // d1
+                full_header_reg[23:16]   <= std_rxfn[7:0];                                  // d2 (0 if !ack_valid)
+                full_header_reg[31:24]   <= std_rxfn[15:8];                                 // d3 (0 if !ack_valid)
+                full_header_reg[39:32]   <= {2'b11, 2'b11, std_ack, ack_valid, frame_type}; // d4 (Reserved=1)
+                full_header_reg[47:40]   <= tx_ts[7:0];                                     // d5
+                full_header_reg[55:48]   <= tx_ts[15:8];                                    // d6
+                full_header_reg[63:56]   <= tx_ts[23:16];                                   // d7
+                full_header_reg[71:64]   <= tx_ts[31:24];                                   // d8
+                full_header_reg[79:72]   <= tx_ts[39:32];                                   // d9
+                full_header_reg[87:80]   <= {2'b11, tod_seconds};                           // d10 (Reserved=1)
+                full_header_reg[95:88]   <= {1'b1, ts_applies, fcch_opcode};                // d11 (Reserved=1)
+                full_header_reg[103:96]  <= std_fcch_pl[7:0];                               // d12
+                full_header_reg[111:104] <= std_fcch_pl[15:8];                              // d13
+                
+                is_generating <= 1'b1;
+                byte_counter  <= 4'd0;
+                header_en_out <= 1'b0; // Wait 1 cycle for stability
+            end 
+            
+            // -----------------------------------------------------------
+            // STATE 2: Execution & Serialization (Shift Phase)
+            // -----------------------------------------------------------
+            else if (is_generating) begin
+                header_en_out   <= 1'b1; // Assert enable signal to wake up CRC-16
+                header_byte_out <= full_header_reg[7:0]; // Output LSB byte
+                full_header_reg <= {8'd0, full_header_reg[111:8]}; // Right shift 8 bits
+                
+                if (byte_counter == 4'd13) begin
+                    // After 14 bytes (0 to 13), terminate the generation cycle
+                    is_generating <= 1'b0;
+                end else begin
+                    byte_counter  <= byte_counter + 1'b1;
+                end
+            end 
+            
+            // -----------------------------------------------------------
+            // STATE 3: Idle / Cooldown
+            // -----------------------------------------------------------
+            else begin
+                header_en_out   <= 1'b0; // De-assert enable
+                header_byte_out <= 8'd0;
+                byte_counter    <= 4'd0;
+            end
+        end
+    end
+endmodule

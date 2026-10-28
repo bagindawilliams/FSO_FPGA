@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="tb_error_inject_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tb_error_inject" />
+            <top_module name="vcomponents" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="2,839.660 ns"></ZoomStartTime>
+      <ZoomEndTime time="2,869.841 ns"></ZoomEndTime>
+      <Cursor1Time time="2,853.600 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="289"></NameColumnWidth>
+      <ValueColumnWidth column_width="78"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="3" />
+   <wvobject type="group" fp_name="group1997">
+      <obj_property name="label">CDC 2</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="group" fp_name="group1987">
+         <obj_property name="label">Data In from MUX (200 MHz)</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <wvobject type="logic" fp_name="/tb_error_inject/clk_logic">
+            <obj_property name="ElementShortName">clk_logic</obj_property>
+            <obj_property name="ObjectShortName">clk_logic</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/tb_error_inject/rst_n">
+            <obj_property name="ElementShortName">rst_n</obj_property>
+            <obj_property name="ObjectShortName">rst_n</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/tb_error_inject/en_upstream">
+            <obj_property name="ElementShortName">en_upstream</obj_property>
+            <obj_property name="ObjectShortName">en_upstream</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/tb_error_inject/frame_id">
+            <obj_property name="ElementShortName">frame_id[3:0]</obj_property>
+            <obj_property name="ObjectShortName">frame_id[3:0]</obj_property>
+            <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/tb_error_inject/mux_data_in">
+            <obj_property name="ElementShortName">mux_data_in[127:0]</obj_property>
+            <obj_property name="ObjectShortName">mux_data_in[127:0]</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/tb_error_inject/mux_data_dv">
+            <obj_property name="ElementShortName">mux_data_dv</obj_property>
+            <obj_property name="ObjectShortName">mux_data_dv</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/tb_error_inject/mux_cdc_keep">
+            <obj_property name="ElementShortName">mux_cdc_keep[15:0]</obj_property>
+            <obj_property name="ObjectShortName">mux_cdc_keep[15:0]</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject type="group" fp_name="group1988">
+         <obj_property name="label">Data Out to Error Injector (312.5MHz)</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+         <wvobject type="logic" fp_name="/tb_error_inject/clk_gth">
+            <obj_property name="ElementShortName">clk_gth</obj_property>
+            <obj_property name="ObjectShortName">clk_gth</obj_property>
+         </wvobject>
+         <wvobject type="logic" fp_name="/tb_error_inject/cdc2_flag_in">
+            <obj_property name="ElementShortName">cdc2_flag_in</obj_property>
+            <obj_property name="ObjectShortName">cdc2_flag_in</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/tb_error_inject/in_frame_id">
+            <obj_property name="ElementShortName">in_frame_id[31:0]</obj_property>
+            <obj_property name="ObjectShortName">in_frame_id[31:0]</obj_property>
+            <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/tb_error_inject/cdc2_data_in">
+            <obj_property name="ElementShortName">cdc2_data_in[31:0]</obj_property>
+            <obj_property name="ObjectShortName">cdc2_data_in[31:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/tb_error_inject/in_clk_cnt">
+            <obj_property name="ElementShortName">in_clk_cnt[15:0]</obj_property>
+            <obj_property name="ObjectShortName">in_clk_cnt[15:0]</obj_property>
+            <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/tb_error_inject/in_byte_cnt">
+            <obj_property name="ElementShortName">in_byte_cnt[11:0]</obj_property>
+            <obj_property name="ObjectShortName">in_byte_cnt[11:0]</obj_property>
+            <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+         </wvobject>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group1998">
+      <obj_property name="label">Error Injector</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="logic" fp_name="/tb_error_inject/gth_tx_valid_out">
+         <obj_property name="ElementShortName">gth_tx_valid_out</obj_property>
+         <obj_property name="ObjectShortName">gth_tx_valid_out</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_error_inject/u_error_inject/error">
+         <obj_property name="ElementShortName">error[0:47][31:0]</obj_property>
+         <obj_property name="ObjectShortName">error[0:47][31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_error_inject/frame_out_id">
+         <obj_property name="ElementShortName">frame_out_id[31:0]</obj_property>
+         <obj_property name="ObjectShortName">frame_out_id[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_error_inject/gth_tx_data_out">
+         <obj_property name="ElementShortName">gth_tx_data_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">gth_tx_data_out[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_error_inject/u_error_inject/con_error">
+         <obj_property name="ElementShortName">con_error[15:0]</obj_property>
+         <obj_property name="ObjectShortName">con_error[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_error_inject/err_mask_applied">
+         <obj_property name="ElementShortName">err_mask_applied[31:0]</obj_property>
+         <obj_property name="ObjectShortName">err_mask_applied[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_error_inject/corrupted_word_cnt">
+         <obj_property name="ElementShortName">corrupted_word_cnt[15:0]</obj_property>
+         <obj_property name="ObjectShortName">corrupted_word_cnt[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_error_inject/out_byte_stream">
+         <obj_property name="ElementShortName">out_byte_stream[7:0]</obj_property>
+         <obj_property name="ObjectShortName">out_byte_stream[7:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_error_inject/out_clk_cnt">
+         <obj_property name="ElementShortName">out_clk_cnt[15:0]</obj_property>
+         <obj_property name="ObjectShortName">out_clk_cnt[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_error_inject/frame_byte_cnt">
+         <obj_property name="ElementShortName">frame_byte_cnt[11:0]</obj_property>
+         <obj_property name="ObjectShortName">frame_byte_cnt[11:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group1999">
+      <obj_property name="label">Math</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="other" fp_name="/tb_error_inject/last_gth_edge_ns">
+         <obj_property name="ElementShortName">last_gth_edge_ns</obj_property>
+         <obj_property name="ObjectShortName">last_gth_edge_ns</obj_property>
+      </wvobject>
+      <wvobject type="other" fp_name="/tb_error_inject/measured_gth_period_ns">
+         <obj_property name="ElementShortName">measured_gth_period_ns</obj_property>
+         <obj_property name="ObjectShortName">measured_gth_period_ns</obj_property>
+      </wvobject>
+      <wvobject type="other" fp_name="/tb_error_inject/measured_byte_time_ns">
+         <obj_property name="ElementShortName">measured_byte_time_ns</obj_property>
+         <obj_property name="ObjectShortName">measured_byte_time_ns</obj_property>
+      </wvobject>
+      <wvobject type="other" fp_name="/tb_error_inject/time_start">
+         <obj_property name="ElementShortName">time_start</obj_property>
+         <obj_property name="ObjectShortName">time_start</obj_property>
+      </wvobject>
+      <wvobject type="other" fp_name="/tb_error_inject/time_end">
+         <obj_property name="ElementShortName">time_end</obj_property>
+         <obj_property name="ObjectShortName">time_end</obj_property>
+      </wvobject>
+      <wvobject type="other" fp_name="/tb_error_inject/OISL_Frame_Duration_us">
+         <obj_property name="ElementShortName">OISL_Frame_Duration_us</obj_property>
+         <obj_property name="ObjectShortName">OISL_Frame_Duration_us</obj_property>
+      </wvobject>
+      <wvobject type="other" fp_name="/tb_error_inject/OISL_Effective_Data_Rate_Mbps">
+         <obj_property name="ElementShortName">OISL_Effective_Data_Rate_Mbps</obj_property>
+         <obj_property name="ObjectShortName">OISL_Effective_Data_Rate_Mbps</obj_property>
+      </wvobject>
+      <wvobject type="other" fp_name="/tb_error_inject/OISL_Frame_Rate_kHz">
+         <obj_property name="ElementShortName">OISL_Frame_Rate_kHz</obj_property>
+         <obj_property name="ObjectShortName">OISL_Frame_Rate_kHz</obj_property>
+      </wvobject>
+      <wvobject type="other" fp_name="/tb_error_inject/OISL_FCCH_Mbps">
+         <obj_property name="ElementShortName">OISL_FCCH_Mbps</obj_property>
+         <obj_property name="ObjectShortName">OISL_FCCH_Mbps</obj_property>
+      </wvobject>
+   </wvobject>
+</wave_config>

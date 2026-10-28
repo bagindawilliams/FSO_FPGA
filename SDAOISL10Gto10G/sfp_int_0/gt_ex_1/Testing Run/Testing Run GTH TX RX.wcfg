@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="tb_gth64b66b_loopback_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tb_gth64b66b_loopback" />
+            <top_module name="vcomponents" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="2.172401 us"></ZoomStartTime>
+      <ZoomEndTime time="17.302402 us"></ZoomEndTime>
+      <Cursor1Time time="8.802401 us"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="289"></NameColumnWidth>
+      <ValueColumnWidth column_width="74"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="6" />
+   <wvobject type="group" fp_name="group2068">
+      <obj_property name="label">Clock Control</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/tb_gth64b66b_loopback/clk_logic">
+         <obj_property name="ElementShortName">clk_logic</obj_property>
+         <obj_property name="ObjectShortName">clk_logic</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_gth64b66b_loopback/clk_100_freerun">
+         <obj_property name="ElementShortName">clk_100_freerun</obj_property>
+         <obj_property name="ObjectShortName">clk_100_freerun</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_gth64b66b_loopback/gt_refclk_p">
+         <obj_property name="ElementShortName">gt_refclk_p</obj_property>
+         <obj_property name="ObjectShortName">gt_refclk_p</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_gth64b66b_loopback/gt_refclk_n">
+         <obj_property name="ElementShortName">gt_refclk_n</obj_property>
+         <obj_property name="ObjectShortName">gt_refclk_n</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_gth64b66b_loopback/sys_rst_n">
+         <obj_property name="ElementShortName">sys_rst_n</obj_property>
+         <obj_property name="ObjectShortName">sys_rst_n</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_gth64b66b_loopback/stream_rst_n">
+         <obj_property name="ElementShortName">stream_rst_n</obj_property>
+         <obj_property name="ObjectShortName">stream_rst_n</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_gth64b66b_loopback/en_upstream">
+         <obj_property name="ElementShortName">en_upstream</obj_property>
+         <obj_property name="ObjectShortName">en_upstream</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_gth64b66b_loopback/txp_out">
+         <obj_property name="ElementShortName">txp_out</obj_property>
+         <obj_property name="ObjectShortName">txp_out</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_gth64b66b_loopback/txn_out">
+         <obj_property name="ElementShortName">txn_out</obj_property>
+         <obj_property name="ObjectShortName">txn_out</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_gth64b66b_loopback/rxp_in">
+         <obj_property name="ElementShortName">rxp_in</obj_property>
+         <obj_property name="ObjectShortName">rxp_in</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_gth64b66b_loopback/rxn_in">
+         <obj_property name="ElementShortName">rxn_in</obj_property>
+         <obj_property name="ObjectShortName">rxn_in</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group2064">
+      <obj_property name="label">CDC </obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="group" fp_name="group2070">
+         <obj_property name="label">CDC Data In from MUX</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+         <wvobject type="logic" fp_name="/tb_gth64b66b_loopback/mux_data_dv">
+            <obj_property name="ElementShortName">mux_data_dv</obj_property>
+            <obj_property name="ObjectShortName">mux_data_dv</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/tb_gth64b66b_loopback/frame_id">
+            <obj_property name="ElementShortName">frame_id[3:0]</obj_property>
+            <obj_property name="ObjectShortName">frame_id[3:0]</obj_property>
+            <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/tb_gth64b66b_loopback/mux_data_in">
+            <obj_property name="ElementShortName">mux_data_in[127:0]</obj_property>
+            <obj_property name="ObjectShortName">mux_data_in[127:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/tb_gth64b66b_loopback/mux_cdc_keep">
+            <obj_property name="ElementShortName">mux_cdc_keep[15:0]</obj_property>
+            <obj_property name="ObjectShortName">mux_cdc_keep[15:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/tb_gth64b66b_loopback/u_cdc2/total_bytes_in_logic">
+            <obj_property name="ElementShortName">total_bytes_in_logic[31:0]</obj_property>
+            <obj_property name="ObjectShortName">total_bytes_in_logic[31:0]</obj_property>
+            <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject type="group" fp_name="group2071">
+         <obj_property name="label">CDC Data Out to Error Inject</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+         <wvobject type="logic" fp_name="/tb_gth64b66b_loopback/cdc2_flag">
+            <obj_property name="ElementShortName">cdc2_flag</obj_property>
+            <obj_property name="ObjectShortName">cdc2_flag</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/tb_gth64b66b_loopback/cdc2_data">
+            <obj_property name="ElementShortName">cdc2_data[31:0]</obj_property>
+            <obj_property name="ObjectShortName">cdc2_data[31:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/tb_gth64b66b_loopback/u_cdc2/frame_out_id">
+            <obj_property name="ElementShortName">frame_out_id[31:0]</obj_property>
+            <obj_property name="ObjectShortName">frame_out_id[31:0]</obj_property>
+            <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/tb_gth64b66b_loopback/u_cdc2/frame_byte_cnt">
+            <obj_property name="ElementShortName">frame_byte_cnt[11:0]</obj_property>
+            <obj_property name="ObjectShortName">frame_byte_cnt[11:0]</obj_property>
+            <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/tb_gth64b66b_loopback/u_cdc2/byte_out">
+            <obj_property name="ElementShortName">byte_out[7:0]</obj_property>
+            <obj_property name="ObjectShortName">byte_out[7:0]</obj_property>
+            <obj_property name="Radix">HEXRADIX</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/tb_gth64b66b_loopback/u_cdc2/out_clk_cnt">
+            <obj_property name="ElementShortName">out_clk_cnt[15:0]</obj_property>
+            <obj_property name="ObjectShortName">out_clk_cnt[15:0]</obj_property>
+            <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+         </wvobject>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group2069">
+      <obj_property name="label">Error Injector</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback/u_error_inject/data_in">
+         <obj_property name="ElementShortName">data_in[31:0]</obj_property>
+         <obj_property name="ObjectShortName">data_in[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback/u_error_inject/applied_mask">
+         <obj_property name="ElementShortName">applied_mask[31:0]</obj_property>
+         <obj_property name="ObjectShortName">applied_mask[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback/u_error_inject/frame_out_id">
+         <obj_property name="ElementShortName">frame_out_id[31:0]</obj_property>
+         <obj_property name="ObjectShortName">frame_out_id[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_gth64b66b_loopback/err_flag">
+         <obj_property name="ElementShortName">err_flag</obj_property>
+         <obj_property name="ObjectShortName">err_flag</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback/u_error_inject/con_error">
+         <obj_property name="ElementShortName">con_error[15:0]</obj_property>
+         <obj_property name="ObjectShortName">con_error[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback/err_data">
+         <obj_property name="ElementShortName">err_data[31:0]</obj_property>
+         <obj_property name="ObjectShortName">err_data[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback/u_error_inject/out_clk_cnt">
+         <obj_property name="ElementShortName">out_clk_cnt[15:0]</obj_property>
+         <obj_property name="ObjectShortName">out_clk_cnt[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback/u_error_inject/frame_byte_cnt">
+         <obj_property name="ElementShortName">frame_byte_cnt[11:0]</obj_property>
+         <obj_property name="ObjectShortName">frame_byte_cnt[11:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group2067">
+      <obj_property name="label">Data In to GTH TX - 322.265 MHz</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="logic" fp_name="/tb_gth64b66b_loopback/tx0_clk">
+         <obj_property name="ElementShortName">tx0_clk</obj_property>
+         <obj_property name="ObjectShortName">tx0_clk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_gth64b66b_loopback/gth_tx_ready">
+         <obj_property name="ElementShortName">gth_tx_ready</obj_property>
+         <obj_property name="ObjectShortName">gth_tx_ready</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_gth64b66b_loopback/tx_stall_out">
+         <obj_property name="ElementShortName">tx_stall_out</obj_property>
+         <obj_property name="ObjectShortName">tx_stall_out</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback/gt_txheader">
+         <obj_property name="ElementShortName">gt_txheader[5:0]</obj_property>
+         <obj_property name="ObjectShortName">gt_txheader[5:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback/gt_txsequence">
+         <obj_property name="ElementShortName">gt_txsequence[6:0]</obj_property>
+         <obj_property name="ObjectShortName">gt_txsequence[6:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback/tx_frame_id">
+         <obj_property name="ElementShortName">tx_frame_id[31:0]</obj_property>
+         <obj_property name="ObjectShortName">tx_frame_id[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback/u_gth64b66b_tx/up_data_in">
+         <obj_property name="ElementShortName">up_data_in[31:0]</obj_property>
+         <obj_property name="ObjectShortName">up_data_in[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback/tx_byte_stream">
+         <obj_property name="ElementShortName">tx_byte_stream[7:0]</obj_property>
+         <obj_property name="ObjectShortName">tx_byte_stream[7:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback/u_gth64b66b_tx/gt_txdata_out">
+         <obj_property name="ElementShortName">gt_txdata_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">gt_txdata_out[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback/gt_txdata">
+         <obj_property name="ElementShortName">gt_txdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">gt_txdata[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback/tx_clk_cnt">
+         <obj_property name="ElementShortName">tx_clk_cnt[15:0]</obj_property>
+         <obj_property name="ObjectShortName">tx_clk_cnt[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback/tx_byte_cnt">
+         <obj_property name="ElementShortName">tx_byte_cnt[11:0]</obj_property>
+         <obj_property name="ObjectShortName">tx_byte_cnt[11:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group2066">
+      <obj_property name="label">Data Out from GTH RX - 322.265 MHz</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="logic" fp_name="/tb_gth64b66b_loopback/rx0_clk">
+         <obj_property name="ElementShortName">rx0_clk</obj_property>
+         <obj_property name="ObjectShortName">rx0_clk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_gth64b66b_loopback/gth_link_up">
+         <obj_property name="ElementShortName">gth_link_up</obj_property>
+         <obj_property name="ObjectShortName">gth_link_up</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_gth64b66b_loopback/gth_rx_ready">
+         <obj_property name="ElementShortName">gth_rx_ready</obj_property>
+         <obj_property name="ObjectShortName">gth_rx_ready</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_gth64b66b_loopback/gt_rxgearboxslip">
+         <obj_property name="ElementShortName">gt_rxgearboxslip</obj_property>
+         <obj_property name="ObjectShortName">gt_rxgearboxslip</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_gth64b66b_loopback/rx_block_locked">
+         <obj_property name="ElementShortName">rx_block_locked</obj_property>
+         <obj_property name="ObjectShortName">rx_block_locked</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_gth64b66b_loopback/rx_down_dv">
+         <obj_property name="ElementShortName">rx_down_dv</obj_property>
+         <obj_property name="ObjectShortName">rx_down_dv</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback/rx_frame_id">
+         <obj_property name="ElementShortName">rx_frame_id[31:0]</obj_property>
+         <obj_property name="ObjectShortName">rx_frame_id[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback/rx_down_data">
+         <obj_property name="ElementShortName">rx_down_data[31:0]</obj_property>
+         <obj_property name="ObjectShortName">rx_down_data[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback/rx_byte_stream">
+         <obj_property name="ElementShortName">rx_byte_stream[7:0]</obj_property>
+         <obj_property name="ObjectShortName">rx_byte_stream[7:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback/rx_clk_cnt">
+         <obj_property name="ElementShortName">rx_clk_cnt[15:0]</obj_property>
+         <obj_property name="ObjectShortName">rx_clk_cnt[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback/rx_byte_cnt">
+         <obj_property name="ElementShortName">rx_byte_cnt[11:0]</obj_property>
+         <obj_property name="ObjectShortName">rx_byte_cnt[11:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="group" fp_name="group2084">
+         <obj_property name="label">gth</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <wvobject type="array" fp_name="/tb_gth64b66b_loopback/gt_rxdata">
+            <obj_property name="ElementShortName">gt_rxdata[31:0]</obj_property>
+            <obj_property name="ObjectShortName">gt_rxdata[31:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/tb_gth64b66b_loopback/gt_rxdatavalid">
+            <obj_property name="ElementShortName">gt_rxdatavalid[1:0]</obj_property>
+            <obj_property name="ObjectShortName">gt_rxdatavalid[1:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/tb_gth64b66b_loopback/gt_rxheader">
+            <obj_property name="ElementShortName">gt_rxheader[5:0]</obj_property>
+            <obj_property name="ObjectShortName">gt_rxheader[5:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/tb_gth64b66b_loopback/gt_rxheadervalid">
+            <obj_property name="ElementShortName">gt_rxheadervalid[1:0]</obj_property>
+            <obj_property name="ObjectShortName">gt_rxheadervalid[1:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/tb_gth64b66b_loopback/gt_rxstartofseq">
+            <obj_property name="ElementShortName">gt_rxstartofseq[1:0]</obj_property>
+            <obj_property name="ObjectShortName">gt_rxstartofseq[1:0]</obj_property>
+         </wvobject>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group2065">
+      <obj_property name="label">Math</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="other" fp_name="/tb_gth64b66b_loopback/net_byte_time_ns">
+         <obj_property name="ElementShortName">net_byte_time_ns</obj_property>
+         <obj_property name="ObjectShortName">net_byte_time_ns</obj_property>
+      </wvobject>
+      <wvobject type="other" fp_name="/tb_gth64b66b_loopback/time_start">
+         <obj_property name="ElementShortName">time_start</obj_property>
+         <obj_property name="ObjectShortName">time_start</obj_property>
+      </wvobject>
+      <wvobject type="other" fp_name="/tb_gth64b66b_loopback/time_end">
+         <obj_property name="ElementShortName">time_end</obj_property>
+         <obj_property name="ObjectShortName">time_end</obj_property>
+      </wvobject>
+      <wvobject type="other" fp_name="/tb_gth64b66b_loopback/OISL_Frame_Duration_us">
+         <obj_property name="ElementShortName">OISL_Frame_Duration_us</obj_property>
+         <obj_property name="ObjectShortName">OISL_Frame_Duration_us</obj_property>
+      </wvobject>
+      <wvobject type="other" fp_name="/tb_gth64b66b_loopback/OISL_Effective_Data_Rate_Mbps">
+         <obj_property name="ElementShortName">OISL_Effective_Data_Rate_Mbps</obj_property>
+         <obj_property name="ObjectShortName">OISL_Effective_Data_Rate_Mbps</obj_property>
+      </wvobject>
+      <wvobject type="other" fp_name="/tb_gth64b66b_loopback/OISL_Frame_Rate_kHz">
+         <obj_property name="ElementShortName">OISL_Frame_Rate_kHz</obj_property>
+         <obj_property name="ObjectShortName">OISL_Frame_Rate_kHz</obj_property>
+      </wvobject>
+      <wvobject type="other" fp_name="/tb_gth64b66b_loopback/OISL_FCCH_Mbps">
+         <obj_property name="ElementShortName">OISL_FCCH_Mbps</obj_property>
+         <obj_property name="ObjectShortName">OISL_FCCH_Mbps</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback/prev_rx_frame_id">
+         <obj_property name="ElementShortName">prev_rx_frame_id[31:0]</obj_property>
+         <obj_property name="ObjectShortName">prev_rx_frame_id[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback/SIM_MODE">
+         <obj_property name="ElementShortName">SIM_MODE[31:0]</obj_property>
+         <obj_property name="ObjectShortName">SIM_MODE[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback/ST_WAIT_RST">
+         <obj_property name="ElementShortName">ST_WAIT_RST[1:0]</obj_property>
+         <obj_property name="ObjectShortName">ST_WAIT_RST[1:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback/ST_STREAM">
+         <obj_property name="ElementShortName">ST_STREAM[1:0]</obj_property>
+         <obj_property name="ObjectShortName">ST_STREAM[1:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback/ST_GAP">
+         <obj_property name="ElementShortName">ST_GAP[1:0]</obj_property>
+         <obj_property name="ObjectShortName">ST_GAP[1:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback/ST_DONE">
+         <obj_property name="ElementShortName">ST_DONE[1:0]</obj_property>
+         <obj_property name="ObjectShortName">ST_DONE[1:0]</obj_property>
+      </wvobject>
+   </wvobject>
+</wave_config>
