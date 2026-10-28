@@ -19,6 +19,8 @@ Description  : Complete End-to-End SDA OISL 10G-to-10G Grand Top Module.
                   and back_end_inst) so SDAOISL10Gto10G_top is 100% purely 
                   structural with ZERO loose yellow flip-flop boxes in the 
                   Vivado RTL Schematic (identical layout to image_1335e3.png).
+               3. [Rev 2.2 - 2026-10-28 14:55 KST]: Connected 'seg_valid_bytes'
+                  [10:0] wire between front_end_inst and sda_encoder_inst.
 ===========================================================================
 */
 
@@ -141,24 +143,26 @@ module SDAOISL10Gto10G_top #(
     wire        seg_axis_tvalid;
     wire        seg_axis_tlast;
     wire        seg_axis_tready;
+    wire [10:0] seg_valid_bytes;
 
     eth_rx_front_end_top #(
         .RUN_MODE (SIM_MODE)
     ) front_end_inst (
-        .clk          (tx0_clk),
-        .rst_n        (rst_n),
-        .xgmii_rxd    (xgmii_txd_in),  
-        .xgmii_rxc    (xgmii_txc_in),
-        .fso_data_out (seg_axis_tdata),     
-        .fso_valid    (seg_axis_tvalid),
-        .fso_last     (seg_axis_tlast),
-        .fso_ready    (seg_axis_tready),
-        .refclk_p     (mgtrefclk_p),
-        .refclk_n     (mgtrefclk_n),
-        .reset        (eth_reset),
-        .dclk         (clk_100M),
-        .rxp          (RXP_IN[0]),    
-        .rxn          (RXN_IN[0])
+        .clk             (tx0_clk),
+        .rst_n           (rst_n),
+        .xgmii_rxd       (xgmii_txd_in),  
+        .xgmii_rxc       (xgmii_txc_in),
+        .fso_data_out    (seg_axis_tdata),     
+        .fso_valid       (seg_axis_tvalid),
+        .fso_last        (seg_axis_tlast),
+        .fso_ready       (seg_axis_tready),
+        .seg_valid_bytes (seg_valid_bytes),
+        .refclk_p        (mgtrefclk_p),
+        .refclk_n        (mgtrefclk_n),
+        .reset           (eth_reset),
+        .dclk            (clk_100M),
+        .rxp             (RXP_IN[0]),    
+        .rxn             (RXN_IN[0])
     );
 
     // =======================================================
@@ -178,6 +182,7 @@ module SDAOISL10Gto10G_top #(
         .s_axis_eth_tvalid   (seg_axis_tvalid),
         .s_axis_eth_tlast    (seg_axis_tlast),
         .s_axis_eth_tready   (seg_axis_tready),
+        .seg_valid_bytes     (seg_valid_bytes),
         .mgmt_trigger_1hz    (1'b0),
         .rx_phy_ts_sec       (6'd15),
         .rx_phy_ts_picosec   (40'd16678204759),

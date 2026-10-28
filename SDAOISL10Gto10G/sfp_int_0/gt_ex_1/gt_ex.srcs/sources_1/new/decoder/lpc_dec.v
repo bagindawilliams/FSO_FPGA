@@ -16,20 +16,21 @@ Revision History:
     corrected_bit_stb tracker for lpc_dec_top.v.
   - Rev 2.0 (2026-10-27 04:09 KST) : [ETRI Audit Item 6 - SDA OISL Page 40-41, Sec. 2.6.3.6.8]
     Added matching Active Disparity Management state tracker (running_disparity).
-  - Rev 2.1 (2026-10-28 13:56 KST) : [Internal Audit Fix #6 - Orthogonal 8-Syndrome Disparity Recovery]
-    1. Enabled ACTIVE_DISP_INV_EN = 1 by default to match lpc.v Rev 2.1.
-    2. Exploited the Figure 2-13 e_0,0 parity coupling property:
-       - A 24-bit disparity-inverted codeword (~raw_codeword) flips ONLY Hr[0] and Vr[0]
-         (because Hr[1:3] and Vr[1:3] each sum 6 inverted bits, which cancel out mod 2!),
-         whereas a single-bit error on E[0] flips ALL 8 syndromes (Hr=4'b1111, Vr=4'b1111).
-       - Full 8-syndrome classifier (word_is_inverted) cleanly separates disparity
-         inversion (with 0 or 1 channel bit error) from non-inverted codewords, and
-         S[0..15] corrects single-bit errors across all 16 data bits including E[0]!
+  - Rev 2.2 (2026-10-28 14:55 KST) : [Clean-Path, All 24-Bit Error Positions & Monitor Fix]
+    1. Fixed clean-path false inversion by setting ACTIVE_DISP_INV_EN = 0 default and
+       restricting word_is_inverted strictly to exact inverted zero-error syndrome
+       (Hr == 4'b1000 && Vr == 4'b1000).
+    2. Added exact single-row & single-column weight gating (h_wt == 1 && v_wt == 1)
+       plus E[0] all-syndrome detection (is_e0_err = (&H) & (&V)) so single-bit errors
+       across ALL 24 codeword bit positions (bits 23..8 data E[0..15] and bits 7..0
+       parity P[7..0]) are 100% corrected with zero false triggers.
+    3. Added internal monitor alias wires (E_rx, P_rx, P_calc, SH, SV) for full backward
+       compatibility with legacy lpc_dec_top.v monitors.
 ===========================================================================
 */
 
 module lpc_dec #(
-    parameter ACTIVE_DISP_INV_EN = 1 // [Rev 2.1] Enabled by default per SDA OISL Sec. 2.6.3.6.8
+    parameter ACTIVE_DISP_INV_EN = 0
 )(
     input  wire        clk,
     input  wire        rst_n,
@@ -77,13 +78,7 @@ module lpc_dec #(
             temp <= data_in;
     end
 
-    // =========================================================================
-    // [Rev 2.1] ORTHOGONAL 8-SYNDROME DISPARITY INVERSION DETECTOR
-    // Evaluates raw syndromes Hr[0:3] and Vr[0:3] on incoming 'temp':
-    // Because flipping all 24 bits toggles ONLY Hr[0] and Vr[0], an inverted
-    // codeword (with 0 or 1 bit error) maps (~Hr[0], Hr[1:3], ~Vr[0], Vr[1:3])
-    // into a valid 0-error (0000_0000) or 1-bit error syndrome!
-    // =========================================================================
+    // Raw syndromes on incoming 'temp'
     wire [0:15] Er = temp[23:8];
     wire [7:0]  Pr = temp[7:0];
     wire [0:3]  Hr, Vr;
@@ -98,21 +93,9 @@ module lpc_dec #(
     assign Vr[2] = Er[2] ^ Er[6] ^ Er[10] ^ Er[14] ^ Pr[1] ^ Er[0];
     assign Vr[3] = Er[3] ^ Er[7] ^ Er[11] ^ Er[15] ^ Pr[0] ^ Er[0];
 
-    // Candidate syndromes if 'temp' was inverted by TX Active Disparity Management:
-    wire [0:3] Hi = {~Hr[0], Hr[1], Hr[2], Hr[3]};
-    wire [0:3] Vi = {~Vr[0], Vr[1], Vr[2], Vr[3]};
-    wire [2:0] hi_wt = Hi[0] + Hi[1] + Hi[2] + Hi[3];
-    wire [2:0] vi_wt = Vi[0] + Vi[1] + Vi[2] + Vi[3];
-
-    // 'temp' is disparity-inverted iff un-inverting it yields 0 errors, a 1-bit parity error,
-    // a 1-bit data error (hi_wt==1 && vi_wt==1), or an E[0] error (Hi==4'b1111 && Vi==4'b1111):
-    wire inv_valid_syndrome = ((hi_wt == 3'd0) && (vi_wt == 3'd0)) ||
-                              ((hi_wt == 3'd1) && (vi_wt == 3'd0)) ||
-                              ((hi_wt == 3'd0) && (vi_wt == 3'd1)) ||
-                              ((hi_wt == 3'd1) && (vi_wt == 3'd1)) ||
-                              ((Hi == 4'b1111) && (Vi == 4'b1111));
-
-    wire word_is_inverted   = ACTIVE_DISP_INV_EN && inv_valid_syndrome;
+    // Note: In a non-inverted codeword with 0 or 1 bit error, (Hr==4'b1000 && Vr==4'b1000)
+    // never occurs because E[0] flips all 8 syndromes (Hr==4'b1111 && Vr==4'b1111).
+    wire word_is_inverted   = ACTIVE_DISP_INV_EN && (Hr == 4'b1000) && (Vr == 4'b1000);
     wire [23:0] aligned_temp = word_is_inverted ? ~temp : temp;
 
     wire [4:0]        rx_ones_cnt  = count_ones_24(temp);
@@ -134,7 +117,7 @@ module lpc_dec #(
 
     assign P = aligned_temp[7:0];
 
-    // Horizontal & Vertical Syndrome Equations on Polarity-Aligned Codeword
+    // Horizontal & Vertical Syndrome Equations
     assign H[0] = E[0]  ^ E[1]  ^ E[2]  ^ E[3]  ^ (~P[7]);
     assign H[1] = E[4]  ^ E[5]  ^ E[6]  ^ E[7]  ^ (~P[6]) ^ E[0];
     assign H[2] = E[8]  ^ E[9]  ^ E[10] ^ E[11] ^ (~P[5]) ^ E[0];
@@ -145,25 +128,31 @@ module lpc_dec #(
     assign V[2] = E[2] ^ E[6] ^ E[10] ^ E[14] ^ P[1] ^ E[0];
     assign V[3] = E[3] ^ E[7] ^ E[11] ^ E[15] ^ P[0] ^ E[0];
 
-    // 2D Cross-Point Error Localization
-    // Note: E[0] error flips all 8 syndromes (H=1111, V=1111); E[1..15] flips exactly 1 H and 1 V!
-    wire is_e0_err = (&H) & (&V);
-    assign S[0]  = is_e0_err | (H[0] & V[0] & ~(|H[1:3]) & ~(|V[1:3]));
-    assign S[1]  = H[0] & V[1] & ~is_e0_err;
-    assign S[2]  = H[0] & V[2] & ~is_e0_err;
-    assign S[3]  = H[0] & V[3] & ~is_e0_err;
-    assign S[4]  = H[1] & V[0] & ~is_e0_err;
-    assign S[5]  = H[1] & V[1] & ~is_e0_err;
-    assign S[6]  = H[1] & V[2] & ~is_e0_err;
-    assign S[7]  = H[1] & V[3] & ~is_e0_err;
-    assign S[8]  = H[2] & V[0] & ~is_e0_err;
-    assign S[9]  = H[2] & V[1] & ~is_e0_err;
-    assign S[10] = H[2] & V[2] & ~is_e0_err;
-    assign S[11] = H[2] & V[3] & ~is_e0_err;
-    assign S[12] = H[3] & V[0] & ~is_e0_err;
-    assign S[13] = H[3] & V[1] & ~is_e0_err;
-    assign S[14] = H[3] & V[2] & ~is_e0_err;
-    assign S[15] = H[3] & V[3] & ~is_e0_err;
+    // Exact 2D Cross-Point Error Localization for All 24 Bit Positions:
+    // - E[0] error (bit 23) flips all 8 syndromes: H == 4'b1111 && V == 4'b1111 (is_e0_err)
+    // - E[1..15] error (bits 22..8) flips exactly 1 H row (h_wt == 1) and 1 V col (v_wt == 1)
+    // - P[7..0] error (bits 7..0) flips only 1 H or 1 V (h_wt == 0 or v_wt == 0), leaving E untouched
+    wire [2:0] h_wt       = H[0] + H[1] + H[2] + H[3];
+    wire [2:0] v_wt       = V[0] + V[1] + V[2] + V[3];
+    wire       is_e0_err  = (&H) & (&V);
+    wire       is_1b_data = (h_wt == 3'd1) && (v_wt == 3'd1);
+
+    assign S[0]  = is_e0_err;
+    assign S[1]  = is_1b_data & H[0] & V[1];
+    assign S[2]  = is_1b_data & H[0] & V[2];
+    assign S[3]  = is_1b_data & H[0] & V[3];
+    assign S[4]  = is_1b_data & H[1] & V[0];
+    assign S[5]  = is_1b_data & H[1] & V[1];
+    assign S[6]  = is_1b_data & H[1] & V[2];
+    assign S[7]  = is_1b_data & H[1] & V[3];
+    assign S[8]  = is_1b_data & H[2] & V[0];
+    assign S[9]  = is_1b_data & H[2] & V[1];
+    assign S[10] = is_1b_data & H[2] & V[2];
+    assign S[11] = is_1b_data & H[2] & V[3];
+    assign S[12] = is_1b_data & H[3] & V[0];
+    assign S[13] = is_1b_data & H[3] & V[1];
+    assign S[14] = is_1b_data & H[3] & V[2];
+    assign S[15] = is_1b_data & H[3] & V[3];
 
     // Single-Bit Error Correction
     assign M[0]  = E[0]  ^ S[0];
@@ -201,7 +190,18 @@ module lpc_dec #(
     assign U[14] = M[14] ^ M[13];
     assign U[15] = M[15] ^ M[14];
 
-    wire corrected_bit_stb = en_d0 && (|S);
+    wire corrected_bit_stb = en_d0 && ((|S) || ((h_wt + v_wt) == 3'd1));
+
+    // [Rev 2.2] Monitor Alias Wires for lpc_dec_top.v Compatibility
+    wire [15:0] E_rx   = {E[0], E[1], E[2], E[3], E[4], E[5], E[6], E[7],
+                          E[8], E[9], E[10], E[11], E[12], E[13], E[14], E[15]};
+    wire [7:0]  P_rx   = P;
+    wire [7:0]  P_calc = {~(E[0]^E[1]^E[2]^E[3]), ~(E[0]^E[4]^E[5]^E[6]^E[7]),
+                          ~(E[0]^E[8]^E[9]^E[10]^E[11]), ~(E[0]^E[12]^E[13]^E[14]^E[15]),
+                          (E[0]^E[4]^E[8]^E[12]), (E[0]^E[1]^E[5]^E[9]^E[13]),
+                          (E[0]^E[2]^E[6]^E[10]^E[14]), (E[0]^E[3]^E[7]^E[11]^E[15])};
+    wire [3:0]  SH     = {H[0], H[1], H[2], H[3]};
+    wire [3:0]  SV     = {V[0], V[1], V[2], V[3]};
 
     assign flag     = en_d0;
     assign data_out = (flag) ? {U[0], U[1], U[2],  U[3],  U[4],  U[5],  U[6],  U[7],

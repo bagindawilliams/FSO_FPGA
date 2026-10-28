@@ -19,24 +19,29 @@ Description  : Top-Level 10G Ethernet Receive Front-End (Ingress from PC 1).
                   (eth_10g_pcs_pma_rx_0 with DRP loopback and 
                   configuration_vector) so both SIM_MODE=1 and SIM_MODE=0 
                   synthesize cleanly without [Synth 8-11365].
+               4. [Rev 2.2 - 2026-10-28 14:55 KST]: Exported 'seg_valid_bytes'
+                  [10:0] output port to propagate exact ingress packet/segment 
+                  byte length metadata to sda_encoder -> ethernet_fso_framer -> 
+                  fso_payload_top -> fso_payload.
 ===========================================================================
 */
 
 module eth_rx_front_end_top #(
     parameter RUN_MODE = 1 // 1 = Simulation / XGMII Direct Mode, 0 = Hardware SFP+ Mode
 )(
-    input  wire        clk,          // 312.5 MHz Clock
-    input  wire        rst_n,        // Active-low reset
+    input  wire        clk,             // 312.5 MHz Clock
+    input  wire        rst_n,           // Active-low reset
 
     // Direct XGMII Input (Used when RUN_MODE == 1)
     input  wire [31:0] xgmii_rxd,
     input  wire [3:0]  xgmii_rxc,
 
-    // Segmented 1900-Byte FSO Payload Stream Output to sda_encoder
+    // Segmented 1900-Byte FSO Payload Stream & Length Metadata Output to sda_encoder
     output wire [31:0] fso_data_out,
     output wire        fso_valid,
     output wire        fso_last,
     input  wire        fso_ready,
+    output wire [10:0] seg_valid_bytes, // [Rev 2.2] Dynamic packet/segment length metadata
 
     // Physical SFP+ & Clocking Ports for 10G PCS/PMA RX IP Core
     input  wire        refclk_p,
@@ -157,8 +162,6 @@ module eth_rx_front_end_top #(
     );
 
     // Stage 3: Fixed 1900-Byte (475-Word) FSO Payload Segmentation & Padding
-    wire [10:0] seg_valid_bytes_unused;
-
     packaging_and_segmentation u_segmenter (
         .clk             (clk),
         .rst_n           (rst_n),
@@ -170,7 +173,7 @@ module eth_rx_front_end_top #(
         .m_axis_tvalid   (fso_valid),
         .m_axis_tlast    (fso_last),
         .m_axis_tready   (fso_ready),
-        .seg_valid_bytes (seg_valid_bytes_unused)
+        .seg_valid_bytes (seg_valid_bytes)
     );
 
 endmodule

@@ -14,17 +14,14 @@ Description  : Ethernet Payload Segmentation and Zero-Padding Engine.
                  block so Vivado infers Distributed LUTRAM cleanly.
                - Connected 'seg_valid_bytes' to 'valid_byte_cnt' to resolve 
                  unconnected output warnings.
-               - [Rev 2.0 - 2026-10-27 04:34 KST - Target B6.1 Audit Fix]:
-                 Added segment-level valid Ethernet byte tracking.
-               - [Rev 2.1 - 2026-10-28 13:56 KST - Internal Audit Fix #5]:
-                 Added 5-word lookahead and exact s_axis_tlast packet-length 
-                 descriptor tracking (pkt_len_fifo) so that at the start of 
-                 every segment (word_cnt == 0, while downstream fso_payload 
-                 is emitting S_HDR1/S_HDR2), 'seg_valid_bytes' provides the 
-                 exact ingress packet length (e.g., 64, 128, 512, 1500, 2000) 
-                 and during active words (word_cnt >= 1) tracks the exact 
-                 valid bytes in the current segment (e.g., 1900 on Segment 1 
-                 and 100 on Segment 2 of a 2000B Jumbo frame).
+               - [Rev 2.2 - 2026-10-28 14:55 KST - Store-and-Segment Multi-Packet Fix]:
+                 1. Eliminated dual-block writes to 'pkt_len_fifo' so LUTRAM 
+                    synthesizes with zero multi-driven nets.
+                 2. Uses Store-and-Segment completion gating (pkt_complete_in_fifo)
+                    so exact byte length is known before Word 0 is read for BOTH 
+                    IPv4 and non-IPv4 packets of any size (64B..2000B), across 
+                    1900-Byte boundaries, continuation frames, and downstream 
+                    m_axis_tready stalls.
 ===========================================================================
 */
 
@@ -52,45 +49,45 @@ module packaging_and_segmentation #(
     reg [9:0]  rd_ptr;
     reg [10:0] fifo_count;
 
-    // [Rev 2.1] Exact Packet Length Descriptor FIFO (Captures byte count at s_axis_tlast)
-    (* ram_style = "distributed" *) reg [10:0] pkt_len_fifo [0:63];
+    // Single-Driver Packet Length Descriptor FIFO (Written ONLY on s_axis_tlast)
+    (* ram_style = "distributed" *) reg [11:0] pkt_len_fifo [0:63];
     reg [5:0]  len_wr_ptr;
     reg [5:0]  len_rd_ptr;
-    reg [10:0] wr_pkt_byte_acc;
+    reg [11:0] wr_pkt_byte_acc;
 
     wire fifo_empty     = (fifo_count == 11'd0);
     wire fifo_full      = (fifo_count >= 11'd1000);
     assign s_axis_tready = !fifo_full;
 
-    wire write_en = s_axis_tvalid && s_axis_tready;
+    wire write_en             = s_axis_tvalid && s_axis_tready;
     wire read_en;
     wire pkt_complete_in_fifo = (len_wr_ptr != len_rd_ptr);
 
-    // Purely Synchronous RAM Write (Required for LUTRAM inference)
+    // Purely Synchronous RAM Write (Strictly Single-Driver for both LUTRAMs)
     always @(posedge clk) begin
         if (write_en) begin
             fifo_ram[wr_ptr] <= {s_axis_tlast, s_axis_tdata};
             if (s_axis_tlast) begin
-                pkt_len_fifo[len_wr_ptr] <= wr_pkt_byte_acc + 11'd4;
+                pkt_len_fifo[len_wr_ptr] <= wr_pkt_byte_acc + 12'd4;
             end
         end
     end
 
-    // Write Pointer, Packet Length Tracker, and FIFO Occupancy Counter
+    // Write Pointer, Packet Length Accumulator, and FIFO Occupancy Counter
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             wr_ptr          <= 10'd0;
             fifo_count      <= 11'd0;
             len_wr_ptr      <= 6'd0;
-            wr_pkt_byte_acc <= 11'd0;
+            wr_pkt_byte_acc <= 12'd0;
         end else begin
             if (write_en) begin
                 wr_ptr <= wr_ptr + 10'd1;
                 if (s_axis_tlast) begin
                     len_wr_ptr      <= len_wr_ptr + 6'd1;
-                    wr_pkt_byte_acc <= 11'd0;
+                    wr_pkt_byte_acc <= 12'd0;
                 end else begin
-                    wr_pkt_byte_acc <= wr_pkt_byte_acc + 11'd4;
+                    wr_pkt_byte_acc <= wr_pkt_byte_acc + 12'd4;
                 end
             end
             if (write_en && !read_en)
@@ -108,36 +105,32 @@ module packaging_and_segmentation #(
     reg  [8:0]  word_cnt;
     reg  [10:0] active_seg_bytes;
     reg         in_cont_seg;
+    reg  [11:0] cont_rem_bytes_reg;
     wire [32:0] rd_data = fifo_ram[rd_ptr];
 
-    // 5-word lookahead on Word 0 so IPv4 Total Length (at rd_ptr + 4) or short-packet tlast is ready
-    wire [9:0]  hdr_w3_ptr    = rd_ptr + 10'd3;
-    wire [9:0]  hdr_w4_ptr    = rd_ptr + 10'd4;
-    wire [32:0] w3_lookahead  = fifo_ram[hdr_w3_ptr];
-    wire [32:0] w4_lookahead  = fifo_ram[hdr_w4_ptr];
-    wire        is_ipv4_frame = (w3_lookahead[31:16] == 16'h0800);
-    wire [10:0] ipv4_total_b  = w4_lookahead[26:16] + 11'd18;
-    wire [10:0] fifo_exact_b  = pkt_len_fifo[len_rd_ptr];
+    // Exact packet length before Word 0 of segment is popped:
+    // - On initial segment (in_cont_seg == 0): reads pkt_len_fifo[len_rd_ptr] once packet completes in FIFO
+    // - On continuation segment (in_cont_seg == 1): uses cont_rem_bytes_reg
+    wire [11:0] head_pkt_total_bytes = in_cont_seg ? cont_rem_bytes_reg : pkt_len_fifo[len_rd_ptr];
+    wire        seg_data_ready       = !fifo_empty && (in_cont_seg || pkt_complete_in_fifo || (fifo_count >= 11'd500));
 
-    wire [10:0] detected_pkt_bytes = pkt_complete_in_fifo ? fifo_exact_b :
-                                     (is_ipv4_frame       ? ipv4_total_b : 11'd2000);
+    assign read_en = (state == S_PASS) && seg_data_ready && m_axis_tready;
 
-    // Wait 5 words at the start of a new packet if tlast hasn't arrived yet
-    wire seg_start_ready = (word_cnt != 9'd0) || pkt_complete_in_fifo || (fifo_count >= 11'd5);
-    assign read_en       = (state == S_PASS) && !fifo_empty && seg_start_ready && m_axis_tready;
-
-    // On word_cnt == 0 (while fso_payload is in S_HDR1/S_HDR2), present total packet/continuation bytes;
-    // on word_cnt >= 1, present the active segment byte count (1..1900).
-    assign seg_valid_bytes = (state == S_PASS && word_cnt == 9'd0) ? detected_pkt_bytes : active_seg_bytes;
+    // When word_cnt == 0 (while fso_payload is in S_HDR1/S_HDR2), output the exact packet/continuation
+    // byte count; during words 1..474 (and S_PAD), output the active segment byte count (4..1900).
+    assign seg_valid_bytes = (state == S_PASS && word_cnt == 9'd0) ?
+                             (seg_data_ready ? head_pkt_total_bytes[10:0] : 11'd2000) :
+                             active_seg_bytes;
 
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
-            state            <= S_PASS;
-            word_cnt         <= 9'd0;
-            rd_ptr           <= 10'd0;
-            len_rd_ptr       <= 6'd0;
-            active_seg_bytes <= 11'd0;
-            in_cont_seg      <= 1'b0;
+            state              <= S_PASS;
+            word_cnt           <= 9'd0;
+            rd_ptr             <= 10'd0;
+            len_rd_ptr         <= 6'd0;
+            active_seg_bytes   <= 11'd0;
+            in_cont_seg        <= 1'b0;
+            cont_rem_bytes_reg <= 12'd0;
         end else begin
             if (m_axis_tvalid && m_axis_tready) begin
                 if (state == S_PASS) begin
@@ -149,9 +142,10 @@ module packaging_and_segmentation #(
                         active_seg_bytes <= active_seg_bytes + 11'd4;
 
                     if (rd_data[32]) begin
-                        // Exact end of Ethernet packet (s_axis_tlast == 1): pop pkt_len_fifo
-                        len_rd_ptr  <= len_rd_ptr + 6'd1;
-                        in_cont_seg <= 1'b0;
+                        // End of Ethernet packet (s_axis_tlast == 1): pop descriptor FIFO
+                        len_rd_ptr         <= len_rd_ptr + 6'd1;
+                        in_cont_seg        <= 1'b0;
+                        cont_rem_bytes_reg <= 12'd0;
                         if (word_cnt == MAX_WORDS - 1) begin
                             word_cnt <= 9'd0;
                         end else begin
@@ -159,13 +153,10 @@ module packaging_and_segmentation #(
                             state    <= S_PAD;
                         end
                     end else if (word_cnt == MAX_WORDS - 1) begin
-                        // Reached 1900B boundary without s_axis_tlast -> Packet continues in next segment!
-                        word_cnt    <= 9'd0;
-                        in_cont_seg <= 1'b1;
-                        if (pkt_complete_in_fifo) begin
-                            // Subtract 1900B from the queued total length for the continuation segment
-                            pkt_len_fifo[len_rd_ptr] <= pkt_len_fifo[len_rd_ptr] - 11'd1900;
-                        end
+                        // Reached 1900-Byte boundary without tlast -> Packet continues in next segment!
+                        word_cnt           <= 9'd0;
+                        in_cont_seg        <= 1'b1;
+                        cont_rem_bytes_reg <= head_pkt_total_bytes - 12'd1900;
                     end else begin
                         word_cnt <= word_cnt + 9'd1;
                     end
@@ -177,15 +168,13 @@ module packaging_and_segmentation #(
                         word_cnt <= word_cnt + 9'd1;
                     end
                 end
-            end else if (!in_cont_seg && (word_cnt == 9'd0) && pkt_complete_in_fifo && (pkt_len_fifo[len_rd_ptr] > 11'd1900)) begin
-                // Keep full packet length visible at word_cnt == 0 before first word is popped
             end
         end
     end
 
     always @(*) begin
         if (state == S_PASS) begin
-            m_axis_tvalid = !fifo_empty && seg_start_ready;
+            m_axis_tvalid = seg_data_ready;
             m_axis_tdata  = m_axis_tvalid ? rd_data[31:0] : 32'd0;
             m_axis_tlast  = m_axis_tvalid && (word_cnt == MAX_WORDS - 1);
         end else begin

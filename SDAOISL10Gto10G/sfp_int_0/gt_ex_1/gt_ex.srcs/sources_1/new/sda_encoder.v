@@ -4,6 +4,11 @@
 Company      : WiComAI Lab, Kookmin University
 Engineers    : Williamsyah Baginda Miraj & Giovanni Dwi
 Description  : SDA Encoder Grand Top Module.
+
+Revision History:
+  - Rev 1.0 (Initial) : SDA Encoder top-level integration.
+  - Rev 2.2 (2026-10-28 14:55 KST) : Added 'seg_valid_bytes [10:0]' input port 
+    and forwarded it to u_eth_fso_framer for dynamic packet length encapsulation.
 ===========================================================================
 */
 
@@ -18,6 +23,7 @@ module sda_encoder #(
     input  wire        s_axis_eth_tvalid,
     input  wire        s_axis_eth_tlast,
     output wire        s_axis_eth_tready,
+    input  wire [10:0] seg_valid_bytes,
 
     input  wire        mgmt_trigger_1hz,
     input  wire [5:0]  rx_phy_ts_sec,
@@ -79,6 +85,7 @@ module sda_encoder #(
         .s_axis_eth_tvalid   (s_axis_eth_tvalid),
         .s_axis_eth_tlast    (s_axis_eth_tlast),
         .s_axis_eth_tready   (s_axis_eth_tready),
+        .seg_valid_bytes     (seg_valid_bytes),
         .mgmt_trigger_1hz    (mgmt_trigger_1hz),
         .rx_phy_ts_sec       (rx_phy_ts_sec),
         .rx_phy_ts_picosec   (rx_phy_ts_picosec),

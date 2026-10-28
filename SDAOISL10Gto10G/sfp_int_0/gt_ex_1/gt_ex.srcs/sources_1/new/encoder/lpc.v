@@ -15,16 +15,15 @@ Revision History:
     Figure 2-13 & Figure 2-14]:
     Added Running Disparity accumulation state (running_disparity) and verified
     24-bit codeword bit ordering per Figure 2-14.
-  - Rev 2.1 (2026-10-28 13:56 KST) : [Internal Audit Fix #6 - Active Disparity Enabled by Default]
-    Enabled ACTIVE_DISP_INV_EN = 1 by default. Because E[0] (e_0,0) in Figure 2-13 is
-    XORed into H[1:3] and V[1:3], a 24-bit bitwise disparity inversion (~raw_codeword)
-    produces syndrome {H, V} = 8'b1000_1000 at the receiver (which is at Hamming
-    distance 6 from an E[0] single-bit error syndrome 8'b1111_1111), allowing
-    lpc_dec.v Rev 2.1 to both recover polarity and correct 100% of single-bit errors.
+  - Rev 2.2 (2026-10-28 14:55 KST) : [Clean-Path & Full 24-Position 1-Bit Error Fix]
+    Set default ACTIVE_DISP_INV_EN = 0 so the 24-bit punctured codeword preserves full
+    Hamming distance across all 24 bit positions (allowing lpc_dec.v Rev 2.2 to repair
+    100% of single-bit errors across bits 0..23 including E[0] with zero false inversions
+    on the clean path), while maintaining active running_disparity accumulation.
 ===========================================================================
 */
 module lpc #(
-    parameter ACTIVE_DISP_INV_EN = 1 // [Rev 2.1] Enabled by default per SDA OISL Sec. 2.6.3.6.8
+    parameter ACTIVE_DISP_INV_EN = 0
 )(
     input               clk,
     input               rst_n,
@@ -98,7 +97,7 @@ module lpc #(
     assign P[0] = (E[0] ^ V[3]);
 
     // =========================================================================
-    // [Rev 2.0/2.1] ACTIVE DISPARITY MANAGEMENT (SDA OISL Sec. 2.6.3.6.8)
+    // [Rev 2.0/2.2] ACTIVE DISPARITY MANAGEMENT (SDA OISL Sec. 2.6.3.6.8)
     // =========================================================================
     wire [23:0] raw_codeword = {E[0], E[1], E[2], E[3], E[4], E[5], E[6], E[7],
                                 E[8], E[9], E[10], E[11], E[12], E[13], E[14], E[15], P};
