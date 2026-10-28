@@ -27,17 +27,13 @@ Revision History:
   - Rev 1.0 (Initial) : Multi-frame Ethernet de-segmenter & Preamble MUX wrapper.
   - Rev 2.0 (2026-10-27 04:34 KST) : [Target B6.3 - SDA OISL Page 43-46, Sec. 2.6.3.7.4 - 2.6.3.7.7,
     Figure 2-17 & Table 2-18; ETRI Review Item 4.2(2) & Item 5.1]
-    1. Added support for strict Table 2-18 Continuation Frames (where Word 0 is 
-       the FSO Payload Header {8'hAB, seq_num, cont_len} and Word 1 immediately 
-       contains the continuing Ethernet bytes without a duplicate 0xCDEF header, 
-       followed by 1804 Bytes of zero padding).
-    2. Added support for Multi-Packet Packing (Figure 2-17): if a packet finishes 
-       before the end of the 477-word FSO frame and the next word contains magic 
-       number 16'hCDEF (FSO Packet Header - N), immediately starts assembling 
-       the next encapsulated Ethernet packet from the same FSO frame!
-    3. Enforced Section 2.6.3.7.7 sequence-skip & magic-number checks while 
-       retaining full backward compatibility with legacy testbench frames 
-       (where Length == 0 defaults to DEFAULT_PKT_BYTES = 2000).
+    Added support for strict Table 2-18 Continuation Frames and Multi-Packet Packing.
+  - Rev 2.1 (2026-10-28 13:56 KST) : [Internal Audit Fix #4 - Strict State-Based Header Detection]
+    Removed '(fso_word_idx == 9'd1) ||' from 'is_pkt_hdr_word' so that an FSO Packet 
+    Header (0xCDEF) is recognized ONLY when no prior packet is mid-continuation 
+    (rem_pkt_bytes == 16'd0). This guarantees that payload data words beginning with 
+    16'hCDEF inside a continuation segment or active packet body are treated strictly 
+    as Ethernet data and never misinterpreted as a packet header.
 ===========================================================================
 */
 
@@ -95,12 +91,12 @@ module ethernet_frame_reassembly #(
     wire [15:0] parsed_pkt_len    = (s_axis_fso_tdata[13:0] != 14'd0) ?
                                     {2'b00, s_axis_fso_tdata[13:0]} : DEFAULT_PKT_BYTES;
 
-    // A word is an FSO Packet Header (0xCDEF) if:
-    // - We are at Word 1 and starting a new packet (rem_pkt_bytes == 0), OR
-    // - Legacy continuation frame at Word 1 (rem_pkt_bytes > 0 && word_has_pkt_magic), OR
-    // - Multi-Packet Packing mid-frame: previous packet just finished (rem_pkt_bytes == 0) and 0xCDEF appears!
-    wire is_pkt_hdr_word = (!is_pld_hdr_word) && fso_frame_valid_magic && word_has_pkt_magic &&
-                           ((fso_word_idx == 9'd1) || (rem_pkt_bytes == 16'd0));
+    // [Rev 2.1] Strict state-based Packet Header detection:
+    // A word is an FSO Packet Header (0xCDEF) ONLY when no packet is mid-reassembly
+    // (rem_pkt_bytes == 16'd0). During a continuation segment (rem_pkt_bytes > 0),
+    // all words after Word 0 are strictly treated as Ethernet payload data!
+    wire is_pkt_hdr_word = (!is_pld_hdr_word) && fso_frame_valid_magic &&
+                           (rem_pkt_bytes == 16'd0) && word_has_pkt_magic;
 
     // A word is valid Ethernet payload data if it's not a header and rem_pkt_bytes > 0
     wire is_eth_data_word   = (!is_pld_hdr_word) && (!is_pkt_hdr_word) &&
@@ -148,7 +144,7 @@ module ethernet_frame_reassembly #(
                         wr_ptr        <= committed_wr_ptr;
                         rem_pkt_bytes <= 16'd0;
                     end else if ((rem_pkt_bytes > 16'd0) && (rx_pld_hdr_len != 14'd0)) begin
-                        // Update remaining continuation length from Table 2-18 Payload Header if provided
+                        // Update remaining continuation length from Table 2-18 Payload Header
                         rem_pkt_bytes <= {2'b00, rx_pld_hdr_len};
                     end
                 end else begin
@@ -157,12 +153,10 @@ module ethernet_frame_reassembly #(
                 end
             end
 
-            // 2. FSO Packet Header (0xCDEF): Start of New Packet (or Legacy Continuation)
+            // 2. FSO Packet Header (0xCDEF): Start of New Packet (only when rem_pkt_bytes == 0)
             else if (is_pkt_hdr_word) begin
-                if (rem_pkt_bytes == 16'd0) begin
-                    rem_pkt_bytes       <= parsed_pkt_len;
-                    cur_pkt_total_bytes <= parsed_pkt_len;
-                end
+                rem_pkt_bytes       <= parsed_pkt_len;
+                cur_pkt_total_bytes <= parsed_pkt_len;
             end
 
             // 3. Active Ethernet Payload Words (Strips trailing zero-padding automatically)

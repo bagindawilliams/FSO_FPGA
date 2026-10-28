@@ -18,21 +18,18 @@ Description  : Clock Domain Crossing 1 (CDC 1) Subsystem.
                   derived from FIFO 'full' flags. This throttles the upstream 
                   Framer, preventing throughput collisions and memory overflows.
                4. Multi-Frame Continuous Read & 10G Pacing Alignment:
-                  Aligned 'max_head' (25) and 'max_load' (404) with 1-cycle 
-                  Standard FIFO read latency so 'rd_head' pops strictly 16 bytes 
-                  and 'rd_load' pops strictly 239 words per frame without 
-                  over-reading into the next queued frame. Added 'max_frame' (496) 
-                  so the 200 MHz frame extraction period (499 cycles = 2495 ns) 
-                  matches the 10 Gbps optical frame duration (2493.6 ns).
+                  Aligned 'max_head' (25) and 'max_load' (404) with FIFO read 
+                  latency so 'rd_head' pops strictly 16 bytes and 'rd_load' pops 
+                  strictly 239 words per frame.
                5. [Rev 2.0 - 2026-10-27 04:19 KST - Target B2 Audit Fix]:
-                  - Aligned 'header_dv' (st_head + 2 .. max_head + 2 -> count 11..26) 
-                    and 'payload_dv' (st_load + 2 .. max_load + 2 -> count 167..405) 
-                    with C_PRELOAD_LATENCY = 2 (Use_Embedded_Registers = true in 
-                    cross_gth_logic_head.xci and cross_gth_logic_load.xci) so that 
-                    Byte d0..d15 of Header and Word 1..239 of Payload (including 
-                    CRC-16 and CRC-32) are never shifted or truncated.
-                  - Adjusted 'max_frame' to 495 (498 total cycles = 2490.0 ns <= 2493.6 ns)
-                    and connected wr_rst_busy / rd_rst_busy ports per .xci definitions.
+                  Aligned 'header_dv' and 'payload_dv' with C_PRELOAD_LATENCY = 2.
+               6. [Rev 2.1 - 2026-10-28 13:56 KST - Internal Audit Fix #6]:
+                  Added a modulo-25 fractional cycle accumulator (frame_mod25_cnt)
+                  that alternates between 499 cycles (2495.0 ns, 18 times out of 25)
+                  and 498 cycles (2490.0 ns, 7 times out of 25), achieving an exact
+                  long-term average frame period of:
+                    (18 * 2495.0 ns + 7 * 2490.0 ns) / 25 = 2493.600 ns
+                  matching the 3117-Byte @ 10 Gbps optical frame rate with zero drift.
 ===========================================================================
 */
 
@@ -70,14 +67,14 @@ module x_gth_logic(
     // TIMING CONSTANTS (Aligned with FEC RS Latency & C_PRELOAD_LATENCY = 2)
     // =======================================================
     parameter   st_head     = 8;
-    // Original: parameter max_head = 27; // 16 cycles for 16-Byte Header
     parameter   max_head    = 25;     // count 9..24 (rd_head = 16 pops), count 11..26 (header_dv = 16 cycles)
     parameter   st_load     = 164;    // 164 cycles synchronization delay for RS Header
-    // Original: parameter max_load = 406; // 239 cycles for 1912-Byte Payload (64-bit wide)
     parameter   max_load    = 404;    // count 165..403 (rd_load = 239 pops), count 167..405 (payload_dv = 239 cycles)
-    parameter   max_frame   = 495;    // [Rev 2.0] 498 total cycles @ 200 MHz (2490.0 ns) to pace frames at 10 Gbps rate
+    parameter   max_frame   = 496;    // Base terminal count (499 cycles = 2495.0 ns; modulated to 495 = 2490.0 ns 7/25 frames)
 
-    reg     [15:0]  count   = 16'd0;
+    reg     [15:0]  count           = 16'd0;
+    reg     [4:0]   frame_mod25_cnt = 5'd0; // [Rev 2.1] 0..24 fractional pacing counter (498.72 cycles avg = 2493.600 ns)
+    wire    [15:0]  active_max_frame = (frame_mod25_cnt < 5'd18) ? max_frame : (max_frame - 16'd1);
 
     parameter   IDLE        = 3'b001;
     parameter   ACTIVE      = 3'b010;
@@ -103,8 +100,6 @@ module x_gth_logic(
 
     // =======================================================
     // 1. BACKPRESSURE LOGIC (Write Domain)
-    // Asserts ready only when both FIFOs have available space.
-    // full flags are natively synchronized to wr_clk (clk_gth).
     // =======================================================
     assign cdc_ready = ~(head_full | load_full | head_wr_rst_busy | load_wr_rst_busy);
 
@@ -118,22 +113,28 @@ module x_gth_logic(
             state <= next_state;
     end
 
-    // Cycle Counter
+    // Cycle Counter & Modulo-25 Fractional Pacer (Exact 2493.600 ns Average)
     always @(posedge clk_logic or negedge rst_n) begin
-        if (~rst_n)
-            count <= 16'd0;
-        else if (state == ACTIVE)
+        if (~rst_n) begin
+            count           <= 16'd0;
+            frame_mod25_cnt <= 5'd0;
+        end else if (state == ACTIVE) begin
             count <= count + 1'b1;
-        else
+        end else begin
             count <= 16'd0;
+            if (state == END) begin
+                if (frame_mod25_cnt == 5'd24)
+                    frame_mod25_cnt <= 5'd0;
+                else
+                    frame_mod25_cnt <= frame_mod25_cnt + 5'd1;
+            end
+        end
     end
 
     // State Transitions
     always @(*) begin
         case(state)
             IDLE: begin
-                // SMART TRIGGER: Start immediately if Header & Payload FIFOs are not empty.
-                // Eliminates reliance on fragile pulse signals from fast clock.
                 if (~head_empty && ~load_empty && ~head_rd_rst_busy && ~load_rd_rst_busy)
                     next_state <= ACTIVE;
                 else
@@ -141,15 +142,13 @@ module x_gth_logic(
             end
             
             ACTIVE: begin
-                // Hold active state until maximum payload/frame cycle count is reached
-                if (count < max_frame)
+                if (count < active_max_frame)
                     next_state <= ACTIVE;
                 else
                     next_state <= END;
             end
             
             END: begin
-                // Transition cycle before re-evaluating FIFO status
                 next_state <= IDLE;
             end
             
@@ -159,14 +158,11 @@ module x_gth_logic(
 
     // =======================================================
     // 3. FIFO READ GATING & OUTPUT ASSIGNMENTS
-    //    [Rev 2.0 - 2026-10-27 04:19 KST] Aligned with C_PRELOAD_LATENCY = 2 (+ 2 offset)
     // =======================================================
-    // Header Output Math (Strictly 16 pops & 16 valid cycles: d0..d15)
     assign  rd_head     = (state == ACTIVE) && (count > st_head && count < max_head);
     assign  header_dv   = (state == ACTIVE) && (count > st_head + 2 && count < max_head + 2);
     assign  header      = (header_dv) ? header_out : 8'b0;
 
-    // Payload Output Math (Asymmetric 32b -> 64b, Strictly 239 pops & 239 valid cycles: Words 1..239)
     assign  rd_load     = (state == ACTIVE) && (count > st_load && count < max_load);
     assign  payload_dv  = (state == ACTIVE) && (count > st_load + 2 && count < max_load + 2);
     assign  payload     = (payload_dv) ? payload_out : 64'b0;

@@ -9,11 +9,11 @@ Description  : Reed-Solomon (RS) Systematic Encoder over GF(2^8).
                generator polynomial g(x) = (x + alpha^0)...(x + alpha^15).
 
                Configuration:
-               - Payload RS(255,239): MAX_CYCLE = 255 (or 254)
+               - Payload RS(255,239): MAX_CYCLE = 254 (0-indexed: 0..254 = 255 cycles)
                  -> Active Data Phase = 239 cycles (count = 0..238)
                  -> Flush Parity Phase = 16 cycles (count = 239..254)
                  -> Total Output = 255 cycles.
-               - Header RS(32,16)   : MAX_CYCLE = 32 (or 31)
+               - Header RS(32,16)   : MAX_CYCLE = 31 (0-indexed: 0..31 = 32 cycles)
                  -> Active Data Phase = 16 cycles (count = 0..15)
                  -> Flush Parity Phase = 16 cycles (count = 16..31)
                  -> Total Output = 32 cycles.
@@ -23,20 +23,17 @@ Revision History:
   - Rev 2.0 (2026-10-27 03:54 KST) : [ETRI Audit Item 3 - SDA OISL Page 37, Sec. 2.6.3.6.3]
     Recalculated and replaced all 16 generator polynomial multiplier coefficients (gf_0..gf_f)
     for g(x) = prod_{j=120}^{135} (x - alpha^(11*j)) over GF(2^8) primitive polynomial
-    F(x) = x^8 + x^7 + x^2 + x + 1 (0x187) in conventional basis:
-      g_0        = 8'h01 (alpha^0)
-      g_1 = g_15 = 8'ha5 (alpha^30)
-      g_2 = g_14 = 8'h69 (alpha^230)
-      g_3 = g_13 = 8'h1b (alpha^49)
-      g_4 = g_12 = 8'h9f (alpha^235)
-      g_5 = g_11 = 8'h68 (alpha^129)
-      g_6 = g_10 = 8'h98 (alpha^81)
-      g_7 = g_9  = 8'h65 (alpha^76)
-      g_8        = 8'h4a (alpha^173)
+    F(x) = x^8 + x^7 + x^2 + x + 1 (0x187) in conventional basis.
+  - Rev 2.1 (2026-10-28 13:56 KST) : [Internal Audit Fix #1 & #2]
+    1. Changed FLUSH phase output assignment from 'C0' (Q[15] ^ data_d0) to pure 'Q[15]'
+       so that the 16 emitted parity bytes are completely isolated from any residual 
+       transitions on data_in / data_d0 after the active data window ends.
+    2. Aligned default parameter MAX_CYCLE to 254 (matching 0-indexed count 0..254 = 
+       255 total cycles used by core_tx.v).
 ===========================================================================
 */
 
-module rs_encoder # (parameter MAX_CYCLE = 255) (
+module rs_encoder # (parameter MAX_CYCLE = 254) (
     input           clk,
     input           rst_n,
     input           en,
@@ -172,8 +169,8 @@ module rs_encoder # (parameter MAX_CYCLE = 255) (
     assign  C0       = Q[15] ^ data_d0;
     assign  C1       = (state == FLUSH) ? 8'b0 : C0;
 
-    // Output Mapping
+    // Output Mapping ([Rev 2.1] Output pure Q[15] during FLUSH so parity is immune to data_d0)
     assign  flag     = (state == ACTIVE || state == FLUSH);
-    assign  data_out = (state == FLUSH) ? C0 : data_d0;
+    assign  data_out = (state == FLUSH) ? Q[15] : data_d0;
 
 endmodule

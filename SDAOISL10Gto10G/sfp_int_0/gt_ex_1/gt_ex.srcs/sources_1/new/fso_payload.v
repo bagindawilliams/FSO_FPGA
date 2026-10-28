@@ -19,28 +19,24 @@ Description  : SDA OISL FSO Payload Encapsulation Engine.
 
 Revision History:
   - Rev 1.0 (Initial) : FSO Payload (0xAB) & Packet (0xCDEF) Header injector + CRC-32 + FIFO.
-  - Rev 2.0 (2026-10-27 04:34 KST) : [Target B6.2 - SDA OISL Page 43-45, Sec. 2.6.3.7.4 - 2.6.3.7.5,
-    Figure 2-17 & Table 2-18; ETRI Review Item 4.2(2)]
-    1. Populated the 14-bit 'Length' fields in Table 2-18:
-       - On a Start Frame (in_continuation == 0):
-         * FSO Payload Header (Word 0) = {8'hAB, seq_num, 14'd0} (Length = 0).
-         * FSO Packet Header  (Word 1) = {16'hCDEF, 2'b00, DEFAULT_ETH_PKT_BYTES}
-           (e.g., 32'hCDEF_07D0 for a 2000-Byte Ethernet Jumbo frame).
-       - On a Continuation Frame (in_continuation == 1, when preceding frame did 
-         not end with zero-padding):
-         * FSO Payload Header (Word 0) = {8'hAB, seq_num, cont_rem_bytes}
-           (e.g., Length = 14'd100 Bytes remaining from the split 2000-Byte packet).
-    2. Added parameter CONT_NO_PKT_HDR_EN (default = 1) to enforce strict Table 2-18 
-       continuation formatting: when CONT_NO_PKT_HDR_EN == 1 and in_continuation == 1,
-       skips S_HDR2 (no duplicate 0xCDEF Packet Header is inserted) and appends 1 
-       extra zero-pad word in S_CONT_PAD so the Continuation Frame structure is:
-       [4B FSO Payload Header + 100B Remaining Data + 1804B Zero Padding = 1908B]
-       (+ 4B CRC-32 = 1912B).
+  - Rev 2.0 (2026-10-27 04:34 KST) : [Target B6.2 - SDA OISL Page 43-45, Table 2-18]
+    Populated the 14-bit 'Length' fields in Table 2-18 and added strict Table 2-18 
+    continuation formatting (no duplicate 0xCDEF header).
+  - Rev 2.1 (2026-10-28 13:56 KST) : [Internal Audit Fix #5 - Dynamic Ingress Length & Zero-Data Safety]
+    1. Added 'seg_valid_bytes' metadata input from packaging_and_segmentation.v 
+       so that any Ethernet packet size (e.g., 64B Mini, 512B Standard, 1500B MTU, 
+       or 2000B Jumbo) is dynamically written into the FSO Packet Header (0xCDEF) 
+       and FSO Payload Header (0xAB) Length[13:0] fields.
+    2. Completely removed 's_axis_eth_tdata != 32'd0' from the continuation 
+       decision! Continuation is now determined strictly from the latched packet 
+       length metadata (latched_pkt_bytes > 14'd1900), ensuring that Ethernet 
+       payload words containing all zeros (32'h0000_0000) are preserved 100% as 
+       valid data.
 ===========================================================================
 */
 
 module fso_payload #(
-    parameter [13:0] DEFAULT_ETH_PKT_BYTES = 14'd2000, // 2000 Bytes (14'h07D0) Jumbo Frame
+    parameter [13:0] DEFAULT_ETH_PKT_BYTES = 14'd2000, // Fallback only if seg_valid_bytes is unconnected (0)
     parameter        CONT_NO_PKT_HDR_EN    = 1         // 1 = Strict Table 2-18 Continuation (No duplicate 0xCDEF)
 )(
     input  wire        clk,
@@ -48,12 +44,13 @@ module fso_payload #(
 
     // -------------------------------------------------------
     // Interface from XGMII Front-End (packaging_and_segmentation.v)
-    // Expected: 1900 Bytes
+    // Expected: 1900 Bytes + Dynamic Ingress Length Metadata
     // -------------------------------------------------------
     input  wire [31:0] s_axis_eth_tdata,
     input  wire        s_axis_eth_tvalid,
     input  wire        s_axis_eth_tlast,
     output reg         s_axis_eth_tready, // correction: change to reg
+    input  wire [10:0] seg_valid_bytes,   // [Rev 2.1] Dynamic packet/segment byte count from segmenter
 
     // -------------------------------------------------------
     // ARQ Control Interfaces (from arq_tx_controller.v)
@@ -91,7 +88,11 @@ module fso_payload #(
     reg [9:0]  seq_num;
     reg        in_continuation;
     reg [13:0] cont_rem_bytes;
-    reg [10:0] seg_non_zero_bytes;
+    reg [13:0] latched_pkt_bytes;
+
+    // Resolve active ingress packet length (uses seg_valid_bytes if connected & > 0, else DEFAULT_ETH_PKT_BYTES)
+    wire        meta_valid        = (^seg_valid_bytes !== 1'bx) && (seg_valid_bytes != 11'd0);
+    wire [13:0] live_pkt_bytes    = meta_valid ? {3'd0, seg_valid_bytes} : DEFAULT_ETH_PKT_BYTES;
 
     // Internal wires connecting Injector -> CRC
     reg  [31:0] inj_tdata;
@@ -100,31 +101,30 @@ module fso_payload #(
     wire        inj_tready;
 
     wire [13:0] pld_hdr_len_field = in_continuation ? cont_rem_bytes : 14'd0;
-    wire [13:0] pkt_hdr_len_field = DEFAULT_ETH_PKT_BYTES;
+    wire [13:0] pkt_hdr_len_field = latched_pkt_bytes;
 
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
-            state              <= S_IDLE;
-            seq_num            <= 10'd0;
-            in_continuation    <= 1'b0;
-            cont_rem_bytes     <= 14'd0;
-            seg_non_zero_bytes <= 11'd0;
+            state             <= S_IDLE;
+            seq_num           <= 10'd0;
+            in_continuation   <= 1'b0;
+            cont_rem_bytes    <= 14'd0;
+            latched_pkt_bytes <= DEFAULT_ETH_PKT_BYTES;
         end else begin
             state <= next_state;
 
-            if (state == S_HDR1 && inj_tready) begin
-                seg_non_zero_bytes <= 11'd0;
-            end else if (state == S_DATA && s_axis_eth_tvalid && s_axis_eth_tready) begin
-                if (s_axis_eth_tdata != 32'd0) begin
-                    seg_non_zero_bytes <= seg_non_zero_bytes + 11'd4;
-                end
+            // Latch exact ingress packet length at the start of the frame (S_IDLE -> S_HDR1)
+            if ((state == S_IDLE && s_axis_eth_tvalid) || (state == S_HDR1 && !in_continuation)) begin
+                latched_pkt_bytes <= live_pkt_bytes;
+            end
 
+            if (state == S_DATA && s_axis_eth_tvalid && s_axis_eth_tready) begin
                 if (s_axis_eth_tlast) begin
-                    // If the 475th word (1900th Byte) is non-zero data and we were not
-                    // already finishing a continuation segment, the packet spans into the next frame!
-                    if (!in_continuation && (s_axis_eth_tdata != 32'd0) && (DEFAULT_ETH_PKT_BYTES > 14'd1900)) begin
+                    // [Rev 2.1] Continuation is determined purely from packet length metadata
+                    // (latched_pkt_bytes > 14'd1900), never from (s_axis_eth_tdata != 32'd0)!
+                    if (!in_continuation && (latched_pkt_bytes > 14'd1900)) begin
                         in_continuation <= 1'b1;
-                        cont_rem_bytes  <= DEFAULT_ETH_PKT_BYTES - 14'd1900; // 14'd100 for 2000B Jumbo
+                        cont_rem_bytes  <= latched_pkt_bytes - 14'd1900;
                     end else begin
                         in_continuation <= 1'b0;
                         cont_rem_bytes  <= 14'd0;
@@ -153,7 +153,7 @@ module fso_payload #(
             end
             S_HDR1: begin
                 inj_tvalid = 1'b1;
-                // [Rev 2.0] Table 2-18 FSO Payload Header: {0xAB, seq_num[9:0], Length[13:0]}
+                // [Rev 2.0/2.1] Table 2-18 FSO Payload Header: {0xAB, seq_num[9:0], Length[13:0]}
                 inj_tdata  = {8'hAB, seq_num, pld_hdr_len_field};
                 if (inj_tready) begin
                     if (CONT_NO_PKT_HDR_EN && in_continuation)
@@ -164,7 +164,7 @@ module fso_payload #(
             end
             S_HDR2: begin
                 inj_tvalid = 1'b1;
-                // [Rev 2.0] Table 2-18 FSO Packet Header: {0xCDEF, 2'b00, Length[13:0]}
+                // [Rev 2.0/2.1] Table 2-18 FSO Packet Header: {0xCDEF, 2'b00, Length[13:0]}
                 inj_tdata  = {16'hCDEF, 2'b00, pkt_hdr_len_field};
                 if (inj_tready) next_state = S_DATA;
             end

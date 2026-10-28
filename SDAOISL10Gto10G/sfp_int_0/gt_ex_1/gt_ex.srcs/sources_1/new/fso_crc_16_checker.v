@@ -1,4 +1,4 @@
-`timescale 1ns / 100ps
+`timescale 1ns / 1ps
 /*
 ===========================================================================
 Company      : WiComAI Lab, Kookmin University
@@ -9,10 +9,19 @@ Description  : 16-bit Cyclic Redundancy Check (CRC-16) Verifier for the
                Computes the CRC-16 polynomial x^16 + x^12 + x^5 + 1 over 
                the first 14 Header bytes (d0..d13) and compares the result 
                against bytes d14..d15.
+
+Revision History:
+  - Rev 1.0 (Initial) : 16-Byte Header CRC-16 verifier.
+  - Rev 2.1 (2026-10-28 13:56 KST) : [Internal Audit Fix #3 - Strict CRC-16 Verification]
+    Added parameter SIM_LEGACY_COMPAT = 0 (disabled by default) so operational 
+    synthesis and compliance verification strictly require (rx_crc_word == Q) 
+    without accepting the legacy simulation marker (16'hC160 + TXFN).
 ===========================================================================
 */
 
-module fso_crc_16_checker (
+module fso_crc_16_checker #(
+    parameter SIM_LEGACY_COMPAT = 0
+)(
     input  wire       clk,
     input  wire       rst_n,
     input  wire       en,             // 16 cycles active from CDC 4 (header_dv)
@@ -82,7 +91,8 @@ module fso_crc_16_checker (
                     calculated_crc <= Q;
                     received_crc   <= rx_crc_word;
                     hdr_check_done <= 1'b1;
-                    hdr_crc_ok     <= (rx_crc_word == Q) || (rx_crc_word == sim_marker_crc);
+                    hdr_crc_ok     <= (rx_crc_word == Q) ||
+                                      (SIM_LEGACY_COMPAT && (rx_crc_word == sim_marker_crc));
                     byte_cnt       <= 5'd0;
                     Q              <= 16'd0;
                 end

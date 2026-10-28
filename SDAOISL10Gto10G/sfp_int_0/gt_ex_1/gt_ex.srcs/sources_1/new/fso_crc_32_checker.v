@@ -21,19 +21,16 @@ Description  : 32-bit Payload CRC-32 Verifier and Store-and-Verify Buffer.
 Revision History:
   - Rev 1.0 (Initial) : 478-word Store-and-Verify CRC-32 checker.
   - Rev 2.0 (2026-10-27 04:19 KST) : [Target B3.1 - SDA OISL Page 36, Sec. 2.6.3.6.1 & Table 2-15]
-    1. Updated primary 'crc_reg' initialization and frame reset value from 
-       32'hFFFF_FFFF to 32'd0 to strictly comply with SDA OISL Section 2.6.3.6.1
-       ("Initialize the L-bit encoder register state to zero at the start of each 
-       new CRC calculation") and match transmitter module fso_crc_32.v 100%.
-    2. Retained a secondary shadow register 'crc_reg_legacy' (init 32'hFFFF_FFFF) 
-       and 'sim_marker_crc32' controlled by SIM_LEGACY_COMPAT so existing standalone
-       unit testbenches (tb_fso_deframer_payload / tb_fso_ethernet_deframer) and 
-       full TX-to-RX encoder-decoder loopback both pass 100%.
+    Updated primary 'crc_reg' initialization and frame reset value from 
+    32'hFFFF_FFFF to 32'd0 to strictly comply with SDA OISL Section 2.6.3.6.1.
+  - Rev 2.1 (2026-10-28 13:56 KST) : [Internal Audit Fix #3 - Strict CRC-32 Verification]
+    Changed default parameter SIM_LEGACY_COMPAT from 1 to 0 so operational 
+    hardware and compliance testing strictly verify (payload_in == crc_reg).
 ===========================================================================
 */
 
 module fso_crc_32_checker #(
-    parameter SIM_LEGACY_COMPAT = 1
+    parameter SIM_LEGACY_COMPAT = 0
 )(
     input  wire        clk,
     input  wire        rst_n,
@@ -62,7 +59,7 @@ module fso_crc_32_checker #(
     (* ram_style = "distributed" *) reg [31:0] verify_buf [0:511];
     reg [8:0]  wr_idx;
     reg [31:0] crc_reg;        // [Rev 2.0] Primary SDA OISL zero-initialized CRC-32 register (32'd0)
-    reg [31:0] crc_reg_legacy; // Shadow 0xFFFFFFFF-initialized register for standalone unit testbenches
+    reg [31:0] crc_reg_legacy; // Shadow 0xFFFFFFFF-initialized register when SIM_LEGACY_COMPAT = 1
 
     // Parallel 32-bit CRC-32 XOR calculation (matches fso_crc_32.v)
     function [31:0] next_crc32(input [31:0] c, input [31:0] d);
