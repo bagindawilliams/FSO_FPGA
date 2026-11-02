@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="runtime_report28_rs_original.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tb_RS" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+   </zoom_setting>
+   <column_width_setting>
+   </column_width_setting>
+   <WVObjectSize size="8" />
+   <wvobject type="group" fp_name="group1">
+      <obj_property name="label">Clock / Reset</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/tb_RS/clk">
+         <obj_property name="ElementShortName">clk</obj_property>
+         <obj_property name="ObjectShortName">clk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_RS/rst_n">
+         <obj_property name="ElementShortName">rst_n</obj_property>
+         <obj_property name="ObjectShortName">rst_n</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_RS/cycle">
+         <obj_property name="ElementShortName">cycle[31:0]</obj_property>
+         <obj_property name="ObjectShortName">cycle[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group5">
+      <obj_property name="label">Input / FEC reference</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/tb_RS/eh">
+         <obj_property name="ElementShortName">eh</obj_property>
+         <obj_property name="ObjectShortName">eh</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_RS/hi">
+         <obj_property name="ElementShortName">hi[7:0]</obj_property>
+         <obj_property name="ObjectShortName">hi[7:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_RS/ep">
+         <obj_property name="ElementShortName">ep</obj_property>
+         <obj_property name="ObjectShortName">ep</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_RS/pi">
+         <obj_property name="ElementShortName">pi[63:0]</obj_property>
+         <obj_property name="ObjectShortName">pi[63:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group10">
+      <obj_property name="label">RS codewords / Scrambler / LPC</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/tb_RS/tx/encoder_dv">
+         <obj_property name="ElementShortName">encoder_dv</obj_property>
+         <obj_property name="ObjectShortName">encoder_dv</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_RS/tx/rs_head">
+         <obj_property name="ElementShortName">rs_head[7:0]</obj_property>
+         <obj_property name="ObjectShortName">rs_head[7:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_RS/tx/rs_load_dv">
+         <obj_property name="ElementShortName">rs_load_dv</obj_property>
+         <obj_property name="ObjectShortName">rs_load_dv</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_RS/tx/rs_load">
+         <obj_property name="ElementShortName">rs_load[63:0]</obj_property>
+         <obj_property name="ObjectShortName">rs_load[63:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_RS/tx/scrambler_dv">
+         <obj_property name="ElementShortName">scrambler_dv</obj_property>
+         <obj_property name="ObjectShortName">scrambler_dv</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_RS/tx/scrambler">
+         <obj_property name="ElementShortName">scrambler[63:0]</obj_property>
+         <obj_property name="ObjectShortName">scrambler[63:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_RS/fv">
+         <obj_property name="ElementShortName">fv</obj_property>
+         <obj_property name="ObjectShortName">fv</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_RS/fd">
+         <obj_property name="ElementShortName">fd[95:0]</obj_property>
+         <obj_property name="ObjectShortName">fd[95:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group19">
+      <obj_property name="label">Frame-relative mask coordinates</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_RS/injector/frame_byte_acc">
+         <obj_property name="ElementShortName">frame_byte_acc[11:0]</obj_property>
+         <obj_property name="ObjectShortName">frame_byte_acc[11:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_RS/injector/lane_position">
+         <obj_property name="ElementShortName">lane_position[47:0]</obj_property>
+         <obj_property name="ObjectShortName">lane_position[47:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_RS/injector/applied_position">
+         <obj_property name="ElementShortName">applied_position[47:0]</obj_property>
+         <obj_property name="ObjectShortName">applied_position[47:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_RS/injector/applied_address">
+         <obj_property name="ElementShortName">applied_address[63:0]</obj_property>
+         <obj_property name="ObjectShortName">applied_address[63:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_RS/injector/applied_zone">
+         <obj_property name="ElementShortName">applied_zone[7:0]</obj_property>
+         <obj_property name="ObjectShortName">applied_zone[7:0]</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_RS/checked_words">
+         <obj_property name="ElementShortName">checked_words[31:0]</obj_property>
+         <obj_property name="ObjectShortName">checked_words[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_RS/zone1_bytes">
+         <obj_property name="ElementShortName">zone1_bytes[31:0]</obj_property>
+         <obj_property name="ObjectShortName">zone1_bytes[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_RS/zone2_bytes">
+         <obj_property name="ElementShortName">zone2_bytes[31:0]</obj_property>
+         <obj_property name="ObjectShortName">zone2_bytes[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_RS/zone3_bytes">
+         <obj_property name="ElementShortName">zone3_bytes[31:0]</obj_property>
+         <obj_property name="ObjectShortName">zone3_bytes[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_RS/oracle_mask">
+         <obj_property name="ElementShortName">oracle_mask[31:0]</obj_property>
+         <obj_property name="ObjectShortName">oracle_mask[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group30">
+      <obj_property name="label">Preamble / Byte transport</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/tb_RS/gv">
+         <obj_property name="ElementShortName">gv</obj_property>
+         <obj_property name="ObjectShortName">gv</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_RS/gd">
+         <obj_property name="ElementShortName">gd[127:0]</obj_property>
+         <obj_property name="ObjectShortName">gd[127:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_RS/gk">
+         <obj_property name="ElementShortName">gk[15:0]</obj_property>
+         <obj_property name="ObjectShortName">gk[15:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_RS/bw">
+         <obj_property name="ElementShortName">bw[31:0]</obj_property>
+         <obj_property name="ObjectShortName">bw[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_RS/br">
+         <obj_property name="ElementShortName">br[31:0]</obj_property>
+         <obj_property name="ObjectShortName">br[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group36">
+      <obj_property name="label">Injector / XOR mask</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/tb_RS/iv">
+         <obj_property name="ElementShortName">iv</obj_property>
+         <obj_property name="ObjectShortName">iv</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_RS/id">
+         <obj_property name="ElementShortName">id[31:0]</obj_property>
+         <obj_property name="ObjectShortName">id[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_RS/injector/applied_mask">
+         <obj_property name="ElementShortName">applied_mask[31:0]</obj_property>
+         <obj_property name="ObjectShortName">applied_mask[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_RS/ov">
+         <obj_property name="ElementShortName">ov</obj_property>
+         <obj_property name="ObjectShortName">ov</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_RS/od">
+         <obj_property name="ElementShortName">od[31:0]</obj_property>
+         <obj_property name="ObjectShortName">od[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_RS/masked">
+         <obj_property name="ElementShortName">masked[31:0]</obj_property>
+         <obj_property name="ObjectShortName">masked[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_RS/changedbytes">
+         <obj_property name="ElementShortName">changedbytes[31:0]</obj_property>
+         <obj_property name="ObjectShortName">changedbytes[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_RS/flippedbits">
+         <obj_property name="ElementShortName">flippedbits[31:0]</obj_property>
+         <obj_property name="ObjectShortName">flippedbits[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group45">
+      <obj_property name="label">RX / LPC / Descrambler</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/tb_RS/rv">
+         <obj_property name="ElementShortName">rv</obj_property>
+         <obj_property name="ObjectShortName">rv</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_RS/rd">
+         <obj_property name="ElementShortName">rd[127:0]</obj_property>
+         <obj_property name="ObjectShortName">rd[127:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_RS/rx/lpc_valid_raw">
+         <obj_property name="ElementShortName">lpc_valid_raw</obj_property>
+         <obj_property name="ObjectShortName">lpc_valid_raw</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_RS/rx/lpc_data_raw">
+         <obj_property name="ElementShortName">lpc_data_raw[95:0]</obj_property>
+         <obj_property name="ObjectShortName">lpc_data_raw[95:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_RS/rx/descrambler_dv">
+         <obj_property name="ElementShortName">descrambler_dv</obj_property>
+         <obj_property name="ObjectShortName">descrambler_dv</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_RS/rx/descrambled_data">
+         <obj_property name="ElementShortName">descrambled_data[63:0]</obj_property>
+         <obj_property name="ObjectShortName">descrambled_data[63:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group52">
+      <obj_property name="label">RS decoded / Comparison</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/tb_RS/hv">
+         <obj_property name="ElementShortName">hv</obj_property>
+         <obj_property name="ObjectShortName">hv</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_RS/ho">
+         <obj_property name="ElementShortName">ho[7:0]</obj_property>
+         <obj_property name="ObjectShortName">ho[7:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_RS/pv">
+         <obj_property name="ElementShortName">pv</obj_property>
+         <obj_property name="ObjectShortName">pv</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_RS/po">
+         <obj_property name="ElementShortName">po[63:0]</obj_property>
+         <obj_property name="ObjectShortName">po[63:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_RS/hc">
+         <obj_property name="ElementShortName">hc[31:0]</obj_property>
+         <obj_property name="ObjectShortName">hc[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_RS/pc">
+         <obj_property name="ElementShortName">pc[31:0]</obj_property>
+         <obj_property name="ObjectShortName">pc[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_RS/mismatch">
+         <obj_property name="ElementShortName">mismatch[31:0]</obj_property>
+         <obj_property name="ObjectShortName">mismatch[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_RS/th">
+         <obj_property name="ElementShortName">th[31:0]</obj_property>
+         <obj_property name="ObjectShortName">th[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_RS/tp">
+         <obj_property name="ElementShortName">tp[31:0]</obj_property>
+         <obj_property name="ObjectShortName">tp[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_RS/rh">
+         <obj_property name="ElementShortName">rh[31:0]</obj_property>
+         <obj_property name="ObjectShortName">rh[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_RS/rp">
+         <obj_property name="ElementShortName">rp[31:0]</obj_property>
+         <obj_property name="ObjectShortName">rp[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_RS/lock">
+         <obj_property name="ElementShortName">lock</obj_property>
+         <obj_property name="ObjectShortName">lock</obj_property>
+      </wvobject>
+   </wvobject>
+</wave_config>

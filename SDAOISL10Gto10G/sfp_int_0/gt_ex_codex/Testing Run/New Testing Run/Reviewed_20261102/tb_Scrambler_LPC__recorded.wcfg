@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/audit/20261101_module13/build/modules_20261101_175641_098035_tb_Scrambler_LPC.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tb_Scrambler_LPC" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+   </zoom_setting>
+   <column_width_setting>
+   </column_width_setting>
+   <WVObjectSize size="6" />
+   <wvobject type="group" fp_name="group36">
+      <obj_property name="label">System Clock / Control</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/tb_Scrambler_LPC/clk">
+         <obj_property name="ElementShortName">clk</obj_property>
+         <obj_property name="ObjectShortName">clk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_Scrambler_LPC/rst_n">
+         <obj_property name="ElementShortName">rst_n</obj_property>
+         <obj_property name="ObjectShortName">rst_n</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group39">
+      <obj_property name="label">Process and State</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_Scrambler_LPC/frame_id">
+         <obj_property name="ElementShortName">frame_id[3:0]</obj_property>
+         <obj_property name="ObjectShortName">frame_id[3:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_Scrambler_LPC/lpc_data">
+         <obj_property name="ElementShortName">lpc_data[95:0]</obj_property>
+         <obj_property name="ObjectShortName">lpc_data[95:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_Scrambler_LPC/mux_data">
+         <obj_property name="ElementShortName">mux_data[63:0]</obj_property>
+         <obj_property name="ObjectShortName">mux_data[63:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_Scrambler_LPC/rx_desc_data">
+         <obj_property name="ElementShortName">rx_desc_data[63:0]</obj_property>
+         <obj_property name="ObjectShortName">rx_desc_data[63:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_Scrambler_LPC/rx_lpc_dec_data">
+         <obj_property name="ElementShortName">rx_lpc_dec_data[63:0]</obj_property>
+         <obj_property name="ObjectShortName">rx_lpc_dec_data[63:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_Scrambler_LPC/scr_data">
+         <obj_property name="ElementShortName">scr_data[63:0]</obj_property>
+         <obj_property name="ObjectShortName">scr_data[63:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_Scrambler_LPC/loopback_ok_cnt">
+         <obj_property name="ElementShortName">loopback_ok_cnt[31:0]</obj_property>
+         <obj_property name="ObjectShortName">loopback_ok_cnt[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_Scrambler_LPC/cycle_cnt">
+         <obj_property name="ElementShortName">cycle_cnt[15:0]</obj_property>
+         <obj_property name="ObjectShortName">cycle_cnt[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_Scrambler_LPC/scr_prbs_mask_64b">
+         <obj_property name="ElementShortName">scr_prbs_mask_64b[63:0]</obj_property>
+         <obj_property name="ObjectShortName">scr_prbs_mask_64b[63:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_Scrambler_LPC/ST_DONE">
+         <obj_property name="ElementShortName">ST_DONE[1:0]</obj_property>
+         <obj_property name="ObjectShortName">ST_DONE[1:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_Scrambler_LPC/ST_GAP">
+         <obj_property name="ElementShortName">ST_GAP[1:0]</obj_property>
+         <obj_property name="ObjectShortName">ST_GAP[1:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_Scrambler_LPC/ST_STREAM">
+         <obj_property name="ElementShortName">ST_STREAM[1:0]</obj_property>
+         <obj_property name="ObjectShortName">ST_STREAM[1:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_Scrambler_LPC/frame_type_str">
+         <obj_property name="ElementShortName">frame_type_str[31:0]</obj_property>
+         <obj_property name="ObjectShortName">frame_type_str[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_Scrambler_LPC/ref_rd_ptr">
+         <obj_property name="ElementShortName">ref_rd_ptr[31:0]</obj_property>
+         <obj_property name="ObjectShortName">ref_rd_ptr[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_Scrambler_LPC/ref_wr_ptr">
+         <obj_property name="ElementShortName">ref_wr_ptr[31:0]</obj_property>
+         <obj_property name="ObjectShortName">ref_wr_ptr[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_Scrambler_LPC/scr_state_25b">
+         <obj_property name="ElementShortName">scr_state_25b[24:0]</obj_property>
+         <obj_property name="ObjectShortName">scr_state_25b[24:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_Scrambler_LPC/tb_state">
+         <obj_property name="ElementShortName">tb_state[1:0]</obj_property>
+         <obj_property name="ObjectShortName">tb_state[1:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group57">
+      <obj_property name="label">Data Input</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_Scrambler_LPC/in_mux_byte_idx">
+         <obj_property name="ElementShortName">in_mux_byte_idx[11:0]</obj_property>
+         <obj_property name="ObjectShortName">in_mux_byte_idx[11:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_Scrambler_LPC/in_mux_word_idx">
+         <obj_property name="ElementShortName">in_mux_word_idx[8:0]</obj_property>
+         <obj_property name="ObjectShortName">in_mux_word_idx[8:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_Scrambler_LPC/lpc0_running_disp">
+         <obj_property name="ElementShortName">lpc0_running_disp[11:0]</obj_property>
+         <obj_property name="ObjectShortName">lpc0_running_disp[11:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_Scrambler_LPC/lpc1_running_disp">
+         <obj_property name="ElementShortName">lpc1_running_disp[11:0]</obj_property>
+         <obj_property name="ObjectShortName">lpc1_running_disp[11:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_Scrambler_LPC/lpc2_running_disp">
+         <obj_property name="ElementShortName">lpc2_running_disp[11:0]</obj_property>
+         <obj_property name="ObjectShortName">lpc2_running_disp[11:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_Scrambler_LPC/lpc3_running_disp">
+         <obj_property name="ElementShortName">lpc3_running_disp[11:0]</obj_property>
+         <obj_property name="ObjectShortName">lpc3_running_disp[11:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group64">
+      <obj_property name="label">Data Output</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_Scrambler_LPC/out_lpc_byte_idx">
+         <obj_property name="ElementShortName">out_lpc_byte_idx[11:0]</obj_property>
+         <obj_property name="ObjectShortName">out_lpc_byte_idx[11:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_Scrambler_LPC/out_lpc_word_idx">
+         <obj_property name="ElementShortName">out_lpc_word_idx[8:0]</obj_property>
+         <obj_property name="ObjectShortName">out_lpc_word_idx[8:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_Scrambler_LPC/out_scr_byte_idx">
+         <obj_property name="ElementShortName">out_scr_byte_idx[11:0]</obj_property>
+         <obj_property name="ObjectShortName">out_scr_byte_idx[11:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_Scrambler_LPC/out_scr_word_idx">
+         <obj_property name="ElementShortName">out_scr_word_idx[8:0]</obj_property>
+         <obj_property name="ObjectShortName">out_scr_word_idx[8:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group69">
+      <obj_property name="label">Measurement / Checker</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_Scrambler_LPC/loopback_err_cnt">
+         <obj_property name="ElementShortName">loopback_err_cnt[31:0]</obj_property>
+         <obj_property name="ObjectShortName">loopback_err_cnt[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group71">
+      <obj_property name="label">Functional handshake / recorded controls</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/tb_Scrambler_LPC/mux_dv">
+         <obj_property name="ElementShortName">mux_dv</obj_property>
+         <obj_property name="ObjectShortName">mux_dv</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_Scrambler_LPC/scr_dv">
+         <obj_property name="ElementShortName">scr_dv</obj_property>
+         <obj_property name="ObjectShortName">scr_dv</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_Scrambler_LPC/lpc_dv">
+         <obj_property name="ElementShortName">lpc_dv</obj_property>
+         <obj_property name="ObjectShortName">lpc_dv</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_Scrambler_LPC/rx_lpc_dec_dv">
+         <obj_property name="ElementShortName">rx_lpc_dec_dv</obj_property>
+         <obj_property name="ObjectShortName">rx_lpc_dec_dv</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_Scrambler_LPC/rx_desc_dv">
+         <obj_property name="ElementShortName">rx_desc_dv</obj_property>
+         <obj_property name="ObjectShortName">rx_desc_dv</obj_property>
+      </wvobject>
+   </wvobject>
+</wave_config>

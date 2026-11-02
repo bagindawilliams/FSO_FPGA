@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/audit/20261101_module13/build/modules_20261101_175641_098035_tb_mux_gearbox.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tb_mux_gearbox" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+   </zoom_setting>
+   <column_width_setting>
+   </column_width_setting>
+   <WVObjectSize size="10" />
+   <wvobject type="group" fp_name="group34">
+      <obj_property name="label">DETAIL alternate / Clock System</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="group" fp_name="group35">
+      <obj_property name="label">DETAIL alternate / LPC Data</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_mux_gearbox/lpc_data">
+         <obj_property name="ElementShortName">lpc_data[95:0]</obj_property>
+         <obj_property name="ObjectShortName">lpc_data[95:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_mux_gearbox/track_lpc_bytes">
+         <obj_property name="ElementShortName">track_lpc_bytes[11:0]</obj_property>
+         <obj_property name="ObjectShortName">track_lpc_bytes[11:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group38">
+      <obj_property name="label">DETAIL alternate / </obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_mux_gearbox/preamble_data">
+         <obj_property name="ElementShortName">preamble_data[71:0]</obj_property>
+         <obj_property name="ObjectShortName">preamble_data[71:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group40">
+      <obj_property name="label">DETAIL alternate / Multiplexer</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_mux_gearbox/frame_id">
+         <obj_property name="ElementShortName">frame_id[3:0]</obj_property>
+         <obj_property name="ObjectShortName">frame_id[3:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_mux_gearbox/cdc_data">
+         <obj_property name="ElementShortName">cdc_data[127:0]</obj_property>
+         <obj_property name="ObjectShortName">cdc_data[127:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_mux_gearbox/cdc_keep">
+         <obj_property name="ElementShortName">cdc_keep[15:0]</obj_property>
+         <obj_property name="ObjectShortName">cdc_keep[15:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   <wvobject type="array" fp_name="/tb_mux_gearbox/frame_type_str">
+         <obj_property name="ElementShortName">frame_type_str[31:0]</obj_property>
+         <obj_property name="ObjectShortName">frame_type_str[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_mux_gearbox/frame_type_str">
+         <obj_property name="ElementShortName">frame_type_str[31:0]</obj_property>
+         <obj_property name="ObjectShortName">frame_type_str[31:0]</obj_property>
+         <obj_property name="Radix">ASCIIRADIX</obj_property>
+      <obj_property name="label">ASCII (MSB-to-LSB): frame_type_str</obj_property><obj_property name="DisplayName">label</obj_property></wvobject>
+      </wvobject>
+   </wave_config>

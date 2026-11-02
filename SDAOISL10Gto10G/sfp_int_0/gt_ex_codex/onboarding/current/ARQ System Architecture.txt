@@ -1,0 +1,38 @@
+          TX Node
+        Transmission
+                                                                     NO      CRC-32 Passed?
+
+
+
+
+                                                                                  YES
+
+
+
+
+                                                                             Reassembly Data
+       Store frame copy
+      in ARQ Retransmit
+             RAM
+                                               Send NAK         Send ACK
+
+
+
+
+                          [Received NAK /     What is the TX
+      TX_NUM<ARQ_MAX_
+YES                        Timer Expired]      condition?
+          RETX (5)?
+                                                                                  End:
+                                                                           Reassembly Complete
+
+
+
+             NO                              [Received ACK]
+
+
+
+
+      End: Transmission                     End: Transmission
+            Failed                             Successful
+

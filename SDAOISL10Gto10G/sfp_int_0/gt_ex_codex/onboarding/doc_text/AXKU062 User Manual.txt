@@ -1,0 +1,2197 @@
+KINTEX UltraScale FPGA
+   Development Board
+       AXKU062
+     User Manual
+                     KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+Version Record
+      Version            Date            Release By                   Description
+      Rev 1.0         2022-11-12         Rachel Zhou
+
+
+
+     The English version was translated by Shanghai Tianhui Trading
+Company. They has not been officially Review by ALINX and are for
+reference only. If there are any errors, please send email feedback to
+alinx@aithtech.com for correction.
+
+
+Amazon Store: https://www.amazon.com/alinx
+Aliexpress Store:
+https://alinxfpga.aliexpress.com/store/911112202?spm=a2g0o.detail.1000007.1.704e2bedqLBW90
+
+Ebay Store: https://www.ebay.com/str/alinxfpga
+
+
+Customer Service Information
+Wechat/Skype: 15026866269
+Technical Email: support@aithtech.com
+Sales Email: rachel.zhou@alinx.com
+
+
+
+
+   2 / 56                          Amazon Store: https://www.amazon.com/alinx
+                       KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+Table of Contents
+  Version Record .............................................................................................2
+  Part 1: FPGA Development Board Introduction .......................................... 5
+  Part 2: ACKU060 Core Board ...................................................................... 8
+          Part 2.1: ACKU060 Core Board Introduction ....................................... 8
+          Part 2.2: FPGA Chip ............................................................................. 9
+          Part 2.3: DDR4 DRAM ........................................................................10
+          Part 2.4: QSPI Flash ...........................................................................14
+          Part 2.5: Clock configuration .............................................................. 16
+          Part 2.6: LED ...................................................................................... 16
+          Part 2.7: Power Supply .......................................................................17
+          Part 2.8: ACKU060 Core Board Form Factors .................................. 18
+          Part 2.9: Board-to-Board Pin Definition ..............................................19
+  Part 3: Carrier Board ..................................................................................30
+          Part 3.1: Carrier Board Introduction ................................................... 30
+          Part 3.2: PCIE x 8 Interface ................................................................30
+          Part 3.3: SFP+ Optical fiber interface ................................................ 32
+          Part 3.4: Gigabit Ethernet Interface ................................................... 34
+          Part 3.5: USB to Serial Port ................................................................36
+          Part 3.6: FMC Expansion Port ........................................................... 36
+          Part 3.7: SD Card Slot ........................................................................ 49
+          Part 3.8: SMA Interface ...................................................................... 50
+          Part 3.9: Temperature Sensor and EEPROM .................................... 50
+          Part 3.10: LED Light ........................................................................... 51
+          Part 3.11: Keys ................................................................................... 53
+          Part 3.12: JTAG Interface ................................................................... 53
+          Part 3.13: Power Supply .....................................................................54
+          Part 3.14: Fan ..................................................................................... 55
+
+
+
+ 3 / 56                             Amazon Store: https://www.amazon.com/alinx
+                     KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+         Part 3.15: Form Factors ......................................................................56
+
+
+
+
+4 / 56                            Amazon Store: https://www.amazon.com/alinx
+                   KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+Part 1: FPGA Development Board Introduction
+    The entire structure of the development board is designed by inheriting our
+usual core board + expansion board model. Use high-speed inter-board
+connectors to connect between the core board and the expansion board.
+    The     core   board   is    the   smallest   system   mainly   composed   of
+XCKU060-2FFVA1156I + 4 DDR4 SDRAM + 2 pics of 128Mb QSPI FLASH.
+    The carrier board expands a wealth of peripheral interfaces for the core
+board, including 2*10G SFP+ Interfaces, 3 FMC Interfaces (1 HPC, 2 LPC), 1
+Gigabit Ethernet, 1 UART serial interface, and 1 SD card Interface, LEDs and
+KYEs.
+
+
+
+
+   5 / 56                       Amazon Store: https://www.amazon.com/alinx
+                  KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+    The following diagram illustrates the structure of the entire development
+system.
+
+
+
+
+ SoM Core Board ACKU060
+1) FPGA chip: Xilinx KINTEX UltraSacale chip XCKU060.
+2) DDR4: Four high-capacity 1G bytes (4GB total) high-speed DDR4 SDRAM,
+   which can be used as FPGA data storage, image analysis cache, and data
+   processing.
+3) QSPI FLASH: Two 128Mbit QSPI NOR FLASH memory chips, which can
+   be used for FPGA chip configuration file and user data storage;
+4) 1 differential crystal of 200Mhz.
+5) 2 LEDs, including 1 power indicator and 1 DONE configuration indicator
+
+
+ Carrier Board
+1) 2 SFP+ fiber optic interfaces, each with fiber optic data communication
+
+
+
+   6 / 56                   Amazon Store: https://www.amazon.com/alinx
+                    KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+   receive and transmit speeds up to 16.3Gb/s.
+2) 1 PCIE3.0 X8 interface, endpoint mode, for PCIE data communication with
+   PC.
+3) USB Uart interface for communication with PC for user-friendly debugging.
+   The serial chip adopts Silicon Labs CP2102GM USB-UART chip, and the
+   USB interface adopts MINI USB interface.
+4) One 10/100M/1000M Ethernet RJ45 interface for Ethernet data exchange
+   with PC or other network devices. The network interface chip uses Micrel's
+   KSZ9031 industrial grade GPHY chip.
+5) 3 standard FMC expansion ports, including 2 LPC expansion ports and 1
+   HPC expansion port. It can be connected to XILINX or ALINX FMC modules
+   (HDMI input/output module, binocular camera module, high-speed AD
+   module, etc.).
+6) 1 Micro SD card holder for FPGA to read, write and store data on SD card.
+7) 2 SMA external interface, pin connection to the common clock signal, for
+   external input and output signals
+8) Onboard a temperature and humidity sensor chip LM75, used to detect the
+   temperature and humidity of the environment around the board.
+9) On-board EEPROM for IIC bus communication and storage of some
+   customer-defined information
+10)10-pin 2.54mm standard JTAG port for FPGA program download and
+   debugging, users can debug and download the FPGA through XILINX
+   downloader.
+11) On-board 2 differential crystal of 156.25Mhz to provide reference clock for
+   transceiver.
+12)7 LEDs, 1 power indicator, 4 user indicators and a pair of panel indicators.
+13)2 KEYs, including a reset key and one user key that connected to the           a
+   common IO of the FPGA.
+
+
+
+
+   7 / 56                  Amazon Store: https://www.amazon.com/alinx
+                  KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+Part 2: ACKU060 Core Board
+Part 2.1: ACKU060 Core Board Introduction
+    ACKU060 (core board model, the same below) core board, FPGA chip is
+based on XCKU060-2FFVA1156I of XILINX company KINTEX Ultrascale +
+series.     The   core   board    uses     4    Micron   1GB    DDR4     chips
+MT40A512M16LY-062EIT, with a total capacity of 4GB. In addition, two
+128MBit QSPI FLASH is also integrated on the core board, which is used to
+start storage configuration and system files.
+    The 6 board-to-board connectors of this core board extend 359 IOs, 104
+IOs of BANK64 and BANK65 are at 3.3V and all other BANKs are at 1.8V. The
+core board also has 20 pairs of high-speed transceiver GTH interfaces. For
+users who need a lot of IO, this core board will be a good choice. Moreover, in
+the IO connection part, the wiring between the FPGA chip and the interface has
+been processed with equal length and differential processing, and the size of
+the core board is only 80*60 (mm), which is very suitable for secondary
+development
+
+
+
+
+                         Figure 2-1-1: ACKU060 Core Board
+
+
+
+   8 / 56                   Amazon Store: https://www.amazon.com/alinx
+                 KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+Part 2.2: FPGA Chip
+    The FPGA development board uses Xilinx's KINTEX UltraScale          FPGA
+chip, model number XCKU060-2FFVA1156I. The speed class is 2 and the
+temperature class is industrial. This model is a FFVA1156 package with 1156
+pins and a 1.0mm pitch. The chip naming rules for Xilinx KINTEX UltraScale
+FPGA are shown in Figure 2-1 below:
+
+
+
+
+  Figure 2-1: The Chip Model Definition of KINTEX UltraScale Series
+
+
+    The main parameters of the FPGA chip XCKU060 are as follows
+                   Name                           Specific parameters
+                 Logic Cells                           725,550
+             CLB Look-Up-Tables                        331,680
+                CLB flip-flops                         663,360
+              Block RAM（kb）                              38.0
+
+                 DSP Slices                             2,760
+               PCIe Gen3 x 8                               3
+              GTP Transceiver                      20, 16.3Gb/s max
+                Speed Grade                               -2
+             Temperature Grade                         Industrial
+
+
+
+
+   9 / 56                        Amazon Store: https://www.amazon.com/alinx
+                      KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+Part 2.3: DDR4 DRAM
+    The AXKU062 FPGA development board is equipped with four Micron
+1GB DDR4 chips, model MT40A512M16LY-062EIT. Four DDR4 SDRAMs
+form a 64-bit bus width. Because four DDR4 chips are connected to the FPGA,
+the DDR4 SDRAM can run at speeds up to 1200MHz, and four DDR4 memory
+systems are directly connected to the BANK44, BANK45, and BANK46
+interfaces of the FPGA. The specific configuration of DDR4 SDRAM is shown
+in Table 3-1.
+     Bit Number                Chip Model                Capacity       Factory
+    U45,U47,U48,U49       MT40A512M16LY-062EIT           512M x 16bit     Micron
+
+                         Table 3-1: DDR4 SDRAM Configuration
+
+
+
+    The hardware design of DDR4 requires strict consideration of
+signal integrity. We have fully considered the matching resistor/terminal
+resistance, trace impedance control, and trace length control in circuit
+design and PCB design to ensure high-speed and stable operation of
+DDR3.
+
+
+
+
+                  Figure 3-1: The DDR4 DRAM Schematic
+
+
+  10 / 56                     Amazon Store: https://www.amazon.com/alinx
+                  KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+4 DDR4 DRAM pin assignments:
+        Signal Name             FPGA Pin Name          FPGA Pin Number
+
+       PL_DDR4_DQ0          IO_L3N_T0L_N5_AD15N_44             AE20
+       PL_DDR4_DQ1             IO_L2N_T0L_N3_44                AG20
+       PL_DDR4_DQ2             IO_L2P_T0L_N2_44                AF20
+       PL_DDR4_DQ3          IO_L5P_T0U_N8_AD14P_44             AE22
+
+       PL_DDR4_DQ4          IO_L3P_T0L_N4_AD15P_44             AD20
+       PL_DDR4_DQ5           IO_L6N_T0U_N11_AD6N_44            AG22
+       PL_DDR4_DQ6           IO_L6P_T0U_N10_AD6P_44            AF22
+
+       PL_DDR4_DQ7           IO_L5N_T0U_N9_AD14N_44            AE23
+       PL_DDR4_DQ8            IO_L8N_T1L_N3_AD5N_44            AF24
+
+       PL_DDR4_DQ9             IO_L11P_T1U_N8_GC_44             AJ23
+      PL_DDR4_DQ10            IO_L8P_T1L_N2_AD5P_44            AF23
+      PL_DDR4_DQ11            IO_L12N_T1U_N11_GC_44            AH23
+      PL_DDR4_DQ12           IO_L9N_T1L_N5_AD12N_44            AG25
+      PL_DDR4_DQ13             IO_L11N_T1U_N9_GC_44             AJ24
+
+      PL_DDR4_DQ14           IO_L9P_T1L_N4_AD12P_44            AG24
+      PL_DDR4_DQ15            IO_L12P_T1U_N10_GC_44            AH22
+
+      PL_DDR4_DQ16             IO_L14P_T2L_N2_GC_44            AK22
+      PL_DDR4_DQ17           IO_L17P_T2U_N8_AD10P_44            AL22
+
+      PL_DDR4_DQ18           IO_L15N_T2L_N5_AD11N_44           AM20
+      PL_DDR4_DQ19           IO_L17N_T2U_N9_AD10N_44            AL23
+      PL_DDR4_DQ20             IO_L14N_T2L_N3_GC_44            AK23
+      PL_DDR4_DQ21           IO_L18N_T2U_N11_AD2N_44            AL25
+      PL_DDR4_DQ22           IO_L15P_T2L_N4_AD11P_44            AL20
+
+      PL_DDR4_DQ23           IO_L18P_T2U_N10_AD2P_44            AL24
+      PL_DDR4_DQ24           IO_L20P_T3L_N2_AD1P_44            AM22
+
+      PL_DDR4_DQ25               IO_L23P_T3U_N8_44             AP24
+      PL_DDR4_DQ26           IO_L20N_T3L_N3_AD1N_44            AN22
+      PL_DDR4_DQ27           IO_L21N_T3L_N5_AD8N_44            AN24
+
+      PL_DDR4_DQ28               IO_L24P_T3U_N10_44            AN23
+      PL_DDR4_DQ29               IO_L23N_T3U_N9_44             AP25
+      PL_DDR4_DQ30              IO_L24N_T3U_N11_44             AP23
+      PL_DDR4_DQ31           IO_L21P_T3L_N4_AD8P_44            AM24
+
+
+
+
+  11 / 56                Amazon Store: https://www.amazon.com/alinx
+              KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+    PL_DDR4_DQ32               IO_L2P_T0L_N2_46       AM26
+    PL_DDR4_DQ33          IO_L6P_T0U_N10_AD6P_46      AJ28
+    PL_DDR4_DQ34               IO_L2N_T0L_N3_46       AM27
+
+    PL_DDR4_DQ35          IO_L6N_T0U_N11_AD6N_46      AK28
+    PL_DDR4_DQ36          IO_L5P_T0U_N8_AD14P_46      AH27
+
+    PL_DDR4_DQ37          IO_L5N_T0U_N9_AD14N_46      AH28
+    PL_DDR4_DQ38          IO_L3P_T0L_N4_AD15P_46      AK26
+
+    PL_DDR4_DQ39          IO_L3N_T0L_N5_AD15N_46      AK27
+    PL_DDR4_DQ40        IO_L9N_T1L_N5_AD12N_46        AN28
+    PL_DDR4_DQ41        IO_L12N_T1U_N11_GC_46         AM30
+
+    PL_DDR4_DQ42         IO_L8P_T1L_N2_AD5P_46        AP28
+    PL_DDR4_DQ43         IO_L11N_T1U_N9_GC_46         AM29
+
+    PL_DDR4_DQ44        IO_L9P_T1L_N4_AD12P_46        AN27
+    PL_DDR4_DQ45        IO_L12P_T1U_N10_GC_46         AL30
+
+    PL_DDR4_DQ46         IO_L11P_T1U_N8_GC_46         AL29
+    PL_DDR4_DQ47        IO_L8N_T1L_N3_AD5N_46         AP29
+    PL_DDR4_DQ48         IO_L14P_T2L_N2_GC_46         AK31
+
+    PL_DDR4_DQ49        IO_L18P_T2U_N10_AD2P_46       AH34
+    PL_DDR4_DQ50         IO_L14N_T2L_N3_GC_46         AK32
+
+    PL_DDR4_DQ51        IO_L15N_T2L_N5_AD11N_46       AJ31
+    PL_DDR4_DQ52        IO_L15P_T2L_N4_AD11P_46       AJ30
+
+    PL_DDR4_DQ53        IO_L17P_T2U_N8_AD10P_46       AH31
+    PL_DDR4_DQ54       IO_L18N_T2U_N11_AD2N_46        AJ34
+    PL_DDR4_DQ55       IO_L17N_T2U_N9_AD10N_46        AH32
+    PL_DDR4_DQ56        IO_L21P_T3L_N4_AD8P_46        AN31
+    PL_DDR4_DQ57          IO_L24P_T3U_N10_46          AL34
+
+    PL_DDR4_DQ58           IO_L23N_T3U_N9_46          AN32
+    PL_DDR4_DQ59        IO_L20P_T3L_N2_AD1P_46        AN33
+
+    PL_DDR4_DQ60           IO_L23P_T3U_N8_46          AM32
+    PL_DDR4_DQ61          IO_L24N_T3U_N11_46          AM34
+    PL_DDR4_DQ62        IO_L21N_T3L_N5_AD8N_46        AP31
+
+    PL_DDR4_DQ63        IO_L20N_T3L_N3_AD1N_46        AP33
+    PL_DDR4_DM0          IO_L1P_T0L_N0_DBC_44         AD21
+    PL_DDR4_DM1       IO_L7P_T1L_N0_QBC_AD13P_44      AE25
+
+
+
+
+12 / 56              Amazon Store: https://www.amazon.com/alinx
+              KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+    PL_DDR4_DM2        IO_L13P_T2L_N0_GC_QBC_44       AJ21
+
+    PL_DDR4_DM3       IO_L19P_T3L_N0_DBC_AD9P_44      AM21
+    PL_DDR4_DM4          IO_L1P_T0L_N0_DBC_46         AH26
+    PL_DDR4_DM5       IO_L7P_T1L_N0_QBC_AD13P_46      AN26
+
+    PL_DDR4_DM6        IO_L13P_T2L_N0_GC_QBC_46       AJ29
+    PL_DDR4_DM7       IO_L19P_T3L_N0_DBC_AD9P_46      AL32
+
+ PL_DDR4_DQS0_P       IO_L4P_T0U_N6_DBC_AD7P_44       AG21
+ PL_DDR4_DQS0_N       IO_L4N_T0U_N7_DBC_AD7N_44       AH21
+
+ PL_DDR4_DQS1_P       IO_L10P_T1U_N6_QBC_AD4P_44      AH24
+ PL_DDR4_DQS1_N       IO_L10N_T1U_N7_QBC_AD4N_44      AJ25
+ PL_DDR4_DQS2_P       IO_L16P_T2U_N6_QBC_AD3P_44      AJ20
+ PL_DDR4_DQS2_N       IO_L16N_T2U_N7_QBC_AD3N_44      AK20
+ PL_DDR4_DQS3_P       IO_L22P_T3U_N6_DBC_AD0P_44      AP20
+ PL_DDR4_DQS3_N       IO_L22N_T3U_N7_DBC_AD0N_44      AP21
+ PL_DDR4_DQS4_P       IO_L4P_T0U_N6_DBC_AD7P_46       AL27
+ PL_DDR4_DQS4_N       IO_L4N_T0U_N7_DBC_AD7N_46       AL28
+ PL_DDR4_DQS5_P       IO_L10P_T1U_N6_QBC_AD4P_46      AN29
+ PL_DDR4_DQS5_N       IO_L10N_T1U_N7_QBC_AD4N_46      AP30
+ PL_DDR4_DQS6_P       IO_L16P_T2U_N6_QBC_AD3P_46      AH33
+ PL_DDR4_DQS6_N       IO_L16N_T2U_N7_QBC_AD3N_46      AJ33
+ PL_DDR4_DQS7_P       IO_L22P_T3U_N6_DBC_AD0P_46      AN34
+ PL_DDR4_DQS7_N       IO_L22N_T3U_N7_DBC_AD0N_46      AP34
+     PL_DDR4_A0        IO_L18N_T2U_N11_AD2N_45        AG14
+     PL_DDR4_A1           IO_L23N_T3U_N9_45           AF17
+     PL_DDR4_A2         IO_L20P_T3L_N2_AD1P_45        AF15
+     PL_DDR4_A3       IO_L16N_T2U_N7_QBC_AD3N_45      AJ14
+     PL_DDR4_A4       IO_L19N_T3L_N1_DBC_AD9N_45      AD18
+     PL_DDR4_A5         IO_L15P_T2L_N4_AD11P_45       AG17
+     PL_DDR4_A6            IO_L23P_T3U_N8_45          AE17
+     PL_DDR4_A7          IO_L11N_T1U_N9_GC_45         AK18
+     PL_DDR4_A8           IO_L24P_T3U_N10_45          AD16
+     PL_DDR4_A9        IO_L13P_T2L_N0_GC_QBC_45       AH18
+     PL_DDR4_A10      IO_L19P_T3L_N0_DBC_AD9P_45      AD19
+
+
+
+
+13 / 56              Amazon Store: https://www.amazon.com/alinx
+                   KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+       PL_DDR4_A11                 IO_L24N_T3U_N11_45             AD15
+       PL_DDR4_A12              IO_L14P_T2L_N2_GC_45              AH16
+       PL_DDR4_A13          IO_L10N_T1U_N7_QBC_AD4N_45            AL17
+       PL_DDR4_BA0            IO_L18P_T2U_N10_AD2P_45             AG15
+       PL_DDR4_BA1          IO_L10P_T1U_N6_QBC_AD4P_45            AL18
+       PL_DDR4_BG0          IO_L16P_T2U_N6_QBC_AD3P_45            AJ15
+      PL_DDR4_WE_B             IO_L9N_T1L_N5_AD12N_45             AL15
+      PL_DDR4_RAS_B            IO_L8N_T1L_N3_AD5N_45              AM19
+      PL_DDR4_CAS_B            IO_L8P_T1L_N2_AD5P_45              AL19
+       PL_DDR4_CKE              IO_L14N_T2L_N3_GC_45              AJ16
+      PL_DDR4_ACT_B            IO_L21N_T3L_N5_AD8N_45             AF18
+      PL_DDR4_CLK_N         IO_L22N_T3U_N7_DBC_AD0N_45            AE15
+      PL_DDR4_CLK_P         IO_L22P_T3U_N6_DBC_AD0P_45            AE16
+      PL_DDR4_CS_B             IO_L21P_T3L_N4_AD8P_45             AE18
+       PL_DDR4_OTD            IO_L17P_T2U_N8_AD10P_45             AG19
+       PL_DDR4_PAR             IO_L20N_T3L_N3_AD1N_45             AF14
+       PL_DDR4_RST            IO_L15N_T2L_N5_AD11N_45             AG16
+
+
+
+Part 2.4: QSPI Flash
+    The AXKU062 FPGA development board is equipped with two 128MBit
+Quad-SPI FLASH, and the model is N25Q128A, which uses the 3.3V CMOS
+voltage standard. Due to the non-volatile nature of QSPI FLASH, it can store
+FPGA configuration Bin files and other user data files in use. The specific
+models and related parameters of QSPI FLASH are shown in Table 4-1.
+        Position           Model                 Capacity      Factory
+            U14          N25Q128A                 128M Bit     Numonyx
+
+                         Table 4-1: QSPI FLASH Specification
+
+    QSPI FLASH is connected to the dedicated pins of BANK0 of the FPGA
+chip. The clock pin is connected to CCLK0 of BANK0, and other data signals
+are connected to D00~D03 of BANK0 and FCS pins. Figure 4-2 shows the
+hardware connection of QSPI Flash and FPGA Chip.
+
+
+
+  14 / 56                 Amazon Store: https://www.amazon.com/alinx
+                KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+
+
+
+                        Figure 4-2: QSPI Flash Schematic
+
+
+  QSPI Flash pin assignments:
+          Signal Name                 FPGA Pin Name        FPGA Pin Number
+
+          QSPI_CCLK                      CCLK_0                 AA9
+          QSPI0_CS_B                 RDWR_FCS_B_0                U7
+          QSPI0_IO0                    D00_MOSI_0               AC7
+          QSPI0_IO1                     D01_DIN_0               AB7
+          QSPI0_IO2                       D02_0                 AA7
+          QSPI0_IO3                       D03_0                  Y7
+
+
+  Signal Name                     FPGA Pin Name            FPGA Pin Number
+
+   QSPI_CCLK                         CCLK_0                      AA9
+  QSPI1_CS_B                 IO_L2N_T0L_N3_FWE_FCS2_B_65         G26
+   QSPI1_IO0              IO_L22P_T3U_N6_DBC_AD0P_D04_6         M20
+                                                      5
+   QSPI1_IO1             IO_L22N_T3U_N7_DBC_AD0N_D05_65          L20
+   QSPI1_IO2                  IO_L21P_T3L_N4_AD8P_D06_65         R21
+   QSPI1_IO3                 IO_L21N_T3L_N5_AD8N_D07_65          R22
+
+
+
+
+15 / 56                     Amazon Store: https://www.amazon.com/alinx
+                  KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+Part 2.5: Clock configuration
+200Mhz differential clock source
+    A differential 200MHz clock source is provided on the FPGA development
+board to provide the system clock to the FPGA. The crystal differential output is
+connected to the FPGA BANK45, which can be used to drive the DDR
+controller operating clock and other user logic in the FPGA. The schematic
+diagram of the clock source is shown in Figure 5-1.
+
+
+
+
+             Figure 5-1: 200Mhz System Clock Source Schematic
+
+
+    System Clock pin assignments:
+                 Signal Name                          FPGA Pin
+                 SYS_CLK0_P                             AK17
+                 SYS_CLK0_N                             AK16
+
+
+
+Part 2.6: LED
+    There are 2 red LED lights on the ACKU060 core board, one of which is
+the power indicator (PWR) and the other is the configuration LED (DONE). The
+Power LED and DONE LED will be on after power-up; the DONE LED will be
+off when the FPGA is configured for the program.The schematic diagram of
+
+
+
+  16 / 56                      Amazon Store: https://www.amazon.com/alinx
+                   KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+LED light hardware connection is shown in Figure 2-6-1:
+
+
+
+
+                         Figure 2-6-1: LED in core board Schematic
+Part 2.7: Power Supply
+    The ACKU060 core board power supply voltage is DC12V, which is
+powered by the carrier board. The core board power supply schematic is show
+as Figure 2-7-1.
+
+
+
+
+                    Figure 2-7-1: Power Supply Design Diagram
+
+
+  17 / 56                  Amazon Store: https://www.amazon.com/alinx
+                KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+    +12V is used to generate +0.95V FPGA core power through the DCDC
+power supply chip MYMGK1R820ERSR at up to 20A, meet the current
+requirements of the core voltage. The +12V power supply is then passed
+through the DCDC chip ETA1471 to generate +1.2V, +1.8V +3.3V and
+MGTAVTT quad power supplies. The MGTAVCC for the GTX transceiver is
+generated by the DCDC chip ETA8156, and the GTX auxiliary power supply
++1.8V is generated by an LDO chip SPX3819-1-8. The DDR4 VTT and VREF
+voltages are generated by the TPS51200.
+
+
+Part 2.8: ACKU060 Core Board Form Factors
+
+
+
+
+               Figure 2-8-1: ACKU060 Core Board Form Factors
+
+
+
+
+  18 / 56                Amazon Store: https://www.amazon.com/alinx
+                    KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+Part 2.9: Board-to-Board Pin Definition
+    The core board expands a total of 6 high-speed expansion ports, using 4
+120-Pin inter-board connectors (J1,J3,J4,J5) and 2 80Pin connectors (J2,J6) to
+connect to the carrier board. The connector uses using Panasonic
+AXK5A2137YG and AXK580137YG, corresponding to the carrier board
+connector AXK6A2337YG and AXK680337YG.
+    The J1 connector is the signal for BANK66 and BANK68 with a level
+standard of 1.8V.
+Pin assignment of J1 connector
+
+
+ Signal Name        FPGA Pin         J1 Pin      Signal Name     FPGA Pin
+                    Number                                        Number
+  B66_L3_N           C8                    2      B66_L1_N          E8
+  B66_L3_P           D8                    4      B66_L1_P          F8
+  B66_L7_N           K8                    6      B66_L2_N          A9
+  B66_L7_P             L8             8           B66_L2_P          B9
+     GND                  -           10            GND              -
+  B66_L9_N             H8             12          B66_L4_N          A10
+  B66_L9_P             J8             14          B66_L4_P          B10
+  B66_L8_N             H9             16          B66_L11_N         F9
+  B66_L8_P             J9             18          B66_L11_P         G9
+     GND                  -           20            GND              -
+  B66_L10_N            J10            22          B66_L12_N         F10
+  B66_L10_P           K10             24          B66_L12_P         G10
+  B66_L5_N             C9             26          B66_L6_N          D10
+  B66_L5_P             D9             28          B66_L6_P          E10
+     GND                  -           30            GND              -
+  B66_L17_N           K12             32          B66_L13_N         G11
+  B66_L17_P           L12             34          B66_L13_P         H11
+  B66_L19_N           D11             36          B66_L15_N         J11
+  B66_L19_P           E11             38          B66_L15_P         K11
+     GND                  -           40            GND              -
+  B66_L16_N           K13             42          B66_L14_N         G12
+
+
+
+  19 / 56                      Amazon Store: https://www.amazon.com/alinx
+            KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+B66_L16_P     L13          44          B66_L14_P       H12
+B66_L20_N     B12          46          B66_L18_N       H13
+B66_L20_P     C12          48          B66_L18_P       J13
+  GND          -           50            GND            -
+B66_L22_N     E13          52          B66_L21_N       B11
+B66_L22_P     F13          54          B66_L21_P       C11
+B66_L24_N     C13          56          B66_L23_N       A12
+B66_L24_P     D13          58          B66_L23_P       A13
+  GND          -           60            GND            -
+B68_L9_N      F14          62          B68_L19_N       J14
+B68_L9_P      F15          64          B68_L19_P       J15
+B68_L8_N      D15          66          B68_L21_N       K15
+B68_L8_P      E15          68          B68_L21_P       L15
+  GND          -           70            GND            -
+B68_L15_N     G14          72          B68_L11_N       D16
+B68_L15_P     G15          74          B68_L11_P       E16
+B68_L20_N     K17          76          B68_L23_N       J16
+B68_L20_P     K18          78          B68_L23_P       K16
+  GND          -           80            GND            -
+B68_L16_N     F19          82          B68_L10_N       D18
+B68_L16_P     G19          84          B68_L10_P       D19
+B68_L18_N     H18          86          B68_L1_N        A14
+B68_L18_P     H19          88          B68_L1_P        B14
+  GND          -           90            GND            -
+B68_L22_N     J18          92          B68_L3_N        A15
+B68_L22_P     J19          94          B68_L3_P        B15
+B68_L24_N     L18          96          B68_L5_N        B16
+B68_L24_P     L19          98          B68_L5_P        B17
+  GND          -           100           GND            -
+B68_L13_N     G16          102         B68_L7_N        C14
+B68_L13_P     G17          104         B68_L7_P        D14
+B68_L14_N     F17          106         B68_L6_N        C17
+B68_L14_P     F18          108         B68_L6_P        C18
+  GND          -           110           GND            -
+B68_L12_N     E17          112         B68_L2_N        A18
+B68_L12_P     E18          114         B68_L2_P        A19
+
+
+
+20 / 56             Amazon Store: https://www.amazon.com/alinx
+                     KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+  B68_L17_N               H16              116              B68_L4_N        B19
+   B68_L17_P              H17              118              B68_L4_P        C19
+         GND                 -             120                GND            -
+
+
+     The J2 connector is 80PIN and connects the high speed differential signals
+of transceiver BANK226~228.
+Pin assignment of J2 connector
+J2 Pin         Signal Name       FPGA     Pin    J2 Pin       Signal Name   FPGA          Pin
+                                 Number                                     Number
+     1              GND             -                   2           GND               -
+     3          226_TX2_N          U3                   4       226_RX2_N         T1
+     5          226_TX2_P          U4                   6       226_RX2_P         T2
+     7              GND             -               8               GND               -
+     9          226_TX3_N          R3               10          226_RX3_N         P1
+    11          226_TX3_P          R4               12          226_RX3_P         P2
+    13              GND             -               14              GND           -
+    15          226_CLK1_N         T5               16         226_CLK0_N         V5
+    17          226_CLK1_P         T6               18         226_CLK0_P         V6
+    19              GND             -               20              GND           -
+    21          227_TX0_P          N4               22          227_RX0_P         M2
+    23          227_TX0_N          N3               24          227_RX0_N         M1
+    25              GND             -               26              GND           -
+    27          227_TX1_P          L4               28          227_RX1_P         K2
+    29          227_TX1_N          L3               30          227_RX1_N         K1
+    31              GND             -               32              GND           -
+    33          227_TX2_P          J4               34          227_RX2_P         H2
+    35          227_TX2_N          J3               36          227_RX2_N         H1
+    37              GND             -               38              GND           -
+    39          227_TX3_P          G4               40          227_RX3_P         F2
+    41          227_TX3_N          G3               42          227_RX3_N         F1
+    43              GND             -               44              GND           -
+    45          227_CLK1_P         M6               46         227_CLK0_P         P6
+    47          227_CLK1_N         M5               48         227_CLK0_N         P5
+
+    49              GND             -               50              GND           -
+
+
+
+
+   21 / 56                       Amazon Store: https://www.amazon.com/alinx
+                      KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+     51          228_TX0_P       F6                   52      228_RX0_P        E4
+     53          228_TX0_N       F5                   54      228_RX0_N        E3
+     55              GND          -                   56         GND           -
+     57          228_TX1_P       D6                   58      228_RX1_P        D2
+     59          228_TX1_N       D5                   60      228_RX1_N        D1
+     61              GND          -                   62         GND           -
+     63          228_TX2_P       C4                   64      228_RX2_P        B2
+     65          228_TX2_N       C3                   66      228_RX2_N        B1
+     67              GND          -                   68         GND           -
+     69          228_TX3_P       B6                   70      228_RX3_P        A4
+     71          228_TX3_N       B5                   72      228_RX3_N        A3
+     73              GND          -                   74         GND           -
+     75         228_CLK1_P       H6                   76     228_CLK0_P        K6
+     77         228_CLK1_N       H5                   78     228_CLK0_N        K5
+     79              GND          -                   80         GND           -
+
+
+       The J3 connector is 120PIN and connects the high speed differential
+signals of transceiver BANK224~226 and Part of the BANK64, BANK65 signals
+Pin assignment of J3 connector
+J3 Pin         Signal Name     FPGA        Pin   J3 Pin    Signal Name     FPGA     Pin
+                               Number                                      Number
+1                  B64_L7_N           AF13       2             B64_L21_N       AL9
+3                  B64_L7_P           AE13       4             B64_L21_P       AK10
+5                  B64_L11_N          AH12       6             B64_L24_N       AL8
+7                  B64_L11_P          AG12       8             B64_L24_P       AK8
+9                  GND                L7         10            GND             -
+11                 B64_L9_N           AF12       12            B64_L12_N       AH11
+13                 B64_L9_P           AE12       14            B64_L12_P       AG11
+15                 B64_L13_N          AG10       16            B64_L14_N       AG9
+17                 B64_L13_P          AF10       18            B64_L14_P       AF9
+19                 GND                L7         20            GND             -
+
+21                 B64_L10_N          AE11       22            B64_L15_N       AF8
+23                 B64_L10_P          AD11       24            B64_L15_P       AE8
+25                 B64_L18_N          AH8        26            B64_L16_N       AE10
+
+
+
+     22 / 56                   Amazon Store: https://www.amazon.com/alinx
+                 KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+27             B64_L18_P        AH9   28            B64_L16_P     AD10
+29             GND              L7    30            GND           -
+31             B64_L17_N        AD8   32            FPGA_TCK      AC9
+33             B64_L17_P        AD9   34            FPGA_TDO      U9
+
+35             B64_L23_N        AJ8   36            FPGA_TMS      W9
+37             B64_L23_P        AJ9   38            FPGA_TDI      V9
+39             GND              L7    40            GND           -
+41             B65_T0U          H23   42            B66_T3U       E12
+43             B65_T3U          K22   44            B66_T2U       F12
+45             B65_T1U          N23   46            B66_T1U       L9
+47             B65_T2U          N27   48            NC            -
+
+49             GND              L7    50            GND           -
+51             224_TX0_N        AN3   52            224_RX0_N     AP1
+53             224_TX0_P        AN4   54            224_RX0_P     AP2
+55             GND              L7    56            GND           -
+57             224_TX1_N        AM5   58            224_RX1_N     AM1
+59             224_TX1_P        AM6   60            224_RX1_P     AM2
+61             GND              L7    62            GND           -
+
+63             224_TX2_N        AL3   64            224_RX2_N     AK1
+65             224_TX2_P        AL4   66            224_RX2_P     AK2
+67             GND              L7    68            GND           -
+69             224_TX3_N        AK5   70            224_RX3_N     AJ3
+71             224_TX3_P        AK6   72            224_RX3_P     AJ4
+73             GND              L7    74            GND           -
+75             224_CLK1_N       AD5   76            224_CLK0_N    AF5
+77             224_CLK1_P       AD6   78            224_CLK0_P    AF6
+79             GND              L7    80            GND           -
+81             225_TX0_N        AH5   82            225_RX0_N     AH1
+83             225_TX0_P        AH6   84            225_RX0_P     AH2
+85             GND              L7    86            GND           -
+87             225_TX1_N        AG3   88            225_RX1_N     AF1
+89             225_TX1_P        AG4   90            225_RX1_P     AF2
+
+91             GND              L7    92            GND           -
+93             225_TX2_N        AE3   94            225_RX2_N     AD1
+95             225_TX2_P        AE4   96            225_RX2_P     AD2
+
+
+
+     23 / 56                Amazon Store: https://www.amazon.com/alinx
+                     KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+97                 GND                 L7         98           GND                 -
+99                 225_TX3_N           AC3        100          225_RX3_N           AB1
+101                225_TX3_P           AC4        102          225_RX3_P           AB2
+103                GND                 L7         104          GND                 -
+
+105                225_CLK1_N          Y5         106          225_CLK0_N          AB5
+107                225_CLK1_P          Y6         108          225_CLK0_P          AB6
+109                GND                 L7         110          GND                 -
+111                226_TX0_N           AA3        112          226_RX0_N           Y1
+113                226_TX0_P           AA4        114          226_RX0_P           Y2
+115                GND                 L7         116          GND                 -
+117                226_TX1_N           W3         118          226_RX1_N           V1
+
+119                226_TX1_P           W4         120          226_RX1_P           V2
+
+
+       The J4 connector is 120PIN and connects to BANK48 and Part of the
+BANK64 signals
+Pin assignment of J4 connector
+J4 Pin         Signal Name      FPGA        Pin   J4 Pin   Signal Name      FPGA        Pin
+                                Number                                      Number
+1                 B48_L8_N        AG34            2           B48_T2U         AA33
+3                 B48_L8_P        AF33            4           B48_T1U         AE31
+5                 B48_L7_N        AG32            6           B48_T3U         V32
+7                 B48_L7_P        AG31            8           B47_T3U         U29
+9                 GND             -               10          GND             -
+11                B48_L10_N       AF34            12          B48_L18_N       AD33
+13                B48_L10_P       AE33            14          B48_L18_P       AC33
+15                B48_L9_N        AF32            16          B48_L23_N       V34
+17                B48_L9_P        AE32            18          B48_L23_P       U34
+19                GND             -               20          GND             -
+
+21                B48_L12_N       AC32            22          B48_L21_N       W34
+23                B48_L12_P       AC31            24          B48_L21_P       V33
+25                B48_L11_N       AD31            26          B48_L17_N       AB34
+27                B48_L11_P       AD30            28          B48_L17_P       AA34
+29                GND             -               30          GND             -
+31                B48_L13_N       AB32            32          B48_L15_N       AD34
+
+
+
+
+     24 / 56                    Amazon Store: https://www.amazon.com/alinx
+                    KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+33             B48_L13_P      AA32    34          B48_L15_P     AC34
+
+35             B48_L4_N       AG29    36          B48_L19_N     Y33
+37             B48_L4_P       AF29    38          B48_L19_P     W33
+39             GND            -       40          GND           -
+41             B48_L2_N       AF28    42          B48_L6_N      AG30
+43             B48_L2_P       AE28    44          B48_L6_P      AF30
+45             B48_L1_N       AF27    46          B48_L5_N      AE30
+47             B48_L1_P       AE27    48          B48_L5_P      AD29
+
+49             GND            -       50          GND           -
+51             B48_L3_N       AD28    52          B48_L16_N     AB29
+53             B48_L3_P       AC28    54          B48_L16_P     AA29
+55             B48_L14_N      AB31    56          B48_L24_N     W31
+57             B48_L14_P      AB30    58          B48_L24_P     V31
+59             GND            -       60          GND           -
+61             B48_L20_N      Y30     62          NC            -
+
+63             B48_L20_P      W30     64          NC            -
+65             B48_L22_N      Y32     66          NC            -
+67             B48_L22_P      Y31     68          NC            -
+69             GND            -       70          GND           -
+71             B47_T1U        Y22     72          NC            -
+73             B47_T2U        Y21     74          NC            -
+75             NC             -       76          NC            -
+77             NC             -       78          NC            -
+79             GND            L7      80          GND           -
+81             NC             -       82          NC            -
+83             NC             -       84          NC            -
+85             NC             -       86          NC            -
+87             NC             -       88          POWER_PG      -
+89             GND            -       90          GND           -
+
+91             B64_L8_N       AJ13    92          B64_T1U       AJ11
+93             B64_L8_P       AH13    94          B64_T3U       AM9
+95             B64_L6_N       AL13    96          B64_T0U       AK11
+97             B64_L6_P       AK13    98          B64_T2U       AJ10
+99             GND            -       100         GND           -
+101            B64_L1_N       AP10    102         B64_L2_N      AP13
+
+
+
+
+     25 / 56               Amazon Store: https://www.amazon.com/alinx
+                      KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+103               B64_L1_P      AP11            104         B64_L2_P      AN13
+
+105               B64_L4_N      AN12            106         B64_L22_N     AP8
+107               B64_L4_P      AM12            108         B64_L22_P     AN8
+109               GND           -               110         GND           -
+111               B64_L20_N     AP9             112         B64_L19_N     AM10
+113               B64_L20_P     AN9             114         B64_L19_P     AL10
+115               B64_L3_N      AN11            116         B64_L5_N      AL12
+117               B64_L3_P      AM11            118         B64_L5_P      AK12
+
+119               GND           -               120         GND           -
+
+
+       The J5 connector is 120PIN and connects to BANK47 and Part of the
+BANK65 signals
+Pin assignment of J5 connector
+J5 Pin         Signal Name    FPGA        Pin   J5 Pin   Signal Name    FPGA        Pin
+                              Number                                    Number
+1               B65_L10_N           K23         2           NC                -
+3               B65_L10_P           L22         4           NC                -
+
+5               B65_L6_N            H24         6           B65_L23_N         M21
+7               B65_L6_P            J23         8           B65_L23_P         N21
+9               GND                 L7          10          GND               -
+11              B65_L19_N           M22         12          NC                -
+13              B65_L19_P           N22         14          B65_L2_P          G25
+15              B65_L9_N            K25         16          B65_L1_N          G27
+17              B65_L9_P            L25         18          B65_L1_P          H27
+19              GND                 L7          20          GND               -
+21              B65_L24_N           K21         22          B65_L5_N          H26
+23              B65_L24_P           K20         24          B65_L5_P          J26
+25              B65_L12_N           M24         26          B65_L4_N          J25
+27              B65_L12_P           N24         28          B65_L4_P          J24
+29              GND                 L7          30          GND               -
+31              B65_L20_N           P21         32          B65_L3_N          K27
+33              B65_L20_P           P20         34          B65_L3_P          K26
+35              B65_L7_N            L27         36          B65_L11_N         M26
+37              B65_L7_P            M27         38          B65_L11_P         M25
+
+
+
+
+     26 / 56                  Amazon Store: https://www.amazon.com/alinx
+                     KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+39             GND             L7      40          GND            -
+41             B65_L13_N       N26     42          B65_L18_N      P23
+43             B65_L13_P       P26     44          B65_L18_P      R23
+45             B65_L14_N       P25     46          B65_L15_N      R27
+47             B65_L14_P       P24     48          B65_L15_P      T27
+49             GND             -       50          GND            -
+51             B65_L8_N        L24     52          B65_L17_N      R26
+53             B65_L8_P        L23     54          B65_L17_P      R25
+55             NC              -       56          B65_L16_N      T25
+
+57             NC              -       58          B65_L16_P      T24
+59             GND             L7      60          GND            -
+61             B47_L11_N       AA23    62          B47_L19_N      V28
+
+63             B47_L11_P       Y23     64          B47_L19_P      V27
+65             B47_L14_N       Y25     66          B47_L22_N      U27
+67             B47_L14_P       W25     68          B47_L22_P      U26
+69             GND             -       70          GND            -
+71             B47_L7_N        AB22    72          B47_L20_N      U25
+73             B47_L7_P        AA22    74          B47_L20_P      U24
+75             B47_L21_N       Y28     76          B47_L17_N      T23
+77             B47_L21_P       W28     78          B47_L17_P      T22
+79             GND             -       80          GND            -
+81             B47_L3_N        AC24    82          B47_L15_N      U22
+83             B47_L3_P        AB24    84          B47_L15_P      U21
+85             B47_L23_N       W29     86          B47_L24_N      W26
+87             B47_L23_P       V29     88          B47_L24_P      V26
+89             GND             -       90          GND            -
+91             B47_L10_N       AC21    92          B47_L13_N      W24
+93             B47_L10_P       AB21    94          B47_L13_P      W23
+95             B47_L5_N        AB27    96          B47_L1_N       Y27
+97             B47_L5_P        AA27    98          B47_L1_P       Y26
+99             GND             -       100         GND            -
+101            B47_L9_N        AB20    102         B47_L12_N      AA25
+103            B47_L9_P        AA20    104         B47_L12_P      AA24
+105            B47_L4_N        AC27    106         B47_L6_N       AB26
+107            B47_L4_P        AC26    108         B47_L6_P       AB25
+
+
+
+
+     27 / 56                Amazon Store: https://www.amazon.com/alinx
+                       KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+109             GND              -             110         GND             -
+111             B47_L8_N         AC23          112         B47_L16_N       V23
+113             B47_L8_P         AC22          114         B47_L16_P       V22
+115             B47_L2_N         AD26          116         B47_L18_N       W21
+117             B47_L2_P         AD25          118         B47_L18_P       V21
+119             GND              -             120         GND             -
+
+
+       The J6 connector is 80PIN and connects to + 12V, BANK66 and Part of the
+BANK68 signals
+Pin assignment of J6 connector
+J6 Pin         Signal Name    FPGA       Pin   J6 Pin   Signal Name    FPGA     Pin
+                              Number                                   Number
+1               +12V                 -         2         +12V              -
+3               +12V                 -         4         +12V              -
+5               +12V                 -         6         +12V              -
+7               +12V                 -         8         +12V              -
+9               +12V                 -         10        +12V              -
+11              GND                  -         12        GND               -
+13              B67_L17_N            A20       14        B67_L8_N          A25
+15              B67_L17_P            B20       16        B67_L8_P          B25
+17              B67_L16_N            C22       18        B67_L6_N          A28
+19              B67_L16_P            C21       20        B67_L6_P          A27
+
+21              GND                  -         22        GND               -
+23              B67_L15_N            B22       24        B67_L13_N         C23
+25              B67_L15_P            B21       26        B67_L13_P         D23
+27              B67_L11_N            D25       28        B67_L12_N         C24
+29              B67_L11_P            E25       30        B67_L12_P         D24
+31              GND                  -         32        GND               -
+33              B67_L18_N            D21       34        B67_L4_N          A29
+35              B67_L18_P            D20       36        B67_L4_P          B29
+37              B67_L20_N            E21       38        B67_L2_N          B27
+39              B67_L20_P            E20       40        B67_L2_P          C27
+41              GND                  -         42        GND               -
+43              B67_L14_N            E23       44        B67_L1_N          E27
+
+
+
+
+     28 / 56                  Amazon Store: https://www.amazon.com/alinx
+                      KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+45              B67_L14_P          E22   46        B67_L1_P        F27
+47              B67_L22_N          F20   48        B67_L10_N       A24
+49              B67_L22_P          G20   50        B67_L10_P       B24
+51              GND                -     52        GND             -
+53              B67_L19_N          F25   54        B67_L9_N        B26
+55              B67_L19_P          G24   56        B67_L9_P        C26
+57              B67_L24_N          G21   58        B67_L5_N        C28
+59              B67_L24_P          H21   60        B67_L5_P        D28
+61              GND                -     62        GND             -
+63              B67_L21_N          F24   64        B67_L3_N        D29
+65              B67_L21_P          F23   66        B67_L3_P        E28
+67              B67_L23_N          F22   68        B67_L7_N        D26
+69              B67_L23_P          G22   70        B67_L7_P        E26
+71              GND                -     72        GND             -
+73              B68_T1U            C16   74        B67_T1U         A23
+75              B68_T2U            H14   76        B67_T2U         A22
+77              B68_T3U            L17   78        B67_T3U         H22
+79              NC                 -     80        NC              -
+
+81             B68_L16_N     F19         82        B67_L6_P        A27
+83             B68_L16_P     G19         84        GND             -
+85             B68_L18_N     H18         86        B67_L13_N       C23
+87             B68_L18_P     H19         88        B67_L13_P       D23
+89             GND           -           90        B67_L12_N       C24
+
+
+
+
+     29 / 56                 Amazon Store: https://www.amazon.com/alinx
+                  KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+Part 3: Carrier Board
+Part 3.1: Carrier Board Introduction
+    Through the previous function introduction, we can understand the
+function of the carrier board
+     2 optical fiber interface
+     1 PCIE x 8 interface
+     1 USB Uart communication interface
+     1 Gigabit Ethernet with RJ45 Interface
+     3 Standard FMC Expansion Ports
+     1 SD card interface
+     2 SMA Interface
+     EEPROM, Temperature and humidity sensor
+     JTAG debug interface
+     7 LEDs
+     2 User KEYs
+
+
+Part 3.2: PCIE x 8 Interface
+    AXKU062 is equipped with a PCIe3.0 x8 interface
+    The 8 pairs of transceivers are connected to the PCIEx8 gold finger, which
+can realize the data communication of PCIEex8, PCIEex4, PCIex2, PCIex1.
+    The transceiver signals of the PCIe interface are directly connected to the
+GTH transceivers of the FPGA BANK224, BANK225. The 8 TX signals and RX
+signals are connected to the FPGA transceiver in differential signal mode, and
+the single channel communication rate can be up to 8Gbps bandwidth. The
+design of the PCIe interface of the FPGA development board is shown in
+Figure 3-2-1 below, where the TX transmit signals are connected in AC
+coupling mode.
+
+
+
+
+  30 / 56                    Amazon Store: https://www.amazon.com/alinx
+                 KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+
+
+
+                  Figure 3-2-1: PCIe Interface Schematic
+
+
+PCIe x 8 Interface Pin Assignment:
+ Signal Name        FPGA Pin      Pin Number                Description
+                                               PCIE Channel 0 Data Receive Negative
+PCIE_RX0_N     MGTHRXN3_225       AB1
+                                               PCIE Channel 0 Data Receive Positive
+PCIE_RX0_P     MGTHRXP3_225       AB2
+PCIE_RX1_N     MGTHRXN2_225       AD1          PCIE Channel 1 Data Receive Negative
+                                               PCIE Channel 1 Data Receive Positive
+PCIE_RX1_P     MGTHRXP2_225       AD2
+                                               PCIE Channel 2 Data Receive Negative
+PCIE_RX2_N     MGTHRXN1_225       AF1
+PCIE_RX2_P     MGTHRXP1_225       AF2          PCIE Channel 2 Data Receive Positive
+                                               PCIE Channel 3 Data Receive Negative
+PCIE_RX3_N     MGTHRXN0_225       AH1
+PCIE_RX3_P     MGTHRXP0_225       AH2          PCIE Channel 3 Data Receive Positive
+                                               PCIE Channel 4 Data Receive Negative
+PCIE_RX4_N     MGTHRXN3_224       AJ3
+PCIE_RX4_P     MGTHRXP3_224       AJ4          PCIE Channel 4 Data Receive Positive
+                                               PCIE Channel 5 Data Receive Negative
+PCIE_RX5_N     MGTHRXN2_224       AK1
+                                               PCIE Channel 5 Data Receive Positive
+PCIE_RX5_P     MGTHRXP2_224       AK2
+PCIE_RX6_N     MGTHRXN1_224       AM1          PCIE Channel 6 Data Receive Negative
+                                               PCIE Channel 6 Data Receive Positive
+PCIE_RX6_P     MGTHRXP1_224       AM2
+
+
+
+
+  31 / 56                 Amazon Store: https://www.amazon.com/alinx
+                   KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+PCIE_RX7_N      MGTHRXN0_224           AP1         PCIE Channel 7 Data Receive Negative
+
+PCIE_RX7_P      MGTHRXP0_224           AP2         PCIE Channel 7 Data Receive Positive
+
+PCIE_TX0_N      MGTHTXN3_225           AC3         PCIE Channel 0 Data Receive Negative
+                                                   PCIE Channel 0 Data Receive Positive
+PCIE_TX0_P      MGTHTXP3_225           AC4
+PCIE_TX1_N      MGTHTXN2_225           AE3         PCIE Channel 1 Data Receive Negative
+                                                   PCIE Channel 1 Data Receive Positive
+PCIE_TX1_P      MGTHTXP2_225           AE4
+PCIE_TX2_N      MGTHTXN1_225           AG3         PCIE Channel 2 Data Receive Negative
+                                                   PCIE Channel 2 Data Receive Positive
+PCIE_TX2_P      MGTHTXP1_225           AG4
+                                                   PCIE Channel 3 Data Receive Negative
+PCIE_TX3_N      MGTHTXN0_225           AH5
+PCIE_TX3_P      MGTHTXP0_225           AH6         PCIE Channel 3 Data Receive Positive
+                                                   PCIE Channel 4 Data Receive Negative
+PCIE_TX4_N      MGTHTXN3_224           AK5
+PCIE_TX4_P      MGTHTXP3_224           AK6         PCIE Channel 4 Data Receive Positive
+                                                   PCIE Channel 5 Data Receive Negative
+PCIE_TX5_N      MGTHTXN2_224           AL3
+PCIE_TX5_P      MGTHTXP2_224           AL4         PCIE Channel 5 Data Receive Positive
+                                                   PCIE Channel 6 Data Receive Negative
+PCIE_TX6_N      MGTHTXN1_224           AM5
+                                                   PCIE Channel 6 Data Receive Positive
+PCIE_TX6_P      MGTHTXP1_224           AM6
+PCIE_TX7_N      MGTHTXN0_224           AN3         PCIE Channel 7 Data Receive Negative
+
+PCIE_TX7_P      MGTHTXP0_224           AN4         PCIE Channel 7 Data Receive Positive
+
+PCIE_CLK_N      MGTREFCLK0N_225        AB5         PCIE Channel reference Clock Negative
+                                                   PCIE Channel reference Clock Positive
+PCIE_CLK_P      MGTREFCLK0P_225        AB6
+                                                   Reset signal for PCIE boards
+PCIE_PERST      IO_T3U_N12_PERSTN      K22
+                 0_65
+
+
+
+Part 3.3: SFP+ Optical fiber interface
+    The AXKU062 FPGA development board has a two SFP interfaces. The
+Users can buy SFP optical modules (1.25G, 2.5G, 10G optical modules on the
+market) and insert them into these 2 optical fiber interfaces for optical fiber data
+communication. The 2 optical fiber interfaces are respectively connected with 2
+RX/TX of FPGA BANK226 GTH transceiver. Both the TX signal and the RX
+signal are connected to the FPGA and the optical module through in a
+differential signal mode, and the data rate of each TX transmission and RX
+reception is as high as 16.3 Gb/s. The reference clock of the GXH transceiver
+
+
+
+  32 / 56                    Amazon Store: https://www.amazon.com/alinx
+                  KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+of BANK226 is provided by a differential crystal oscillator 156.25M.
+
+
+
+
+                     Figure 2-3-1: SFP Fiber Design Diagram
+
+
+The 1st fiber interface FPGA pin assignment is as follows:
+         Signal Name        FPGA PIN                    Description
+         SFP1_TX_P             U4           SFP1 Data Transmission (Positive)
+         SFP1_TX_N             U3           SFP1 Data Transmission (Negative)
+         SFP1_RX_P             T2             SFP1 Data Receiver (Positive)
+         SFP1_RX_P             T1             SFP1 Data Receiver (Negative)
+        SFP1_TX_DIS           AN11       SFP1 Optical Transfer Disable, active high
+         SFP1_LOSS            AP9        SFP1 Optical LOSS,High level means no
+                                                   light signal is received
+
+The 2nd fiber interface FPGA pin assignment is as follows:
+         Signal Name         FPGA PIN                    Description
+         SFP2_TX_P             W4            SFP2 Data Transmission (Positive)
+         SFP2_TX_N             W3           SFP2 Data Transmission (Negative)
+         SFP2_RX_P             V2              SFP2 Data Receiver (Positive)
+         SFP2_RX_N             V1              SFP2 Data Receiver (Negative)
+        SFP2_TX_DIS           AM11       SFP2 Optical Transfer Disable, active high
+         SFP2_LOSS             AN9        SFP2 Optical LOSS,High level means no
+                                                   light signal is received
+
+
+
+
+  33 / 56                   Amazon Store: https://www.amazon.com/alinx
+                      KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+Part 3.4: Gigabit Ethernet Interface
+     There are 1 Gigabit Ethernet ports on the AXKU062 FPGA Development
+board. The GPHY chip uses Micrel's KSZ9031RNX Ethernet PHY chip to
+provide users with network communication services. The KSZ9031RNX chip
+supports 10/100/1000 Mbps network transmission rate, and communicates
+with the MAC layer of the system through the RGMII interface. KSZ9031RNX
+supports MDI/MDX adaptation, various speed adaptation, Master/Slave
+adaptation, and supports MDIO bus for PHY register management.
+     When the KSZ9031RNX is powered on, it will detect the level status of
+some specific IOs to determine its own operating mode. Table 3-5-1 describes
+the default settings after the GPHY chip is powered on.
+  Configuration Pin               Instructions                          Configuration value
+    PHYAD[2:0]          MDIO/MDC Mode PHY Address                       PHY Address 011
+    CLK125_EN         Enable 125Mhz clock output selection                    Enable
+    LED_MODE              LED light mode configuration                Single LED light mode
+
+                         Link adaptation and full duplex        10/100/1000 adaptive, compatible
+  MODE0~MODE3
+                                 configuration                      with full-duplex, half-duplex
+
+                           Table 9-1: PHY chip default configuration value
+
+
+
+
+     When the network is connected to Gigabit Ethernet, the data transmission
+of FPGA chip and PHY chip KSZ9031RNX is communicated through the RGMII
+bus, the transmission clock is 125Mhz, and the data is sampled on the rising
+edge and falling samples of the clock.
+     When the network is connected to 100M Ethernet, the data transmission of
+FPGA chip and PHY chip KSZ9031RNX is communicated through RMII bus,
+and the transmission clock is 25Mhz. Data is sampled on the rising edge and
+falling samples of the clock.
+
+
+
+
+  34 / 56                        Amazon Store: https://www.amazon.com/alinx
+                 KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+
+
+
+        Figure 2-4-1: FPGA Chip and GPHY connection diagram
+
+
+ Gigabit Ethernet interface pin assignments are as follows:
+Signal Name      Pin Name       Pin Number                Description
+                                                      Ethernet 1 Transmit Clock
+PHY_GTXC        B48_L21_N          W34
+PHY_TXD0        B48_L18_N           AD33            Ethernet 1 Transmit Data bit0
+
+PHY_TXD1        B48_L18_P           AC33            Ethernet 1 Transmit Data bit1
+                                                    Ethernet 1 Transmit Data bit2
+PHY_TXD2        B48_L23_N            V34
+PHY_TXD3        B48_L23_P            U34            Ethernet 1 Transmit Data bit3
+                                                  Ethernet 1 Transmit Enable Signal
+PHY_TXEN        B48_L21_P            V33
+ PHY_RXC        B48_L12_P           AC31              Ethernet 1 Receive Clock
+                                                    Ethernet 1 Receive Data    Bit0
+PHY_RXD3        B48_L17_N           AB34
+                                                    Ethernet 1 Receive Data    Bit1
+PHY_RXD2        B48_L17_P           AA34
+PHY_RXD1        B48_L15_N           AD34            Ethernet 1 Receive Data    Bit2
+                                                    Ethernet 1 Receive Data    Bit3
+PHY_RXD0        B48_L15_P           AC34
+PHY_RXDV        B48_L12_N           AC32      Ethernet 1 Receive Data Enable Signal
+                                                 Ethernet 1 MDIO Management Clock
+ PHY_MDC        B48_T2U             AA33
+PHY_MDIO        B48_T1U             AE31         Ethernet 1 MDIO Management Data
+                                                         Ethernet Chip Reset
+PHY_RESET       B48_T3U              V32
+
+
+
+
+  35 / 56                   Amazon Store: https://www.amazon.com/alinx
+                  KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+Part 3.5: USB to Serial Port
+    The AXKU062 FPGA development board is equipped with a Uart to USB
+interface for serial communication and debugging of the development board.
+The conversion chip uses the USB-UAR chip of Silicon Labs CP2102GM. The
+CP2102 serial chip and the FPGA are connected by a level-shifting chip to
+adapt to different FPGA BANK voltages. The USB interface uses the MINI USB
+interface, which can be connected to the USB port of the upper PC for serial
+data communication on the FPGA development board with a USB cable. The
+schematic diagram of the USB Uart circuit design is shown below:
+
+
+
+
+                    Figure 3-5-1: USB to serial port schematic
+
+
+USB to serial port pin assignment:
+    Signal Name    FPGA Pin Name      FPGA Pin             Description
+                                      Number
+                                                           Uart Data Input
+ UART_RXD              B64_T1U         AJ11
+                                                           Uart Data Output
+ UART_TXD              B64_T3U         AM9
+
+
+
+Part 3.6: FMC Expansion Port
+    The AXKU062 FPGA development board comes with two standard FMC
+LPC expansion ports and one standard FMC HPC expansion ports that can be
+connected to various FMC modules of XILINX or ALINX (HDMI input and
+output modules, binocular camera modules, high-speed AD modules, etc.). The
+FMC expansion port contains 33 pairs of differential IO signals and one I2C bus
+
+
+  36 / 56                  Amazon Store: https://www.amazon.com/alinx
+                 KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+signal.
+    The LPC FMC1 expansion port has 36 pairs of differential signals, which
+are respectively connected to the IO of BANK47 and BANK48 of the FPGA chip.
+The IO level of BANK47 and BANK48 is 1.8V. The 1 pair speed GTH
+transceiver signal is connected to BNAK226.
+    The LPC FMC2 expansion port has 36 pairs of differential signals, which
+are respectively connected to the IO of the BANK64 and BANK65 of the FPGA
+chip. The level standard is +1.8V.
+    The FMC HPC expansion port contains 58 pairs of differential IO signals,
+which are connected to FPGA chips BANK66, BANK67, BANK68, and the
+voltage standard is 1.8V. 8 high-speed GTH transceiver signals are connected
+to the IO of the FPGA chip BANK227 and BANK228.
+    The schematic diagrams of FPGA and FMC LPC connectors are shown in
+Figures 2-6-1, 2-6-2 and 2-6-3
+
+
+
+
+                Figure 2-6-1：LPC FMC1 Connector Diagram
+
+
+
+
+  37 / 56                  Amazon Store: https://www.amazon.com/alinx
+           KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+
+
+
+          Figure 2-6-2：LPC FMC2 Connector Diagram
+
+
+
+
+          Figure 2-6-3：HPC FMC3 Connector Diagram
+
+
+
+
+38 / 56            Amazon Store: https://www.amazon.com/alinx
+                  KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+The 1st FMC LPC Connectors Pin Assignment
+    Signal Name        FPGA Pin Number   FPGA Pin             Description
+                                          Name
+                                                    FMC Reference 1st Reference
+FMC1_LPC_CLK0_N         B47_L11_N           AA23
+                                                    Clock N
+                                                    FMC Reference 1st Reference
+FMC1_LPC_CLK0_P         B47_L11_P           Y23
+                                                    Clock P
+                                                    FMC Reference 2nd Reference
+FMC1_LPC_CLK1_N         B48_L14_N           AB31
+                                                    Clock N
+
+FMC1_LPC_CLK1_P         B48_L14_P           AB30    FMC Reference 2nd Reference
+                                                    Clock P
+
+FMC1_LPC_LA00_CC_N      B47_L13_N           W24     FMC Reference 0th Data
+                                                    ( Clock ) N
+
+FMC1_LPC_LA00_CC_P      B47_L13_P           W23     FMC Reference 0th Data
+                                                    ( Clock ) P
+                                                    FMC Reference 1st Data
+FMC1_LPC_LA01_CC_N      B47_L12_N           AA25
+                                                    ( Clock ) N
+
+FMC1_LPC_LA01_CC_P      B47_L12_P           AA24    FMC Reference 1st Data
+                                                    ( Clock ) P
+                                                    FMC Reference 2nd Data N
+FMC1_LPC_LA02_N         B47_L18_N           W21
+                                                    FMC Reference 2nd Data P
+FMC1_LPC_LA02_P         B47_L18_P           V21
+FMC1_LPC_LA03_N         B47_L16_N           V23     FMC Reference 3rd Data N
+                                                    FMC Reference 3rd Data P
+FMC1_LPC_LA03_P         B47_L16_P           V22
+FMC1_LPC_LA04_N         B47_L6_N            AB26    FMC Reference 4th Data N
+                                                    FMC Reference 4th Data P
+FMC1_LPC_LA04_P         B47_L6_P            AB25
+FMC1_LPC_LA05_N         B47_L23_N           W29     FMC Reference 5th Data N
+                                                    FMC Reference 5th Data P
+FMC1_LPC_LA05_P         B47_L23_P           V29
+                                                    FMC Reference 6th Data N
+FMC1_LPC_LA06_N         B47_L1_N            Y27
+FMC1_LPC_LA06_P         B47_L1_P            Y26     FMC Reference 6th Data P
+                                                    FMC Reference 7th Data N
+FMC1_LPC_LA07_N         B47_L15_N           U22
+FMC1_LPC_LA07_P         B47_L15_P           U21     FMC Reference 7th Data P
+
+FMC1_LPC_LA08_N         B47_L24_N           W26     FMC Reference 8th Data N
+
+FMC1_LPC_LA08_P         B47_L24_P           V26     FMC Reference 8th Data P
+                                                    FMC Reference 9th Data N
+FMC1_LPC_LA09_N         B47_L17_N           T23
+                                                    FMC Reference 9th Data P
+FMC1_LPC_LA09_P         B47_L17_P           T22
+
+
+
+
+  39 / 56                Amazon Store: https://www.amazon.com/alinx
+                  KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+FMC1_LPC_LA10_N         B47_L20_N         U25    FMC Reference 10th Data N
+                                                 FMC Reference 10th Data P
+FMC1_LPC_LA10_P         B47_L20_P         U24
+FMC1_LPC_LA11_N         B47_L3_N          AC24   FMC Reference 11th Data N
+                                                 FMC Reference 11th Data P
+FMC1_LPC_LA11_P         B47_L3_P          AB24
+FMC1_LPC_LA12_N         B47_L22_N         U27    FMC Reference 12th Data N
+
+FMC1_LPC_LA12_P         B47_L22_P         U26    FMC Reference 12th Data P
+
+FMC1_LPC_LA13_N         B47_L21_N         Y28    FMC Reference 13th Data N
+
+FMC1_LPC_LA13_P         B47_L21_P         W28    FMC Reference 13th Data P
+                                                 FMC Reference 14th Data N
+FMC1_LPC_LA14_N         B47_L19_N         V28
+FMC1_LPC_LA14_P         B47_L19_P         V27    FMC Reference 14th Data P
+                                                 FMC Reference 15th Data N
+FMC1_LPC_LA15_N         B47_L14_N         Y25
+FMC1_LPC_LA15_P         B47_L14_P         W25    FMC Reference 15th Data P
+                                                 FMC Reference 16th Data N
+FMC1_LPC_LA16_N         B47_L7_N          AB22
+                                                 FMC Reference 16th Data P
+FMC1_LPC_LA16_P         B47_L7_P          AA22
+                                                 FMC Reference 17th Data
+FMC1_LPC_LA17_CC_N      B48_L13_N         AB32
+                                                 ( Clock ) N
+                                                 FMC Reference 17th Data
+FMC1_LPC_LA17_CC_P      B48_L13_P         AA32
+                                                 ( Clock ) P
+                                                 FMC Reference 18th Data
+FMC1_LPC_LA18_CC_N      B48_L11_N         AD31
+                                                 ( Clock ) N
+                                                 FMC Reference 18th Data
+FMC1_LPC_LA18_CC_P      B48_L11_P         AD30
+                                                 ( Clock ) P
+
+FMC1_LPC_LA19_N         B48_L16_N         AB29   FMC Reference 19th Data N
+
+FMC1_LPC_LA19_P         B48_L16_P         AA29   FMC Reference 19th Data P
+                                                 FMC Reference 20th Data N
+FMC1_LPC_LA20_N         B48_L24_N         W31
+FMC1_LPC_LA20_P         B48_L24_P         V31    FMC Reference 20th Data P
+                                                 FMC Reference 21st Data N
+FMC1_LPC_LA21_N         B48_L6_N          AG30
+FMC1_LPC_LA21_P         B48_L6_P          AF30   FMC Reference 21st Data P
+                                                 FMC Reference 22nd Data N
+FMC1_LPC_LA22_N         B48_L5_N          AE30
+FMC1_LPC_LA22_P         B48_L5_P          AD29   FMC Reference 22nd Data P
+                                                 FMC Reference 23rd Data N
+FMC1_LPC_LA23_N         B48_L8_N          AG34
+FMC1_LPC_LA23_P         B48_L8_P          AF33   FMC Reference 23rd Data P
+
+FMC1_LPC_LA24_N         B48_L4_N          AG29   FMC Reference 24th Data N
+                                                 FMC Reference 24th Data P
+FMC1_LPC_LA24_P         B48_L4_P          AF29
+FMC1_LPC_LA25_N         B48_L9_N          AF32   FMC Reference 25th Data N
+
+
+
+
+  40 / 56                Amazon Store: https://www.amazon.com/alinx
+                    KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+                                                      FMC Reference 25th Data P
+FMC1_LPC_LA25_P           B48_L9_P            AE32
+FMC1_LPC_LA26_N           B48_L7_N            AG32    FMC Reference 26th Data N
+                                                      FMC Reference 26th Data P
+FMC1_LPC_LA26_P           B48_L7_P            AG31
+                                                      FMC Reference 27th Data N
+FMC1_LPC_LA27_N           B48_L10_N           AF34
+FMC1_LPC_LA27_P           B48_L10_P           AE33    FMC Reference 27th Data P
+                                                      FMC Reference 28th Data N
+FMC1_LPC_LA28_N           B48_L1_N            AF27
+FMC1_LPC_LA28_P           B48_L1_P            AE27    FMC Reference 28th Data P
+
+FMC1_LPC_LA29_N           B48_L2_N            AF28    FMC Reference 29th Data N
+                                                      FMC Reference 29th Data P
+FMC1_LPC_LA29_P           B48_L2_P            AE28
+FMC1_LPC_LA30_N           B48_L3_N            AD28    FMC Reference 30th Data N
+                                                      FMC Reference 30th Data P
+FMC1_LPC_LA30_P           B48_L3_P            AC28
+FMC1_LPC_LA31_N           B48_L19_N           Y33     FMC Reference 31st Data N
+                                                      FMC Reference 31st Data P
+FMC1_LPC_LA31_P           B48_L19_P           W33
+                                                      FMC Reference 32nd Data N
+FMC1_LPC_LA32_N           B48_L22_N           Y32
+FMC1_LPC_LA32_P           B48_L22_P           Y31     FMC Reference 32nd Data P
+                                                      FMC Reference 33rd Data N
+FMC1_LPC_LA33_N           B48_L20_N           Y30
+FMC1_LPC_LA33_P           B48_L20_P           W30     FMC Reference 33rd Data P
+                                                      FMC I2C Bus Clock
+FMC1_LPC_SCL              B47_L10_N           AC21
+FMC1_LPC_SDA              B47_L10_P           AB21    FMC I2C Bus Data
+                                                      Transceiver Data Output P
+FMC1_DP0_C2M_N            226_TX3_N           R3
+                                                      Transceiver Data Output N
+FMC1_DP0_C2M_P            226_TX3_P           R4
+FMC1_DP0_M2C_N            226_RX3_N           P1      Transceiver Data Input P
+
+FMC1_DP0_M2C_P            226_RX3_P           P2      Transceiver Data Input N
+
+FMC1_GBTCLK0_M2C_N        226_CLK0_N          V5      Transceiver reference clock P
+                                                      Transceiver reference clock N
+FMC1_GBTCLK0_M2C_P        226_CLK0_P          V6
+
+
+
+The 2nd FMC LPC Connectors Pin Assignment
+    Signal Name          FPGA Pin Number   FPGA Pin             Description
+                                            Name
+                                                      FMC Reference 1st Reference
+ FMC2_LPC_CLK0_N           B65_L13_N         N26
+                                                      Clock N
+
+  FMC2_LPC_CLK0_P          B65_L13_P         P26      FMC Reference 1st Reference
+                                                      Clock P
+                                                      FMC Reference 2nd Reference
+ FMC2_LPC_CLK1_N           B64_L11_N        AH12
+                                                      Clock N
+
+
+
+  41 / 56                  Amazon Store: https://www.amazon.com/alinx
+                   KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+ FMC2_LPC_CLK1_P          B64_L11_P       AG12   FMC Reference 2nd Reference
+                                                 Clock P
+                                                 FMC Reference 0th Data
+FMC2_LPC_LA00_CC_N        B65_L14_N       P25
+                                                 ( Clock ) N
+                                                 FMC Reference 0th Data
+FMC2_LPC_LA00_CC_P        B65_L14_P       P24
+                                                 ( Clock ) P
+
+FMC2_LPC_LA01_CC_N        B65_L11_N       M26    FMC Reference 1st Data
+                                                 ( Clock ) N
+                                                 FMC Reference 1st Data
+FMC2_LPC_LA01_CC_P        B65_L11_P       M25
+                                                 ( Clock ) P
+
+ FMC2_LPC_LA02_N          B65_L17_N       R26    FMC Reference 2nd Data N
+                                                 FMC Reference 2nd Data P
+ FMC2_LPC_LA02_P          B65_L17_P       R25
+ FMC2_LPC_LA03_N          B65_L7_N        L27    FMC Reference 3rd Data N
+
+ FMC2_LPC_LA03_P             B65_L7_P     M27    FMC Reference 3rd Data P
+
+ FMC2_LPC_LA04_N            B65_L15_N     R27    FMC Reference 4th Data N
+                                                 FMC Reference 4th Data P
+ FMC2_LPC_LA04_P            B65_L15_P     T27
+ FMC2_LPC_LA05_N            B65_L4_N      J25    FMC Reference 5th Data N
+                                                 FMC Reference 5th Data P
+ FMC2_LPC_LA05_P             B65_L4_P     J24
+ FMC2_LPC_LA06_N            B65_L3_N      K27    FMC Reference 6th Data N
+                                                 FMC Reference 6th Data P
+ FMC2_LPC_LA06_P             B65_L3_P     K26
+                                                 FMC Reference 7th Data N
+ FMC2_LPC_LA07_N            B65_L5_N      H26
+ FMC2_LPC_LA07_P             B65_L5_P     J26    FMC Reference 7th Data P
+                                                 FMC Reference 8th Data N
+ FMC2_LPC_LA08_N            B65_L18_N     P23
+ FMC2_LPC_LA08_P            B65_L18_P     R23    FMC Reference 8th Data P
+                                                 FMC Reference 9th Data N
+ FMC2_LPC_LA09_N            B65_L1_N      G27
+ FMC2_LPC_LA09_P             B65_L1_P     H27    FMC Reference 9th Data P
+                                                 FMC Reference 10th Data N
+ FMC2_LPC_LA10_N            B65_L20_N     P21
+                                                 FMC Reference 10th Data P
+ FMC2_LPC_LA10_P            B65_L20_P     P20
+ FMC2_LPC_LA11_N            B65_L9_N      K25    FMC Reference 11th Data N
+
+ FMC2_LPC_LA11_P             B65_L9_P     L25    FMC Reference 11th Data P
+
+ FMC2_LPC_LA12_N            B65_L12_N     M24    FMC Reference 12th Data N
+                                                 FMC Reference 12th Data P
+ FMC2_LPC_LA12_P            B65_L12_P     N24
+ FMC2_LPC_LA13_N            B65_L19_N     M22    FMC Reference 13th Data N
+                                                 FMC Reference 13th Data P
+ FMC2_LPC_LA13_P            B65_L19_P     N22
+                                                 FMC Reference 14th Data N
+ FMC2_LPC_LA14_N            B65_L23_N     M21
+
+
+
+
+  42 / 56                 Amazon Store: https://www.amazon.com/alinx
+                   KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+ FMC2_LPC_LA14_P            B65_L23_P     N21    FMC Reference 14th Data P
+                                                 FMC Reference 15th Data N
+ FMC2_LPC_LA15_N            B65_L10_N     K23
+ FMC2_LPC_LA15_P            B65_L10_P     L22    FMC Reference 15th Data P
+
+ FMC2_LPC_LA16_N            B65_L6_N      H24    FMC Reference 16th Data N
+
+ FMC2_LPC_LA16_P             B65_L6_P     J23    FMC Reference 16th Data P
+                                                 FMC Reference 17th Data
+FMC2_LPC_LA17_CC_N          B64_L13_N     AG10
+                                                 ( Clock ) N
+                                                 FMC Reference 17th Data
+FMC2_LPC_LA17_CC_P          B64_L13_P     AF10
+                                                 ( Clock ) P
+                                                 FMC Reference 18th Data
+FMC2_LPC_LA18_CC_N          B64_L12_N     AH11
+                                                 ( Clock ) N
+
+FMC2_LPC_LA18_CC_P          B64_L12_P     AG11   FMC Reference 18th Data
+                                                 ( Clock ) P
+
+ FMC2_LPC_LA19_N            B64_L17_N     AD8    FMC Reference 19th Data N
+                                                 FMC Reference 19th Data P
+ FMC2_LPC_LA19_P            B64_L17_P     AD9
+ FMC2_LPC_LA20_N            B64_L23_N     AJ8    FMC Reference 20th Data N
+
+ FMC2_LPC_LA20_P            B64_L23_P     AJ9    FMC Reference 20th Data P
+                                                 FMC Reference 21st Data N
+ FMC2_LPC_LA21_N            B64_L14_N     AG9
+ FMC2_LPC_LA21_P            B64_L14_P     AF9    FMC Reference 21st Data P
+                                                 FMC Reference 22nd Data N
+ FMC2_LPC_LA22_N            B64_L15_N     AF8
+ FMC2_LPC_LA22_P            B64_L15_P     AE8    FMC Reference 22nd Data P
+                                                 FMC Reference 23rd Data N
+ FMC2_LPC_LA23_N            B64_L16_N     AE10
+                                                 FMC Reference 23rd Data P
+ FMC2_LPC_LA23_P            B64_L16_P     AD10
+ FMC2_LPC_LA24_N            B64_L1_N      AP10   FMC Reference 24th Data N
+                                                 FMC Reference 24th Data P
+ FMC2_LPC_LA24_P             B64_L1_P     AP11
+ FMC2_LPC_LA25_N            B64_L4_N      AN12   FMC Reference 25th Data N
+                                                 FMC Reference 25th Data P
+ FMC2_LPC_LA25_P             B64_L4_P     AM12
+ FMC2_LPC_LA26_N            B64_L21_N     AL9    FMC Reference 26th Data N
+                                                 FMC Reference 26th Data P
+ FMC2_LPC_LA26_P            B64_L21_P     AK10
+                                                 FMC Reference 27th Data N
+ FMC2_LPC_LA27_N            B64_L24_N     AL8
+ FMC2_LPC_LA27_P            B64_L24_P     AK8    FMC Reference 27th Data P
+
+ FMC2_LPC_LA28_N            B64_L18_N     AH8    FMC Reference 28th Data N
+
+ FMC2_LPC_LA28_P            B64_L18_P     AH9    FMC Reference 28th Data P
+                                                 FMC Reference 29th Data N
+ FMC2_LPC_LA29_N            B64_L6_N      AL13
+ FMC2_LPC_LA29_P             B64_L6_P     AK13   FMC Reference 29th Data P
+
+
+
+
+  43 / 56                 Amazon Store: https://www.amazon.com/alinx
+                    KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+                                                      FMC Reference 30th Data N
+  FMC2_LPC_LA30_N             B64_L8_N       AJ13
+                                                      FMC Reference 30th Data P
+  FMC2_LPC_LA30_P             B64_L8_P      AH13
+  FMC2_LPC_LA31_N             B64_L10_N     AE11      FMC Reference 31st Data N
+                                                      FMC Reference 31st Data P
+  FMC2_LPC_LA31_P             B64_L10_P     AD11
+  FMC2_LPC_LA32_N             B64_L7_N      AF13      FMC Reference 32nd Data N
+
+  FMC2_LPC_LA32_P             B64_L7_P      AE13      FMC Reference 32nd Data P
+
+  FMC2_LPC_LA33_N             B64_L9_N      AF12      FMC Reference 33rd Data N
+                                                      FMC Reference 33rd Data P
+  FMC2_LPC_LA33_P             B64_L9_P      AE12
+                                                      FMC I2C Bus Clock
+   FMC2_LPC_SCL               B65_L24_N      K21
+   FMC2_LPC_SDA               B65_L24_P      K20      FMC I2C Bus Data
+
+
+
+The 3rd FMC HPC Connectors Pin Assignment
+    Signal Name          FPGA Pin Number   FPGA Pin             Description
+                                            Name
+
+FMC_HPC_CLK0_M2C_N         B67_L11_N         D25      FMC 0th input Reference clock N
+
+FMC_HPC_CLK0_M2C_P         B67_L11_P         E25      FMC 0th input Reference clock P
+                                                      FMC 1st input Reference clock N
+FMC_HPC_CLK1_M2C_N         B66_L13_N         G11
+FMC_HPC_CLK1_M2C_P         B66_L13_P         H11      FMC 1st input Reference clock P
+                                                      FMC LA 0th Data ( Clock ) N
+FMC_HPC_LA00_CC_N          B67_L14_N         E23
+FMC_HPC_LA00_CC_P          B67_L14_P         E22      FMC LA 0th Data ( Clock ) P
+                                                      FMC LA 1st Data ( Clock ) N
+FMC_HPC_LA01_CC_N          B67_L13_N         C23
+                                                      FMC LA 1st Data ( Clock ) P
+FMC_HPC_LA01_CC_P          B67_L13_P         D23
+  FMC_HPC_LA02_N            B67_L8_N         A25      FMC LA 2nd Data N
+                                                      FMC LA 2nd Data P
+  FMC_HPC_LA02_P            B67_L8_P         B25
+  FMC_HPC_LA03_N            B67_L6_N         A28      FMC LA 3rd Data N
+                                                      FMC LA 3rd Data P
+  FMC_HPC_LA03_P            B67_L6_P         A27
+  FMC_HPC_LA04_N            B67_L2_N         B27      FMC LA 4th Data N
+                                                      FMC LA 4th Data P
+  FMC_HPC_LA04_P            B67_L2_P         C27
+                                                      FMC LA 5th Data N
+  FMC_HPC_LA05_N           B67_L12_N         C24
+  FMC_HPC_LA05_P           B67_L12_P         D24      FMC LA 5th Data P
+
+  FMC_HPC_LA06_N            B67_L4_N         A29      FMC LA 6th Data N
+
+  FMC_HPC_LA06_P            B67_L4_P         B29      FMC LA 6th Data P
+                                                      FMC LA 7th Data N
+  FMC_HPC_LA07_N            B67_L5_N         C28
+  FMC_HPC_LA07_P            B67_L5_P         D28      FMC LA 7th Data P
+
+
+
+
+   44 / 56                 Amazon Store: https://www.amazon.com/alinx
+                  KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+                                                FMC LA 8th Data N
+ FMC_HPC_LA08_N           B67_L1_N       E27
+                                                FMC LA 8th Data P
+ FMC_HPC_LA08_P           B67_L1_P       F27
+ FMC_HPC_LA09_N           B67_L9_N       B26    FMC LA 9th Data N
+                                                FMC LA 9th Data P
+ FMC_HPC_LA09_P           B67_L9_P       C26
+ FMC_HPC_LA10_N          B67_L10_N       A24    FMC LA 10th Data N
+
+ FMC_HPC_LA10_P          B67_L10_P       B24    FMC LA 10th Data P
+
+ FMC_HPC_LA11_N           B67_L7_N       D26    FMC LA 11th Data N
+                                                FMC LA 11th Data P
+ FMC_HPC_LA11_P           B67_L7_P       E26
+                                                FMC LA 12th Data N
+ FMC_HPC_LA12_N           B67_L3_N       D29
+ FMC_HPC_LA12_P           B67_L3_P       E28    FMC LA 12th Data P
+                                                FMC LA 13th Data N
+ FMC_HPC_LA13_N          B67_L15_N       B22
+ FMC_HPC_LA13_P          B67_L15_P       B21    FMC LA 13th Data P
+                                                FMC LA 14th Data N
+ FMC_HPC_LA14_N          B67_L18_N       D21
+ FMC_HPC_LA14_P          B67_L18_P       D20    FMC LA 14th Data P
+                                                FMC LA 15th Data N
+ FMC_HPC_LA15_N          B67_L17_N       A20
+ FMC_HPC_LA15_P          B67_L17_P       B20    FMC LA 15th Data P
+
+ FMC_HPC_LA16_N          B67_L16_N       C22    FMC LA 16th Data N
+                                                FMC LA 16th Data P
+ FMC_HPC_LA16_P          B67_L16_P       C21
+FMC_HPC_LA17_CC_N        B66_L11_N        F9    FMC LA 17th Data ( Clock ) N
+                                                FMC LA 17th Data ( Clock ) P
+FMC_HPC_LA17_CC_P        B66_L11_P        G9
+FMC_HPC_LA18_CC_N        B66_L12_N       F10    FMC LA 18th Data ( Clock ) N
+                                                FMC LA 18th Data ( Clock ) P
+FMC_HPC_LA18_CC_P        B66_L12_P       G10
+                                                FMC LA 19th Data N
+ FMC_HPC_LA19_N          B66_L21_N       B11
+ FMC_HPC_LA19_P          B66_L21_P       C11    FMC LA 19th Data P
+                                                FMC LA 20th Data N
+ FMC_HPC_LA20_N          B66_L23_N       A12
+ FMC_HPC_LA20_P          B66_L23_P       A13    FMC LA 20th Data P
+                                                FMC LA 21st Data N
+ FMC_HPC_LA21_N          B66_L15_N       J11
+ FMC_HPC_LA21_P          B66_L15_P       K11    FMC LA 21st Data P
+                                                FMC LA 22nd Data N
+ FMC_HPC_LA22_N          B66_L19_N       D11
+                                                FMC LA 22nd Data P
+ FMC_HPC_LA22_P          B66_L19_P       E11
+ FMC_HPC_LA23_N          B66_L18_N       H13    FMC LA 23rd Data N
+
+ FMC_HPC_LA23_P          B66_L18_P       J13    FMC LA 23rd Data P
+
+ FMC_HPC_LA24_N           B66_L8_N        H9    FMC LA 24th Data N
+                                                FMC LA 24th Data N
+ FMC_HPC_LA24_P           B66_L8_P        J9
+ FMC_HPC_LA25_N          B66_L10_N       J10    FMC LA 25th Data N
+
+
+
+
+  45 / 56                Amazon Store: https://www.amazon.com/alinx
+                  KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+                                                FMC LA 25th Data N
+ FMC_HPC_LA25_P          B66_L10_P       K10
+                                                FMC LA 26th Data N
+ FMC_HPC_LA26_N           B66_L6_N       D10
+ FMC_HPC_LA26_P           B66_L6_P       E10    FMC LA 26th Data N
+                                                FMC LA 27th Data N
+ FMC_HPC_LA27_N           B66_L5_N        C9
+ FMC_HPC_LA27_P           B66_L5_P        D9    FMC LA 27th Data N
+
+ FMC_HPC_LA28_N           B66_L2_N        A9    FMC LA 28th Data N
+
+ FMC_HPC_LA28_P           B66_L2_P        B9    FMC LA 28th Data N
+                                                FMC LA 29th Data N
+ FMC_HPC_LA29_N           B66_L4_N       A10
+                                                FMC LA 29th Data N
+ FMC_HPC_LA29_P           B66_L4_P       B10
+ FMC_HPC_LA30_N           B66_L9_N        H8    FMC LA 30th Data N
+                                                FMC LA 30th Data N
+ FMC_HPC_LA30_P           B66_L9_P        J8
+ FMC_HPC_LA31_N           B66_L1_N        E8    FMC LA 31th Data N
+                                                FMC LA 31th Data N
+ FMC_HPC_LA31_P           B66_L1_P        F8
+ FMC_HPC_LA32_N           B66_L3_N        C8    FMC LA 32th Data N
+                                                FMC LA 32th Data N
+ FMC_HPC_LA32_P           B66_L3_P        D8
+ FMC_HPC_LA33_N           B66_L7_N        K8    FMC LA 33th Data N
+
+ FMC_HPC_LA33_P           B66_L7_P        L8    FMC LA 33th Data N
+                                                FMC HA 0th input Data (Clock) N
+FMC_HPC_HA00_CC_N        B68_L14_N       F17
+FMC_HPC_HA00_CC_P        B68_L14_P       F18    FMC HA 0th input Data (Clock) P
+                                                FMC HA 1st input Data (Clock) N
+FMC_HPC_HA01_CC_N        B68_L12_N       E17
+FMC_HPC_HA01_CC_P        B68_L12_P       E18    FMC HA 1st input Data (Clock) P
+                                                FMC HA 2nd Data N
+ FMC_HPC_HA02_N          B68_L17_N       H16
+                                                FMC HA 2nd Data P
+ FMC_HPC_HA02_P          B68_L17_P       H17
+ FMC_HPC_HA03_N          B68_L24_N       L18    FMC HA 3rd Data N
+                                                FMC HA 3rd Data P
+ FMC_HPC_HA03_P          B68_L24_P       L19
+ FMC_HPC_HA04_N           B68_L6_N       C17    FMC HA 4th Data N
+                                                FMC HA 4th Data P
+ FMC_HPC_HA04_P           B68_L6_P       C18
+ FMC_HPC_HA05_N           B68_L2_N       A18    FMC HA 5th Data N
+                                                FMC HA 5th Data P
+ FMC_HPC_HA05_P           B68_L2_P       A19
+                                                FMC HA 6th Data N
+ FMC_HPC_HA06_N          B68_L22_N       J18
+ FMC_HPC_HA06_P          B68_L22_P       J19    FMC HA 6th Data P
+
+ FMC_HPC_HA07_N           B68_L4_N       B19    FMC HA 7th Data N
+
+ FMC_HPC_HA07_P           B68_L4_P       C19    FMC HA 7th Data P
+                                                FMC HA 8th Data N
+ FMC_HPC_HA08_N          B68_L18_N       H18
+ FMC_HPC_HA08_P          B68_L18_P       H19    FMC HA 8th Data P
+
+
+
+
+  46 / 56                Amazon Store: https://www.amazon.com/alinx
+                  KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+                                                FMC HA 9th Data N
+ FMC_HPC_HA09_N           B68_L7_N       C14
+                                                FMC HA 9th Data P
+ FMC_HPC_HA09_P           B68_L7_P       D14
+ FMC_HPC_HA10_N           B68_L1_N       A14    FMC HA 10th Data N
+                                                FMC HA 10th Data P
+ FMC_HPC_HA10_P           B68_L1_P       B14
+ FMC_HPC_HA11_N           B68_L5_N       B16    FMC HA 11th Data N
+
+ FMC_HPC_HA11_P           B68_L5_P       B17    FMC HA 11th Data P
+
+ FMC_HPC_HA12_N          B68_L16_N       F19    FMC HA 12th Data N
+                                                FMC HA 12th Data P
+ FMC_HPC_HA12_P          B68_L16_P       G19
+                                                FMC HA 13th Data N
+ FMC_HPC_HA13_N           B68_L3_N       A15
+ FMC_HPC_HA13_P           B68_L3_P       B15    FMC HA 13th Data P
+                                                FMC HA 14th Data N
+ FMC_HPC_HA14_N          B68_L23_N       J16
+ FMC_HPC_HA14_P          B68_L23_P       K16    FMC HA 14th Data P
+                                                FMC HA 15th Data N
+ FMC_HPC_HA15_N          B68_L20_N       K17
+ FMC_HPC_HA15_P          B68_L20_P       K18    FMC HA 15th Data P
+                                                FMC HA 16th Data N
+ FMC_HPC_HA16_N          B68_L10_N       D18
+ FMC_HPC_HA16_P          B68_L10_P       D19    FMC HA 16th Data P
+                                                FMC HA 17th Data ( Clock ) N
+FMC_HPC_HA17_CC_N        B68_L13_N       G16
+                                                FMC HA 17th Data ( Clock ) P
+FMC_HPC_HA17_CC_P        B68_L13_P       G17
+                                                FMC HA 18th Data ( Clock ) N
+ FMC_HPC_HA18_N          B68_L21_N       K15
+ FMC_HPC_HA18_P          B68_L21_P       L15    FMC HA 18th Data ( Clock ) P
+                                                FMC HA 19th Data N
+ FMC_HPC_HA19_N          B68_L15_N       G14
+ FMC_HPC_HA19_P          B68_L15_P       G15    FMC HA 19th Data P
+                                                FMC HA 20th Data N
+ FMC_HPC_HA20_N          B68_L11_N       D16
+                                                FMC HA 20th Data P
+ FMC_HPC_HA20_P          B68_L11_P       E16
+ FMC_HPC_HA21_N          B68_L19_N       J14    FMC HA 21st Data N
+                                                FMC HA 21st Data P
+ FMC_HPC_HA21_P          B68_L19_P       J15
+ FMC_HPC_HA22_N           B68_L8_N       D15    FMC HA 22nd Data N
+                                                FMC HA 22nd Data P
+ FMC_HPC_HA22_P           B68_L8_P       E15
+ FMC_HPC_HA23_N           B68_L9_N       F14    FMC HA 23rd Data N
+
+ FMC_HPC_HA23_P           B68_L9_P       F15    FMC HA 23rd Data P
+
+  FMC_HPC_SCL            B66_L17_N       K12    FMC I2C Bus Clock
+
+  FMC_HPC_SDA            B66_L17_P       L12    FMC I2C Bus Data
+                                                Transceiver Reference Clock 0
+  FMC_GBTCLK0_M2C        227_CLK1_P       M6
+                                                Input P
+            _P
+
+
+
+  47 / 56                Amazon Store: https://www.amazon.com/alinx
+                KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+FMC_GBTCLK0_M2C        227_CLK1_N       M5    Transceiver Reference Clock 0
+
+          _N                                  Input N
+                                              Transceiver Reference Clock 1
+FMC_GBTCLK1_M2C        228_CLK1_P       H6
+                                              Input P
+          _P
+FMC_GBTCLK1_M2C        228_CLK1_N       H5    Transceiver Reference Clock 1
+
+          _N                                  Input N
+                                              Transceiver Data 0 Input P
+FMC_DP0_M2C_P          227_RX0_P        M2
+                                              Transceiver Data 0 Input N
+FMC_DP0_M2C_N          227_RX0_N        M1
+FMC_DP1_M2C_P          227_RX1_P        K2    Transceiver Data 1 Input P
+                                              Transceiver Data 1 Input N
+FMC_DP1_M2C_N          227_RX1_N        K1
+FMC_DP2_M2C_P          227_RX2_P        H2    Transceiver Data 2 Input P
+                                              Transceiver Data 2 Input N
+FMC_DP2_M2C_N          227_RX2_N        H1
+FMC_DP3_M2C_P          227_RX3_P        F2    Transceiver Data 3 Input P
+                                              Transceiver Data 3 Input N
+FMC_DP3_M2C_N          227_RX3_N        F1
+                                              Transceiver Data 4 Input P
+FMC_DP4_M2C_P          228_RX1_P        D2
+FMC_DP4_M2C_N          228_RX1_N        D1    Transceiver Data 4 Input N
+
+FMC_DP5_M2C_P          228_RX3_P        A4    Transceiver Data 5 Input P
+                                              Transceiver Data 5 Input N
+FMC_DP5_M2C_N          228_RX3_N        A3
+FMC_DP6_M2C_P          228_RX2_P        B2    Transceiver Data 6 Input P
+
+FMC_DP6_M2C_N          228_RX2_N        B1    Transceiver Data 6 Input N
+                                              Transceiver Data 7 Input P
+FMC_DP7_M2C_P          228_RX0_P        E4
+FMC_DP7_M2C_N          228_RX0_N        E3    Transceiver Data 7 Input N
+                                              Transceiver Data 0 Output P
+FMC_DP0_C2M_P          227_TX0_P        N4
+FMC_DP0_C2M_N          227_TX0_N        N3    Transceiver Data 0 Output N
+                                              Transceiver Data 1 Output P
+FMC_DP1_C2M_P          227_TX1_P        L4
+                                              Transceiver Data 1 Output N
+FMC_DP1_C2M_N          227_TX1_N        L3
+FMC_DP2_C2M_P          227_TX2_P        J4    Transceiver Data 2 Output P
+                                              Transceiver Data 2 Output N
+FMC_DP2_C2M_N          227_TX2_N        J3
+FMC_DP3_C2M_P          227_TX3_P        G4    Transceiver Data 3 Output P
+                                              Transceiver Data 3 Output N
+FMC_DP3_C2M_N          227_TX3_N        G3
+FMC_DP4_C2M_P          228_TX1_P        D6    Transceiver Data 4 Output P
+                                              Transceiver Data 4 Output N
+FMC_DP4_C2M_N          228_TX1_N        D5
+                                              Transceiver Data 5 Output P
+FMC_DP5_C2M_P          228_TX3_P        B6
+FMC_DP5_C2M_N          228_TX3_N        B5    Transceiver Data 4 Output N
+
+FMC_DP6_C2M_P          228_TX2_P        C4    Transceiver Data 6 Output P
+
+
+
+
+48 / 56                Amazon Store: https://www.amazon.com/alinx
+                  KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+ FMC_DP6_C2M_N              228_TX2_N               C3    Transceiver Data 6 Output N
+                                                          Transceiver Data 7 Output P
+ FMC_DP7_C2M_P              228_TX0_P               F6
+                                                          Transceiver Data 7 Output N
+ FMC_DP7_C2M_N              228_TX0_N               F5
+
+
+
+Part 3.7: SD Card Slot
+
+       The AXKU062 FPGA development board includes a Micro SD
+   card interface to provide users with access to SD card memory for
+   storing pictures, music or other user data files.
+
+       The IO signal is connected to the IO signal of the FPGA
+   BANK64. The schematic diagram of the FPGA and SD card
+   connector is shown in Figure 3-7-1.
+
+
+
+
+                     Figure 11-1: SD Card Slot Schematic
+SD Card Slot pin assignment:
+ Signal Name         FPGA Pin           FPGA Pin Number            Description
+                                                                   SD Clock Signal
+   SD_CLK              B64_L22_P             AN8
+                                                                 SD Command Signal
+   SD_CMD              B64_L19_N             AM10
+                                                                       SD Data0
+   SD_D0               B64_L5_N              AL12
+                                                                       SD Data1
+   SD_D1               B64_L19_P             AL10
+                                                                       SD Data2
+   SD_D2               B64_L2_P              AN13
+                                                                       SD Data3
+   SD_D3               B64_L2_N              AP13
+                                                                SD card insertion signal
+   SD_CD               B64_L22_N             AP8
+
+
+
+
+  49 / 56                   Amazon Store: https://www.amazon.com/alinx
+                   KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+Part 3.8: SMA Interface
+    The AXKU062 FPGA development board provides 2 SMA interfaces,
+differential signals connected to the BANK66 general clock IO port, to provide
+customers with an external clock interface or can be seen in accordance with
+the general IO port, the interface level of 1.8V.
+    The schematic diagram of FPGA and SMA interface connection is shown
+in Figure 3-8-1.
+
+
+
+
+                   Figure 3-8-1: SMA Connection Schematic
+
+
+SMA Interface pin assignment:
+     Signal Name              FPGA Pin          FPGA Pin            Description
+                                                    Number
+                                                             Transceiver Clock Signal N
+    SMA_CLKIN_N                B66_L14_N             G12
+                                                             Transceiver Clock Signal P
+    SMA_CLKIN_P                B66_L14_P             H12
+
+
+
+Part 3.9: Temperature Sensor and EEPROM
+    A high-precision, low-power, digital temperature sensor chip is mounted on
+the AXKU062 FPGA development board, and the model is LM75 of ON
+Semiconductor. The temperature accuracy of the LM75 chip is 0.5 degrees.
+The sensor and FPGA are directly connected to the I2C digital interface. The
+
+
+  50 / 56                   Amazon Store: https://www.amazon.com/alinx
+                     KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+FPGA reads the temperature near the current FPGA development board
+through the I2C interface. The I2C bus is connected to a 4K-byte EEPROM,
+model 24LC04.
+    Figure 13-1 below shows the design of the LM75 sensor chip and
+EEPROM Chip
+
+
+
+
+                    Figure 13-1: LM75 Sensor and IIC Schematic
+
+
+IIC Pin Assignment
+         Pin Name                    FPGA Pin              FPGA Pin Name
+
+         I2C_SDA                      B66_L16_N                  K13
+         I2C_SCL                      B66_L16_P                  L13
+
+
+
+
+Part 3.10: LED Light
+    There are 7 LEDs on the AXKU062 board, including 1 power LED, 4 FPGA
+controlled user LEDs, and 2 panel LEDs. When the board is powered on, the
+power LED will be on, the 4 user LEDs and the 2 panel LEDs are connected to
+the IO of FPGA BANK65 and BANK66, the user can control the on and off
+through the program, when the voltage of the IO connected to the user LED is
+low, the user LED will be off.
+    When the voltage of the connected IO is high, the user LED will be lit. The
+diagram of the user LED hardware connection is shown in Figure 2-10-1.
+
+
+
+
+  51 / 56                    Amazon Store: https://www.amazon.com/alinx
+              KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+
+
+
+                        Figure 2-10-1: User LEDs Schematic
+
+
+
+
+                       Figure 2-10-2: Panel LEDs Schematic
+
+
+Pin assignment of user LED
+Signal Name     FPGA Pin Name        FPGA Pin Number         Description
+                                                             User LED1
+   LED1              B66_T3U                 E12
+                                                             User LED2
+   LED2              B66_T2U                 F12
+                                                             User LED3
+   LED3              B66_T1U                 L9
+                                                             User LED4
+   LED3              B65_T0U                 H23
+                                                             Panel Indicator
+TEST_LED1           B66_L22_N                E13
+                                                             Panel Indicator
+TEST_LED2           B66_L22_P                F13
+
+
+
+
+ 52 / 56               Amazon Store: https://www.amazon.com/alinx
+                 KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+Part 3.11: Keys
+    The AXKU062 FPGA development board contains two user Keys, include
+1 user key and 1 reset key. The Keys are connected to the IO of FPGA
+BANK65.The user key is active at low level to realize some functions of the
+board for customers; The reset key is used for system reset.
+    The circuit of user key part is shown in Figure 3-11-1.
+
+
+
+
+                        Figure 3-11-1: Keys Schematic
+Keys Pin Assignment
+Signal Name            FPGA Pin             FPGA Pin           Description
+                                             Number
+                                                               User Key Input
+   KEY1                B65_T1U                N23
+                                                                System Reset
+FPGA_RSETN             B65_T2U                N27
+
+
+
+Part 3.12: JTAG Interface
+    A JTAG interface is reserved JTAG interface one the AXKU062 FPGA
+development board for downloading FPGA programs or firmware to FLASH. In
+order to prevent damage to the FPGA chip caused by hot plugging, a protection
+diode is added to the JTAG signal to ensure that the voltage of the signal is
+within the range accepted by the FPGA to avoid damage of the FPGA chip.
+
+
+
+
+  53 / 56                  Amazon Store: https://www.amazon.com/alinx
+                KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+
+
+
+                 Figure 3-12-1: JTAG Interface Schematic
+
+
+Part 3.13: Power Supply
+    The power input voltage of the AXKU062 FPGA development board is
+DC12V, and the external +12V power supply supplies power to the FPGA
+development board.
+    The Power supply design diagram shown in Figure 2-13-1.
+
+
+
+
+                     Figure 2-13-1: Power Supply Design Diagram
+
+
+  54 / 56                 Amazon Store: https://www.amazon.com/alinx
+                 KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+Part 3.14: Fan
+    Because AXKU062 FPGA development board generates a lot of heat
+when it works normally, we add a heat sink and fan to the chip on the board to
+prevent the chip from overheating. The control of the fan is controlled by the
+FPGA Chip. The control pin is connected to the IO of the BANK48. If the IO
+level output is Low, the MOSFET is turned on and the fan is working. The fan
+design on the board is shown in Figure 2-14-1.
+
+
+
+
+                 Figure 2-14-1：Fan design in the schematic
+
+
+Fan Control Pin Assignment
+  Signal Name            FPGA Pin             FPGA Pin             Description
+                                                 Number
+                                                           Pins for controlling the fan
+  FAN_PWM                B64_T0U                    AK11
+
+
+
+
+  55 / 56                  Amazon Store: https://www.amazon.com/alinx
+            KINTEX UltraScale+ FPGA Board AXKU062 User Manual
+
+Part 3.15: Form Factors
+
+
+
+
+              Figure 19-1: Form Factors (Top View)
+
+
+
+
+ 56 / 56            Amazon Store: https://www.amazon.com/alinx
+

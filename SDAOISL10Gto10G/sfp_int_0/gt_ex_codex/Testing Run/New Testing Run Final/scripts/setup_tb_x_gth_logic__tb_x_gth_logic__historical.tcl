@@ -1,0 +1,6 @@
+# New simulation only: exact tested top/profile required.
+foreach path {{/tb_x_gth_logic/clk_gth} {/tb_x_gth_logic/clk_logic} {/tb_x_gth_logic/rst_n} {/tb_x_gth_logic/header_in} {/tb_x_gth_logic/payload_in} {/tb_x_gth_logic/header_byte_index} {/tb_x_gth_logic/payload_word_index} {/tb_x_gth_logic/ST_INIT} {/tb_x_gth_logic/current_frame_id} {/tb_x_gth_logic/mux_frame_type_str} {/tb_x_gth_logic/header_out} {/tb_x_gth_logic/payload_out} {/tb_x_gth_logic/out_header_byte_idx} {/tb_x_gth_logic/out_payload_word_idx} {/tb_x_gth_logic/ST_DONE} {/tb_x_gth_logic/ST_STREAM} {/tb_x_gth_logic/tb_state} {/tb_x_gth_logic/hdr_crc16_tail_ok_cnt} {/tb_x_gth_logic/out_header_cnt_reg} {/tb_x_gth_logic/verified_header_bytes} {/tb_x_gth_logic/out_payload_cnt_reg} {/tb_x_gth_logic/pld_crc32_tail_ok_cnt} {/tb_x_gth_logic/verified_payload_words} {/tb_x_gth_logic/cdc_ready} {/tb_x_gth_logic/header_dv} {/tb_x_gth_logic/payload_dv}} {
+ if {![llength [get_objects -quiet $path]]} {error "Unresolved waveform object: $path. Wrong top/profile; do not ignore."}
+ log_wave [get_objects $path]
+}
+open_wave_config {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/Testing Run/New Testing Run Final/tb_x_gth_logic__tb_x_gth_logic__historical.wcfg}

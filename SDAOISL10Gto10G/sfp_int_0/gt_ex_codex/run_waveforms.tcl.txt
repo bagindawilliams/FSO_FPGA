@@ -1,0 +1,1 @@
+source setup_all_25_waveforms.tcl

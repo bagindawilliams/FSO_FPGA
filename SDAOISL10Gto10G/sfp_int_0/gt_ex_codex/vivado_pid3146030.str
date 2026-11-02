@@ -1,0 +1,311 @@
+/*
+
+AMD Vivado v2025.2 (64-bit) [Major: 2025, Minor: 2]
+SW Build: 6299465 on Fri Nov 14 12:34:56 MST 2025
+IP Build: 6300035 on Fri Nov 14 10:48:45 MST 2025
+IP Build: 6300035 on Fri Nov 14 10:48:45 MST 2025
+
+Process ID (PID): 3146030
+License: Customer
+Mode: GUI Mode
+
+Current time: 	Mon Nov 02 01:30:35 KST 2026
+Time zone: 	Korean Standard Time (Asia/Seoul)
+
+OS: Ubuntu
+OS Version: 6.8.0-138-generic
+OS Architecture: amd64
+Available processors (cores): 24
+LSB Release Description: DISTRIB_ID=Ubuntu
+
+Display: 1
+Screen size: 1920x1080
+Local screen bounds: x = 0, y = 28, width = 1920, height = 990
+Screen resolution (DPI): 100
+Available screens: 1
+Default font: family=Dialog,name=Dialog,style=plain,size=12
+Scale size: 12
+OS font scaling: 100%
+Anti-Alias Enabled: false
+
+Java version: 	21.0.5 64-bit
+
+Java home: 	/2025.2/2025.2/tps/lnx64/jre21.0.5_11
+Java executable: 	/2025.2/2025.2/tps/lnx64/jre21.0.5_11/bin/java
+Java arguments: 	[-Dsun.java2d.pmoffscreen=false, -Dhttps.protocols=TLSv1,TLSv1.1,TLSv1.2, -Dsun.java2d.xrender=false, -Dsun.java2d.uiScale.enabled=false, -Dswing.aatext=true, -XX:-UsePerfData, -Djdk.map.althashing.threshold=512, -XX:StringTableSize=4072, -XX:+UseStringDeduplication, -XX:MaxGCPauseMillis=200, -XX:ParallelGCThreads=4, -XX:+ParallelRefProcEnabled, --add-opens=java.desktop/javax.swing.plaf.synth=ALL-UNNAMED, --add-opens=java.base/java.nio=ALL-UNNAMED, --add-opens=java.desktop/sun.swing=ALL-UNNAMED, --add-opens=java.desktop/javax.swing=ALL-UNNAMED, --add-opens=java.desktop/javax.swing.tree=ALL-UNNAMED, --add-opens=java.desktop/javax.swing.plaf.basic=ALL-UNNAMED, --add-opens=java.desktop/javax.swing.plaf.synth=ALL-UNNAMED, --add-opens=java.desktop/javax.swing.plaf.basic=ALL-UNNAMED, --add-opens=java.desktop/javax.swing=ALL-UNNAMED, --add-opens=java.desktop/javax.swing.tree=ALL-UNNAMED, --add-opens=java.desktop/java.awt.event=ALL-UNNAMED, --add-opens=java.desktop/sun.awt.X11=ALL-UNNAMED, --add-exports=java.desktop/javax.swing.plaf.synth=ALL-UNNAMED, --add-exports=java.base/java.nio=ALL-UNNAMED, --add-exports=java.desktop/sun.swing=ALL-UNNAMED, --add-exports=java.desktop/javax.swing=ALL-UNNAMED, --add-exports=java.desktop/javax.swing.tree=ALL-UNNAMED, --add-exports=java.desktop/javax.swing.plaf.basic=ALL-UNNAMED, --add-exports=java.desktop/sun.swing=ALL-UNNAMED, --add-exports=java.desktop/sun.swing.table=ALL-UNNAMED, --add-exports=java.desktop/sun.swing.plaf.synth=ALL-UNNAMED, --add-exports=java.desktop/sun.awt.shell=ALL-UNNAMED, --add-exports=java.base/sun.security.action=ALL-UNNAMED, --add-exports=java.desktop/sun.font=ALL-UNNAMED, --add-opens=java.desktop/sun.awt.X11=ALL-UNNAMED, -XX:NewSize=80m, -XX:MaxNewSize=80m, -Xms812m, -Xmx6144m, -Xss10m, -Xrs]
+Java initial memory (-Xms): 	812 MB
+Java maximum memory (-Xmx):	 6 GB
+
+User name: 	williams
+User home directory: /home/williams
+User working directory: /home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)
+User country: 	US
+User language: 	en
+User locale: 	en_US
+
+RDI_BASEROOT: /2025.2/2025.2
+HDI_APPROOT: /2025.2/2025.2/Vivado
+RDI_DATADIR: /home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/:/2025.2/2025.2/data
+RDI_BINDIR: /2025.2/2025.2/Vivado/bin
+
+Vivado preferences file: /home/williams/.Xilinx/Vivado/2025.2/vivado.xml
+Vivado preferences directory: /home/williams/.Xilinx/Vivado/2025.2/
+Vivado layouts directory: /home/williams/.Xilinx/Vivado/2025.2/data/layouts
+PlanAhead jar file: 	/2025.2/2025.2/Vivado/lib/classes/planAhead.jar
+Vivado log file: 	/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/vivado.log
+Vivado journal file: 	/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/vivado.jou
+Engine tmp dir: 	./.Xil/Vivado-3146030-Williams
+Non-Default Parameters:	[]
+
+Xilinx & AMD Environment Variables
+--------------------------------------------------------------------------------------------
+GNOME_SHELL_SESSION_MODE: ubuntu
+RDI_APPROOT: /2025.2/2025.2/Vivado
+RDI_BASEROOT: /2025.2/2025.2
+RDI_BINROOT: /2025.2/2025.2/Vivado/bin
+RDI_BUILD: yes
+RDI_DATADIR: :/2025.2/2025.2/data
+RDI_INSTALLROOT: /2025.2
+RDI_INSTALLVER: Vivado
+RDI_JAVA_PLATFORM: 
+RDI_JAVA_VERSION: 21.0.5_11
+RDI_LIBDIR: /2025.2/2025.2/Vivado/lib/lnx64.o/Ubuntu/22:/2025.2/2025.2/Vivado/lib/lnx64.o/Ubuntu:/2025.2/2025.2/Vivado/lib/lnx64.o
+RDI_OPT_EXT: .o
+RDI_PATCHROOT: 
+RDI_PLATFORM: lnx64
+RDI_PREPEND_PATH: /2025.2/2025.2/Vitis/bin:/2025.2/2025.2/Vivado/ids_lite/ISE/bin/lin64
+RDI_PROG: /2025.2/2025.2/Vivado/bin/unwrapped/lnx64.o/vivado
+RDI_SESSION_INFO: /home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX):Williams_1793550627_3145982
+RDI_SHARED_DATA: 
+RDI_TPS_ROOT: /2025.2/2025.2/Vivado/tps/lnx64
+RDI_USE_JDK21: True
+SHELL: /bin/bash
+XILINX: /2025.2/2025.2/Vivado/ids_lite/ISE
+XILINX_DSP: /2025.2/2025.2/Vivado/ids_lite/ISE
+XILINX_HLS: /2025.2/2025.2/Vitis
+XILINX_PLANAHEAD: /2025.2/2025.2/Vivado
+XILINX_SDK: /2025.2/2025.2/Vitis
+XILINX_VITIS: /2025.2/2025.2/Vitis
+XILINX_VIVADO: /2025.2/2025.2/Vivado
+
+
+GUI allocated memory:	812 MB
+GUI max memory:		6,144 MB
+Engine allocated memory: 1,933 MB
+
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+*/
+
+// TclEventType: START_GUI
+// Tcl Message: start_gui 
+// HMemoryUtils.trashcanNow. Engine heap size: 1,925 MB. GUI used memory: 63 MB. Current time: 11/2/26, 1:30:36 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,917 MB. GUI used memory: 63 MB. Current time: 11/2/26, 1:31:09 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,917 MB. GUI used memory: 63 MB. Current time: 11/2/26, 1:31:49 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+selectButton(PAResourceEtoH.GettingStartedView_OPEN_PROJECT, "Open Project"); // t (PAResourceEtoH.GettingStartedView_OPEN_PROJECT)
+// Run Command: PAResourceCommand.PACommandNames_OPEN_PROJECT
+// HOptionPane Error: 'Please use ASCII characters for file name or path. (Non-ASCII Characters Found)'
+selectButton("OptionPane.button", "OK", "Non-ASCII Characters Found"); // JButton (OptionPane.button)
+selectButton("OptionPane.button", "OK", "Non-ASCII Characters Found"); // JButton (OptionPane.button)
+selectButton("OptionPane.button", "OK", "Non-ASCII Characters Found"); // JButton (OptionPane.button)
+dismissFileChooser();
+// HMemoryUtils.trashcanNow. Engine heap size: 1,920 MB. GUI used memory: 65 MB. Current time: 11/2/26, 1:32:29 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,920 MB. GUI used memory: 64 MB. Current time: 11/2/26, 1:33:09 AM KST
+// Elapsed time: 40 seconds
+selectButton(PAResourceEtoH.GettingStartedView_OPEN_PROJECT, "Open Project"); // t (PAResourceEtoH.GettingStartedView_OPEN_PROJECT)
+// Run Command: PAResourceCommand.PACommandNames_OPEN_PROJECT
+// HOptionPane Error: 'Please use ASCII characters for file name or path. (Non-ASCII Characters Found)'
+// Elapsed time: 12 seconds
+selectButton("OptionPane.button", "OK", "Non-ASCII Characters Found"); // JButton (OptionPane.button)
+selectButton(RDIResource.HJFileChooserHelper_REFRESH_FOLDER_VIEW_TO_REFLECT_EXTERNAL, (String) null, "Open Project"); // a (RDIResource.HJFileChooserHelper_REFRESH_FOLDER_VIEW_TO_REFLECT_EXTERNAL)
+dismissFileChooser();
+selectButton(PAResourceEtoH.GettingStartedView_OPEN_PROJECT, "Open Project"); // t (PAResourceEtoH.GettingStartedView_OPEN_PROJECT)
+// Run Command: PAResourceCommand.PACommandNames_OPEN_PROJECT
+selectButton((HResource) null, "FileChooser.upFolderIcon", "Open Project"); // JButton (FileChooser.upFolderIcon)
+// HOptionPane Error: 'Please use ASCII characters for file name or path. (Non-ASCII Characters Found)'
+// HMemoryUtils.trashcanNow. Engine heap size: 1,931 MB. GUI used memory: 70 MB. Current time: 11/2/26, 1:33:49 AM KST
+selectButton("OptionPane.button", "OK", "Non-ASCII Characters Found"); // JButton (OptionPane.button)
+selectButton((HResource) null, "FileChooser.upFolderIcon", "Open Project"); // JButton (FileChooser.upFolderIcon)
+// Elapsed time: 17 seconds
+dismissFileChooser();
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,931 MB. GUI used memory: 64 MB. Current time: 11/2/26, 1:34:29 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 1:35:09 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 1:35:49 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 1:36:29 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 1:37:09 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 1:37:49 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 1:38:29 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 1:39:09 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 1:39:49 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 1:40:29 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 1:41:09 AM KST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 1:41:49 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 1:42:29 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 1:43:09 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 1:43:49 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 1:44:29 AM KST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 1:45:10 AM KST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 1:45:50 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 1:46:30 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// [GUI Memory]: 67 MB (+67804kb) [00:16:18]
+// [Engine Memory]: 1,930 MB (+1872693kb) [00:16:18]
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 1:47:10 AM KST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 1:47:50 AM KST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 1:48:30 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 1:49:10 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 1:49:50 AM KST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 1:50:30 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 1:51:10 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 1:51:50 AM KST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 1:52:30 AM KST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 1:53:10 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 1:53:50 AM KST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 1:54:30 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 1:55:10 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 1:55:50 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 1:56:30 AM KST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 1:57:10 AM KST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 1:57:50 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 1:58:30 AM KST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 1:59:10 AM KST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 1:59:50 AM KST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:00:30 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:01:10 AM KST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:01:50 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:02:30 AM KST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:03:10 AM KST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:03:50 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:04:30 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:05:10 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:05:50 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:06:30 AM KST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:07:10 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:07:50 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:08:30 AM KST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:09:10 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:09:50 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:10:30 AM KST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:11:10 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:11:50 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:12:30 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:13:10 AM KST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:13:50 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:14:30 AM KST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:15:10 AM KST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:15:50 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:16:30 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:17:10 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:17:50 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:18:30 AM KST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:19:10 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:19:50 AM KST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:20:30 AM KST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:21:10 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:21:50 AM KST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:22:30 AM KST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:23:10 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:23:50 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:24:30 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:25:10 AM KST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:25:50 AM KST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:26:30 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:27:10 AM KST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:27:50 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:28:30 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:29:10 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:29:50 AM KST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:30:30 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:31:10 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:31:50 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:32:30 AM KST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:33:10 AM KST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:33:50 AM KST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:34:30 AM KST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 65 MB. Current time: 11/2/26, 2:35:10 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:35:50 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:36:30 AM KST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:37:10 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:37:50 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:38:30 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:39:10 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:39:50 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 65 MB. Current time: 11/2/26, 2:40:30 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 65 MB. Current time: 11/2/26, 2:41:10 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 65 MB. Current time: 11/2/26, 2:41:50 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 64 MB. Current time: 11/2/26, 2:42:30 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 65 MB. Current time: 11/2/26, 2:43:10 AM KST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,930 MB. GUI used memory: 65 MB. Current time: 11/2/26, 2:43:50 AM KST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.

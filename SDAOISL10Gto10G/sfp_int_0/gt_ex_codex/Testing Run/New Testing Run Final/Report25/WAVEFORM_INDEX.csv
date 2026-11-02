@@ -1,0 +1,7 @@
+snapshot,run,WDB,sha256,WCFG,function,waveform,GUI
+report_rs_clean,20261102_075031,/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/audit/20261102_report24/runs/20261102_075031/report_rs_clean.wdb,2abdda29f3ae0b4026b3830320afea4cf65d336a4a6bcbeb10e03096bd4291ea,/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/Testing Run/New Testing Run Final/Report25/report_rs_clean.wcfg,PASS_TESTED_SCOPE,SELECTED_VALUES_VERIFIED,NOT_VERIFIED
+report_arq_0,20261102_075031,/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/audit/20261102_report24/runs/20261102_075031/report_arq_0.wdb,c77446c61b43561a4a4537f636d7c38c6d52755831f9f3c6cfc505ef599b35ff,/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/Testing Run/New Testing Run Final/Report25/report_arq_0.wcfg,PASS_TESTED_SCOPE,SELECTED_VALUES_VERIFIED,NOT_VERIFIED
+report_rs_mem,PENDING,NOT_AVAILABLE,,runtime-generated after actual scope checks,NOT_RUN,PENDING,NOT_VERIFIED
+report_arq_1,PENDING,NOT_AVAILABLE,,runtime-generated after actual scope checks,NOT_RUN,PENDING,NOT_VERIFIED
+report_arq_2,PENDING,NOT_AVAILABLE,,runtime-generated after actual scope checks,NOT_RUN,PENDING,NOT_VERIFIED
+report_top,PENDING,NOT_AVAILABLE,,runtime-generated after actual scope checks,NOT_RUN,PENDING,NOT_VERIFIED

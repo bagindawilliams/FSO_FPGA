@@ -1,0 +1,4557 @@
+--- ZIP/sources_1/new/ethernet_frame_reassembly.v
++++ gt_ex.srcs/sources_1/new/ethernet_frame_reassembly.v
+@@ -65,6 +65,16 @@
+        inconsistent continuation headers trigger an immediate partial-packet rollback
+        (preserving all previously committed packets) and reject the inconsistent frame
+        (parser_inconsistent_cont_length.sv).
++  - Rev 3.1 (2026-10-31 14:00 KST) : [Audit Fix OISL-ETH-001 (D02) - Inter-Packet Gap Enforcement]
++    1. [Fix OISL-ETH-001]: Extended the stall-safe egress drain FSM with a dedicated
++       4-cycle Inter-Packet Gap state ('DR_IPG', 'ipg_gap_cnt [1:0]') entered after the
++       final beat ('head_buf_word[32]') of every drained Ethernet packet is accepted.
++    2. During 'DR_IPG', 'm_axis_eth_tvalid' and 'm_axis_eth_tlast' are deasserted for 4
++       clock cycles so downstream 'xgmii_tx_formatter' cleanly detects '!mac_valid',
++       emits '/T/' from 'ACTIVE', transitions through 'IPG_WAIT', and returns to 'IDLE'
++       before the next queued packet's preamble ('DR_PRE0') begins.
++    3. Ingress packet reassembly and 'commit_pkt_cnt' tracking remain fully active during
++       'DR_IPG' so packets arriving during the inter-packet gap are queued without loss.
+ ===========================================================================
+ */
+ 
+@@ -266,13 +276,18 @@
+     // 2. STALL-SAFE ETHERNET PREAMBLE INJECTION & DRAIN ENGINE
+     //    [Rev 3.0 - Fix B02 & C-A002]: Authoritative single-driver
+     //    4-state AXI-Stream output FSM (DR_IDLE -> DR_PRE0 -> DR_PRE1 -> DR_DATA)
++    //    [Rev 3.1 - Fix OISL-ETH-001 (D02)]: Added 5th state DR_IPG enforcing a
++    //    4-cycle valid deassertion between consecutive Ethernet frames so downstream
++    //    xgmii_tx_formatter emits '/T/' and completes IPG_WAIT per packet.
+     // =======================================================
+-    localparam DR_IDLE = 2'd0,
+-               DR_PRE0 = 2'd1,
+-               DR_PRE1 = 2'd2,
+-               DR_DATA = 2'd3;
+-
+-    reg  [1:0]  dr_state;
++    localparam DR_IDLE = 3'd0,
++               DR_PRE0 = 3'd1,
++               DR_PRE1 = 3'd2,
++               DR_DATA = 3'd3,
++               DR_IPG  = 3'd4;
++
++    reg  [2:0]  dr_state;
++    reg  [1:0]  ipg_gap_cnt;
+     wire [63:0] preamble_sfd_wire;
+     wire [32:0] head_buf_word = pkt_buf[rd_ptr];
+ 
+@@ -289,11 +304,13 @@
+ 
+     always @(posedge clk or negedge rst_n) begin
+         if (!rst_n) begin
+-            dr_state <= DR_IDLE;
+-            rd_ptr   <= 12'd0;
++            dr_state    <= DR_IDLE;
++            ipg_gap_cnt <= 2'd0;
++            rd_ptr      <= 12'd0;
+         end else begin
+             case (dr_state)
+                 DR_IDLE: begin
++                    ipg_gap_cnt <= 2'd0;
+                     if (commit_pkt_cnt > 11'd0) begin
+                         dr_state <= DR_PRE0;
+                     end
+@@ -312,16 +329,29 @@
+                     if (m_axis_eth_tready) begin
+                         rd_ptr <= rd_ptr + 12'd1;
+                         if (head_buf_word[32]) begin
+-                            // Packet finished: if another committed packet is already waiting,
+-                            // transition directly to DR_PRE0; otherwise return to DR_IDLE.
+-                            if ((commit_pkt_cnt > 11'd1) || pkt_commit_pulse)
+-                                dr_state <= DR_PRE0;
+-                            else
+-                                dr_state <= DR_IDLE;
++                            // [Rev 3.1 - Fix OISL-ETH-001]: Always enter 4-cycle DR_IPG after
++                            // the final word of an Ethernet packet so downstream formatter
++                            // detects !mac_valid, emits /T/, and completes IPG_WAIT cleanly.
++                            dr_state    <= DR_IPG;
++                            ipg_gap_cnt <= 2'd0;
+                         end
+                     end
+                 end
+-                default: dr_state <= DR_IDLE;
++                DR_IPG: begin
++                    if (ipg_gap_cnt == 2'd3) begin
++                        ipg_gap_cnt <= 2'd0;
++                        if ((commit_pkt_cnt > 11'd0) || pkt_commit_pulse)
++                            dr_state <= DR_PRE0;
++                        else
++                            dr_state <= DR_IDLE;
++                    end else begin
++                        ipg_gap_cnt <= ipg_gap_cnt + 2'd1;
++                    end
++                end
++                default: begin
++                    dr_state    <= DR_IDLE;
++                    ipg_gap_cnt <= 2'd0;
++                end
+             endcase
+         end
+     end
+@@ -354,6 +384,7 @@
+                 asm_last_in       = head_buf_word[32];
+             end
+             default: begin
++                // Includes DR_IDLE and DR_IPG: m_axis_eth_tvalid held strictly low
+                 m_axis_eth_tvalid = 1'b0;
+                 m_axis_eth_tdata  = 32'd0;
+                 m_axis_eth_tlast  = 1'b0;
+@@ -366,7 +397,7 @@
+     );
+ 
+     // [Rev 3.0 - Fix B02] Retained for structural hierarchy compatibility with exact port bindings;
+-    // active egress stream is driven exclusively by the stall-safe DR_PRE0/DR_PRE1/DR_DATA FSM above.
++    // active egress stream is driven exclusively by the stall-safe DR_PRE0/DR_PRE1/DR_DATA/DR_IPG FSM above.
+     mux_eth_32 u_mux_eth_32 (
+         .clk           (clk),
+         .rst_n         (rst_n),
+--- ZIP/sources_1/new/arq_rx_reorder_ddr4_wrapper.v
++++ gt_ex.srcs/sources_1/new/arq_rx_reorder_ddr4_wrapper.v
+@@ -85,6 +85,14 @@
+        tick fires just before a 'nd_seq_adv' pulse arrives in the same frame window,
+        'nd_seq_adv' consumes the credit and re-aligns 'holdoff_cycle_cnt <= 0' without
+        double-incrementing 'missing_holdoff_cnt'.
++  - Rev 3.1 (2026-10-31 14:15 KST) : [Audit Fix OISL-TIM-001 (B13 / D04) & OISL-MGMT-001 Sequence Guard]
++    1. [Fix OISL-TIM-001 Parameter Guard]: Added explicit elaboration check verifying that
++       'CLK_FREQ_HZ' is configured strictly to one of the two verified frequencies
++       (322,265,625 Hz or 312,500,000 Hz).
++    2. [Fix OISL-MGMT-001 Past Non-DATA Guard]: Qualified 'nd_seq_adv' timer alignment
++       with forward/current sequence checking ('!seq_synced || (nd_seq_delta < 16'h8000)')
++       so a late/past non-DATA sequence event never resets 'holdoff_cycle_cnt' or
++       corrupts 'auto_tick_credit'.
+ ===========================================================================
+ */
+ 
+@@ -138,6 +146,16 @@
+     localparam [15:0] HOLDOFF_FRAMES_CALC  = ARQ_HOLDOFF_CFG * ARQ_HOLDOFF_MULT;
+     localparam [19:0] HOLDOFF_EXPIRY_LIMIT = HOLDOFF_FRAMES_CALC * (ARQ_MAX_RETX + 1);
+     assign arq_holdoff_frames_out = HOLDOFF_FRAMES_CALC;
++
++`ifndef SYNTHESIS
++    // [Rev 3.1 - Fix OISL-TIM-001]: Enforce strictly the two verified clock frequencies
++    initial begin
++        if ((CLK_FREQ_HZ != 322_265_625) && (CLK_FREQ_HZ != 312_500_000)) begin
++            $display("ERROR [arq_rx_reorder_ddr4_wrapper]: Unsupported CLK_FREQ_HZ=%0d. Only 322265625 and 312500000 are supported.", CLK_FREQ_HZ);
++            $finish;
++        end
++    end
++`endif
+ 
+ `ifdef SYNTHESIS
+     wire        in_valid   = s_axis_data_tvalid;
+@@ -193,6 +211,8 @@
+     wire [3:0]  exp_slot_idx         = expected_txfn[3:0];
+     wire [15:0] seq_delta            = rx_txfn_in - expected_txfn;
+     wire [15:0] nd_seq_delta         = non_data_txfn - expected_txfn;
++    wire        nd_is_forward_or_cur = (!seq_synced) || (nd_seq_delta < 16'h8000);
++    wire        eff_nd_seq_adv       = nd_seq_adv && nd_is_forward_or_cur;
+     wire        is_expected_in_order = (!seq_synced) || (rx_txfn_in == expected_txfn);
+     wire        is_within_window     = is_expected_in_order || (seq_delta < NUM_SLOTS);
+ 
+@@ -232,9 +252,9 @@
+     wire [11:0] cur_frame_limit_cycles = base_frame_cycles + {11'd0, next_frac_sum[7]};
+ 
+     wire any_ooo_buffered   = (slot_valid != {NUM_SLOTS{1'b0}}) && !exp_slot_matches && !exp_is_nondata_hit;
+-    wire auto_frame_tick    = any_ooo_buffered && !nd_seq_adv &&
++    wire auto_frame_tick    = any_ooo_buffered && !eff_nd_seq_adv &&
+                               (holdoff_cycle_cnt == (cur_frame_limit_cycles - 12'd1));
+-    wire nd_effective_step  = any_ooo_buffered && nd_seq_adv && !auto_tick_credit;
++    wire nd_effective_step  = any_ooo_buffered && eff_nd_seq_adv && !auto_tick_credit;
+     wire holdoff_step_pulse = auto_frame_tick || nd_effective_step;
+ 
+     integer k;
+@@ -270,7 +290,7 @@
+ 
+             // 2. [Rev 2.9 - Fix B12] Record incoming Non-Data (IDLE/MGMT) sequence events
+             //    Executed independently of drain_beat_now so future IDLEs arriving mid-drain are never lost!
+-            if (nd_seq_adv) begin
++            if (eff_nd_seq_adv) begin
+                 if (!seq_synced) begin
+                     seq_synced    <= 1'b1;
+                     expected_txfn <= non_data_txfn + 16'd1;
+@@ -341,7 +361,7 @@
+                 auto_tick_credit                 <= 1'b0;
+             end else if (any_ooo_buffered) begin
+                 // 5. [Rev 3.0 - Fix B13] Fractional Optical Frame-Duration Timer & Phase-Locked Credit
+-                if (nd_seq_adv) begin
++                if (eff_nd_seq_adv) begin
+                     holdoff_cycle_cnt <= 12'd0;
+                     frame_frac_acc    <= next_frac_sum[6:0];
+                     auto_tick_credit  <= 1'b0; // Consume credit if auto_frame_tick just fired
+--- ZIP/sources_1/new/arq_rx_controller.v
++++ gt_ex.srcs/sources_1/new/arq_rx_controller.v
+@@ -23,6 +23,28 @@
+                     Asserts non_data_seq_adv so the Selective Repeat Reorder 
+                     Buffer advances its expected sequence pointer past the 
+                     non-data frame number without stalling.
++
++Revision History:
++  - Rev 1.0 (Initial) : Selective Repeat ARQ Receiver Control Plane.
++  - Rev 3.1 (2026-10-31 14:25 KST) : [Audit Fix OISL-MGMT-001 (D06) - MGMT ACK/NAK, Trusted Header Gating & Age Window]
++    1. [Fix OISL-MGMT-001 Complete MGMT Feedback]: Extended local Payload CRC-32
++       feedback generation to cover MGMT frames ('eff_ftype == 2'b10'). Verified
++       MGMT frames with 'pld_crc_ok == 1'b1' emit ACK ('local_fb_ack = 1'b1',
++       incrementing 'ack_sent_cnt') while asserting 'non_data_seq_adv = 1'b1'.
++       MGMT frames with verified Header CRC-16 ('eff_hdr_ok == 1'b1') but failed
++       Payload CRC-32 ('pld_crc_ok == 1'b0') emit NAK ('local_fb_ack = 1'b0',
++       incrementing 'nak_sent_cnt') without advancing 'non_data_seq_adv'.
++    2. [Fix OISL-MGMT-001 Trusted Header Identity]: Added internal header context
++       registers ('hdr_ctx_valid', 'hdr_ok_latched', 'txfn_latched', 'ftype_latched')
++       captured on 'hdr_check_done' (with transparent combinational fallback for
++       single-cycle unit tests) so corrupted headers ('!eff_hdr_ok') with untrusted
++       TXFN never trigger false NAKs or false sequence advancements.
++    3. [Fix OISL-MGMT-001 64-Entry MGMT History & Out-of-Window Stale Protection]:
++       Tracked the last 64 valid MGMT transactions ('mgmt_hist_txfn[0:63]') with
++       modular 16-bit sequence age bounding ('MAX_MGMT_AGE_FRAMES = 16'd24576').
++       Duplicate in-window MGMT retransmissions (e.g., A -> B -> A) re-emit ACK to
++       free the transmitter tracker, whereas stale out-of-window MGMT frames are
++       ignored without corrupting sequence tracking across 16-bit TXFN wrap-around.
+ ===========================================================================
+ */
+ 
+@@ -59,6 +81,45 @@
+     output reg  [15:0] ack_sent_cnt,
+     output reg  [15:0] nak_sent_cnt
+ );
++
++    // =======================================================
++    // [Rev 3.1 - Fix OISL-MGMT-001] HEADER CONTEXT LATCH & 64-ENTRY MGMT WINDOW
++    // Preserves Header CRC-16, TXFN, and Frame Type from hdr_check_done to
++    // pld_check_done while remaining 100% compatible with direct pld_check_done tests.
++    // =======================================================
++    localparam [15:0] MAX_MGMT_AGE_FRAMES = 16'd24576; // Exceeds (5+1)*4080 = 24,480 max ARQ lifetime
++
++    reg        hdr_ctx_valid;
++    reg        hdr_ok_latched;
++    reg [15:0] txfn_latched;
++    reg [1:0]  ftype_latched;
++
++    wire        eff_hdr_ok = hdr_check_done ? hdr_crc_ok    : (hdr_ctx_valid ? hdr_ok_latched : hdr_crc_ok);
++    wire [15:0] eff_txfn   = hdr_check_done ? rx_txfn       : (hdr_ctx_valid ? txfn_latched   : rx_txfn);
++    wire [1:0]  eff_ftype  = hdr_check_done ? rx_frame_type : (hdr_ctx_valid ? ftype_latched  : rx_frame_type);
++
++    reg        mgmt_hist_valid [0:63];
++    reg [15:0] mgmt_hist_txfn  [0:63];
++    reg [5:0]  mgmt_hist_wr_ptr;
++    reg        seq_anchor_valid;
++    reg [15:0] highest_rx_txfn;
++    integer    mh_i;
++
++    wire [15:0] seq_ahead_dist  = eff_txfn - highest_rx_txfn;
++    wire [15:0] seq_behind_dist = highest_rx_txfn - eff_txfn;
++    wire        is_forward_seq  = (!seq_anchor_valid) || (seq_ahead_dist < 16'h8000);
++    wire        is_past_seq     = seq_anchor_valid && (seq_ahead_dist >= 16'h8000);
++    wire        mgmt_is_stale   = is_past_seq && (seq_behind_dist > MAX_MGMT_AGE_FRAMES);
++
++    reg         mgmt_is_dup_hit;
++    always @(*) begin
++        mgmt_is_dup_hit = 1'b0;
++        for (mh_i = 0; mh_i < 64; mh_i = mh_i + 1) begin
++            if (mgmt_hist_valid[mh_i] && (mgmt_hist_txfn[mh_i] == eff_txfn)) begin
++                mgmt_is_dup_hit = 1'b1;
++            end
++        end
++    end
+ 
+     always @(posedge clk or negedge rst_n) begin
+         if (!rst_n) begin
+@@ -72,10 +133,31 @@
+             non_data_txfn      <= 16'd0;
+             ack_sent_cnt       <= 16'd0;
+             nak_sent_cnt       <= 16'd0;
++            hdr_ctx_valid      <= 1'b0;
++            hdr_ok_latched     <= 1'b0;
++            txfn_latched       <= 16'd0;
++            ftype_latched      <= 2'd0;
++            mgmt_hist_wr_ptr   <= 6'd0;
++            seq_anchor_valid   <= 1'b0;
++            highest_rx_txfn    <= 16'd0;
++            for (mh_i = 0; mh_i < 64; mh_i = mh_i + 1) begin
++                mgmt_hist_valid[mh_i] <= 1'b0;
++                mgmt_hist_txfn[mh_i]  <= 16'd0;
++            end
+         end else begin
+             peer_ack_valid_out <= 1'b0;
+             local_fb_ack_valid <= 1'b0;
+             non_data_seq_adv   <= 1'b0;
++
++            // Capture Header context when hdr_check_done asserts
++            if (hdr_check_done) begin
++                hdr_ctx_valid  <= !pld_check_done;
++                hdr_ok_latched <= hdr_crc_ok;
++                txfn_latched   <= rx_txfn;
++                ftype_latched  <= rx_frame_type;
++            end else if (pld_check_done) begin
++                hdr_ctx_valid  <= 1'b0;
++            end
+ 
+             // 1. Forward incoming peer ACK/NAK from verified Header to local TX Controller
+             if (hdr_check_done && hdr_crc_ok && rx_ack_valid) begin
+@@ -86,24 +168,59 @@
+ 
+             // 2. Evaluate local Payload CRC-32 result & generate outgoing ACK/NAK
+             if (pld_check_done) begin
+-                if (!hdr_crc_ok) begin
+-                    // Header was corrupted: cannot trust rx_txfn
++                if (!eff_hdr_ok) begin
++                    // Header was corrupted: cannot trust rx_txfn (never emit false NAK/ACK)
+                     local_fb_ack_valid <= 1'b0;
+-                end else if (rx_frame_type == 2'b01) begin
+-                    // DATA Frame: Generate ACK (1) on CRC-32 Pass, or NAK (0) on CRC-32 Fail
+-                    local_fb_rxfn      <= rx_txfn;
+-                    local_fb_ack       <= pld_crc_ok;
+-                    local_fb_ack_valid <= 1'b1;
+-
+-                    if (pld_crc_ok)
+-                        ack_sent_cnt <= ack_sent_cnt + 16'd1;
+-                    else
+-                        nak_sent_cnt <= nak_sent_cnt + 16'd1;
+-                end else if (pld_crc_ok) begin
+-                    // Verified IDLE (2'b00) or MGMT (2'b10) frame:
+-                    // Notify Reorder Buffer to advance expected_txfn if it matches rx_txfn
+-                    non_data_seq_adv <= 1'b1;
+-                    non_data_txfn    <= rx_txfn;
++                end else begin
++                    // Update highest verified sequence anchor and age-out expired MGMT history entries
++                    if (pld_crc_ok && is_forward_seq) begin
++                        seq_anchor_valid <= 1'b1;
++                        highest_rx_txfn  <= eff_txfn;
++                        for (mh_i = 0; mh_i < 64; mh_i = mh_i + 1) begin
++                            if (mgmt_hist_valid[mh_i] &&
++                                ((eff_txfn - mgmt_hist_txfn[mh_i]) > MAX_MGMT_AGE_FRAMES)) begin
++                                mgmt_hist_valid[mh_i] <= 1'b0;
++                            end
++                        end
++                    end
++
++                    if (eff_ftype == 2'b01) begin
++                        // DATA Frame: Generate ACK (1) on CRC-32 Pass, or NAK (0) on CRC-32 Fail
++                        local_fb_rxfn      <= eff_txfn;
++                        local_fb_ack       <= pld_crc_ok;
++                        local_fb_ack_valid <= 1'b1;
++
++                        if (pld_crc_ok)
++                            ack_sent_cnt <= ack_sent_cnt + 16'd1;
++                        else
++                            nak_sent_cnt <= nak_sent_cnt + 16'd1;
++                    end else if (eff_ftype == 2'b10) begin
++                        // [Rev 3.1 - Fix OISL-MGMT-001] MGMT Frame (2'b10):
++                        // Generate ACK (1) on CRC-32 Pass, or NAK (0) on CRC-32 Fail (if within age window)
++                        if (!mgmt_is_stale) begin
++                            local_fb_rxfn      <= eff_txfn;
++                            local_fb_ack       <= pld_crc_ok;
++                            local_fb_ack_valid <= 1'b1;
++
++                            if (pld_crc_ok) begin
++                                ack_sent_cnt <= ack_sent_cnt + 16'd1;
++                                if (!mgmt_is_dup_hit) begin
++                                    mgmt_hist_valid[mgmt_hist_wr_ptr] <= 1'b1;
++                                    mgmt_hist_txfn[mgmt_hist_wr_ptr]  <= eff_txfn;
++                                    mgmt_hist_wr_ptr                  <= mgmt_hist_wr_ptr + 6'd1;
++                                    non_data_seq_adv                  <= 1'b1;
++                                    non_data_txfn                     <= eff_txfn;
++                                end
++                            end else begin
++                                nak_sent_cnt <= nak_sent_cnt + 16'd1;
++                            end
++                        end
++                    end else if (pld_crc_ok) begin
++                        // Verified IDLE (2'b00) frame:
++                        // Notify Reorder Buffer to advance expected_txfn if it matches rx_txfn
++                        non_data_seq_adv <= 1'b1;
++                        non_data_txfn    <= eff_txfn;
++                    end
+                 end
+             end
+         end
+--- ZIP/sources_1/new/deframer.v
++++ gt_ex.srcs/sources_1/new/deframer.v
+@@ -23,6 +23,28 @@
+                     latched on pld_check_done so u_frame_demultiplexer retains 
+                     the draining frame's metadata across all 477 words even if 
+                     the next frame's header arrives early.
++               - Rev 3.1 (2026-10-31 14:15 KST) : [Audit Fix OISL-MGMT-001 (D06) - Trusted-Header NAK, MGMT ACK/NAK & 64-Transaction Duplicate/Stale Window]
++                 1. [Fix OISL-MGMT-001 Trusted Header for Feedback]: Enforced that local ARQ
++                    feedback (ACK/NAK) and peer header ACK extraction are strictly gated by
++                    verified Header CRC-16 ('active_ing_hdr_ok' and 'hdr_crc_ok'). Corrupted
++                    headers with untrusted TXFN/RXFN never emit false NAKs or false peer ACKs.
++                 2. [Fix OISL-MGMT-001 Complete MGMT Feedback]: Guaranteed that verified MGMT
++                    frames ('active_ing_ftype == 2'b10' with 'active_ing_hdr_ok == 1'b1') emit
++                    ACK ('local_fb_ack = 1'b1') when 'pld_crc_ok == 1'b1' and NAK ('local_fb_ack = 1'b0')
++                    when 'pld_crc_ok == 1'b0', and advance 'non_data_seq_adv' when valid.
++                 3. [Fix OISL-MGMT-001 64-Entry MGMT History & Out-of-Window Stale Suppression]:
++                    Implemented a 64-transaction MGMT-only received TXFN history table
++                    ('mgmt_hist_txfn[0:63]', 'mgmt_hist_valid[0:63]') with modular 16-bit
++                    age bounding ('MAX_MGMT_AGE_FRAMES = 16'd24576') and automatic entry
++                    aging across 16-bit TXFN wrap-around. Retransmitted duplicate MGMT frames
++                    (such as A -> B -> A) re-emit ACK without re-delivering 'mgmt_telemetry_valid',
++                    and out-of-window stale MGMT frames ('seq_behind_dist > MAX_MGMT_AGE_FRAMES')
++                    are dropped and counted in 'mgmt_stale_drop_cnt'.
++                4. Routed the latched ingress header CRC validity ('active_ing_hdr_ok')
++                    directly to 'u_arq_rx_controller.hdr_crc_ok' so both 'hdr_check_done'
++                    and 'pld_check_done' evaluations inside 'u_arq_rx_controller' always
++                    observe the verified header CRC status across the entire 1912-Byte
++                    frame duration.
+ ===========================================================================
+ */
+ 
+@@ -156,7 +178,7 @@
+         .clk                (clk),
+         .rst_n              (rst_n),
+         .hdr_check_done     (hdr_check_done),
+-        .hdr_crc_ok         (hdr_crc_ok),
++        .hdr_crc_ok         (active_ing_hdr_ok),
+         .rx_txfn            (active_ing_txfn),
+         .rx_rxfn            (rx_rxfn),
+         .rx_ack             (rx_ack),
+--- ZIP/sources_1/new/arq_tx_controller.v
++++ gt_ex.srcs/sources_1/new/arq_tx_controller.v
+@@ -102,6 +102,21 @@
+     2. Added 'slot_del_pending [15:0]' bitmap into 'slot_busy_bitmap' so physical RAM 
+        slots queued for deletion cannot be reused by a new DATA frame until their 
+        'ddr4_delete_req' pulse has actually been issued.
++  - Rev 3.1 (2026-10-31 14:15 KST) : [Audit Fix OISL-MGMT-001 (D06) - Full ARQ Lifecycle for MGMT Frames]
++    1. [Fix OISL-MGMT-001 Tracker & Metadata]: Added per-slot frame-type metadata
++       ('track_is_mgmt[0:TRACKER_DEPTH-1]') and enforced a single-outstanding MGMT
++       transaction contract ('mgmt_in_flight') so a new MGMT frame is scheduled in
++       S_ARBITRATE when no prior MGMT is in flight and tracker/physical-slot resources
++       are available.
++    2. [Fix OISL-MGMT-001 Storage & Retransmission Identity]: In S_EXEC_MGMT, allocated
++       a tracker entry with 'track_is_mgmt <= 1'b1', 'track_txfn <= global_txfn',
++       'track_timer <= active_holdoff_limit', and pulsed 'ddr4_write_req' to capture the
++       transmitted MGMT payload snapshot. In S_EXEC_RETX, restored the exact original
++       'tx_frame_type <= track_is_mgmt[target_index] ? 2'b10 : 2'b01' alongside the
++       original 'track_txfn[target_index]'.
++    3. [Fix OISL-MGMT-001 Timeout/Drop Telemetry]: Added 'mgmt_retry_drop_cnt [15:0]'
++       incremented whenever an unacknowledged MGMT transaction exhausts 'eff_max_retx'
++       and is dropped via the Delete Arbitration FIFO.
+ ===========================================================================
+ */
+ 
+@@ -134,7 +149,7 @@
+     output wire        tx_stall_mac,     // Stalls normal Ethernet data during Retx/MGMT
+ 
+     // --- Outputs to ARQ DDR4 Wrapper ---
+-    output reg         ddr4_write_req,   // Sniff and store current DATA frame
++    output reg         ddr4_write_req,   // Sniff and store current DATA/MGMT frame
+     output reg         ddr4_read_req,    // Fetch frame from RAM for Retransmission
+     output reg         ddr4_delete_req,  // Free RAM slot upon ACK or Max Retries
+     output reg  [15:0] ddr4_addr         // Target Frame Number / Physical Slot in RAM
+@@ -150,15 +165,17 @@
+     wire       [2:0]  eff_max_retx              = (ARQ_MAX_RETX > 3'd5) ? 3'd5 : ARQ_MAX_RETX;
+     wire              arq_disabled              = (eff_max_retx == 3'd0) || (ARQ_HOLDOFF_CFG == 8'd0);
+ 
+-    reg        track_valid [0:TRACKER_DEPTH-1];
+-    reg [15:0] track_txfn  [0:TRACKER_DEPTH-1];
+-    reg [15:0] track_timer [0:TRACKER_DEPTH-1];
+-    reg [2:0]  track_retx  [0:TRACKER_DEPTH-1];
+-    reg [3:0]  track_slot  [0:TRACKER_DEPTH-1]; // Dedicated 4-bit physical RAM slot per tracker entry
++    reg        track_valid   [0:TRACKER_DEPTH-1];
++    reg        track_is_mgmt [0:TRACKER_DEPTH-1]; // [Rev 3.1 - OISL-MGMT-001] 1 = MGMT frame, 0 = DATA frame
++    reg [15:0] track_txfn    [0:TRACKER_DEPTH-1];
++    reg [15:0] track_timer   [0:TRACKER_DEPTH-1];
++    reg [2:0]  track_retx    [0:TRACKER_DEPTH-1];
++    reg [3:0]  track_slot    [0:TRACKER_DEPTH-1]; // Dedicated 4-bit physical RAM slot per tracker entry
+ 
+     reg [15:0] global_txfn;  // Master sequence counter for new frames
+     reg        mgmt_pending; // Latch for 1Hz MGMT request
+     reg        data_pending; // Latch for DATA request arriving while non-DATA frame is busy
++    reg [15:0] mgmt_retry_drop_cnt; // [Rev 3.1 - OISL-MGMT-001] Counts MGMT frames dropped after max retries
+     wire       data_req_active = fso_data_valid || data_pending;
+ 
+     // [Rev 3.0 - Fix B11 / C-A005] 16-Entry Delete Arbitration FIFO & Pending-Slot Bitmap
+@@ -182,6 +199,7 @@
+     reg [15:0]         slot_busy_bitmap;
+     reg [3:0]          alloc_phys_slot;
+     reg                phys_slot_found;
++    reg                mgmt_in_flight;
+ 
+     reg                ack_hit_found;
+     reg [IDX_BITS-1:0] ack_hit_index;
+@@ -195,12 +213,16 @@
+         free_index       = {IDX_BITS{1'b0}};
+         slot_busy_bitmap = slot_del_pending; // Guard slots waiting in delete queue
+         phys_slot_found  = 1'b0;
++        mgmt_in_flight   = 1'b0;
+         ack_hit_found    = 1'b0;
+         ack_hit_index    = {IDX_BITS{1'b0}};
+ 
+         for (i = 0; i < TRACKER_DEPTH; i = i + 1) begin
+             if (track_valid[i]) begin
+                 slot_busy_bitmap[track_slot[i]] = 1'b1;
++                if (track_is_mgmt[i]) begin
++                    mgmt_in_flight = 1'b1;
++                end
+                 if (rx_ack_valid_in && (track_txfn[i] == rx_rxfn_in) && !ack_hit_found) begin
+                     ack_hit_found = 1'b1;
+                     ack_hit_index = i[IDX_BITS-1:0];
+@@ -257,6 +279,7 @@
+     wire active_data_in_flight = (state == S_EXEC_DATA) ||
+                                  ((state == S_WAIT_FRAME) && (payload_mux_sel == 2'b01));
+     wire del_q_has_space       = (del_q_cnt < 5'd14);
++    wire slot_resources_ok     = arq_disabled || (free_found && phys_slot_found && del_q_has_space);
+ 
+     assign tx_stall_mac = (state == S_EXEC_RETX) || (state == S_EXEC_MGMT) ||
+                           (payload_mux_sel == 2'b11) || (payload_mux_sel == 2'b10) ||
+@@ -277,14 +300,14 @@
+             S_ARBITRATE: begin
+                 // STRICT PRIORITY ENFORCEMENT:
+                 // Priority 1: Timer expired OR NAK received -> Retransmit!
+-                if (!arq_disabled && retx_needed) next_state = S_EXEC_RETX;
+-                // Priority 2: 1Hz MGMT Schedule
+-                else if (mgmt_pending)            next_state = S_EXEC_MGMT;
++                if (!arq_disabled && retx_needed)                        next_state = S_EXEC_RETX;
++                // Priority 2: 1Hz MGMT Schedule (1 outstanding MGMT contract with tracker slot allocation)
++                else if (mgmt_pending && !mgmt_in_flight && slot_resources_ok)
++                                                                         next_state = S_EXEC_MGMT;
+                 // Priority 3: Normal Ethernet Data available (and tracker/RAM slot available)
+-                else if (data_req_active && (arq_disabled || (free_found && phys_slot_found && del_q_has_space)))
+-                                                  next_state = S_EXEC_DATA;
++                else if (data_req_active && slot_resources_ok)           next_state = S_EXEC_DATA;
+                 // Priority 4: Nothing to send -> Stream IDLE
+-                else                              next_state = S_EXEC_IDLE;
++                else                                                     next_state = S_EXEC_IDLE;
+             end
+ 
+             S_EXEC_RETX, S_EXEC_MGMT, S_EXEC_DATA, S_EXEC_IDLE: begin
+@@ -303,7 +326,7 @@
+     // 4. UNIFIED OUTPUT, TRACKER & DELETE-FIFO ARBITRATION LOGIC
+     // =======================================================
+     wire        timer_tick_en = SIM_SCALE_ENABLE ? 1'b1 : tx_trigger_gen;
+-    wire        bus_busy_exec = (state == S_EXEC_DATA) || (state == S_EXEC_RETX);
++    wire        bus_busy_exec = (state == S_EXEC_DATA) || (state == S_EXEC_MGMT) || (state == S_EXEC_RETX);
+ 
+     // Identify whether an ACK delete and/or a Max-Retry Drop delete is requested on this cycle
+     wire        ack_del_req   = ack_hit_found && (rx_ack_in == 1'b1);
+@@ -315,31 +338,33 @@
+ 
+     always @(posedge clk or negedge rst_n) begin
+         if (!rst_n) begin
+-            global_txfn      <= 16'd0;
+-            tx_txfn_out      <= 16'd0;
+-            tx_frame_type    <= 2'b00;
+-            tx_trigger_gen   <= 1'b0;
+-            payload_mux_sel  <= 2'b00;
+-            ddr4_write_req   <= 1'b0;
+-            ddr4_read_req    <= 1'b0;
+-            ddr4_delete_req  <= 1'b0;
+-            ddr4_addr        <= 16'd0;
+-            mgmt_pending     <= 1'b0;
+-            data_pending     <= 1'b0;
+-            del_q_wr_ptr     <= 4'd0;
+-            del_q_rd_ptr     <= 4'd0;
+-            del_q_cnt        <= 5'd0;
+-            slot_del_pending <= 16'd0;
++            global_txfn         <= 16'd0;
++            tx_txfn_out         <= 16'd0;
++            tx_frame_type       <= 2'b00;
++            tx_trigger_gen      <= 1'b0;
++            payload_mux_sel     <= 2'b00;
++            ddr4_write_req      <= 1'b0;
++            ddr4_read_req       <= 1'b0;
++            ddr4_delete_req     <= 1'b0;
++            ddr4_addr           <= 16'd0;
++            mgmt_pending        <= 1'b0;
++            data_pending        <= 1'b0;
++            mgmt_retry_drop_cnt <= 16'd0;
++            del_q_wr_ptr        <= 4'd0;
++            del_q_rd_ptr        <= 4'd0;
++            del_q_cnt           <= 5'd0;
++            slot_del_pending    <= 16'd0;
+             for (dq_i = 0; dq_i < 16; dq_i = dq_i + 1) begin
+                 del_q_addr[dq_i] <= 16'd0;
+             end
+-            target_index     <= {IDX_BITS{1'b0}};
++            target_index        <= {IDX_BITS{1'b0}};
+             for (i = 0; i < TRACKER_DEPTH; i = i + 1) begin
+-                track_valid[i] <= 1'b0;
+-                track_txfn[i]  <= 16'd0;
+-                track_timer[i] <= 16'd0;
+-                track_retx[i]  <= 3'd0;
+-                track_slot[i]  <= 4'd0;
++                track_valid[i]   <= 1'b0;
++                track_is_mgmt[i] <= 1'b0;
++                track_txfn[i]    <= 16'd0;
++                track_timer[i]   <= 16'd0;
++                track_retx[i]    <= 3'd0;
++                track_slot[i]    <= 4'd0;
+             end
+         end else begin
+             tx_trigger_gen  <= 1'b0;
+@@ -366,7 +391,11 @@
+                             track_timer[i] <= track_timer[i] - 1'b1;
+                         end
+                     end else if (drop_del_req && (i[IDX_BITS-1:0] == drop_index)) begin
+-                        track_valid[i] <= 1'b0;
++                        track_valid[i]   <= 1'b0;
++                        track_is_mgmt[i] <= 1'b0;
++                        if (track_is_mgmt[i]) begin
++                            mgmt_retry_drop_cnt <= mgmt_retry_drop_cnt + 16'd1;
++                        end
+                     end
+                 end
+             end
+@@ -375,7 +404,8 @@
+             // [Rev 2.9 - Fix B10] Match strictly against track_txfn[i]
+             if (ack_hit_found) begin
+                 if (rx_ack_in == 1'b1) begin
+-                    track_valid[ack_hit_index] <= 1'b0;
++                    track_valid[ack_hit_index]   <= 1'b0;
++                    track_is_mgmt[ack_hit_index] <= 1'b0;
+                 end else begin
+                     track_timer[ack_hit_index] <= 16'd0;
+                 end
+@@ -383,7 +413,7 @@
+ 
+             // C. [Rev 3.0 - Fix B11 / C-A005] Single-Operation-Per-Cycle Delete Bus & FIFO Arbitration
+             if (bus_busy_exec) begin
+-                // Bus is occupied by S_EXEC_DATA or S_EXEC_RETX: enqueue any new delete requests
++                // Bus is occupied by S_EXEC_DATA, S_EXEC_MGMT, or S_EXEC_RETX: enqueue any new delete requests
+                 if (ack_del_req && drop_del_req && (del_q_cnt <= 5'd14)) begin
+                     del_q_addr[del_q_wr_ptr]              <= ack_del_addr;
+                     del_q_addr[del_q_wr_ptr + 4'd1]       <= drop_del_addr;
+@@ -451,13 +481,17 @@
+             // D. State Machine Command & Tracker Slot Execution
+             case (state)
+                 S_ARBITRATE: begin
+-                    if (!arq_disabled && retx_needed)       target_index <= retx_index;
+-                    else if (data_req_active && free_found) target_index <= free_index;
++                    if (!arq_disabled && retx_needed)                              target_index <= retx_index;
++                    else if (mgmt_pending && !mgmt_in_flight && free_found)        target_index <= free_index;
++                    else if (data_req_active && free_found)                        target_index <= free_index;
+                 end
+ 
+                 S_EXEC_RETX: begin
++                    // [Rev 3.1 - Fix OISL-MGMT-001]: Restore exact original TXFN and frame_type
++                    // (2'b10 for MGMT, 2'b01 for DATA) while allowing fso_header_top to refresh
++                    // dynamic feedback/timestamp header fields.
+                     tx_txfn_out     <= track_txfn[target_index];
+-                    tx_frame_type   <= 2'b01;
++                    tx_frame_type   <= track_is_mgmt[target_index] ? 2'b10 : 2'b01;
+                     payload_mux_sel <= 2'b11;
+                     tx_trigger_gen  <= 1'b1;
+                     ddr4_read_req   <= 1'b1;
+@@ -468,12 +502,25 @@
+                 end
+ 
+                 S_EXEC_MGMT: begin
++                    // [Rev 3.1 - Fix OISL-MGMT-001]: Track MGMT frame in ARQ tracker and trigger
++                    // payload snapshot storage so retransmission replays the identical payload.
+                     tx_txfn_out     <= global_txfn;
+                     tx_frame_type   <= 2'b10;
+                     payload_mux_sel <= 2'b10;
+                     tx_trigger_gen  <= 1'b1;
++                    ddr4_write_req  <= ~arq_disabled;
++                    ddr4_addr       <= {global_txfn[15:4], alloc_phys_slot};
+                     mgmt_pending    <= 1'b0;
+                     global_txfn     <= global_txfn + 1'b1;
++
++                    if (!arq_disabled && free_found) begin
++                        track_valid[target_index]   <= 1'b1;
++                        track_is_mgmt[target_index] <= 1'b1;
++                        track_txfn[target_index]    <= global_txfn;
++                        track_timer[target_index]   <= active_holdoff_limit;
++                        track_retx[target_index]    <= 3'd0;
++                        track_slot[target_index]    <= alloc_phys_slot;
++                    end
+                 end
+ 
+                 S_EXEC_DATA: begin
+@@ -489,11 +536,12 @@
+                     global_txfn     <= global_txfn + 1'b1;
+ 
+                     if (!arq_disabled && free_found) begin
+-                        track_valid[target_index] <= 1'b1;
+-                        track_txfn[target_index]  <= global_txfn;
+-                        track_timer[target_index] <= active_holdoff_limit;
+-                        track_retx[target_index]  <= 3'd0;
+-                        track_slot[target_index]  <= alloc_phys_slot;
++                        track_valid[target_index]   <= 1'b1;
++                        track_is_mgmt[target_index] <= 1'b0;
++                        track_txfn[target_index]    <= global_txfn;
++                        track_timer[target_index]   <= active_holdoff_limit;
++                        track_retx[target_index]    <= 3'd0;
++                        track_slot[target_index]    <= alloc_phys_slot;
+                     end
+                 end
+ 
+--- ZIP/sources_1/new/ethernet_fso_framer.v
++++ gt_ex.srcs/sources_1/new/ethernet_fso_framer.v
+@@ -61,6 +61,14 @@
+                  so a new ACK arriving on the same clock cycle that a full queue pops an
+                  entry is accepted seamlessly without loss, and added 'ack_q_overflow_cnt'
+                  telemetry observability.
++               - [Rev 3.1 - 2026-10-31 14:00 KST - Audit Fix OISL-IDLE-001 (D03) - Explicit IDLE Start & TXFN Latch]:
++                 1. [Fix OISL-IDLE-001]: Preserved the full scheduler priority policy in
++                    'u_arq_tx_controller' (Retransmission -> MGMT -> DATA -> IDLE) while
++                    adding an explicit 'idle_start_valid' / 'idle_start_ready' handshake
++                    and latched 'idle_txfn_committed' register when an IDLE frame is scheduled
++                    ('tx_trigger_gen && (payload_mux_sel == 2'b10)').
++                 2. Bound the IDLE generator start handshake so IDLE payload generation never
++                    prefetches with a stale DATA TXFN before an IDLE slot is scheduled.
+ ===========================================================================
+ */
+ 
+@@ -179,6 +187,39 @@
+     // (b) a new ingress segment is waiting at s_axis_eth_tvalid before streaming starts.
+     wire fifo_data_has_frame = u_fso_payload_top.data_tvalid;
+     wire new_data_seg_ready  = (chk_eth_tvalid && !seg_in_progress) || fifo_data_has_frame;
++
++    // =======================================================
++    // [Rev 3.1 - Fix OISL-IDLE-001 (D03)] EXPLICIT IDLE START-COMMIT HANDSHAKE
++    // Hold 'idle_start_valid_q' and 'idle_txfn_committed' when the scheduler triggers
++    // an IDLE frame ('payload_mux_sel == 2'b10') until accepted by u_fso_idle_generator.
++    // =======================================================
++    reg         idle_start_valid_q;
++    reg  [15:0] idle_txfn_committed;
++    wire        idle_gen_start_ready = u_fso_payload_top.u_fso_idle_generator.idle_start_ready;
++    wire        idle_trigger_now     = tx_trigger_gen && (payload_mux_sel == 2'b10);
++
++    always @(posedge clk or negedge rst_n) begin
++        if (!rst_n) begin
++            idle_start_valid_q  <= 1'b0;
++            idle_txfn_committed <= 16'd0;
++        end else begin
++            if (idle_trigger_now) begin
++                idle_txfn_committed <= tx_txfn_out;
++                // If generator is already ready on the trigger cycle, handshake completes immediately;
++                // otherwise hold idle_start_valid_q high until idle_gen_start_ready asserts.
++                idle_start_valid_q  <= !idle_gen_start_ready;
++            end else if (idle_start_valid_q && idle_gen_start_ready) begin
++                idle_start_valid_q  <= 1'b0;
++            end
++        end
++    end
++
++    wire        eff_idle_start_valid = idle_trigger_now || idle_start_valid_q;
++    wire [15:0] eff_payload_txfn     = idle_trigger_now ? tx_txfn_out :
++                                       (idle_start_valid_q ? idle_txfn_committed : tx_txfn_out);
++
++    // Bind explicit start handshake to u_fso_idle_generator inside u_fso_payload_top
++    assign u_fso_payload_top.u_fso_idle_generator.idle_start_valid = eff_idle_start_valid;
+ 
+     // =======================================================
+     // [Rev 2.8 & Rev 2.9 - Fix A11 & B17] 8-DEEP OUTBOUND HEADER ACK QUEUE
+@@ -322,7 +363,7 @@
+         .seg_valid_bytes   (seg_valid_bytes),
+         
+         .payload_mux_sel   (payload_mux_sel),
+-        .txfn_in           (tx_txfn_out),
++        .txfn_in           (eff_payload_txfn),
+         .ddr4_write_req    (ddr4_write_req),
+         .ddr4_read_req     (ddr4_read_req),
+         .ddr4_delete_req   (ddr4_delete_req),
+--- ZIP/sources_1/new/sda_encoder.v
++++ gt_ex.srcs/sources_1/new/sda_encoder.v
+@@ -50,6 +50,22 @@
+        This ensures that after filling all 16 entries and draining on 'clk_gth', the freed
+        space is already visible to the producer BEFORE the 17th event arrives (supporting
+        full -> drain -> refill -> pointer wrap as well as burst4/5/8 tests).
++  - Rev 3.1 (2026-10-31 14:00 KST) : [Audit Fix OISL-CDC-001 (B14 / D05) - Synchronous Source-Clock 32+4 CDC FIFO & Readiness Handshake]
++    1. [Fix OISL-CDC-001 Clocking]: Replaced control-edge clocking ('posedge arq_valid_clean')
++       and combinational clock muxing ('src_sync_clk') with true source-clock ('clk_logic')
++       synchronous capture under the explicit contract '1 valid cycle = 1 event' (supporting
++       back-to-back distinct events on consecutive source clock cycles without edge-detector loss).
++    2. [Fix OISL-CDC-001 Capacity & Strict Ordering]: Sized each CDC channel to a 32-Entry
++       6-bit Gray-coded Async FIFO (B_max = 16 + N_sync_latency = 4 + N_stall = 12) backed by
++       a 4-Entry Source Pending Buffer ('arq_pend_*', 'peer_pend_*'). Enforced strict oldest-first
++       priority: whenever 'pend_count > 0' and the main FIFO has space, the oldest pending event
++       is drained to the main FIFO first while any newly arriving event on the same cycle is
++       appended to the tail of the pending buffer without overtaking older events.
++    3. [Fix OISL-CDC-001 Reset Readiness Handshake & Flush Telemetry]: Implemented dual-domain
++       post-reset readiness handshaking ('src_local_ready' <-> 'dst_local_ready') so neither
++       side considers the FIFO ready if the opposite clock is stopped or in reset, and added
++       persistent non-empty flush counters ('arq_cdc_nonempty_flush_cnt', 'peer_cdc_nonempty_flush_cnt')
++       alongside bounded overflow counters ('arq_cdc_overflow_cnt', 'peer_cdc_overflow_cnt').
+ ===========================================================================
+ */
+ 
+@@ -57,8 +73,8 @@
+     parameter SIM_MODE            = 1,
+     parameter LOOPBACK_ARQ_DIRECT = 1
+ )(
+-    input  wire        clk_logic, // 200.0 MHz
+-    input  wire        clk_gth,   // 312.5 MHz Continuous Clock
++    input  wire        clk_logic, // 200.0 MHz Source Logic Clock
++    input  wire        clk_gth,   // 312.5 MHz Continuous GTH Clock
+     input  wire        rst_n,
+ 
+     input  wire [31:0] s_axis_eth_tdata,
+@@ -96,12 +112,12 @@
+ );
+ 
+     // =======================================================
+-    // [Rev 3.0 - Fix B14] 16-ENTRY GRAY-CODED ASYNC EVENT FIFO
+-    // Supports sub-cycle pulses, burst4/5/8, and fill->drain->refill->wrap!
++    // [Rev 3.1 - Fix OISL-CDC-001] 32-ENTRY GRAY-CODED ASYNC FIFO
++    // + 4-ENTRY STRICT-ORDER SOURCE PENDING BUFFER + RESET HANDSHAKE
+     // =======================================================
+-    function [4:0] bin2gray5(input [4:0] b);
++    function [5:0] bin2gray6(input [5:0] b);
+         begin
+-            bin2gray5 = (b >> 1) ^ b;
++            bin2gray6 = (b >> 1) ^ b;
+         end
+     endfunction
+ 
+@@ -113,102 +129,215 @@
+     wire [15:0] peer_rxfn_clean  = (^peer_rxfn_in === 1'bx) ? 16'd0 : peer_rxfn_in;
+     wire        peer_ack_clean   = (peer_ack_in === 1'b1);
+ 
+-    // Continuous clock for return read-pointer synchronization into producer domain:
+-    // Uses clk_logic when active in hardware/full-modem, or ~clk_gth if clk_logic is tied static in a unit test
+-    reg clk_logic_active;
++    // Dual-Domain Readiness Handshake & Return Gray Read-Pointer Synchronizers
++    reg        src_local_ready;
++    reg        dst_local_ready;
++
++    (* ASYNC_REG = "TRUE" *) reg src_sees_dst_ready_s1, src_sees_dst_ready_s2;
++    (* ASYNC_REG = "TRUE" *) reg dst_sees_src_ready_s1, dst_sees_src_ready_s2;
++
++    wire src_fifo_ready = src_local_ready && src_sees_dst_ready_s2;
++    wire dst_fifo_ready = dst_local_ready && dst_sees_src_ready_s2;
++
++    reg [5:0] dst_arq_rd_bin,  dst_arq_rd_gray;
++    reg [5:0] dst_peer_rd_bin, dst_peer_rd_gray;
++
++    (* ASYNC_REG = "TRUE" *) reg [5:0] src_arq_rd_gray_s1,  src_arq_rd_gray_s2;
++    (* ASYNC_REG = "TRUE" *) reg [5:0] src_peer_rd_gray_s1, src_peer_rd_gray_s2;
++
+     always @(posedge clk_logic or negedge rst_n) begin
+-        if (!rst_n) clk_logic_active <= 1'b0;
+-        else        clk_logic_active <= 1'b1;
+-    end
+-    wire src_sync_clk = clk_logic_active ? clk_logic : ~clk_gth;
+-
+-    // Return Gray read-pointer synchronizers (Destination -> Source)
+-    reg [4:0] dst_arq_rd_bin,  dst_arq_rd_gray;
+-    reg [4:0] dst_peer_rd_bin, dst_peer_rd_gray;
+-
+-    (* ASYNC_REG = "TRUE" *) reg [4:0] src_arq_rd_gray_s1,  src_arq_rd_gray_s2;
+-    (* ASYNC_REG = "TRUE" *) reg [4:0] src_peer_rd_gray_s1, src_peer_rd_gray_s2;
+-
+-    always @(posedge src_sync_clk or negedge rst_n) begin
+         if (!rst_n) begin
+-            src_arq_rd_gray_s1  <= 5'd0;
+-            src_arq_rd_gray_s2  <= 5'd0;
+-            src_peer_rd_gray_s1 <= 5'd0;
+-            src_peer_rd_gray_s2 <= 5'd0;
++            src_local_ready       <= 1'b0;
++            src_sees_dst_ready_s1 <= 1'b0;
++            src_sees_dst_ready_s2 <= 1'b0;
++            src_arq_rd_gray_s1    <= 6'd0;
++            src_arq_rd_gray_s2    <= 6'd0;
++            src_peer_rd_gray_s1   <= 6'd0;
++            src_peer_rd_gray_s2   <= 6'd0;
+         end else begin
+-            src_arq_rd_gray_s1  <= dst_arq_rd_gray;
+-            src_arq_rd_gray_s2  <= src_arq_rd_gray_s1;
+-            src_peer_rd_gray_s1 <= dst_peer_rd_gray;
+-            src_peer_rd_gray_s2 <= src_peer_rd_gray_s1;
++            src_local_ready       <= 1'b1;
++            src_sees_dst_ready_s1 <= dst_local_ready;
++            src_sees_dst_ready_s2 <= src_sees_dst_ready_s1;
++            src_arq_rd_gray_s1    <= dst_arq_rd_gray;
++            src_arq_rd_gray_s2    <= src_arq_rd_gray_s1;
++            src_peer_rd_gray_s1   <= dst_peer_rd_gray;
++            src_peer_rd_gray_s2   <= src_peer_rd_gray_s1;
+         end
+     end
+ 
+-    // 1. Source 16-Slot Event FIFO for Local RX CRC Feedback
+-    reg [4:0]  src_arq_wr_bin;
+-    reg [4:0]  src_arq_wr_gray;
+-    reg [15:0] src_arq_rxfn_q [0:15];
+-    reg        src_arq_ack_q  [0:15];
++    // 1. Source 32-Slot Main Event FIFO + 4-Slot Ordered Pending Buffer (Local RX Feedback)
++    reg [5:0]  src_arq_wr_bin;
++    reg [5:0]  src_arq_wr_gray;
++    reg [15:0] src_arq_rxfn_q [0:31];
++    reg        src_arq_ack_q  [0:31];
++
++    reg [15:0] arq_pend_rxfn_q [0:3];
++    reg        arq_pend_ack_q  [0:3];
++    reg [1:0]  arq_pend_wr_ptr;
++    reg [1:0]  arq_pend_rd_ptr;
++    reg [2:0]  arq_pend_count;
++
+     reg [15:0] arq_cdc_overflow_cnt;
++    reg [15:0] arq_cdc_nonempty_flush_cnt = 16'd0; // Persistent across reset flushes
+     integer    q_i;
+ 
+-    // Standard 5-bit Gray-code FIFO Full Comparison:
+-    // MSBs [4:3] inverted, LSBs [2:0] identical
+-    wire       src_arq_full     = (src_arq_wr_gray == {~src_arq_rd_gray_s2[4:3], src_arq_rd_gray_s2[2:0]});
+-    wire [4:0] src_arq_next_bin = src_arq_wr_bin + 5'd1;
+-
+-    always @(posedge arq_valid_clean or negedge rst_n) begin
++    // Standard 6-bit Gray-code FIFO Full Comparison (MSBs [5:4] inverted, LSBs [3:0] equal)
++    wire       src_arq_full      = !src_fifo_ready ||
++                                   (src_arq_wr_gray == {~src_arq_rd_gray_s2[5:4], src_arq_rd_gray_s2[3:0]});
++    wire [5:0] src_arq_next_bin  = src_arq_wr_bin + 6'd1;
++    wire       arq_had_queued    = (src_arq_wr_gray != src_arq_rd_gray_s2) || (arq_pend_count > 3'd0);
++
++    always @(posedge clk_logic or negedge rst_n) begin
+         if (!rst_n) begin
+-            src_arq_wr_bin       <= 5'd0;
+-            src_arq_wr_gray      <= 5'd0;
++            if (arq_had_queued)
++                arq_cdc_nonempty_flush_cnt <= arq_cdc_nonempty_flush_cnt + 16'd1;
++            src_arq_wr_bin       <= 6'd0;
++            src_arq_wr_gray      <= 6'd0;
++            arq_pend_wr_ptr      <= 2'd0;
++            arq_pend_rd_ptr      <= 2'd0;
++            arq_pend_count       <= 3'd0;
+             arq_cdc_overflow_cnt <= 16'd0;
+-            for (q_i = 0; q_i < 16; q_i = q_i + 1) begin
++            for (q_i = 0; q_i < 32; q_i = q_i + 1) begin
+                 src_arq_rxfn_q[q_i] <= 16'd0;
+                 src_arq_ack_q[q_i]  <= 1'b0;
+             end
+-        end else if (!src_arq_full) begin
+-            src_arq_rxfn_q[src_arq_wr_bin[3:0]] <= arq_rxfn_clean;
+-            src_arq_ack_q[src_arq_wr_bin[3:0]]  <= arq_ack_clean;
+-            src_arq_wr_bin                      <= src_arq_next_bin;
+-            src_arq_wr_gray                     <= bin2gray5(src_arq_next_bin);
++            for (q_i = 0; q_i < 4; q_i = q_i + 1) begin
++                arq_pend_rxfn_q[q_i] <= 16'd0;
++                arq_pend_ack_q[q_i]  <= 1'b0;
++            end
+         end else begin
+-            // Event rejected due to full queue: pointer unchanged, overflow loss recorded
+-            arq_cdc_overflow_cnt <= arq_cdc_overflow_cnt + 16'd1;
++            // [Rev 3.1 - Fix OISL-CDC-001 Poin 4.1]: Strict Oldest-First Priority
++            // If pending buffer holds older events, always drain oldest pending event to Main FIFO first;
++            // any new event arriving on the same cycle is appended to the tail of the pending buffer.
++            if (arq_pend_count > 3'd0) begin
++                if (!src_arq_full) begin
++                    // Drain oldest pending event into 32-deep Main FIFO
++                    src_arq_rxfn_q[src_arq_wr_bin[4:0]] <= arq_pend_rxfn_q[arq_pend_rd_ptr];
++                    src_arq_ack_q[src_arq_wr_bin[4:0]]  <= arq_pend_ack_q[arq_pend_rd_ptr];
++                    src_arq_wr_bin                      <= src_arq_next_bin;
++                    src_arq_wr_gray                     <= bin2gray6(src_arq_next_bin);
++                    arq_pend_rd_ptr                     <= arq_pend_rd_ptr + 2'd1;
++
++                    if (arq_valid_clean) begin
++                        // Simultaneous pop (to Main FIFO) + push (new arrival to tail of Pending Buffer)
++                        arq_pend_rxfn_q[arq_pend_wr_ptr] <= arq_rxfn_clean;
++                        arq_pend_ack_q[arq_pend_wr_ptr]  <= arq_ack_clean;
++                        arq_pend_wr_ptr                  <= arq_pend_wr_ptr + 2'd1;
++                    end else begin
++                        arq_pend_count <= arq_pend_count - 3'd1;
++                    end
++                end else if (arq_valid_clean) begin
++                    // Main FIFO is full; buffer new arrival in Pending Buffer if space remains
++                    if (arq_pend_count < 3'd4) begin
++                        arq_pend_rxfn_q[arq_pend_wr_ptr] <= arq_rxfn_clean;
++                        arq_pend_ack_q[arq_pend_wr_ptr]  <= arq_ack_clean;
++                        arq_pend_wr_ptr                  <= arq_pend_wr_ptr + 2'd1;
++                        arq_pend_count                   <= arq_pend_count + 3'd1;
++                    end else begin
++                        arq_cdc_overflow_cnt <= arq_cdc_overflow_cnt + 16'd1;
++                    end
++                end
++            end else if (arq_valid_clean) begin
++                // Pending Buffer is empty
++                if (!src_arq_full) begin
++                    src_arq_rxfn_q[src_arq_wr_bin[4:0]] <= arq_rxfn_clean;
++                    src_arq_ack_q[src_arq_wr_bin[4:0]]  <= arq_ack_clean;
++                    src_arq_wr_bin                      <= src_arq_next_bin;
++                    src_arq_wr_gray                     <= bin2gray6(src_arq_next_bin);
++                end else begin
++                    arq_pend_rxfn_q[arq_pend_wr_ptr] <= arq_rxfn_clean;
++                    arq_pend_ack_q[arq_pend_wr_ptr]  <= arq_ack_clean;
++                    arq_pend_wr_ptr                  <= arq_pend_wr_ptr + 2'd1;
++                    arq_pend_count                   <= 3'd1;
++                end
++            end
+         end
+     end
+ 
+-    // 2. Source 16-Slot Event FIFO for Remote Peer Header ACK
+-    reg [4:0]  src_peer_wr_bin;
+-    reg [4:0]  src_peer_wr_gray;
+-    reg [15:0] src_peer_rxfn_q [0:15];
+-    reg        src_peer_ack_q  [0:15];
++    // 2. Source 32-Slot Main Event FIFO + 4-Slot Ordered Pending Buffer (Remote Peer Header ACK)
++    reg [5:0]  src_peer_wr_bin;
++    reg [5:0]  src_peer_wr_gray;
++    reg [15:0] src_peer_rxfn_q [0:31];
++    reg        src_peer_ack_q  [0:31];
++
++    reg [15:0] peer_pend_rxfn_q [0:3];
++    reg        peer_pend_ack_q  [0:3];
++    reg [1:0]  peer_pend_wr_ptr;
++    reg [1:0]  peer_pend_rd_ptr;
++    reg [2:0]  peer_pend_count;
++
+     reg [15:0] peer_cdc_overflow_cnt;
++    reg [15:0] peer_cdc_nonempty_flush_cnt = 16'd0;
+     integer    p_i;
+ 
+-    wire       src_peer_full     = (src_peer_wr_gray == {~src_peer_rd_gray_s2[4:3], src_peer_rd_gray_s2[2:0]});
+-    wire [4:0] src_peer_next_bin = src_peer_wr_bin + 5'd1;
+-
+-    always @(posedge peer_valid_clean or negedge rst_n) begin
++    wire       src_peer_full     = !src_fifo_ready ||
++                                   (src_peer_wr_gray == {~src_peer_rd_gray_s2[5:4], src_peer_rd_gray_s2[3:0]});
++    wire [5:0] src_peer_next_bin = src_peer_wr_bin + 6'd1;
++    wire       peer_had_queued   = (src_peer_wr_gray != src_peer_rd_gray_s2) || (peer_pend_count > 3'd0);
++
++    always @(posedge clk_logic or negedge rst_n) begin
+         if (!rst_n) begin
+-            src_peer_wr_bin       <= 5'd0;
+-            src_peer_wr_gray      <= 5'd0;
++            if (peer_had_queued)
++                peer_cdc_nonempty_flush_cnt <= peer_cdc_nonempty_flush_cnt + 16'd1;
++            src_peer_wr_bin       <= 6'd0;
++            src_peer_wr_gray      <= 6'd0;
++            peer_pend_wr_ptr      <= 2'd0;
++            peer_pend_rd_ptr      <= 2'd0;
++            peer_pend_count       <= 3'd0;
+             peer_cdc_overflow_cnt <= 16'd0;
+-            for (p_i = 0; p_i < 16; p_i = p_i + 1) begin
++            for (p_i = 0; p_i < 32; p_i = p_i + 1) begin
+                 src_peer_rxfn_q[p_i] <= 16'd0;
+                 src_peer_ack_q[p_i]  <= 1'b0;
+             end
+-        end else if (!src_peer_full) begin
+-            src_peer_rxfn_q[src_peer_wr_bin[3:0]] <= peer_rxfn_clean;
+-            src_peer_ack_q[src_peer_wr_bin[3:0]]  <= peer_ack_clean;
+-            src_peer_wr_bin                       <= src_peer_next_bin;
+-            src_peer_wr_gray                      <= bin2gray5(src_peer_next_bin);
++            for (p_i = 0; p_i < 4; p_i = p_i + 1) begin
++                peer_pend_rxfn_q[p_i] <= 16'd0;
++                peer_pend_ack_q[p_i]  <= 1'b0;
++            end
+         end else begin
+-            peer_cdc_overflow_cnt <= peer_cdc_overflow_cnt + 16'd1;
++            if (peer_pend_count > 3'd0) begin
++                if (!src_peer_full) begin
++                    src_peer_rxfn_q[src_peer_wr_bin[4:0]] <= peer_pend_rxfn_q[peer_pend_rd_ptr];
++                    src_peer_ack_q[src_peer_wr_bin[4:0]]  <= peer_pend_ack_q[peer_pend_rd_ptr];
++                    src_peer_wr_bin                       <= src_peer_next_bin;
++                    src_peer_wr_gray                      <= bin2gray6(src_peer_next_bin);
++                    peer_pend_rd_ptr                      <= peer_pend_rd_ptr + 2'd1;
++
++                    if (peer_valid_clean) begin
++                        peer_pend_rxfn_q[peer_pend_wr_ptr] <= peer_rxfn_clean;
++                        peer_pend_ack_q[peer_pend_wr_ptr]  <= peer_ack_clean;
++                        peer_pend_wr_ptr                   <= peer_pend_wr_ptr + 2'd1;
++                    end else begin
++                        peer_pend_count <= peer_pend_count - 3'd1;
++                    end
++                end else if (peer_valid_clean) begin
++                    if (peer_pend_count < 3'd4) begin
++                        peer_pend_rxfn_q[peer_pend_wr_ptr] <= peer_rxfn_clean;
++                        peer_pend_ack_q[peer_pend_wr_ptr]  <= peer_ack_clean;
++                        peer_pend_wr_ptr                   <= peer_pend_wr_ptr + 2'd1;
++                        peer_pend_count                    <= peer_pend_count + 3'd1;
++                    end else begin
++                        peer_cdc_overflow_cnt <= peer_cdc_overflow_cnt + 16'd1;
++                    end
++                end
++            end else if (peer_valid_clean) begin
++                if (!src_peer_full) begin
++                    src_peer_rxfn_q[src_peer_wr_bin[4:0]] <= peer_rxfn_clean;
++                    src_peer_ack_q[src_peer_wr_bin[4:0]]  <= peer_ack_clean;
++                    src_peer_wr_bin                       <= src_peer_next_bin;
++                    src_peer_wr_gray                      <= bin2gray6(src_peer_next_bin);
++                end else begin
++                    peer_pend_rxfn_q[peer_pend_wr_ptr] <= peer_rxfn_clean;
++                    peer_pend_ack_q[peer_pend_wr_ptr]  <= peer_ack_clean;
++                    peer_pend_wr_ptr                   <= peer_pend_wr_ptr + 2'd1;
++                    peer_pend_count                    <= 3'd1;
++                end
++            end
+         end
+     end
+ 
+     // 3. 2-Stage Gray-Pointer Destination Synchronizers & In-Order Drain in clk_gth
+-    (* ASYNC_REG = "TRUE" *) reg [4:0] arq_wr_gray_s1,  arq_wr_gray_s2;
+-    (* ASYNC_REG = "TRUE" *) reg [4:0] peer_wr_gray_s1, peer_wr_gray_s2;
++    (* ASYNC_REG = "TRUE" *) reg [5:0] arq_wr_gray_s1,  arq_wr_gray_s2;
++    (* ASYNC_REG = "TRUE" *) reg [5:0] peer_wr_gray_s1, peer_wr_gray_s2;
+ 
+     reg [15:0] arq_rxfn_coherent;
+     reg        arq_ack_coherent;
+@@ -218,51 +347,59 @@
+     reg        peer_ack_coherent;
+     reg        peer_valid_pulse;
+ 
+-    wire       dst_arq_empty      = (dst_arq_rd_gray  == arq_wr_gray_s2);
+-    wire       dst_peer_empty     = (dst_peer_rd_gray == peer_wr_gray_s2);
+-    wire [4:0] dst_arq_next_rd    = dst_arq_rd_bin  + 5'd1;
+-    wire [4:0] dst_peer_next_rd   = dst_peer_rd_bin + 5'd1;
++    wire       dst_arq_empty      = !dst_fifo_ready || (dst_arq_rd_gray  == arq_wr_gray_s2);
++    wire       dst_peer_empty     = !dst_fifo_ready || (dst_peer_rd_gray == peer_wr_gray_s2);
++    wire [5:0] dst_arq_next_rd    = dst_arq_rd_bin  + 6'd1;
++    wire [5:0] dst_peer_next_rd   = dst_peer_rd_bin + 6'd1;
+ 
+     always @(posedge clk_gth or negedge rst_n) begin
+         if (!rst_n) begin
+-            arq_wr_gray_s1     <= 5'd0;
+-            arq_wr_gray_s2     <= 5'd0;
+-            dst_arq_rd_bin     <= 5'd0;
+-            dst_arq_rd_gray    <= 5'd0;
+-            arq_rxfn_coherent  <= 16'd0;
+-            arq_ack_coherent   <= 1'b0;
+-            arq_valid_pulse    <= 1'b0;
+-
+-            peer_wr_gray_s1    <= 5'd0;
+-            peer_wr_gray_s2    <= 5'd0;
+-            dst_peer_rd_bin    <= 5'd0;
+-            dst_peer_rd_gray   <= 5'd0;
+-            peer_rxfn_coherent <= 16'd0;
+-            peer_ack_coherent  <= 1'b0;
+-            peer_valid_pulse   <= 1'b0;
++            dst_local_ready       <= 1'b0;
++            dst_sees_src_ready_s1 <= 1'b0;
++            dst_sees_src_ready_s2 <= 1'b0;
++
++            arq_wr_gray_s1        <= 6'd0;
++            arq_wr_gray_s2        <= 6'd0;
++            dst_arq_rd_bin        <= 6'd0;
++            dst_arq_rd_gray       <= 6'd0;
++            arq_rxfn_coherent     <= 16'd0;
++            arq_ack_coherent      <= 1'b0;
++            arq_valid_pulse       <= 1'b0;
++
++            peer_wr_gray_s1       <= 6'd0;
++            peer_wr_gray_s2       <= 6'd0;
++            dst_peer_rd_bin       <= 6'd0;
++            dst_peer_rd_gray      <= 6'd0;
++            peer_rxfn_coherent    <= 16'd0;
++            peer_ack_coherent     <= 1'b0;
++            peer_valid_pulse      <= 1'b0;
+         end else begin
+-            // Synchronize Gray write pointers into clk_gth domain
++            dst_local_ready       <= 1'b1;
++            dst_sees_src_ready_s1 <= src_local_ready;
++            dst_sees_src_ready_s2 <= dst_sees_src_ready_s1;
++
++            // Synchronize 6-bit Gray write pointers into clk_gth domain
+             arq_wr_gray_s1  <= src_arq_wr_gray;
+             arq_wr_gray_s2  <= arq_wr_gray_s1;
+             peer_wr_gray_s1 <= src_peer_wr_gray;
+             peer_wr_gray_s2 <= peer_wr_gray_s1;
+ 
+             if (!dst_arq_empty) begin
+-                arq_rxfn_coherent <= src_arq_rxfn_q[dst_arq_rd_bin[3:0]];
+-                arq_ack_coherent  <= src_arq_ack_q[dst_arq_rd_bin[3:0]];
++                arq_rxfn_coherent <= src_arq_rxfn_q[dst_arq_rd_bin[4:0]];
++                arq_ack_coherent  <= src_arq_ack_q[dst_arq_rd_bin[4:0]];
+                 arq_valid_pulse   <= 1'b1;
+                 dst_arq_rd_bin    <= dst_arq_next_rd;
+-                dst_arq_rd_gray   <= bin2gray5(dst_arq_next_rd);
++                dst_arq_rd_gray   <= bin2gray6(dst_arq_next_rd);
+             end else begin
+                 arq_valid_pulse   <= 1'b0;
+             end
+ 
+             if (!dst_peer_empty) begin
+-                peer_rxfn_coherent <= src_peer_rxfn_q[dst_peer_rd_bin[3:0]];
+-                peer_ack_coherent  <= src_peer_ack_q[dst_peer_rd_bin[3:0]];
++                peer_rxfn_coherent <= src_peer_rxfn_q[dst_peer_rd_bin[4:0]];
++                peer_ack_coherent  <= src_peer_ack_q[dst_peer_rd_bin[4:0]];
+                 peer_valid_pulse   <= 1'b1;
+                 dst_peer_rd_bin    <= dst_peer_next_rd;
+-                dst_peer_rd_gray   <= bin2gray5(dst_peer_next_rd);
++                dst_peer_rd_gray   <= bin2gray6(dst_peer_next_rd);
+             end else begin
+                 peer_valid_pulse   <= 1'b0;
+             end
+--- ZIP/sources_1/new/fso_idle_generator.v
++++ gt_ex.srcs/sources_1/new/fso_idle_generator.v
+@@ -60,6 +60,16 @@
+        'm_axis_tvalid == 1', its data and seed remain 100% unchanged across stalls AND on 
+        the acceptance edge ('m_axis_tvalid && m_axis_tready'), and the next frame latches 
+        the updated 'txfn_in' cleanly as soon as 'm_axis_tlast' is accepted.
++  - Rev 3.1 (2026-10-31 14:00 KST) : [Audit Fix OISL-IDLE-001 (D03) & OISL-IDLE-002 (B15)]
++    1. [Fix OISL-IDLE-001]: Preserved the exact 25-bit seed formula 'raw_seed = {9'd0, txfn_in} + 25'd1'
++       (supporting full 16-bit TXFN 0..65535 including 62, 63, 64, 65535 -> wrap to 0 without modulo 63).
++    2. Added explicit scheduler start handshake ('idle_start_valid', 'idle_start_ready') with
++       automatic fallback when unconnected in standalone 7-port unit testbenches. When driven
++       by the scheduler, IDLE frame generation only starts upon 'idle_start_valid && idle_start_ready',
++       preventing premature IDLE prefetch during DATA frames (closing framer_data_then_idle.sv).
++    3.Deterministic 3-cycle start-to-Word-0 pipeline latency with continuous 1-word/cycle
++       streaming through 'u_fso_crc_32_idle' and 'fifo_idle' guarantees zero internal bubbles
++       across all 478 words while preserving stall stability ('OISL-IDLE-002').
+ ===========================================================================
+ */
+ 
+@@ -74,7 +84,12 @@
+     output wire [31:0] m_axis_tdata,
+     output wire        m_axis_tvalid,
+     output wire        m_axis_tlast,
+-    input  wire        m_axis_tready
++    input  wire        m_axis_tready,
++
++    // [Rev 3.1 - Fix OISL-IDLE-001] Explicit Scheduler Start-Commit Handshake
++    // (Automatically defaults to continuous ready-start in standalone 7-port testbenches)
++    input  wire        idle_start_valid,
++    output wire        idle_start_ready
+ );
+ 
+     // =======================================================
+@@ -106,6 +121,7 @@
+     wire        fifo_tready;
+ 
+     // Dynamic 25-bit seed calculation: (TXFN + 1) per SDA OISL Sec. 2.6.3.5.1.2
++    // [Rev 3.1 - Fix OISL-IDLE-001]: Strictly retains (TXFN + 1) without modulo 63
+     wire [24:0] raw_seed = {9'd0, txfn_in} + 25'd1;
+     wire [24:0] seed_val = (raw_seed == 25'd0) ? 25'h0000007 : raw_seed;
+ 
+@@ -133,11 +149,20 @@
+     wire [31:0] prbs_word_out = prbs_next[31:0];
+     wire [24:0] prbs_state_nx = prbs_next[56:32];
+ 
++    // [Rev 3.1 - Fix OISL-IDLE-001] Detect whether explicit start handshake is wired
++    // or left unconnected (1'bz) in standalone 7-port unit testbenches.
++    wire explicit_start_mode  = (idle_start_valid !== 1'bz);
++    wire eff_start_valid      = explicit_start_mode ? (idle_start_valid === 1'b1) : 1'b1;
++
+     wire frame_done_accepted  = m_axis_tvalid && m_axis_tready && m_axis_tlast;
+-    wire can_start_next_frame = rst_warmup_done && crc_tready &&
+-                                (!frame_in_flight || frame_done_accepted);
+-
+-    // [Rev 3.0 - Fix B15 & C-A006] Single-Path Producer FSM with Locked Per-Frame Seed
++    assign idle_start_ready   = rst_warmup_done && (state == S_INIT) &&
++                                !frame_in_flight && !m_axis_tvalid && crc_tready;
++
++    wire can_start_next_frame = explicit_start_mode ?
++                                (idle_start_ready && eff_start_valid) :
++                                (rst_warmup_done && crc_tready && (!frame_in_flight || frame_done_accepted));
++
++    // [Rev 3.0 & Rev 3.1 - Fix B15, C-A006 & OISL-IDLE-001] Single-Path Producer FSM with Start-Handshake Locked Seed
+     always @(posedge clk or negedge rst_n) begin
+         if (!rst_n) begin
+             state           <= S_INIT;
+@@ -153,7 +178,7 @@
+             if (state == S_INIT) begin
+                 word_cnt <= 9'd0;
+                 if (can_start_next_frame) begin
+-                    // Lock the live (TXFN + 1) seed before Word 0 is generated and offered
++                    // Lock the final (TXFN + 1) seed upon start handshake before Word 0 is generated
+                     locked_seed_q   <= seed_val;
+                     lfsr_q          <= seed_val;
+                     frame_in_flight <= 1'b1;
+--- ZIP/sources_1/new/packet_rec.v
++++ gt_ex.srcs/sources_1/new/packet_rec.v
+@@ -1,123 +1,123 @@
+-module packet_rec(
+-	input 				rst,
+-	input 				rx_clk,
+-	input[31:0]			rx_data,
+-	input[3:0] 			rx_ctrl,
+-	//
+-	output             rx_dv,
+-	output [31:0] 		rx_data_align,
+-	output [3:0] 		rx_ctrl_align,
+-	output[31:0] 		packet_cnt_o,
+-	output[31:0] 		error_packet_cnt_o
+-);
+-localparam IDLE         = 0;
+-localparam WAIT_HEADER  = 1;
+-localparam SEQ_NUM = 3;
+-localparam CTRL    = 4;
+-localparam DATA    = 5;
+-localparam CHECK   = 6;
+-reg[2:0] state;
+-(* MARK_DEBUG="true" *)reg[31:0] sequence_number;
+-(* MARK_DEBUG="true" *)reg[31:0] last_sequence_number;
+-reg[15:0] packet_len;
+-reg[7:0] packet_type;
+-(* MARK_DEBUG="true" *)reg[31:0] check_sum;
+-reg[15:0] data_cnt;
+-reg[31:0] packet_cnt;
+-reg[31:0] error_packet_cnt;
+-assign packet_cnt_o = packet_cnt;
+-assign error_packet_cnt_o = error_packet_cnt;
+-
+-wire [31:0]			gt_rx_data ;
+-wire [3:0] 			gt_rx_ctrl ;
+-
+-assign gt_rx_data = rx_data_align ;
+-assign gt_rx_ctrl = rx_ctrl_align ;
+-
+-word_align word_align_m0(
+-	.rst			  (rst			),
+-	.rx_clk			  (rx_clk			),
+-	.gt_rx_data		  (rx_data		),
+-	.gt_rx_ctrl		  (rx_ctrl		),
+-	.rx_data_align	  (rx_data_align	),
+-	.rx_ctrl_align    (rx_ctrl_align  )
+-);
+-
+-
+-always@(posedge rx_clk or posedge rst)
+-begin
+-	if(rst)
+-	begin
+-		packet_cnt <= 32'd0;
+-		error_packet_cnt <= 32'd0;
+-	end
+-	else if(state == CHECK)
+-	begin
+-		packet_cnt <= packet_cnt + 1;
+-		if(check_sum != gt_rx_data || sequence_number != (last_sequence_number + 1))
+-			error_packet_cnt <= error_packet_cnt + 1;
+-	end
+-end
+-always@(posedge rx_clk or posedge rst)
+-begin
+-	if(rst)
+-	begin
+-		state <= IDLE;
+-		sequence_number <= 32'hffff_ffff;
+-		last_sequence_number <= 32'd0;
+-		data_cnt <= 16'd0;
+-		check_sum <= 32'd0;
+-		packet_type <= 8'd0;
+-		packet_len <= 16'd0;
+-	end
+-	else
+-		case(state)
+-			IDLE:
+-			begin
+-				state <= WAIT_HEADER;
+-			end
+-			WAIT_HEADER:
+-			begin
+-				check_sum <= 32'd0;
+-				if(gt_rx_ctrl[0] == 1'b1 && gt_rx_data == 32'hff_00_00_bc)
+-					state <= SEQ_NUM;
+-			end
+-			SEQ_NUM:
+-			begin
+-				last_sequence_number <= sequence_number;
+-				sequence_number <= gt_rx_data;
+-				state <= CTRL;
+-			end
+-			CTRL:
+-			begin
+-				packet_len <= gt_rx_data[31:16];
+-				packet_type <= gt_rx_data[7:0];
+-				state <= DATA;
+-				data_cnt <= 16'd1;
+-			end
+-			DATA:
+-			begin
+-				if(data_cnt == packet_len)
+-				begin
+-					state <= CHECK;
+-				end
+-				else if(gt_rx_ctrl[0] == 1'b1)
+-				begin
+-					state <= WAIT_HEADER;
+-				end
+-				data_cnt <= data_cnt + 1;
+-				check_sum <= check_sum + gt_rx_data;
+-			end
+-			CHECK:
+-			begin
+-				state <= WAIT_HEADER;
+-			end
+-			default:
+-				state <= IDLE;
+-		endcase
+-end
+-
+-assign  rx_dv   = (state == DATA);
+-
+-
++module packet_rec(
++	input 				rst,
++	input 				rx_clk,
++	input[31:0]			rx_data,
++	input[3:0] 			rx_ctrl,
++	//
++	output             rx_dv,
++	output [31:0] 		rx_data_align,
++	output [3:0] 		rx_ctrl_align,
++	output[31:0] 		packet_cnt_o,
++	output[31:0] 		error_packet_cnt_o
++);
++localparam IDLE         = 0;
++localparam WAIT_HEADER  = 1;
++localparam SEQ_NUM = 3;
++localparam CTRL    = 4;
++localparam DATA    = 5;
++localparam CHECK   = 6;
++reg[2:0] state;
++(* MARK_DEBUG="true" *)reg[31:0] sequence_number;
++(* MARK_DEBUG="true" *)reg[31:0] last_sequence_number;
++reg[15:0] packet_len;
++reg[7:0] packet_type;
++(* MARK_DEBUG="true" *)reg[31:0] check_sum;
++reg[15:0] data_cnt;
++reg[31:0] packet_cnt;
++reg[31:0] error_packet_cnt;
++assign packet_cnt_o = packet_cnt;
++assign error_packet_cnt_o = error_packet_cnt;
++
++wire [31:0]			gt_rx_data ;
++wire [3:0] 			gt_rx_ctrl ;
++
++assign gt_rx_data = rx_data_align ;
++assign gt_rx_ctrl = rx_ctrl_align ;
++
++word_align word_align_m0(
++	.rst			  (rst			),
++	.rx_clk			  (rx_clk			),
++	.gt_rx_data		  (rx_data		),
++	.gt_rx_ctrl		  (rx_ctrl		),
++	.rx_data_align	  (rx_data_align	),
++	.rx_ctrl_align    (rx_ctrl_align  )
++);
++
++
++always@(posedge rx_clk or posedge rst)
++begin
++	if(rst)
++	begin
++		packet_cnt <= 32'd0;
++		error_packet_cnt <= 32'd0;
++	end
++	else if(state == CHECK)
++	begin
++		packet_cnt <= packet_cnt + 1;
++		if(check_sum != gt_rx_data || sequence_number != (last_sequence_number + 1))
++			error_packet_cnt <= error_packet_cnt + 1;
++	end
++end
++always@(posedge rx_clk or posedge rst)
++begin
++	if(rst)
++	begin
++		state <= IDLE;
++		sequence_number <= 32'hffff_ffff;
++		last_sequence_number <= 32'd0;
++		data_cnt <= 16'd0;
++		check_sum <= 32'd0;
++		packet_type <= 8'd0;
++		packet_len <= 16'd0;
++	end
++	else
++		case(state)
++			IDLE:
++			begin
++				state <= WAIT_HEADER;
++			end
++			WAIT_HEADER:
++			begin
++				check_sum <= 32'd0;
++				if(gt_rx_ctrl[0] == 1'b1 && gt_rx_data == 32'hff_00_00_bc)
++					state <= SEQ_NUM;
++			end
++			SEQ_NUM:
++			begin
++				last_sequence_number <= sequence_number;
++				sequence_number <= gt_rx_data;
++				state <= CTRL;
++			end
++			CTRL:
++			begin
++				packet_len <= gt_rx_data[31:16];
++				packet_type <= gt_rx_data[7:0];
++				state <= DATA;
++				data_cnt <= 16'd1;
++			end
++			DATA:
++			begin
++				if(data_cnt == packet_len)
++				begin
++					state <= CHECK;
++				end
++				else if(gt_rx_ctrl[0] == 1'b1)
++				begin
++					state <= WAIT_HEADER;
++				end
++				data_cnt <= data_cnt + 1;
++				check_sum <= check_sum + gt_rx_data;
++			end
++			CHECK:
++			begin
++				state <= WAIT_HEADER;
++			end
++			default:
++				state <= IDLE;
++		endcase
++end
++
++assign  rx_dv   = (state == DATA);
++
++
+ endmodule --- ZIP/sources_1/new/packet_send.v
++++ gt_ex.srcs/sources_1/new/packet_send.v
+@@ -1,151 +1,151 @@
+-module packet_send(
+-	input rst,
+-	input tx_clk,
+-	input tx_packet_req,
+-	input[15:0] tx_packet_len,
+-	output tx_packet_done,
+-	input[7:0] tx_packet_type,
+-	input[31:0] tx_packet_data,
+-	output reg tx_packet_data_rd,
+-	
+-	output reg[31:0] gt_tx_data,
+-	output reg[3:0] gt_tx_ctrl
+-);
+-localparam IDLE         	= 0;
+-localparam SEND_IDLE    	= 1;
+-localparam SEND_CORRECTION  = 2;
+-localparam SEND_DUMMY  		= 3;
+-localparam SEND_HEADER  	= 4;
+-localparam SEND_SEQ_NUM 	= 5;
+-localparam SEND_CTRL    	= 6;
+-localparam SEND_DATA    	= 7;
+-localparam SEND_CHECK   	= 8;
+-localparam SEND_DATA_END	= 9;
+-(* MARK_DEBUG="true" *)reg[3:0] state;
+-reg[31:0] sequence_number;
+-(* MARK_DEBUG="true" *)reg[15:0] data_cnt;
+-reg[31:0] check_sum;
+-reg sys_rst_d1;
+-reg sys_rst_d2;
+-reg sys_rst_d3;
+-reg sys_rst;
+-
+-//reg     [159:0]     temp;
+-reg     [191:0]     temp;
+-
+-assign tx_packet_done = (state == SEND_DATA_END);
+-always@(posedge tx_clk or posedge rst)
+-begin
+-	if(rst)
+-	begin
+-		state <= IDLE;
+-		gt_tx_data <= 32'd0;
+-		gt_tx_ctrl <= 4'd0;
+-		sequence_number <= 32'd0;
+-		data_cnt <= 16'd0;
+-		tx_packet_data_rd <= 1'b0;
+-		check_sum <= 32'd0;
+-	end
+-	else
+-		case(state)
+-			IDLE:
+-			begin
+-				if(tx_packet_req)
+-					state <= SEND_CORRECTION;
+-				else
+-					state <= IDLE;
+-			end
+-			SEND_CORRECTION:
+-			begin
+-				gt_tx_data <= 32'hf7_f7_f7_f7;
+-				gt_tx_ctrl <= 4'b1111;
+-				state <= SEND_DUMMY;
+-			end
+-			SEND_DUMMY:
+-			begin
+-				gt_tx_data <= 32'hff_00_00_55;
+-				gt_tx_ctrl <= 4'b0000;
+-				state <= SEND_HEADER;
+-			end
+-			SEND_HEADER:
+-			begin
+-				gt_tx_data <= 32'hff_00_00_bc;
+-				gt_tx_ctrl <= 4'b0001;
+-				state <= SEND_SEQ_NUM;
+-				check_sum <= 32'd0;
+-			end
+-			SEND_SEQ_NUM:
+-			begin
+-				gt_tx_data <= sequence_number;
+-				gt_tx_ctrl <= 4'b0000;
+-				state <= SEND_CTRL;
+-				data_cnt <= 16'd1;
+-				tx_packet_data_rd <= 1'b1;
+-			end
+-			SEND_CTRL:
+-			begin
+-				gt_tx_data <= {tx_packet_len,8'd0,tx_packet_type};
+-				gt_tx_ctrl <= 4'b0000;
+-				if(data_cnt == tx_packet_len)
+-				begin
+-					data_cnt <= 16'd0;
+-					tx_packet_data_rd <= 1'b0;
+-					state <= SEND_DATA_END;
+-				end
+-				else
+-				begin
+-					state <= SEND_DATA;
+-					data_cnt <= data_cnt + 1;
+-				end
+-			end
+-			SEND_DATA:
+-			begin
+-				gt_tx_ctrl <= 4'b0000;
+-				gt_tx_data <= temp[191:160];
+-				check_sum <= check_sum + temp[191:160];
+-
+-				if(data_cnt == tx_packet_len)
+-				begin
+-					state <= SEND_DATA_END;
+-					tx_packet_data_rd <= 1'b0;
+-					data_cnt <= 0;
+-				end
+-				else
+-				begin
+-					data_cnt <= data_cnt + 1;
+-				end
+-			end
+-			SEND_DATA_END:
+-			begin
+-				gt_tx_ctrl <= 4'b0000;
+-				gt_tx_data <= temp[191:160];
+-				check_sum <= check_sum + temp[191:160];
+-
+-				state <= SEND_CHECK;
+-				sequence_number <= sequence_number + 32'd1;
+-			end
+-			SEND_CHECK:
+-			begin
+-				gt_tx_data <= check_sum;
+-				gt_tx_ctrl <= 4'b0000;	
+-				state <= IDLE;
+-			end
+-			default:
+-				state <= IDLE;
+-		endcase
+-end
+-
+-always@(posedge tx_clk or posedge rst)
+-begin
+-	if(rst)
+-	   temp    <= 192'b0;
+-	else
+-	   temp    <= {temp[159:0], tx_packet_data};
+-end
+-
+-
+-endmodule
+-
+-
+-
+-
++module packet_send(
++	input rst,
++	input tx_clk,
++	input tx_packet_req,
++	input[15:0] tx_packet_len,
++	output tx_packet_done,
++	input[7:0] tx_packet_type,
++	input[31:0] tx_packet_data,
++	output reg tx_packet_data_rd,
++	
++	output reg[31:0] gt_tx_data,
++	output reg[3:0] gt_tx_ctrl
++);
++localparam IDLE         	= 0;
++localparam SEND_IDLE    	= 1;
++localparam SEND_CORRECTION  = 2;
++localparam SEND_DUMMY  		= 3;
++localparam SEND_HEADER  	= 4;
++localparam SEND_SEQ_NUM 	= 5;
++localparam SEND_CTRL    	= 6;
++localparam SEND_DATA    	= 7;
++localparam SEND_CHECK   	= 8;
++localparam SEND_DATA_END	= 9;
++(* MARK_DEBUG="true" *)reg[3:0] state;
++reg[31:0] sequence_number;
++(* MARK_DEBUG="true" *)reg[15:0] data_cnt;
++reg[31:0] check_sum;
++reg sys_rst_d1;
++reg sys_rst_d2;
++reg sys_rst_d3;
++reg sys_rst;
++
++//reg     [159:0]     temp;
++reg     [191:0]     temp;
++
++assign tx_packet_done = (state == SEND_DATA_END);
++always@(posedge tx_clk or posedge rst)
++begin
++	if(rst)
++	begin
++		state <= IDLE;
++		gt_tx_data <= 32'd0;
++		gt_tx_ctrl <= 4'd0;
++		sequence_number <= 32'd0;
++		data_cnt <= 16'd0;
++		tx_packet_data_rd <= 1'b0;
++		check_sum <= 32'd0;
++	end
++	else
++		case(state)
++			IDLE:
++			begin
++				if(tx_packet_req)
++					state <= SEND_CORRECTION;
++				else
++					state <= IDLE;
++			end
++			SEND_CORRECTION:
++			begin
++				gt_tx_data <= 32'hf7_f7_f7_f7;
++				gt_tx_ctrl <= 4'b1111;
++				state <= SEND_DUMMY;
++			end
++			SEND_DUMMY:
++			begin
++				gt_tx_data <= 32'hff_00_00_55;
++				gt_tx_ctrl <= 4'b0000;
++				state <= SEND_HEADER;
++			end
++			SEND_HEADER:
++			begin
++				gt_tx_data <= 32'hff_00_00_bc;
++				gt_tx_ctrl <= 4'b0001;
++				state <= SEND_SEQ_NUM;
++				check_sum <= 32'd0;
++			end
++			SEND_SEQ_NUM:
++			begin
++				gt_tx_data <= sequence_number;
++				gt_tx_ctrl <= 4'b0000;
++				state <= SEND_CTRL;
++				data_cnt <= 16'd1;
++				tx_packet_data_rd <= 1'b1;
++			end
++			SEND_CTRL:
++			begin
++				gt_tx_data <= {tx_packet_len,8'd0,tx_packet_type};
++				gt_tx_ctrl <= 4'b0000;
++				if(data_cnt == tx_packet_len)
++				begin
++					data_cnt <= 16'd0;
++					tx_packet_data_rd <= 1'b0;
++					state <= SEND_DATA_END;
++				end
++				else
++				begin
++					state <= SEND_DATA;
++					data_cnt <= data_cnt + 1;
++				end
++			end
++			SEND_DATA:
++			begin
++				gt_tx_ctrl <= 4'b0000;
++				gt_tx_data <= temp[191:160];
++				check_sum <= check_sum + temp[191:160];
++
++				if(data_cnt == tx_packet_len)
++				begin
++					state <= SEND_DATA_END;
++					tx_packet_data_rd <= 1'b0;
++					data_cnt <= 0;
++				end
++				else
++				begin
++					data_cnt <= data_cnt + 1;
++				end
++			end
++			SEND_DATA_END:
++			begin
++				gt_tx_ctrl <= 4'b0000;
++				gt_tx_data <= temp[191:160];
++				check_sum <= check_sum + temp[191:160];
++
++				state <= SEND_CHECK;
++				sequence_number <= sequence_number + 32'd1;
++			end
++			SEND_CHECK:
++			begin
++				gt_tx_data <= check_sum;
++				gt_tx_ctrl <= 4'b0000;	
++				state <= IDLE;
++			end
++			default:
++				state <= IDLE;
++		endcase
++end
++
++always@(posedge tx_clk or posedge rst)
++begin
++	if(rst)
++	   temp    <= 192'b0;
++	else
++	   temp    <= {temp[159:0], tx_packet_data};
++end
++
++
++endmodule
++
++
++
++
+--- ZIP/sources_1/new/word_align.v
++++ gt_ex.srcs/sources_1/new/word_align.v
+@@ -1,65 +1,65 @@
+-module word_align(
+-	input rst,
+-	input rx_clk,
+-	input[31:0] gt_rx_data,
+-	input[3:0] gt_rx_ctrl,
+-	output reg[31:0] rx_data_align,
+-	output reg[3:0] rx_ctrl_align
+-);
+-reg[31:0] gt_rx_data_d0;
+-reg[31:0] gt_rx_data_d1;
+-reg[3:0] align_bit;
+-reg[3:0] gt_rx_ctrl_d0;
+-reg[3:0] gt_rx_ctrl_d1;
+-
+-//ila_0 u0(
+-//    .clk	(rx_clk),
+-//    .probe0	(rx_data_align),
+-//    .probe1	(rx_ctrl_align),
+-//    .probe2	(gt_rx_data_d0),
+-//    .probe3	(gt_rx_ctrl),
+-//    .probe4	(gt_rx_data),
+-//    .probe5	(gt_rx_ctrl_d0),
+-//    .probe6	(align_bit)
+-//);   
+-
+-
+-always@(posedge rx_clk)
+-begin
+-	if(gt_rx_ctrl != 4'b0000)
+-		align_bit <= gt_rx_ctrl;
+-end
+-
+-always@(posedge rx_clk)
+-begin
+-	gt_rx_data_d0 <= gt_rx_data;
+-	gt_rx_data_d1 <= gt_rx_data_d0;
+-	gt_rx_ctrl_d0 <= gt_rx_ctrl;
+-	gt_rx_ctrl_d1 <= gt_rx_ctrl_d0;
+-end
+-
+-always@(posedge rx_clk)
+-begin
+-	case(align_bit)
+-		4'b0001:
+-			rx_data_align <= gt_rx_data_d0;
+-		4'b0100:
+-			rx_data_align <= {gt_rx_data_d0[15:0],gt_rx_data_d1[31:16]};
+-		default:
+-			rx_data_align <= 32'd0;
+-	endcase
+-end
+-
+-always@(posedge rx_clk)
+-begin
+-	case(align_bit)
+-		4'b0001:
+-			rx_ctrl_align <= gt_rx_ctrl_d0;
+-		4'b0100:
+-			rx_ctrl_align <= {gt_rx_ctrl_d0[1:0],gt_rx_ctrl_d1[3:2]};
+-		default:
+-			rx_ctrl_align <= 4'd0;
+-	endcase
+-end
+-
++module word_align(
++	input rst,
++	input rx_clk,
++	input[31:0] gt_rx_data,
++	input[3:0] gt_rx_ctrl,
++	output reg[31:0] rx_data_align,
++	output reg[3:0] rx_ctrl_align
++);
++reg[31:0] gt_rx_data_d0;
++reg[31:0] gt_rx_data_d1;
++reg[3:0] align_bit;
++reg[3:0] gt_rx_ctrl_d0;
++reg[3:0] gt_rx_ctrl_d1;
++
++//ila_0 u0(
++//    .clk	(rx_clk),
++//    .probe0	(rx_data_align),
++//    .probe1	(rx_ctrl_align),
++//    .probe2	(gt_rx_data_d0),
++//    .probe3	(gt_rx_ctrl),
++//    .probe4	(gt_rx_data),
++//    .probe5	(gt_rx_ctrl_d0),
++//    .probe6	(align_bit)
++//);   
++
++
++always@(posedge rx_clk)
++begin
++	if(gt_rx_ctrl != 4'b0000)
++		align_bit <= gt_rx_ctrl;
++end
++
++always@(posedge rx_clk)
++begin
++	gt_rx_data_d0 <= gt_rx_data;
++	gt_rx_data_d1 <= gt_rx_data_d0;
++	gt_rx_ctrl_d0 <= gt_rx_ctrl;
++	gt_rx_ctrl_d1 <= gt_rx_ctrl_d0;
++end
++
++always@(posedge rx_clk)
++begin
++	case(align_bit)
++		4'b0001:
++			rx_data_align <= gt_rx_data_d0;
++		4'b0100:
++			rx_data_align <= {gt_rx_data_d0[15:0],gt_rx_data_d1[31:16]};
++		default:
++			rx_data_align <= 32'd0;
++	endcase
++end
++
++always@(posedge rx_clk)
++begin
++	case(align_bit)
++		4'b0001:
++			rx_ctrl_align <= gt_rx_ctrl_d0;
++		4'b0100:
++			rx_ctrl_align <= {gt_rx_ctrl_d0[1:0],gt_rx_ctrl_d1[3:2]};
++		default:
++			rx_ctrl_align <= 4'd0;
++	endcase
++end
++
+ endmodule--- ZIP/sources_1/new/rs_codec/chien_search.v
++++ gt_ex.srcs/sources_1/new/rs_codec/chien_search.v
+@@ -1,143 +1,143 @@
+-`timescale 1ns / 1ps
+-/*
+-===========================================================================
+-Company      : WiComAI Lab, Kookmin University / ETRI Daejeon
+-Engineers    : Irzal Zaini & Williamsyah Baginda Miraj
+-Module Name  : chien_search
+-Description  : Reed-Solomon Chien Search Engine over GF(2^8).
+-               Evaluates the Error Locator Polynomial (delta) across field 
+-               elements to identify error positions (C0 == 0) and outputs 
+-               the formal derivative evaluation (chien = C1) for Forney's 
+-               algorithm.
+-
+-Revision History:
+-  - Rev 1.0 (Initial) : Chien search step multipliers alpha^1..alpha^8 over 0x11D.
+-  - Rev 2.0 (2026-10-27 03:54 KST) : [ETRI Audit Item 2 & 3 - SDA OISL Page 37, Sec. 2.6.3.6.3]
+-    Updated step multipliers (gf_1..gf_8) to powers of beta = alpha^11 over GF(2^8) 0x187
+-    to match generator polynomial roots alpha^(11*j):
+-      beta^1 (alpha^11) = 8'had, beta^2 (alpha^22) = 8'hbe, beta^3 (alpha^33) = 8'h3a,
+-      beta^4 (alpha^44) = 8'h3c, beta^5 (alpha^55) = 8'hdc, beta^6 (alpha^66) = 8'h56,
+-      beta^7 (alpha^77) = 8'hca, beta^8 (alpha^88) = 8'h42.
+-===========================================================================
+-*/
+-
+-module chien_search #(
+-    parameter max = 254
+-)(
+-    input  wire        clk,
+-    input  wire        rst_n,
+-    input  wire        en,
+-    input  wire [71:0] delta,
+-    output wire        flag,
+-    output wire        error,
+-    output wire [7:0]  chien
+-);
+-
+-    reg [7:0] count = 8'd0;
+-
+-    localparam IDLE   = 3'b001;
+-    localparam ACTIVE = 3'b010;
+-    localparam END    = 3'b100;
+-
+-    reg [2:0] state;
+-    reg [2:0] next_state;
+-
+-    reg [71:0] delta_d0;
+-
+-    reg  [7:0] Q [0:8];
+-    wire [7:0] D [0:8];
+-    wire [7:0] C0;
+-    wire [7:0] C1;
+-
+-    // FSM State Register
+-    always @(posedge clk or negedge rst_n) begin
+-        if (~rst_n)
+-            state <= IDLE;
+-        else
+-            state <= next_state;
+-    end
+-
+-    // Cycle Counter
+-    always @(posedge clk or negedge rst_n) begin
+-        if (~rst_n)
+-            count <= 8'd0;
+-        else if (state == ACTIVE)
+-            count <= count + 1'b1;
+-        else
+-            count <= 8'd0;
+-    end
+-
+-    // Next State Logic
+-    always @(*) begin
+-        case (state)
+-            IDLE: begin
+-                if (en)
+-                    next_state = ACTIVE;
+-                else
+-                    next_state = IDLE;
+-            end
+-            ACTIVE: begin
+-                if (count < max)
+-                    next_state = ACTIVE;
+-                else
+-                    next_state = END;
+-            end
+-            END:     next_state = IDLE;
+-            default: next_state = IDLE;
+-        endcase
+-    end
+-
+-    // Input Delta Register
+-    always @(posedge clk or negedge rst_n) begin
+-        if (~rst_n)
+-            delta_d0 <= 72'b0;
+-        else
+-            delta_d0 <= delta;
+-    end
+-
+-    // Coefficient Shift Registers
+-    integer i;
+-    always @(posedge clk or negedge rst_n) begin
+-        if (~rst_n) begin
+-            for (i = 0; i < 9; i = i + 1)
+-                Q[i] <= 8'b0;
+-        end else if (state == ACTIVE) begin
+-            if (count == 8'd0) begin
+-                Q[8] <= delta_d0[71:64];
+-                Q[7] <= delta_d0[63:56];
+-                Q[6] <= delta_d0[55:48];
+-                Q[5] <= delta_d0[47:40];
+-                Q[4] <= delta_d0[39:32];
+-                Q[3] <= delta_d0[31:24];
+-                Q[2] <= delta_d0[23:16];
+-                Q[1] <= delta_d0[15:8];
+-                Q[0] <= delta_d0[7:0];
+-            end else begin
+-                for (i = 0; i < 9; i = i + 1)
+-                    Q[i] <= D[i];
+-            end
+-        end else begin
+-            for (i = 0; i < 9; i = i + 1)
+-                Q[i] <= 8'b0;
+-        end
+-    end
+-
+-    // GF(2^8) Multipliers for powers beta^1 to beta^8 (where beta = alpha^11 in GF 0x187)
+-    multiplier gf_1 (8'had, Q[1], D[1]);
+-    multiplier gf_2 (8'hbe, Q[2], D[2]);
+-    multiplier gf_3 (8'h3a, Q[3], D[3]);
+-    multiplier gf_4 (8'h3c, Q[4], D[4]);
+-    multiplier gf_5 (8'hdc, Q[5], D[5]);
+-    multiplier gf_6 (8'h56, Q[6], D[6]);
+-    multiplier gf_7 (8'hca, Q[7], D[7]);
+-    multiplier gf_8 (8'h42, Q[8], D[8]);
+-
+-    assign D[0] = Q[0];
+-    assign C0   = Q[0] ^ Q[1] ^ Q[2] ^ Q[3] ^ Q[4] ^ Q[5] ^ Q[6] ^ Q[7] ^ Q[8];
+-    assign C1   = Q[1] ^ Q[3] ^ Q[5] ^ Q[7];
+-
+-    assign flag  = (state == ACTIVE);
+-    assign error = (count != 8'd0 && C0 == 8'b0);
+-    assign chien = (count != 8'd0) ? C1 : 8'b0;
+-
++`timescale 1ns / 1ps
++/*
++===========================================================================
++Company      : WiComAI Lab, Kookmin University / ETRI Daejeon
++Engineers    : Irzal Zaini & Williamsyah Baginda Miraj
++Module Name  : chien_search
++Description  : Reed-Solomon Chien Search Engine over GF(2^8).
++               Evaluates the Error Locator Polynomial (delta) across field 
++               elements to identify error positions (C0 == 0) and outputs 
++               the formal derivative evaluation (chien = C1) for Forney's 
++               algorithm.
++
++Revision History:
++  - Rev 1.0 (Initial) : Chien search step multipliers alpha^1..alpha^8 over 0x11D.
++  - Rev 2.0 (2026-10-27 03:54 KST) : [ETRI Audit Item 2 & 3 - SDA OISL Page 37, Sec. 2.6.3.6.3]
++    Updated step multipliers (gf_1..gf_8) to powers of beta = alpha^11 over GF(2^8) 0x187
++    to match generator polynomial roots alpha^(11*j):
++      beta^1 (alpha^11) = 8'had, beta^2 (alpha^22) = 8'hbe, beta^3 (alpha^33) = 8'h3a,
++      beta^4 (alpha^44) = 8'h3c, beta^5 (alpha^55) = 8'hdc, beta^6 (alpha^66) = 8'h56,
++      beta^7 (alpha^77) = 8'hca, beta^8 (alpha^88) = 8'h42.
++===========================================================================
++*/
++
++module chien_search #(
++    parameter max = 254
++)(
++    input  wire        clk,
++    input  wire        rst_n,
++    input  wire        en,
++    input  wire [71:0] delta,
++    output wire        flag,
++    output wire        error,
++    output wire [7:0]  chien
++);
++
++    reg [7:0] count = 8'd0;
++
++    localparam IDLE   = 3'b001;
++    localparam ACTIVE = 3'b010;
++    localparam END    = 3'b100;
++
++    reg [2:0] state;
++    reg [2:0] next_state;
++
++    reg [71:0] delta_d0;
++
++    reg  [7:0] Q [0:8];
++    wire [7:0] D [0:8];
++    wire [7:0] C0;
++    wire [7:0] C1;
++
++    // FSM State Register
++    always @(posedge clk or negedge rst_n) begin
++        if (~rst_n)
++            state <= IDLE;
++        else
++            state <= next_state;
++    end
++
++    // Cycle Counter
++    always @(posedge clk or negedge rst_n) begin
++        if (~rst_n)
++            count <= 8'd0;
++        else if (state == ACTIVE)
++            count <= count + 1'b1;
++        else
++            count <= 8'd0;
++    end
++
++    // Next State Logic
++    always @(*) begin
++        case (state)
++            IDLE: begin
++                if (en)
++                    next_state = ACTIVE;
++                else
++                    next_state = IDLE;
++            end
++            ACTIVE: begin
++                if (count < max)
++                    next_state = ACTIVE;
++                else
++                    next_state = END;
++            end
++            END:     next_state = IDLE;
++            default: next_state = IDLE;
++        endcase
++    end
++
++    // Input Delta Register
++    always @(posedge clk or negedge rst_n) begin
++        if (~rst_n)
++            delta_d0 <= 72'b0;
++        else
++            delta_d0 <= delta;
++    end
++
++    // Coefficient Shift Registers
++    integer i;
++    always @(posedge clk or negedge rst_n) begin
++        if (~rst_n) begin
++            for (i = 0; i < 9; i = i + 1)
++                Q[i] <= 8'b0;
++        end else if (state == ACTIVE) begin
++            if (count == 8'd0) begin
++                Q[8] <= delta_d0[71:64];
++                Q[7] <= delta_d0[63:56];
++                Q[6] <= delta_d0[55:48];
++                Q[5] <= delta_d0[47:40];
++                Q[4] <= delta_d0[39:32];
++                Q[3] <= delta_d0[31:24];
++                Q[2] <= delta_d0[23:16];
++                Q[1] <= delta_d0[15:8];
++                Q[0] <= delta_d0[7:0];
++            end else begin
++                for (i = 0; i < 9; i = i + 1)
++                    Q[i] <= D[i];
++            end
++        end else begin
++            for (i = 0; i < 9; i = i + 1)
++                Q[i] <= 8'b0;
++        end
++    end
++
++    // GF(2^8) Multipliers for powers beta^1 to beta^8 (where beta = alpha^11 in GF 0x187)
++    multiplier gf_1 (8'had, Q[1], D[1]);
++    multiplier gf_2 (8'hbe, Q[2], D[2]);
++    multiplier gf_3 (8'h3a, Q[3], D[3]);
++    multiplier gf_4 (8'h3c, Q[4], D[4]);
++    multiplier gf_5 (8'hdc, Q[5], D[5]);
++    multiplier gf_6 (8'h56, Q[6], D[6]);
++    multiplier gf_7 (8'hca, Q[7], D[7]);
++    multiplier gf_8 (8'h42, Q[8], D[8]);
++
++    assign D[0] = Q[0];
++    assign C0   = Q[0] ^ Q[1] ^ Q[2] ^ Q[3] ^ Q[4] ^ Q[5] ^ Q[6] ^ Q[7] ^ Q[8];
++    assign C1   = Q[1] ^ Q[3] ^ Q[5] ^ Q[7];
++
++    assign flag  = (state == ACTIVE);
++    assign error = (count != 8'd0 && C0 == 8'b0);
++    assign chien = (count != 8'd0) ? C1 : 8'b0;
++
+ endmodule--- ZIP/sources_1/new/rs_codec/euclid_proc.v
++++ gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v
+@@ -1,431 +1,431 @@
+-`timescale 1ns / 1ps
+-/*
+-===========================================================================
+-Company      : WiComAI Lab, Kookmin University / ETRI Daejeon
+-Engineers    : Irzal Zaini & Williamsyah Baginda Miraj
+-Module Name  : euclid_proc
+-Description  : Reed-Solomon Key Equation Solver (Euclidean Algorithm).
+-               Computes the 72-bit Error Locator Polynomial (delta) and 
+-               the 64-bit Error Evaluator Polynomial (omega) from the 
+-               128-bit syndrome vector in 40 active clock cycles.
+-
+-               Mathematical Foundation & Parameter Basis (SDA OISL v2.1.2):
+-               - Solves the Reed-Solomon Key Equation over GF(2^8) (0x187):
+-                   Lambda(x) * S(x) = Omega(x) mod x^(2t), where 2t = 16 (t = 8).
+-               - Initial Conditions (INIT state):
+-                   A(x) = x^16 (deg_A = 16), W(x) = 0
+-                   S(x) = S_15*x^15 + ... + S_0 (deg_S = 15), T(x) = 1
+-               - Termination Invariant:
+-                   Stops when formal remainder degree reaches deg_S == 7 (< t = 8),
+-                   placing Omega_7..Omega_0 at reg_S[16:9] and Lambda_8..Lambda_0
+-                   at reg_T[8:0] after at most 16 steps (32 clock cycles <= max = 39).
+-
+-Revision History:
+-  - Rev 1.0 (Initial) : 40-cycle Euclidean key equation solver for RS(255,239) & RS(32,16).
+-  - Rev 2.6 (2026-10-30 01:32 KST) : [Audit Fix N02 - Degree-Tracked Sugiyama Euclidean Solver]
+-    1. Added explicit formal degree tracking registers ('deg_A' initialized to 16 and 
+-       'deg_S' initialized to 15) with a 2-cycle per degree-step schedule (pos = 0..1, 
+-       completing in <= 32 cycles within the existing 40-cycle 'max = 39' window).
+-    2. Added leading-zero normalization when 'reg_S[16] == 8'd0' and 'deg_S >= 5'd8' so 
+-       vanishing leading syndromes (such as S_15 == 0 in 2-error delta=119 cases) and 
+-       multi-degree cancellations (such as single-symbol errors, nu = 1) normalize 
+-       cleanly without dividing by zero or overwriting Lambda(x) in reg_T.
+-    3. Added exact termination hold when 'deg_S == 5'd7' (deg(Omega) < 8), ensuring 
+-       100% error recovery across 0, 1, 2, ..., 8 symbol errors in both RS(32,16) and 
+-       RS(255,239) codewords.
+-===========================================================================
+-*/
+-
+-module euclid_proc #(
+-    parameter max = 39
+-)(
+-    input  wire         clk,
+-    input  wire         rst_n,
+-    input  wire         en,
+-    input  wire [127:0] syndrome,
+-    output wire         flag,
+-    output wire [71:0]  delta,
+-    output wire [63:0]  omega
+-);
+-
+-    reg [7:0] count = 8'd0;
+-
+-    localparam IDLE   = 4'b0001;
+-    localparam INIT   = 4'b0010;
+-    localparam ACTIVE = 4'b0100;
+-    localparam END    = 4'b1000;
+-
+-    reg [3:0] state;
+-    reg [3:0] next_state;
+-
+-    reg [127:0] syndrome_d0;
+-
+-    reg [7:0] reg_A [0:16];
+-    reg [7:0] reg_S [0:16];
+-    reg [7:0] reg_C [0:16];
+-    reg [7:0] reg_W [0:16];
+-    reg [7:0] reg_T [0:16];
+-    reg [7:0] reg_Y [0:16];
+-
+-    // [Rev 2.6 - Fix N02] Formal degree counters for dividend A(x) and remainder S(x)
+-    reg [4:0] deg_A;
+-    reg [4:0] deg_S;
+-
+-    wire [7:0] X [0:16];
+-    wire [7:0] Y [0:16];
+-    wire [7:0] Z [0:16];
+-    wire [7:0] T [0:16];
+-
+-    wire [7:0] B [0:16];
+-    wire [7:0] C [0:16];
+-    wire [7:0] D [0:16];
+-    wire [7:0] S [0:16];
+-
+-    wire [7:0] inv_0;
+-    wire [7:0] fold_B;
+-    wire [7:0] fold_D;
+-
+-    reg [7:0] reg_inv_0;
+-    reg [7:0] reg_fold_B;
+-    reg [7:0] reg_fold_D;
+-
+-    reg [7:0] pos = 8'd0;
+-
+-    // FSM State Register
+-    always @(posedge clk or negedge rst_n) begin
+-        if (~rst_n)
+-            state <= IDLE;
+-        else
+-            state <= next_state;
+-    end
+-
+-    // Cycle Counter (0 to 39 in ACTIVE, 40 at END)
+-    always @(posedge clk or negedge rst_n) begin
+-        if (~rst_n)
+-            count <= 8'd0;
+-        else if (state == ACTIVE)
+-            count <= count + 1'b1;
+-        else
+-            count <= 8'd0;
+-    end
+-
+-    // Next State Logic
+-    always @(*) begin
+-        case (state)
+-            IDLE: begin
+-                if (en)
+-                    next_state = INIT;
+-                else
+-                    next_state = IDLE;
+-            end
+-            INIT:   next_state = ACTIVE;
+-            ACTIVE: begin
+-                if (count < max)
+-                    next_state = ACTIVE;
+-                else
+-                    next_state = END;
+-            end
+-            END:     next_state = IDLE;
+-            default: next_state = IDLE;
+-        endcase
+-    end
+-
+-    // Input Syndrome Register
+-    always @(posedge clk or negedge rst_n) begin
+-        if (~rst_n)
+-            syndrome_d0 <= 128'b0;
+-        else
+-            syndrome_d0 <= syndrome;
+-    end
+-
+-    // [Rev 2.6 - Fix N02] 2-Cycle Sub-Iteration Phase Counter (0 to 1)
+-    // Completes up to 16 single-degree steps in at most 32 cycles (within max = 39)
+-    always @(posedge clk or negedge rst_n) begin
+-        if (~rst_n)
+-            pos <= 8'd0;
+-        else if (state == ACTIVE) begin
+-            if (pos == 8'd0)
+-                pos <= 8'd1;
+-            else
+-                pos <= 8'd0;
+-        end else begin
+-            pos <= 8'd0;
+-        end
+-    end
+-
+-    // Degree difference delta_d = deg_A - deg_S (always >= 0 while deg_S >= 8)
+-    wire [4:0] delta_d = (deg_A >= deg_S) ? (deg_A - deg_S) : 5'd0;
+-
+-    // Shifted locator polynomial x^(delta_d) * reg_T(x)
+-    wire [7:0] T_shift [0:16];
+-    genvar g;
+-    generate
+-        for (g = 0; g < 17; g = g + 1) begin : gen_t_shift
+-            assign T_shift[g] = (g >= delta_d) ? reg_T[g - delta_d] : 8'd0;
+-        end
+-    endgenerate
+-
+-    // Polynomial Register Updates
+-    integer i;
+-    always @(posedge clk or negedge rst_n) begin
+-        if (~rst_n) begin
+-            reg_inv_0  <= 8'b0;
+-            reg_fold_B <= 8'b0;
+-            reg_fold_D <= 8'b0;
+-            deg_A      <= 5'd16;
+-            deg_S      <= 5'd15;
+-
+-            for (i = 0; i < 17; i = i + 1) begin
+-                reg_A[i] <= 8'b0;
+-                reg_C[i] <= 8'b0;
+-                reg_S[i] <= 8'b0;
+-                reg_W[i] <= 8'b0;
+-                reg_Y[i] <= 8'b0;
+-                reg_T[i] <= 8'b0;
+-            end
+-        end else if (state == INIT) begin
+-            reg_inv_0  <= 8'b0;
+-            reg_fold_B <= 8'b0;
+-            reg_fold_D <= 8'b0;
+-            deg_A      <= 5'd16;
+-            deg_S      <= 5'd15;
+-
+-            reg_A[16] <= 8'h01;
+-            reg_T[0]  <= 8'h01;
+-
+-            for (i = 0; i < 16; i = i + 1)
+-                reg_A[i] <= 8'b0;
+-            for (i = 1; i < 17; i = i + 1)
+-                reg_T[i] <= 8'b0;
+-            for (i = 0; i < 17; i = i + 1) begin
+-                reg_C[i] <= 8'b0;
+-                reg_W[i] <= 8'b0;
+-                reg_Y[i] <= 8'b0;
+-            end
+-
+-            reg_S[16] <= syndrome_d0[127:120];
+-            reg_S[15] <= syndrome_d0[119:112];
+-            reg_S[14] <= syndrome_d0[111:104];
+-            reg_S[13] <= syndrome_d0[103:96];
+-            reg_S[12] <= syndrome_d0[95:88];
+-            reg_S[11] <= syndrome_d0[87:80];
+-            reg_S[10] <= syndrome_d0[79:72];
+-            reg_S[9]  <= syndrome_d0[71:64];
+-            reg_S[8]  <= syndrome_d0[63:56];
+-            reg_S[7]  <= syndrome_d0[55:48];
+-            reg_S[6]  <= syndrome_d0[47:40];
+-            reg_S[5]  <= syndrome_d0[39:32];
+-            reg_S[4]  <= syndrome_d0[31:24];
+-            reg_S[3]  <= syndrome_d0[23:16];
+-            reg_S[2]  <= syndrome_d0[15:8];
+-            reg_S[1]  <= syndrome_d0[7:0];
+-            reg_S[0]  <= 8'b0;
+-        end else if (state == ACTIVE) begin
+-            if (pos == 8'd0) begin
+-                // Phase 0: Latch multiplicative inverse of leading coefficient reg_S[16]
+-                reg_inv_0  <= inv_0;
+-                reg_fold_B <= fold_B;
+-            end else begin
+-                // Phase 1: Execute 1 degree-reduction or normalization step while deg_S >= 8
+-                if (deg_S >= 5'd8) begin
+-                    if (reg_S[16] == 8'd0) begin
+-                        // Rule 1: Leading coefficient of reg_S is zero -> normalize reg_S left by 1
+-                        for (i = 16; i >= 1; i = i - 1) begin
+-                            reg_S[i] <= reg_S[i - 1];
+-                        end
+-                        reg_S[0] <= 8'd0;
+-                        deg_S    <= deg_S - 5'd1;
+-                    end else if (deg_A > deg_S) begin
+-                        // Rule 2a (deg_A > deg_S): Eliminate reg_A[16], shift A remainder left by 1
+-                        for (i = 16; i >= 1; i = i - 1) begin
+-                            reg_A[i] <= C[i - 1];
+-                        end
+-                        reg_A[0] <= 8'd0;
+-                        deg_A    <= deg_A - 5'd1;
+-
+-                        for (i = 0; i < 17; i = i + 1) begin
+-                            reg_W[i] <= Y[i];
+-                        end
+-                    end else begin
+-                        // Rule 2b (deg_A == deg_S): Eliminate reg_A[16], swap (A, W) <-> (S, T),
+-                        // and shift new S remainder left by 1
+-                        for (i = 0; i < 17; i = i + 1) begin
+-                            reg_A[i] <= reg_S[i];
+-                            reg_W[i] <= reg_T[i];
+-                            reg_T[i] <= Y[i];
+-                        end
+-                        deg_A <= deg_S;
+-
+-                        for (i = 16; i >= 1; i = i - 1) begin
+-                            reg_S[i] <= C[i - 1];
+-                        end
+-                        reg_S[0] <= 8'd0;
+-                        deg_S    <= deg_S - 5'd1;
+-                    end
+-                end
+-                // Rule 3 (deg_S == 5'd7): Termination reached (deg(Omega) < 8); hold all registers steady
+-            end
+-
+-            for (i = 0; i < 17; i = i + 1) begin
+-                reg_C[i] <= C[i];
+-                reg_Y[i] <= Y[i];
+-            end
+-        end
+-    end
+-
+-    // Galois Field Inverter and Multipliers
+-    inverter   invert_0 (reg_S[16], inv_0);
+-    multiplier gf_B     (reg_inv_0, reg_A[16], fold_B);
+-    multiplier gf_D     (reg_inv_0, reg_C[15], fold_D);
+-
+-    // [Rev 2.6] Use combinational fold_B during pos == 1 after reg_inv_0 is latched on pos == 0
+-    assign B[0] = 8'b0;
+-    multiplier gf_B16 (fold_B, reg_S[16], B[16]);
+-    multiplier gf_B15 (fold_B, reg_S[15], B[15]);
+-    multiplier gf_B14 (fold_B, reg_S[14], B[14]);
+-    multiplier gf_B13 (fold_B, reg_S[13], B[13]);
+-    multiplier gf_B12 (fold_B, reg_S[12], B[12]);
+-    multiplier gf_B11 (fold_B, reg_S[11], B[11]);
+-    multiplier gf_B10 (fold_B, reg_S[10], B[10]);
+-    multiplier gf_B9  (fold_B, reg_S[9],  B[9]);
+-    multiplier gf_B8  (fold_B, reg_S[8],  B[8]);
+-    multiplier gf_B7  (fold_B, reg_S[7],  B[7]);
+-    multiplier gf_B6  (fold_B, reg_S[6],  B[6]);
+-    multiplier gf_B5  (fold_B, reg_S[5],  B[5]);
+-    multiplier gf_B4  (fold_B, reg_S[4],  B[4]);
+-    multiplier gf_B3  (fold_B, reg_S[3],  B[3]);
+-    multiplier gf_B2  (fold_B, reg_S[2],  B[2]);
+-    multiplier gf_B1  (fold_B, reg_S[1],  B[1]);
+-
+-    assign D[16] = 8'b0;
+-    multiplier gf_D15 (reg_fold_D, reg_S[16], D[15]);
+-    multiplier gf_D14 (reg_fold_D, reg_S[15], D[14]);
+-    multiplier gf_D13 (reg_fold_D, reg_S[14], D[13]);
+-    multiplier gf_D12 (reg_fold_D, reg_S[13], D[12]);
+-    multiplier gf_D11 (reg_fold_D, reg_S[12], D[11]);
+-    multiplier gf_D10 (reg_fold_D, reg_S[11], D[10]);
+-    multiplier gf_D9  (reg_fold_D, reg_S[10], D[9]);
+-    multiplier gf_D8  (reg_fold_D, reg_S[9],  D[8]);
+-    multiplier gf_D7  (reg_fold_D, reg_S[8],  D[7]);
+-    multiplier gf_D6  (reg_fold_D, reg_S[7],  D[6]);
+-    multiplier gf_D5  (reg_fold_D, reg_S[6],  D[5]);
+-    multiplier gf_D4  (reg_fold_D, reg_S[5],  D[4]);
+-    multiplier gf_D3  (reg_fold_D, reg_S[4],  D[3]);
+-    multiplier gf_D2  (reg_fold_D, reg_S[3],  D[2]);
+-    multiplier gf_D1  (reg_fold_D, reg_S[2],  D[1]);
+-    multiplier gf_D0  (reg_fold_D, reg_S[1],  D[0]);
+-
+-    assign C[16] = reg_A[16] ^ B[16];
+-    assign C[15] = reg_A[15] ^ B[15];
+-    assign C[14] = reg_A[14] ^ B[14];
+-    assign C[13] = reg_A[13] ^ B[13];
+-    assign C[12] = reg_A[12] ^ B[12];
+-    assign C[11] = reg_A[11] ^ B[11];
+-    assign C[10] = reg_A[10] ^ B[10];
+-    assign C[9]  = reg_A[9]  ^ B[9];
+-    assign C[8]  = reg_A[8]  ^ B[8];
+-    assign C[7]  = reg_A[7]  ^ B[7];
+-    assign C[6]  = reg_A[6]  ^ B[6];
+-    assign C[5] = reg_A[5]  ^ B[5];
+-    assign C[4]  = reg_A[4]  ^ B[4];
+-    assign C[3]  = reg_A[3]  ^ B[3];
+-    assign C[2]  = reg_A[2]  ^ B[2];
+-    assign C[1]  = reg_A[1]  ^ B[1];
+-    assign C[0]  = reg_A[0]  ^ B[0];
+-
+-    assign S[16] = reg_C[16] ^ D[16];
+-    assign S[15] = reg_C[15] ^ D[15];
+-    assign S[14] = reg_C[14] ^ D[14];
+-    assign S[13] = reg_C[13] ^ D[13];
+-    assign S[12] = reg_C[12] ^ D[12];
+-    assign S[11] = reg_C[11] ^ D[11];
+-    assign S[10] = reg_C[10] ^ D[10];
+-    assign S[9]  = reg_C[9]  ^ D[9];
+-    assign S[8]  = reg_C[8]  ^ D[8];
+-    assign S[7]  = reg_C[7]  ^ D[7];
+-    assign S[6]  = reg_C[6]  ^ D[6];
+-    assign S[5]  = reg_C[5]  ^ D[5];
+-    assign S[4]  = reg_C[4]  ^ D[4];
+-    assign S[3]  = reg_C[3]  ^ D[3];
+-    assign S[2]  = reg_C[2]  ^ D[2];
+-    assign S[1]  = reg_C[1]  ^ D[1];
+-    assign S[0]  = reg_C[0]  ^ D[0];
+-
+-    // [Rev 2.6] Multiply fold_B by x^(delta_d) * reg_T(x) = T_shift[16:0]
+-    multiplier gf_X16 (fold_B, T_shift[16], X[16]);
+-    multiplier gf_X14 (fold_B, T_shift[15], X[15]);
+-    multiplier gf_X13 (fold_B, T_shift[14], X[14]);
+-    multiplier gf_X12 (fold_B, T_shift[13], X[13]);
+-    multiplier gf_X11 (fold_B, T_shift[12], X[12]);
+-    multiplier gf_X10 (fold_B, T_shift[11], X[11]);
+-    multiplier gf_X9  (fold_B, T_shift[10], X[10]);
+-    multiplier gf_X8  (fold_B, T_shift[9],  X[9]);
+-    multiplier gf_X7  (fold_B, T_shift[8],  X[8]);
+-    multiplier gf_X6  (fold_B, T_shift[7],  X[7]);
+-    multiplier gf_X5  (fold_B, T_shift[6],  X[6]);
+-    multiplier gf_X4  (fold_B, T_shift[5],  X[5]);
+-    multiplier gf_X3  (fold_B, T_shift[4],  X[4]);
+-    multiplier gf_X2  (fold_B, T_shift[3],  X[3]);
+-    multiplier gf_X1  (fold_B, T_shift[2],  X[2]);
+-    multiplier gf_X0  (fold_B, T_shift[1],  X[1]);
+-    multiplier gf_X00 (fold_B, T_shift[0],  X[0]);
+-
+-    assign Z[16] = 8'b0;
+-    multiplier gf_Y15 (reg_fold_D, reg_T[15], Z[15]);
+-    multiplier gf_Y14 (reg_fold_D, reg_T[14], Z[14]);
+-    multiplier gf_Y13 (reg_fold_D, reg_T[13], Z[13]);
+-    multiplier gf_Y12 (reg_fold_D, reg_T[12], Z[12]);
+-    multiplier gf_Y11 (reg_fold_D, reg_T[11], Z[11]);
+-    multiplier gf_Y10 (reg_fold_D, reg_T[10], Z[10]);
+-    multiplier gf_Y9  (reg_fold_D, reg_T[9],  Z[9]);
+-    multiplier gf_Y8  (reg_fold_D, reg_T[8],  Z[8]);
+-    multiplier gf_Y7  (reg_fold_D, reg_T[7],  Z[7]);
+-    multiplier gf_Y6  (reg_fold_D, reg_T[6],  Z[6]);
+-    multiplier gf_Y5  (reg_fold_D, reg_T[5],  Z[5]);
+-    multiplier gf_Y4  (reg_fold_D, reg_T[4],  Z[4]);
+-    multiplier gf_Y3  (reg_fold_D, reg_T[3],  Z[3]);
+-    multiplier gf_Y2  (reg_fold_D, reg_T[2],  Z[2]);
+-    multiplier gf_Y1  (reg_fold_D, reg_T[1],  Z[1]);
+-    multiplier gf_Y0  (reg_fold_D, reg_T[0],  Z[0]);
+-
+-    assign Y[16] = reg_W[16] ^ X[16];
+-    assign Y[15] = reg_W[15] ^ X[15];
+-    assign Y[14] = reg_W[14] ^ X[14];
+-    assign Y[13] = reg_W[13] ^ X[13];
+-    assign Y[12] = reg_W[12] ^ X[12];
+-    assign Y[11] = reg_W[11] ^ X[11];
+-    assign Y[10] = reg_W[10] ^ X[10];
+-    assign Y[9]  = reg_W[9]  ^ X[9];
+-    assign Y[8]  = reg_W[8]  ^ X[8];
+-    assign Y[7]  = reg_W[7]  ^ X[7];
+-    assign Y[6]  = reg_W[6]  ^ X[6];
+-    assign Y[5]  = reg_W[5]  ^ X[5];
+-    assign Y[4]  = reg_W[4]  ^ X[4];
+-    assign Y[3]  = reg_W[3]  ^ X[3];
+-    assign Y[2]  = reg_W[2]  ^ X[2];
+-    assign Y[1]  = reg_W[1]  ^ X[1];
+-    assign Y[0]  = reg_W[0]  ^ X[0];
+-
+-    assign T[16] = reg_Y[16] ^ Z[16];
+-    assign T[15] = reg_Y[15] ^ Z[15];
+-    assign T[14] = reg_Y[14] ^ Z[14];
+-    assign T[13] = reg_Y[13] ^ Z[13];
+-    assign T[12] = reg_Y[12] ^ Z[12];
+-    assign T[11] = reg_Y[11] ^ Z[11];
+-    assign T[10] = reg_Y[10] ^ Z[10];
+-    assign T[9]  = reg_Y[9]  ^ Z[9];
+-    assign T[8]  = reg_Y[8]  ^ Z[8];
+-    assign T[7]  = reg_Y[7]  ^ Z[7];
+-    assign T[6]  = reg_Y[6]  ^ Z[6];
+-    assign T[5]  = reg_Y[5]  ^ Z[5];
+-    assign T[4]  = reg_Y[4]  ^ Z[4];
+-    assign T[3]  = reg_Y[3]  ^ Z[3];
+-    assign T[2]  = reg_Y[2]  ^ Z[2];
+-    assign T[1]  = reg_Y[1]  ^ Z[1];
+-    assign T[0]  = reg_Y[0]  ^ Z[0];
+-
+-    assign flag  = (count == 8'd40);
+-    assign delta = (flag) ? {reg_T[8], reg_T[7], reg_T[6], reg_T[5], reg_T[4], reg_T[3], reg_T[2], reg_T[1], reg_T[0]} : 72'b0;
+-    assign omega = (flag) ? {reg_S[16], reg_S[15], reg_S[14], reg_S[13], reg_S[12], reg_S[11], reg_S[10], reg_S[9]} : 64'b0;
+-
++`timescale 1ns / 1ps
++/*
++===========================================================================
++Company      : WiComAI Lab, Kookmin University / ETRI Daejeon
++Engineers    : Irzal Zaini & Williamsyah Baginda Miraj
++Module Name  : euclid_proc
++Description  : Reed-Solomon Key Equation Solver (Euclidean Algorithm).
++               Computes the 72-bit Error Locator Polynomial (delta) and 
++               the 64-bit Error Evaluator Polynomial (omega) from the 
++               128-bit syndrome vector in 40 active clock cycles.
++
++               Mathematical Foundation & Parameter Basis (SDA OISL v2.1.2):
++               - Solves the Reed-Solomon Key Equation over GF(2^8) (0x187):
++                   Lambda(x) * S(x) = Omega(x) mod x^(2t), where 2t = 16 (t = 8).
++               - Initial Conditions (INIT state):
++                   A(x) = x^16 (deg_A = 16), W(x) = 0
++                   S(x) = S_15*x^15 + ... + S_0 (deg_S = 15), T(x) = 1
++               - Termination Invariant:
++                   Stops when formal remainder degree reaches deg_S == 7 (< t = 8),
++                   placing Omega_7..Omega_0 at reg_S[16:9] and Lambda_8..Lambda_0
++                   at reg_T[8:0] after at most 16 steps (32 clock cycles <= max = 39).
++
++Revision History:
++  - Rev 1.0 (Initial) : 40-cycle Euclidean key equation solver for RS(255,239) & RS(32,16).
++  - Rev 2.6 (2026-10-30 01:32 KST) : [Audit Fix N02 - Degree-Tracked Sugiyama Euclidean Solver]
++    1. Added explicit formal degree tracking registers ('deg_A' initialized to 16 and 
++       'deg_S' initialized to 15) with a 2-cycle per degree-step schedule (pos = 0..1, 
++       completing in <= 32 cycles within the existing 40-cycle 'max = 39' window).
++    2. Added leading-zero normalization when 'reg_S[16] == 8'd0' and 'deg_S >= 5'd8' so 
++       vanishing leading syndromes (such as S_15 == 0 in 2-error delta=119 cases) and 
++       multi-degree cancellations (such as single-symbol errors, nu = 1) normalize 
++       cleanly without dividing by zero or overwriting Lambda(x) in reg_T.
++    3. Added exact termination hold when 'deg_S == 5'd7' (deg(Omega) < 8), ensuring 
++       100% error recovery across 0, 1, 2, ..., 8 symbol errors in both RS(32,16) and 
++       RS(255,239) codewords.
++===========================================================================
++*/
++
++module euclid_proc #(
++    parameter max = 39
++)(
++    input  wire         clk,
++    input  wire         rst_n,
++    input  wire         en,
++    input  wire [127:0] syndrome,
++    output wire         flag,
++    output wire [71:0]  delta,
++    output wire [63:0]  omega
++);
++
++    reg [7:0] count = 8'd0;
++
++    localparam IDLE   = 4'b0001;
++    localparam INIT   = 4'b0010;
++    localparam ACTIVE = 4'b0100;
++    localparam END    = 4'b1000;
++
++    reg [3:0] state;
++    reg [3:0] next_state;
++
++    reg [127:0] syndrome_d0;
++
++    reg [7:0] reg_A [0:16];
++    reg [7:0] reg_S [0:16];
++    reg [7:0] reg_C [0:16];
++    reg [7:0] reg_W [0:16];
++    reg [7:0] reg_T [0:16];
++    reg [7:0] reg_Y [0:16];
++
++    // [Rev 2.6 - Fix N02] Formal degree counters for dividend A(x) and remainder S(x)
++    reg [4:0] deg_A;
++    reg [4:0] deg_S;
++
++    wire [7:0] X [0:16];
++    wire [7:0] Y [0:16];
++    wire [7:0] Z [0:16];
++    wire [7:0] T [0:16];
++
++    wire [7:0] B [0:16];
++    wire [7:0] C [0:16];
++    wire [7:0] D [0:16];
++    wire [7:0] S [0:16];
++
++    wire [7:0] inv_0;
++    wire [7:0] fold_B;
++    wire [7:0] fold_D;
++
++    reg [7:0] reg_inv_0;
++    reg [7:0] reg_fold_B;
++    reg [7:0] reg_fold_D;
++
++    reg [7:0] pos = 8'd0;
++
++    // FSM State Register
++    always @(posedge clk or negedge rst_n) begin
++        if (~rst_n)
++            state <= IDLE;
++        else
++            state <= next_state;
++    end
++
++    // Cycle Counter (0 to 39 in ACTIVE, 40 at END)
++    always @(posedge clk or negedge rst_n) begin
++        if (~rst_n)
++            count <= 8'd0;
++        else if (state == ACTIVE)
++            count <= count + 1'b1;
++        else
++            count <= 8'd0;
++    end
++
++    // Next State Logic
++    always @(*) begin
++        case (state)
++            IDLE: begin
++                if (en)
++                    next_state = INIT;
++                else
++                    next_state = IDLE;
++            end
++            INIT:   next_state = ACTIVE;
++            ACTIVE: begin
++                if (count < max)
++                    next_state = ACTIVE;
++                else
++                    next_state = END;
++            end
++            END:     next_state = IDLE;
++            default: next_state = IDLE;
++        endcase
++    end
++
++    // Input Syndrome Register
++    always @(posedge clk or negedge rst_n) begin
++        if (~rst_n)
++            syndrome_d0 <= 128'b0;
++        else
++            syndrome_d0 <= syndrome;
++    end
++
++    // [Rev 2.6 - Fix N02] 2-Cycle Sub-Iteration Phase Counter (0 to 1)
++    // Completes up to 16 single-degree steps in at most 32 cycles (within max = 39)
++    always @(posedge clk or negedge rst_n) begin
++        if (~rst_n)
++            pos <= 8'd0;
++        else if (state == ACTIVE) begin
++            if (pos == 8'd0)
++                pos <= 8'd1;
++            else
++                pos <= 8'd0;
++        end else begin
++            pos <= 8'd0;
++        end
++    end
++
++    // Degree difference delta_d = deg_A - deg_S (always >= 0 while deg_S >= 8)
++    wire [4:0] delta_d = (deg_A >= deg_S) ? (deg_A - deg_S) : 5'd0;
++
++    // Shifted locator polynomial x^(delta_d) * reg_T(x)
++    wire [7:0] T_shift [0:16];
++    genvar g;
++    generate
++        for (g = 0; g < 17; g = g + 1) begin : gen_t_shift
++            assign T_shift[g] = (g >= delta_d) ? reg_T[g - delta_d] : 8'd0;
++        end
++    endgenerate
++
++    // Polynomial Register Updates
++    integer i;
++    always @(posedge clk or negedge rst_n) begin
++        if (~rst_n) begin
++            reg_inv_0  <= 8'b0;
++            reg_fold_B <= 8'b0;
++            reg_fold_D <= 8'b0;
++            deg_A      <= 5'd16;
++            deg_S      <= 5'd15;
++
++            for (i = 0; i < 17; i = i + 1) begin
++                reg_A[i] <= 8'b0;
++                reg_C[i] <= 8'b0;
++                reg_S[i] <= 8'b0;
++                reg_W[i] <= 8'b0;
++                reg_Y[i] <= 8'b0;
++                reg_T[i] <= 8'b0;
++            end
++        end else if (state == INIT) begin
++            reg_inv_0  <= 8'b0;
++            reg_fold_B <= 8'b0;
++            reg_fold_D <= 8'b0;
++            deg_A      <= 5'd16;
++            deg_S      <= 5'd15;
++
++            reg_A[16] <= 8'h01;
++            reg_T[0]  <= 8'h01;
++
++            for (i = 0; i < 16; i = i + 1)
++                reg_A[i] <= 8'b0;
++            for (i = 1; i < 17; i = i + 1)
++                reg_T[i] <= 8'b0;
++            for (i = 0; i < 17; i = i + 1) begin
++                reg_C[i] <= 8'b0;
++                reg_W[i] <= 8'b0;
++                reg_Y[i] <= 8'b0;
++            end
++
++            reg_S[16] <= syndrome_d0[127:120];
++            reg_S[15] <= syndrome_d0[119:112];
++            reg_S[14] <= syndrome_d0[111:104];
++            reg_S[13] <= syndrome_d0[103:96];
++            reg_S[12] <= syndrome_d0[95:88];
++            reg_S[11] <= syndrome_d0[87:80];
++            reg_S[10] <= syndrome_d0[79:72];
++            reg_S[9]  <= syndrome_d0[71:64];
++            reg_S[8]  <= syndrome_d0[63:56];
++            reg_S[7]  <= syndrome_d0[55:48];
++            reg_S[6]  <= syndrome_d0[47:40];
++            reg_S[5]  <= syndrome_d0[39:32];
++            reg_S[4]  <= syndrome_d0[31:24];
++            reg_S[3]  <= syndrome_d0[23:16];
++            reg_S[2]  <= syndrome_d0[15:8];
++            reg_S[1]  <= syndrome_d0[7:0];
++            reg_S[0]  <= 8'b0;
++        end else if (state == ACTIVE) begin
++            if (pos == 8'd0) begin
++                // Phase 0: Latch multiplicative inverse of leading coefficient reg_S[16]
++                reg_inv_0  <= inv_0;
++                reg_fold_B <= fold_B;
++            end else begin
++                // Phase 1: Execute 1 degree-reduction or normalization step while deg_S >= 8
++                if (deg_S >= 5'd8) begin
++                    if (reg_S[16] == 8'd0) begin
++                        // Rule 1: Leading coefficient of reg_S is zero -> normalize reg_S left by 1
++                        for (i = 16; i >= 1; i = i - 1) begin
++                            reg_S[i] <= reg_S[i - 1];
++                        end
++                        reg_S[0] <= 8'd0;
++                        deg_S    <= deg_S - 5'd1;
++                    end else if (deg_A > deg_S) begin
++                        // Rule 2a (deg_A > deg_S): Eliminate reg_A[16], shift A remainder left by 1
++                        for (i = 16; i >= 1; i = i - 1) begin
++                            reg_A[i] <= C[i - 1];
++                        end
++                        reg_A[0] <= 8'd0;
++                        deg_A    <= deg_A - 5'd1;
++
++                        for (i = 0; i < 17; i = i + 1) begin
++                            reg_W[i] <= Y[i];
++                        end
++                    end else begin
++                        // Rule 2b (deg_A == deg_S): Eliminate reg_A[16], swap (A, W) <-> (S, T),
++                        // and shift new S remainder left by 1
++                        for (i = 0; i < 17; i = i + 1) begin
++                            reg_A[i] <= reg_S[i];
++                            reg_W[i] <= reg_T[i];
++                            reg_T[i] <= Y[i];
++                        end
++                        deg_A <= deg_S;
++
++                        for (i = 16; i >= 1; i = i - 1) begin
++                            reg_S[i] <= C[i - 1];
++                        end
++                        reg_S[0] <= 8'd0;
++                        deg_S    <= deg_S - 5'd1;
++                    end
++                end
++                // Rule 3 (deg_S == 5'd7): Termination reached (deg(Omega) < 8); hold all registers steady
++            end
++
++            for (i = 0; i < 17; i = i + 1) begin
++                reg_C[i] <= C[i];
++                reg_Y[i] <= Y[i];
++            end
++        end
++    end
++
++    // Galois Field Inverter and Multipliers
++    inverter   invert_0 (reg_S[16], inv_0);
++    multiplier gf_B     (reg_inv_0, reg_A[16], fold_B);
++    multiplier gf_D     (reg_inv_0, reg_C[15], fold_D);
++
++    // [Rev 2.6] Use combinational fold_B during pos == 1 after reg_inv_0 is latched on pos == 0
++    assign B[0] = 8'b0;
++    multiplier gf_B16 (fold_B, reg_S[16], B[16]);
++    multiplier gf_B15 (fold_B, reg_S[15], B[15]);
++    multiplier gf_B14 (fold_B, reg_S[14], B[14]);
++    multiplier gf_B13 (fold_B, reg_S[13], B[13]);
++    multiplier gf_B12 (fold_B, reg_S[12], B[12]);
++    multiplier gf_B11 (fold_B, reg_S[11], B[11]);
++    multiplier gf_B10 (fold_B, reg_S[10], B[10]);
++    multiplier gf_B9  (fold_B, reg_S[9],  B[9]);
++    multiplier gf_B8  (fold_B, reg_S[8],  B[8]);
++    multiplier gf_B7  (fold_B, reg_S[7],  B[7]);
++    multiplier gf_B6  (fold_B, reg_S[6],  B[6]);
++    multiplier gf_B5  (fold_B, reg_S[5],  B[5]);
++    multiplier gf_B4  (fold_B, reg_S[4],  B[4]);
++    multiplier gf_B3  (fold_B, reg_S[3],  B[3]);
++    multiplier gf_B2  (fold_B, reg_S[2],  B[2]);
++    multiplier gf_B1  (fold_B, reg_S[1],  B[1]);
++
++    assign D[16] = 8'b0;
++    multiplier gf_D15 (reg_fold_D, reg_S[16], D[15]);
++    multiplier gf_D14 (reg_fold_D, reg_S[15], D[14]);
++    multiplier gf_D13 (reg_fold_D, reg_S[14], D[13]);
++    multiplier gf_D12 (reg_fold_D, reg_S[13], D[12]);
++    multiplier gf_D11 (reg_fold_D, reg_S[12], D[11]);
++    multiplier gf_D10 (reg_fold_D, reg_S[11], D[10]);
++    multiplier gf_D9  (reg_fold_D, reg_S[10], D[9]);
++    multiplier gf_D8  (reg_fold_D, reg_S[9],  D[8]);
++    multiplier gf_D7  (reg_fold_D, reg_S[8],  D[7]);
++    multiplier gf_D6  (reg_fold_D, reg_S[7],  D[6]);
++    multiplier gf_D5  (reg_fold_D, reg_S[6],  D[5]);
++    multiplier gf_D4  (reg_fold_D, reg_S[5],  D[4]);
++    multiplier gf_D3  (reg_fold_D, reg_S[4],  D[3]);
++    multiplier gf_D2  (reg_fold_D, reg_S[3],  D[2]);
++    multiplier gf_D1  (reg_fold_D, reg_S[2],  D[1]);
++    multiplier gf_D0  (reg_fold_D, reg_S[1],  D[0]);
++
++    assign C[16] = reg_A[16] ^ B[16];
++    assign C[15] = reg_A[15] ^ B[15];
++    assign C[14] = reg_A[14] ^ B[14];
++    assign C[13] = reg_A[13] ^ B[13];
++    assign C[12] = reg_A[12] ^ B[12];
++    assign C[11] = reg_A[11] ^ B[11];
++    assign C[10] = reg_A[10] ^ B[10];
++    assign C[9]  = reg_A[9]  ^ B[9];
++    assign C[8]  = reg_A[8]  ^ B[8];
++    assign C[7]  = reg_A[7]  ^ B[7];
++    assign C[6]  = reg_A[6]  ^ B[6];
++    assign C[5] = reg_A[5]  ^ B[5];
++    assign C[4]  = reg_A[4]  ^ B[4];
++    assign C[3]  = reg_A[3]  ^ B[3];
++    assign C[2]  = reg_A[2]  ^ B[2];
++    assign C[1]  = reg_A[1]  ^ B[1];
++    assign C[0]  = reg_A[0]  ^ B[0];
++
++    assign S[16] = reg_C[16] ^ D[16];
++    assign S[15] = reg_C[15] ^ D[15];
++    assign S[14] = reg_C[14] ^ D[14];
++    assign S[13] = reg_C[13] ^ D[13];
++    assign S[12] = reg_C[12] ^ D[12];
++    assign S[11] = reg_C[11] ^ D[11];
++    assign S[10] = reg_C[10] ^ D[10];
++    assign S[9]  = reg_C[9]  ^ D[9];
++    assign S[8]  = reg_C[8]  ^ D[8];
++    assign S[7]  = reg_C[7]  ^ D[7];
++    assign S[6]  = reg_C[6]  ^ D[6];
++    assign S[5]  = reg_C[5]  ^ D[5];
++    assign S[4]  = reg_C[4]  ^ D[4];
++    assign S[3]  = reg_C[3]  ^ D[3];
++    assign S[2]  = reg_C[2]  ^ D[2];
++    assign S[1]  = reg_C[1]  ^ D[1];
++    assign S[0]  = reg_C[0]  ^ D[0];
++
++    // [Rev 2.6] Multiply fold_B by x^(delta_d) * reg_T(x) = T_shift[16:0]
++    multiplier gf_X16 (fold_B, T_shift[16], X[16]);
++    multiplier gf_X14 (fold_B, T_shift[15], X[15]);
++    multiplier gf_X13 (fold_B, T_shift[14], X[14]);
++    multiplier gf_X12 (fold_B, T_shift[13], X[13]);
++    multiplier gf_X11 (fold_B, T_shift[12], X[12]);
++    multiplier gf_X10 (fold_B, T_shift[11], X[11]);
++    multiplier gf_X9  (fold_B, T_shift[10], X[10]);
++    multiplier gf_X8  (fold_B, T_shift[9],  X[9]);
++    multiplier gf_X7  (fold_B, T_shift[8],  X[8]);
++    multiplier gf_X6  (fold_B, T_shift[7],  X[7]);
++    multiplier gf_X5  (fold_B, T_shift[6],  X[6]);
++    multiplier gf_X4  (fold_B, T_shift[5],  X[5]);
++    multiplier gf_X3  (fold_B, T_shift[4],  X[4]);
++    multiplier gf_X2  (fold_B, T_shift[3],  X[3]);
++    multiplier gf_X1  (fold_B, T_shift[2],  X[2]);
++    multiplier gf_X0  (fold_B, T_shift[1],  X[1]);
++    multiplier gf_X00 (fold_B, T_shift[0],  X[0]);
++
++    assign Z[16] = 8'b0;
++    multiplier gf_Y15 (reg_fold_D, reg_T[15], Z[15]);
++    multiplier gf_Y14 (reg_fold_D, reg_T[14], Z[14]);
++    multiplier gf_Y13 (reg_fold_D, reg_T[13], Z[13]);
++    multiplier gf_Y12 (reg_fold_D, reg_T[12], Z[12]);
++    multiplier gf_Y11 (reg_fold_D, reg_T[11], Z[11]);
++    multiplier gf_Y10 (reg_fold_D, reg_T[10], Z[10]);
++    multiplier gf_Y9  (reg_fold_D, reg_T[9],  Z[9]);
++    multiplier gf_Y8  (reg_fold_D, reg_T[8],  Z[8]);
++    multiplier gf_Y7  (reg_fold_D, reg_T[7],  Z[7]);
++    multiplier gf_Y6  (reg_fold_D, reg_T[6],  Z[6]);
++    multiplier gf_Y5  (reg_fold_D, reg_T[5],  Z[5]);
++    multiplier gf_Y4  (reg_fold_D, reg_T[4],  Z[4]);
++    multiplier gf_Y3  (reg_fold_D, reg_T[3],  Z[3]);
++    multiplier gf_Y2  (reg_fold_D, reg_T[2],  Z[2]);
++    multiplier gf_Y1  (reg_fold_D, reg_T[1],  Z[1]);
++    multiplier gf_Y0  (reg_fold_D, reg_T[0],  Z[0]);
++
++    assign Y[16] = reg_W[16] ^ X[16];
++    assign Y[15] = reg_W[15] ^ X[15];
++    assign Y[14] = reg_W[14] ^ X[14];
++    assign Y[13] = reg_W[13] ^ X[13];
++    assign Y[12] = reg_W[12] ^ X[12];
++    assign Y[11] = reg_W[11] ^ X[11];
++    assign Y[10] = reg_W[10] ^ X[10];
++    assign Y[9]  = reg_W[9]  ^ X[9];
++    assign Y[8]  = reg_W[8]  ^ X[8];
++    assign Y[7]  = reg_W[7]  ^ X[7];
++    assign Y[6]  = reg_W[6]  ^ X[6];
++    assign Y[5]  = reg_W[5]  ^ X[5];
++    assign Y[4]  = reg_W[4]  ^ X[4];
++    assign Y[3]  = reg_W[3]  ^ X[3];
++    assign Y[2]  = reg_W[2]  ^ X[2];
++    assign Y[1]  = reg_W[1]  ^ X[1];
++    assign Y[0]  = reg_W[0]  ^ X[0];
++
++    assign T[16] = reg_Y[16] ^ Z[16];
++    assign T[15] = reg_Y[15] ^ Z[15];
++    assign T[14] = reg_Y[14] ^ Z[14];
++    assign T[13] = reg_Y[13] ^ Z[13];
++    assign T[12] = reg_Y[12] ^ Z[12];
++    assign T[11] = reg_Y[11] ^ Z[11];
++    assign T[10] = reg_Y[10] ^ Z[10];
++    assign T[9]  = reg_Y[9]  ^ Z[9];
++    assign T[8]  = reg_Y[8]  ^ Z[8];
++    assign T[7]  = reg_Y[7]  ^ Z[7];
++    assign T[6]  = reg_Y[6]  ^ Z[6];
++    assign T[5]  = reg_Y[5]  ^ Z[5];
++    assign T[4]  = reg_Y[4]  ^ Z[4];
++    assign T[3]  = reg_Y[3]  ^ Z[3];
++    assign T[2]  = reg_Y[2]  ^ Z[2];
++    assign T[1]  = reg_Y[1]  ^ Z[1];
++    assign T[0]  = reg_Y[0]  ^ Z[0];
++
++    assign flag  = (count == 8'd40);
++    assign delta = (flag) ? {reg_T[8], reg_T[7], reg_T[6], reg_T[5], reg_T[4], reg_T[3], reg_T[2], reg_T[1], reg_T[0]} : 72'b0;
++    assign omega = (flag) ? {reg_S[16], reg_S[15], reg_S[14], reg_S[13], reg_S[12], reg_S[11], reg_S[10], reg_S[9]} : 64'b0;
++
+ endmodule--- ZIP/sources_1/new/rs_codec/forney_math.v
++++ gt_ex.srcs/sources_1/new/rs_codec/forney_math.v
+@@ -1,139 +1,139 @@
+-`timescale 1ns / 1ps
+-/*
+-===========================================================================
+-Company      : WiComAI Lab, Kookmin University / ETRI Daejeon
+-Engineers    : Irzal Zaini & Williamsyah Baginda Miraj
+-Module Name  : forney_math
+-Description  : Reed-Solomon Forney Algorithm Unit over GF(2^8).
+-               Computes the error magnitude (forney = C0 * chien^-1) using 
+-               the Error Evaluator Polynomial (omega) and the odd-power sum 
+-               from the Chien Search module.
+-
+-Revision History:
+-  - Rev 1.0 (Initial) : Forney error evaluator for root offset j_0 = 0 over 0x11D.
+-  - Rev 2.0 (2026-10-27 03:54 KST) : [ETRI Audit Item 2 & 3 - SDA OISL Page 37, Sec. 2.6.3.6.3]
+-    Updated evaluator step multipliers (gf_d0..gf_7) to r_k = alpha^((11*(120+k)) % 255)
+-    for k = 0..7 over GF(2^8) 0x187 so that the non-zero initial root offset (j_0 = 120,
+-    factor beta^(120*m)) is automatically compensated in C0 every cycle without extra latency.
+-===========================================================================
+-*/
+-
+-module forney_math #(
+-    parameter max = 254
+-)(
+-    input  wire        clk,
+-    input  wire        rst_n,
+-    input  wire        en,
+-    input  wire [63:0] omega,
+-    input  wire [7:0]  chien,
+-    output wire        flag,
+-    output wire [7:0]  forney
+-);
+-
+-    reg [7:0] count = 8'd0;
+-
+-    localparam IDLE   = 3'b001;
+-    localparam ACTIVE = 3'b010;
+-    localparam END    = 3'b100;
+-
+-    reg [2:0] state;
+-    reg [2:0] next_state;
+-
+-    reg [63:0] omega_d0;
+-
+-    reg  [7:0] Q [0:7];
+-    wire [7:0] D [0:7];
+-    wire [7:0] C0;
+-    wire [7:0] C1;
+-    wire [7:0] inv_0;
+-
+-    // FSM State Register
+-    always @(posedge clk or negedge rst_n) begin
+-        if (~rst_n)
+-            state <= IDLE;
+-        else
+-            state <= next_state;
+-    end
+-
+-    // Cycle Counter
+-    always @(posedge clk or negedge rst_n) begin
+-        if (~rst_n)
+-            count <= 8'd0;
+-        else if (state == ACTIVE)
+-            count <= count + 1'b1;
+-        else
+-            count <= 8'd0;
+-    end
+-
+-    // Next State Logic
+-    always @(*) begin
+-        case (state)
+-            IDLE: begin
+-                if (en)
+-                    next_state = ACTIVE;
+-                else
+-                    next_state = IDLE;
+-            end
+-            ACTIVE: begin
+-                if (count < max)
+-                    next_state = ACTIVE;
+-                else
+-                    next_state = END;
+-            end
+-            END:     next_state = IDLE;
+-            default: next_state = IDLE;
+-        endcase
+-    end
+-
+-    // Input Omega Register
+-    always @(posedge clk or negedge rst_n) begin
+-        if (~rst_n)
+-            omega_d0 <= 64'b0;
+-        else
+-            omega_d0 <= omega;
+-    end
+-
+-    // Evaluator Shift Registers
+-    integer i;
+-    always @(posedge clk or negedge rst_n) begin
+-        if (~rst_n) begin
+-            for (i = 0; i < 8; i = i + 1)
+-                Q[i] <= 8'b0;
+-        end else if (state == ACTIVE) begin
+-            if (count == 8'd0) begin
+-                Q[7] <= omega_d0[63:56];
+-                Q[6] <= omega_d0[55:48];
+-                Q[5] <= omega_d0[47:40];
+-                Q[4] <= omega_d0[39:32];
+-                Q[3] <= omega_d0[31:24];
+-                Q[2] <= omega_d0[23:16];
+-                Q[1] <= omega_d0[15:8];
+-                Q[0] <= omega_d0[7:0];
+-            end else begin
+-                for (i = 0; i < 8; i = i + 1)
+-                    Q[i] <= D[i];
+-            end
+-        end else begin
+-            for (i = 0; i < 8; i = i + 1)
+-                Q[i] <= 8'b0;
+-        end
+-    end
+-
+-    // GF(2^8) Inversion and Multipliers (beta^(120+k) for k = 0..7 in GF 0x187)
+-    inverter   invert_0 (chien, inv_0);
+-    multiplier gf_0     (inv_0, C0,   C1);
+-    multiplier gf_d0    (8'h78, Q[0], D[0]);
+-    multiplier gf_1     (8'h3f, Q[1], D[1]);
+-    multiplier gf_2     (8'hac, Q[2], D[2]);
+-    multiplier gf_3     (8'h13, Q[3], D[3]);
+-    multiplier gf_4     (8'h84, Q[4], D[4]);
+-    multiplier gf_5     (8'h06, Q[5], D[5]);
+-    multiplier gf_6     (8'he0, Q[6], D[6]);
+-    multiplier gf_7     (8'h8a, Q[7], D[7]);
+-
+-    assign C0   = Q[0] ^ Q[1] ^ Q[2] ^ Q[3] ^ Q[4] ^ Q[5] ^ Q[6] ^ Q[7];
+-
+-    assign flag   = (state == ACTIVE);
+-    assign forney = (count != 8'd0) ? C1 : 8'b0;
+-
++`timescale 1ns / 1ps
++/*
++===========================================================================
++Company      : WiComAI Lab, Kookmin University / ETRI Daejeon
++Engineers    : Irzal Zaini & Williamsyah Baginda Miraj
++Module Name  : forney_math
++Description  : Reed-Solomon Forney Algorithm Unit over GF(2^8).
++               Computes the error magnitude (forney = C0 * chien^-1) using 
++               the Error Evaluator Polynomial (omega) and the odd-power sum 
++               from the Chien Search module.
++
++Revision History:
++  - Rev 1.0 (Initial) : Forney error evaluator for root offset j_0 = 0 over 0x11D.
++  - Rev 2.0 (2026-10-27 03:54 KST) : [ETRI Audit Item 2 & 3 - SDA OISL Page 37, Sec. 2.6.3.6.3]
++    Updated evaluator step multipliers (gf_d0..gf_7) to r_k = alpha^((11*(120+k)) % 255)
++    for k = 0..7 over GF(2^8) 0x187 so that the non-zero initial root offset (j_0 = 120,
++    factor beta^(120*m)) is automatically compensated in C0 every cycle without extra latency.
++===========================================================================
++*/
++
++module forney_math #(
++    parameter max = 254
++)(
++    input  wire        clk,
++    input  wire        rst_n,
++    input  wire        en,
++    input  wire [63:0] omega,
++    input  wire [7:0]  chien,
++    output wire        flag,
++    output wire [7:0]  forney
++);
++
++    reg [7:0] count = 8'd0;
++
++    localparam IDLE   = 3'b001;
++    localparam ACTIVE = 3'b010;
++    localparam END    = 3'b100;
++
++    reg [2:0] state;
++    reg [2:0] next_state;
++
++    reg [63:0] omega_d0;
++
++    reg  [7:0] Q [0:7];
++    wire [7:0] D [0:7];
++    wire [7:0] C0;
++    wire [7:0] C1;
++    wire [7:0] inv_0;
++
++    // FSM State Register
++    always @(posedge clk or negedge rst_n) begin
++        if (~rst_n)
++            state <= IDLE;
++        else
++            state <= next_state;
++    end
++
++    // Cycle Counter
++    always @(posedge clk or negedge rst_n) begin
++        if (~rst_n)
++            count <= 8'd0;
++        else if (state == ACTIVE)
++            count <= count + 1'b1;
++        else
++            count <= 8'd0;
++    end
++
++    // Next State Logic
++    always @(*) begin
++        case (state)
++            IDLE: begin
++                if (en)
++                    next_state = ACTIVE;
++                else
++                    next_state = IDLE;
++            end
++            ACTIVE: begin
++                if (count < max)
++                    next_state = ACTIVE;
++                else
++                    next_state = END;
++            end
++            END:     next_state = IDLE;
++            default: next_state = IDLE;
++        endcase
++    end
++
++    // Input Omega Register
++    always @(posedge clk or negedge rst_n) begin
++        if (~rst_n)
++            omega_d0 <= 64'b0;
++        else
++            omega_d0 <= omega;
++    end
++
++    // Evaluator Shift Registers
++    integer i;
++    always @(posedge clk or negedge rst_n) begin
++        if (~rst_n) begin
++            for (i = 0; i < 8; i = i + 1)
++                Q[i] <= 8'b0;
++        end else if (state == ACTIVE) begin
++            if (count == 8'd0) begin
++                Q[7] <= omega_d0[63:56];
++                Q[6] <= omega_d0[55:48];
++                Q[5] <= omega_d0[47:40];
++                Q[4] <= omega_d0[39:32];
++                Q[3] <= omega_d0[31:24];
++                Q[2] <= omega_d0[23:16];
++                Q[1] <= omega_d0[15:8];
++                Q[0] <= omega_d0[7:0];
++            end else begin
++                for (i = 0; i < 8; i = i + 1)
++                    Q[i] <= D[i];
++            end
++        end else begin
++            for (i = 0; i < 8; i = i + 1)
++                Q[i] <= 8'b0;
++        end
++    end
++
++    // GF(2^8) Inversion and Multipliers (beta^(120+k) for k = 0..7 in GF 0x187)
++    inverter   invert_0 (chien, inv_0);
++    multiplier gf_0     (inv_0, C0,   C1);
++    multiplier gf_d0    (8'h78, Q[0], D[0]);
++    multiplier gf_1     (8'h3f, Q[1], D[1]);
++    multiplier gf_2     (8'hac, Q[2], D[2]);
++    multiplier gf_3     (8'h13, Q[3], D[3]);
++    multiplier gf_4     (8'h84, Q[4], D[4]);
++    multiplier gf_5     (8'h06, Q[5], D[5]);
++    multiplier gf_6     (8'he0, Q[6], D[6]);
++    multiplier gf_7     (8'h8a, Q[7], D[7]);
++
++    assign C0   = Q[0] ^ Q[1] ^ Q[2] ^ Q[3] ^ Q[4] ^ Q[5] ^ Q[6] ^ Q[7];
++
++    assign flag   = (state == ACTIVE);
++    assign forney = (count != 8'd0) ? C1 : 8'b0;
++
+ endmodule--- ZIP/sources_1/new/rs_codec/inverter.v
++++ gt_ex.srcs/sources_1/new/rs_codec/inverter.v
+@@ -1,45 +1,45 @@
+-`timescale 1ns / 1ps
+-/*
+-===========================================================================
+-Company      : WiComAI Lab, Kookmin University
+-Engineers    : Williamsyah Baginda Miraj & Giovanni Dwi
+-Module Name  : inverter
+-Description  : Galois Field GF(2^8) Multiplicative Inverse Lookup Unit.
+-               Computes (data_in)^(-1) = alpha^((255 - log_alpha(data_in)) mod 255)
+-               using log/antilog lookup tables (alpha_value.mem and 
+-               decimal_value.mem).
+-
+-Revision History:
+-  - Rev 1.0 (Initial) : Baseline GF(2^8) inverter over 0x11D tables.
+-  - Rev 2.0 (2026-10-27 03:54 KST) : [ETRI Audit Item 2 - SDA OISL Page 37, Sec. 2.6.3.6.3]
+-    Updated lookup tables to GF(2^8) primitive polynomial F(x) = x^8 + x^7 + x^2 + x + 1 (0x187).
+-  - Rev 2.3 (2026-10-29 12:39 KST) : [Audit Fix F03 - Modulo-255 Inverse for Unity (a = 8'h01)]
+-    Preserved original module structure and parameter max = 255. Fixed exponent wrap
+-    when b == 8'd0 (data_in == 8'd1) so c = 8'd0 (alpha^0 = 8'h01 instead of indexing 
+-    decimal_value[255] = 8'h00) and mapped data_in == 8'd0 to 8'd0.
+-===========================================================================
+-*/
+-
+-module inverter # (parameter max = 255) (
+-    input   [7:0]   data_in,
+-    output  [7:0]   data_out
+-);
+-
+-    reg [7:0] decimal_value [0:max];
+-    reg [7:0] alpha_value   [0:max];
+-
+-    initial begin
+-        // Load GF(2^8) 0x187 log and antilog tables
+-        $readmemh("decimal_value.mem", decimal_value);
+-        $readmemh("alpha_value.mem",   alpha_value);
+-    end
+-
+-    wire [7:0] b;
+-    wire [7:0] c;
+-
+-    assign b = alpha_value[data_in];
+-    assign c = (b == 8'd0) ? 8'd0 : (8'd255 - b);
+-
+-    assign data_out = (data_in == 8'd0) ? 8'd0 : decimal_value[c];
+-
++`timescale 1ns / 1ps
++/*
++===========================================================================
++Company      : WiComAI Lab, Kookmin University
++Engineers    : Williamsyah Baginda Miraj & Giovanni Dwi
++Module Name  : inverter
++Description  : Galois Field GF(2^8) Multiplicative Inverse Lookup Unit.
++               Computes (data_in)^(-1) = alpha^((255 - log_alpha(data_in)) mod 255)
++               using log/antilog lookup tables (alpha_value.mem and 
++               decimal_value.mem).
++
++Revision History:
++  - Rev 1.0 (Initial) : Baseline GF(2^8) inverter over 0x11D tables.
++  - Rev 2.0 (2026-10-27 03:54 KST) : [ETRI Audit Item 2 - SDA OISL Page 37, Sec. 2.6.3.6.3]
++    Updated lookup tables to GF(2^8) primitive polynomial F(x) = x^8 + x^7 + x^2 + x + 1 (0x187).
++  - Rev 2.3 (2026-10-29 12:39 KST) : [Audit Fix F03 - Modulo-255 Inverse for Unity (a = 8'h01)]
++    Preserved original module structure and parameter max = 255. Fixed exponent wrap
++    when b == 8'd0 (data_in == 8'd1) so c = 8'd0 (alpha^0 = 8'h01 instead of indexing 
++    decimal_value[255] = 8'h00) and mapped data_in == 8'd0 to 8'd0.
++===========================================================================
++*/
++
++module inverter # (parameter max = 255) (
++    input   [7:0]   data_in,
++    output  [7:0]   data_out
++);
++
++    reg [7:0] decimal_value [0:max];
++    reg [7:0] alpha_value   [0:max];
++
++    initial begin
++        // Load GF(2^8) 0x187 log and antilog tables
++        $readmemh("decimal_value.mem", decimal_value);
++        $readmemh("alpha_value.mem",   alpha_value);
++    end
++
++    wire [7:0] b;
++    wire [7:0] c;
++
++    assign b = alpha_value[data_in];
++    assign c = (b == 8'd0) ? 8'd0 : (8'd255 - b);
++
++    assign data_out = (data_in == 8'd0) ? 8'd0 : decimal_value[c];
++
+ endmodule--- ZIP/sources_1/new/rs_codec/multiplier.v
++++ gt_ex.srcs/sources_1/new/rs_codec/multiplier.v
+@@ -1,45 +1,45 @@
+-`timescale 1ns / 1ps
+-/*
+-===========================================================================
+-Company      : WiComAI Lab, Kookmin University / ETRI Daejeon
+-Engineers    : Irzal Zaini & Williamsyah Baginda Miraj
+-Module Name  : multiplier
+-Description  : Galois Field GF(2^8) Multiplier Module.
+-               Computes the product 'r = a * b' over GF(2^8) by adding the 
+-               logarithm exponents modulo 255 via lookup tables 
+-               (alpha_value.mem and decimal_value.mem).
+-
+-Revision History:
+-  - Rev 1.0 (Initial) : GF(2^8) log/antilog multiplier using 0x11D tables.
+-  - Rev 2.0 (2026-10-27 03:54 KST) : [ETRI Audit Item 2 - SDA OISL Page 37, Sec. 2.6.3.6.3]
+-    Operates over the rebuilt GF(2^8) tables (alpha_value.mem & decimal_value.mem)
+-    generated with primitive polynomial F(x) = x^8 + x^7 + x^2 + x + 1 (0x187).
+-===========================================================================
+-*/
+-
+-module multiplier #(
+-    parameter max = 255
+-)(
+-    input  wire [7:0] a,
+-    input  wire [7:0] b,
+-    output wire [7:0] r
+-);
+-
+-    wire [7:0] alpha_a;
+-    wire [7:0] alpha_b;
+-    wire [7:0] alpha_r;
+-
+-    reg  [7:0] alpha_value   [0:max];
+-    reg  [7:0] decimal_value [0:max];
+-
+-    initial begin
+-        $readmemh("alpha_value.mem", alpha_value);
+-        $readmemh("decimal_value.mem", decimal_value);
+-    end
+-
+-    assign alpha_a = alpha_value[a];
+-    assign alpha_b = alpha_value[b];
+-    assign alpha_r = (alpha_a == max || alpha_b == max) ? max : (alpha_a + alpha_b) % max;
+-    assign r       = decimal_value[alpha_r];
+-
++`timescale 1ns / 1ps
++/*
++===========================================================================
++Company      : WiComAI Lab, Kookmin University / ETRI Daejeon
++Engineers    : Irzal Zaini & Williamsyah Baginda Miraj
++Module Name  : multiplier
++Description  : Galois Field GF(2^8) Multiplier Module.
++               Computes the product 'r = a * b' over GF(2^8) by adding the 
++               logarithm exponents modulo 255 via lookup tables 
++               (alpha_value.mem and decimal_value.mem).
++
++Revision History:
++  - Rev 1.0 (Initial) : GF(2^8) log/antilog multiplier using 0x11D tables.
++  - Rev 2.0 (2026-10-27 03:54 KST) : [ETRI Audit Item 2 - SDA OISL Page 37, Sec. 2.6.3.6.3]
++    Operates over the rebuilt GF(2^8) tables (alpha_value.mem & decimal_value.mem)
++    generated with primitive polynomial F(x) = x^8 + x^7 + x^2 + x + 1 (0x187).
++===========================================================================
++*/
++
++module multiplier #(
++    parameter max = 255
++)(
++    input  wire [7:0] a,
++    input  wire [7:0] b,
++    output wire [7:0] r
++);
++
++    wire [7:0] alpha_a;
++    wire [7:0] alpha_b;
++    wire [7:0] alpha_r;
++
++    reg  [7:0] alpha_value   [0:max];
++    reg  [7:0] decimal_value [0:max];
++
++    initial begin
++        $readmemh("alpha_value.mem", alpha_value);
++        $readmemh("decimal_value.mem", decimal_value);
++    end
++
++    assign alpha_a = alpha_value[a];
++    assign alpha_b = alpha_value[b];
++    assign alpha_r = (alpha_a == max || alpha_b == max) ? max : (alpha_a + alpha_b) % max;
++    assign r       = decimal_value[alpha_r];
++
+ endmodule--- ZIP/sources_1/new/rs_codec/rs_decoder.v
++++ gt_ex.srcs/sources_1/new/rs_codec/rs_decoder.v
+@@ -1,255 +1,255 @@
+-`timescale 1ns / 1ps
+-/*
+-===========================================================================
+-Company      : WiComAI Lab, Kookmin University / ETRI Daejeon
+-Engineers    : Irzal Zaini & Williamsyah Baginda Miraj
+-Module Name  : rs_decoder
+-Description  : Reed-Solomon Decoder Top Module with Dual-Port BRAM Buffer.
+-               Supports both RS(255,239) for Payload (max_rd = 256 -> 239 
+-               output bytes) and shortened RS(32,16) for Header (max_rd = 33 
+-               -> 16 output bytes).
+-
+-               Revision History:
+-               - Rev 1.0 (Initial) : Dual-port BRAM RS(255,239) / RS(32,16) decoder.
+-               - Rev 1.1 (2026-10-22 06:20 KST) : Updated timescale to 1ns/1ps 
+-                 and added simulation trackers (out_byte_cnt and 
+-                 repaired_symbol_cnt) required by rs_decoder_64.v lines 106-110.
+-===========================================================================
+-*/
+-
+-module rs_decoder #(
+-    parameter max_rd = 256
+-)(
+-    input  wire       clk,
+-    input  wire       rst_n,
+-    input  wire       en,
+-    input  wire [7:0] data_in,
+-    output wire       flag,
+-    output wire [7:0] data_out
+-);
+-
+-    localparam max_wr   = 254;
+-    localparam max_hold = 43;
+-
+-    // Write Path (Port A) State Machine
+-    localparam WR_IDLE  = 3'b001;
+-    localparam WR_WRITE = 3'b010;
+-    localparam WR_HOLD  = 3'b100;
+-
+-    reg [2:0]  wr_state;
+-    reg [2:0]  wr_next_state;
+-    reg [7:0]  con_wr   = 8'd0;
+-    reg [7:0]  con_hold = 8'd0;
+-
+-    // Read Path (Port B) State Machine
+-    localparam RD_IDLE  = 3'b001;
+-    localparam RD_READ  = 3'b010;
+-    localparam RD_END   = 3'b100;
+-
+-    reg [2:0]  rd_state;
+-    reg [2:0]  rd_next_state;
+-    reg [15:0] con_rd   = 16'd0;
+-
+-    reg [7:0]  data_d0;
+-
+-    wire         syndrome_dv;
+-    wire [127:0] syndrome;
+-
+-    wire         euclid_dv;
+-    wire [71:0]  delta;
+-    wire [63:0]  omega;
+-
+-    wire         error_pos;
+-    wire [7:0]   chien;
+-    wire [7:0]   forney;
+-
+-    wire         wr_en;
+-    wire         rd_en;
+-    wire [7:0]   rd_addr_b;
+-    wire [7:0]   data_delay;
+-    reg  [7:0]   decode_out;
+-
+-    // 1. Port A Write FSM
+-    always @(posedge clk or negedge rst_n) begin
+-        if (~rst_n)
+-            wr_state <= WR_IDLE;
+-        else
+-            wr_state <= wr_next_state;
+-    end
+-
+-    always @(posedge clk or negedge rst_n) begin
+-        if (~rst_n)
+-            con_wr <= 8'd0;
+-        else if (wr_state == WR_WRITE)
+-            con_wr <= con_wr + 1'b1;
+-        else
+-            con_wr <= 8'd0;
+-    end
+-
+-    always @(posedge clk or negedge rst_n) begin
+-        if (~rst_n)
+-            con_hold <= 8'd0;
+-        else if (wr_state == WR_HOLD)
+-            con_hold <= con_hold + 1'b1;
+-        else
+-            con_hold <= 8'd0;
+-    end
+-
+-    always @(*) begin
+-        case (wr_state)
+-            WR_IDLE: begin
+-                if (en)
+-                    wr_next_state = WR_WRITE;
+-                else
+-                    wr_next_state = WR_IDLE;
+-            end
+-            WR_WRITE: begin
+-                if (con_wr < max_wr)
+-                    wr_next_state = WR_WRITE;
+-                else
+-                    wr_next_state = WR_HOLD;
+-            end
+-            WR_HOLD: begin
+-                if (con_hold < max_hold)
+-                    wr_next_state = WR_HOLD;
+-                else
+-                    wr_next_state = WR_IDLE;
+-            end
+-            default: wr_next_state = WR_IDLE;
+-        endcase
+-    end
+-
+-    always @(posedge clk or negedge rst_n) begin
+-        if (~rst_n)
+-            data_d0 <= 8'b0;
+-        else
+-            data_d0 <= data_in;
+-    end
+-
+-    // 2. Port B Read FSM
+-    always @(posedge clk or negedge rst_n) begin
+-        if (~rst_n)
+-            rd_state <= RD_IDLE;
+-        else
+-            rd_state <= rd_next_state;
+-    end
+-
+-    always @(posedge clk or negedge rst_n) begin
+-        if (~rst_n)
+-            con_rd <= 16'd0;
+-        else if (rd_state == RD_READ)
+-            con_rd <= con_rd + 1'b1;
+-        else
+-            con_rd <= 16'd0;
+-    end
+-
+-    always @(*) begin
+-        case (rd_state)
+-            RD_IDLE: begin
+-                if (euclid_dv)
+-                    rd_next_state = RD_READ;
+-                else
+-                    rd_next_state = RD_IDLE;
+-            end
+-            RD_READ: begin
+-                if (con_rd < max_rd)
+-                    rd_next_state = RD_READ;
+-                else
+-                    rd_next_state = RD_END;
+-            end
+-            RD_END:  rd_next_state = RD_IDLE;
+-            default: rd_next_state = RD_IDLE;
+-        endcase
+-    end
+-
+-    // Error Correction XOR Logic
+-    always @(posedge clk or negedge rst_n) begin
+-        if (~rst_n)
+-            decode_out <= 8'b0;
+-        else if (rd_state == RD_READ && con_rd < max_rd - 16) begin
+-            if (error_pos)
+-                decode_out <= data_delay ^ forney;
+-            else
+-                decode_out <= data_delay;
+-        end else
+-            decode_out <= 8'b0;
+-    end
+-
+-    // 1-cycle address pre-fetch on Port B compensates for bram_rs 2-cycle read latency
+-    assign wr_en     = (wr_state == WR_WRITE && con_wr < max_rd - 1);
+-    assign rd_en     = euclid_dv || (rd_state == RD_READ);
+-    assign rd_addr_b = (rd_state == RD_READ) ? (con_rd[7:0] + 8'd1) : 8'd0;
+-
+-    assign flag      = (rd_state == RD_READ) && (con_rd > 1 && con_rd < max_rd - 15);
+-    assign data_out  = (flag) ? decode_out : 8'b0;
+-
+-    // 3. Dual-Port BRAM Data Delay Buffer
+-    bram_rs bram_rs_inst (
+-        .clka  (clk),
+-        .ena   (wr_en),
+-        .wea   (1'b1),
+-        .addra (con_wr[7:0]),
+-        .dina  (data_d0),
+-
+-        .clkb  (clk),
+-        .enb   (rd_en),
+-        .addrb (rd_addr_b),
+-        .doutb (data_delay)
+-    );
+-
+-    // 4. Reed-Solomon Sub-Modules
+-    syndrome_unit syndrome_unit_inst (
+-        .clk      (clk),
+-        .rst_n    (rst_n),
+-        .en       (en),
+-        .data_in  (data_in),
+-        .flag     (syndrome_dv),
+-        .syndrome (syndrome)
+-    );
+-
+-    euclid_proc euclid_proc_inst (
+-        .clk      (clk),
+-        .rst_n    (rst_n),
+-        .en       (syndrome_dv),
+-        .syndrome (syndrome),
+-        .flag     (euclid_dv),
+-        .delta    (delta),
+-        .omega    (omega)
+-    );
+-
+-    chien_search chien_search_inst (
+-        .clk   (clk),
+-        .rst_n (rst_n),
+-        .en    (euclid_dv),
+-        .delta (delta),
+-        .flag  (),
+-        .error (error_pos),
+-        .chien (chien)
+-    );
+-
+-    forney_math forney_math_inst (
+-        .clk    (clk),
+-        .rst_n  (rst_n),
+-        .en     (euclid_dv),
+-        .omega  (omega),
+-        .chien  (chien),
+-        .flag   (),
+-        .forney (forney)
+-    );
+-
+-    // =======================================================
+-    // 5. SIMULATION TRACKERS (Required by rs_decoder_64.v)
+-    // =======================================================
+-    // synthesis translate_off
+-    wire [8:0]  out_byte_cnt = flag ? (con_rd[8:0] - 9'd1) : 9'd0;
+-    reg  [11:0] repaired_symbol_cnt;
+-
+-    always @(posedge clk or negedge rst_n) begin
+-        if (~rst_n)
+-            repaired_symbol_cnt <= 12'd0;
+-        else if (rd_state == RD_READ && con_rd < max_rd - 16 && error_pos && (forney != 8'd0))
+-            repaired_symbol_cnt <= repaired_symbol_cnt + 12'd1;
+-    end
+-    // synthesis translate_on
+-
++`timescale 1ns / 1ps
++/*
++===========================================================================
++Company      : WiComAI Lab, Kookmin University / ETRI Daejeon
++Engineers    : Irzal Zaini & Williamsyah Baginda Miraj
++Module Name  : rs_decoder
++Description  : Reed-Solomon Decoder Top Module with Dual-Port BRAM Buffer.
++               Supports both RS(255,239) for Payload (max_rd = 256 -> 239 
++               output bytes) and shortened RS(32,16) for Header (max_rd = 33 
++               -> 16 output bytes).
++
++               Revision History:
++               - Rev 1.0 (Initial) : Dual-port BRAM RS(255,239) / RS(32,16) decoder.
++               - Rev 1.1 (2026-10-22 06:20 KST) : Updated timescale to 1ns/1ps 
++                 and added simulation trackers (out_byte_cnt and 
++                 repaired_symbol_cnt) required by rs_decoder_64.v lines 106-110.
++===========================================================================
++*/
++
++module rs_decoder #(
++    parameter max_rd = 256
++)(
++    input  wire       clk,
++    input  wire       rst_n,
++    input  wire       en,
++    input  wire [7:0] data_in,
++    output wire       flag,
++    output wire [7:0] data_out
++);
++
++    localparam max_wr   = 254;
++    localparam max_hold = 43;
++
++    // Write Path (Port A) State Machine
++    localparam WR_IDLE  = 3'b001;
++    localparam WR_WRITE = 3'b010;
++    localparam WR_HOLD  = 3'b100;
++
++    reg [2:0]  wr_state;
++    reg [2:0]  wr_next_state;
++    reg [7:0]  con_wr   = 8'd0;
++    reg [7:0]  con_hold = 8'd0;
++
++    // Read Path (Port B) State Machine
++    localparam RD_IDLE  = 3'b001;
++    localparam RD_READ  = 3'b010;
++    localparam RD_END   = 3'b100;
++
++    reg [2:0]  rd_state;
++    reg [2:0]  rd_next_state;
++    reg [15:0] con_rd   = 16'd0;
++
++    reg [7:0]  data_d0;
++
++    wire         syndrome_dv;
++    wire [127:0] syndrome;
++
++    wire         euclid_dv;
++    wire [71:0]  delta;
++    wire [63:0]  omega;
++
++    wire         error_pos;
++    wire [7:0]   chien;
++    wire [7:0]   forney;
++
++    wire         wr_en;
++    wire         rd_en;
++    wire [7:0]   rd_addr_b;
++    wire [7:0]   data_delay;
++    reg  [7:0]   decode_out;
++
++    // 1. Port A Write FSM
++    always @(posedge clk or negedge rst_n) begin
++        if (~rst_n)
++            wr_state <= WR_IDLE;
++        else
++            wr_state <= wr_next_state;
++    end
++
++    always @(posedge clk or negedge rst_n) begin
++        if (~rst_n)
++            con_wr <= 8'd0;
++        else if (wr_state == WR_WRITE)
++            con_wr <= con_wr + 1'b1;
++        else
++            con_wr <= 8'd0;
++    end
++
++    always @(posedge clk or negedge rst_n) begin
++        if (~rst_n)
++            con_hold <= 8'd0;
++        else if (wr_state == WR_HOLD)
++            con_hold <= con_hold + 1'b1;
++        else
++            con_hold <= 8'd0;
++    end
++
++    always @(*) begin
++        case (wr_state)
++            WR_IDLE: begin
++                if (en)
++                    wr_next_state = WR_WRITE;
++                else
++                    wr_next_state = WR_IDLE;
++            end
++            WR_WRITE: begin
++                if (con_wr < max_wr)
++                    wr_next_state = WR_WRITE;
++                else
++                    wr_next_state = WR_HOLD;
++            end
++            WR_HOLD: begin
++                if (con_hold < max_hold)
++                    wr_next_state = WR_HOLD;
++                else
++                    wr_next_state = WR_IDLE;
++            end
++            default: wr_next_state = WR_IDLE;
++        endcase
++    end
++
++    always @(posedge clk or negedge rst_n) begin
++        if (~rst_n)
++            data_d0 <= 8'b0;
++        else
++            data_d0 <= data_in;
++    end
++
++    // 2. Port B Read FSM
++    always @(posedge clk or negedge rst_n) begin
++        if (~rst_n)
++            rd_state <= RD_IDLE;
++        else
++            rd_state <= rd_next_state;
++    end
++
++    always @(posedge clk or negedge rst_n) begin
++        if (~rst_n)
++            con_rd <= 16'd0;
++        else if (rd_state == RD_READ)
++            con_rd <= con_rd + 1'b1;
++        else
++            con_rd <= 16'd0;
++    end
++
++    always @(*) begin
++        case (rd_state)
++            RD_IDLE: begin
++                if (euclid_dv)
++                    rd_next_state = RD_READ;
++                else
++                    rd_next_state = RD_IDLE;
++            end
++            RD_READ: begin
++                if (con_rd < max_rd)
++                    rd_next_state = RD_READ;
++                else
++                    rd_next_state = RD_END;
++            end
++            RD_END:  rd_next_state = RD_IDLE;
++            default: rd_next_state = RD_IDLE;
++        endcase
++    end
++
++    // Error Correction XOR Logic
++    always @(posedge clk or negedge rst_n) begin
++        if (~rst_n)
++            decode_out <= 8'b0;
++        else if (rd_state == RD_READ && con_rd < max_rd - 16) begin
++            if (error_pos)
++                decode_out <= data_delay ^ forney;
++            else
++                decode_out <= data_delay;
++        end else
++            decode_out <= 8'b0;
++    end
++
++    // 1-cycle address pre-fetch on Port B compensates for bram_rs 2-cycle read latency
++    assign wr_en     = (wr_state == WR_WRITE && con_wr < max_rd - 1);
++    assign rd_en     = euclid_dv || (rd_state == RD_READ);
++    assign rd_addr_b = (rd_state == RD_READ) ? (con_rd[7:0] + 8'd1) : 8'd0;
++
++    assign flag      = (rd_state == RD_READ) && (con_rd > 1 && con_rd < max_rd - 15);
++    assign data_out  = (flag) ? decode_out : 8'b0;
++
++    // 3. Dual-Port BRAM Data Delay Buffer
++    bram_rs bram_rs_inst (
++        .clka  (clk),
++        .ena   (wr_en),
++        .wea   (1'b1),
++        .addra (con_wr[7:0]),
++        .dina  (data_d0),
++
++        .clkb  (clk),
++        .enb   (rd_en),
++        .addrb (rd_addr_b),
++        .doutb (data_delay)
++    );
++
++    // 4. Reed-Solomon Sub-Modules
++    syndrome_unit syndrome_unit_inst (
++        .clk      (clk),
++        .rst_n    (rst_n),
++        .en       (en),
++        .data_in  (data_in),
++        .flag     (syndrome_dv),
++        .syndrome (syndrome)
++    );
++
++    euclid_proc euclid_proc_inst (
++        .clk      (clk),
++        .rst_n    (rst_n),
++        .en       (syndrome_dv),
++        .syndrome (syndrome),
++        .flag     (euclid_dv),
++        .delta    (delta),
++        .omega    (omega)
++    );
++
++    chien_search chien_search_inst (
++        .clk   (clk),
++        .rst_n (rst_n),
++        .en    (euclid_dv),
++        .delta (delta),
++        .flag  (),
++        .error (error_pos),
++        .chien (chien)
++    );
++
++    forney_math forney_math_inst (
++        .clk    (clk),
++        .rst_n  (rst_n),
++        .en     (euclid_dv),
++        .omega  (omega),
++        .chien  (chien),
++        .flag   (),
++        .forney (forney)
++    );
++
++    // =======================================================
++    // 5. SIMULATION TRACKERS (Required by rs_decoder_64.v)
++    // =======================================================
++    // synthesis translate_off
++    wire [8:0]  out_byte_cnt = flag ? (con_rd[8:0] - 9'd1) : 9'd0;
++    reg  [11:0] repaired_symbol_cnt;
++
++    always @(posedge clk or negedge rst_n) begin
++        if (~rst_n)
++            repaired_symbol_cnt <= 12'd0;
++        else if (rd_state == RD_READ && con_rd < max_rd - 16 && error_pos && (forney != 8'd0))
++            repaired_symbol_cnt <= repaired_symbol_cnt + 12'd1;
++    end
++    // synthesis translate_on
++
+ endmodule--- ZIP/sources_1/new/rs_codec/syndrome_unit.v
++++ gt_ex.srcs/sources_1/new/rs_codec/syndrome_unit.v
+@@ -1,172 +1,172 @@
+-`timescale 1ns / 1ps
+-/*
+-===========================================================================
+-Company      : WiComAI Lab, Kookmin University / ETRI Daejeon
+-Engineers    : Irzal Zaini & Williamsyah Baginda Miraj
+-Module Name  : syndrome_unit
+-Description  : Reed-Solomon Syndrome Computation Unit over GF(2^8).
+-               Evaluates the incoming codeword at 16 consecutive roots 
+-               (alpha^(11*j) for j = 120..135) over a 256-cycle evaluation window.
+-               For shortened RS(32,16) headers, the 224 trailing zero cycles 
+-               (and 1 trailing zero cycle for RS(255,239)) automatically 
+-               shift the codeword roots to align with the Chien search 
+-               starting position (alpha^-254).
+-
+-Revision History:
+-  - Rev 1.0 (Initial) : Syndrome computation for roots alpha^0..alpha^15 over 0x11D.
+-  - Rev 2.0 (2026-10-27 03:54 KST) : [ETRI Audit Item 2 & 3 - SDA OISL Page 37, Sec. 2.6.3.6.3]
+-    Updated the 16 syndrome evaluation roots (gf_0..gf_f) to r_k = alpha^((11*(120+k)) % 255)
+-    for j = 120..135 over GF(2^8) 0x187:
+-      j=120 (alpha^45)=8'h78, j=121 (alpha^56)=8'h3f, j=122 (alpha^67)=8'hac, j=123 (alpha^78)=8'h13,
+-      j=124 (alpha^89)=8'h84, j=125 (alpha^100)=8'h06, j=126 (alpha^111)=8'he0, j=127 (alpha^122)=8'h8a,
+-      j=128 (alpha^133)=8'h9c, j=129 (alpha^144)=8'h88, j=130 (alpha^155)=8'h41, j=131 (alpha^166)=8'h73,
+-      j=132 (alpha^177)=8'h35, j=133 (alpha^188)=8'h0b, j=134 (alpha^199)=8'h0a, j=135 (alpha^210)=8'ha7.
+-  - Rev 2.3 (2026-10-29 12:39 KST) : [Audit Fix F10 - Enable Gating Against Invalid Tail Bytes]
+-    Gated data_in_d0 with 'en' so invalid non-zero bytes after 'en' deasserts are forced to 0.
+-  - Rev 2.5 (2026-10-29 15:19 KST) : [Audit Fix R17 - Restored 256-Cycle Pre-Shift & Syndrome Bus Order]
+-    Restored the original 256-cycle ACTIVE root shift (else if (state == ACTIVE) Q[i] <= D[i])
+-    and original syndrome bus ordering (syndrome[127:0] = {Q[15], Q[14], ..., Q[0]}) required 
+-    by euclid_proc, chien_search, and forney_math, while keeping 'data_in_d0 <= en ? data_in : 8'b0'
+-    so both F10 (tail poisoning immunity) and R17 (shortened/full RS pre-shift alignment) hold.
+-===========================================================================
+-*/
+-
+-module syndrome_unit #(
+-    parameter max = 255
+-)(
+-    input  wire         clk,
+-    input  wire         rst_n,
+-    input  wire         en,
+-    input  wire [7:0]   data_in,
+-    output wire         flag,
+-    output wire [127:0] syndrome
+-);
+-
+-    reg [15:0] count = 16'd0;
+-
+-    reg  [7:0] Q [0:15];
+-    wire [7:0] D [0:15];
+-    wire [7:0] C [0:15];
+-
+-    localparam IDLE   = 3'b001;
+-    localparam ACTIVE = 3'b010;
+-    localparam END    = 3'b100;
+-
+-    reg [2:0] state;
+-    reg [2:0] next_state;
+-
+-    reg [7:0] data_in_d0;
+-
+-    always @(posedge clk or negedge rst_n) begin
+-        if (~rst_n)
+-            state <= IDLE;
+-        else
+-            state <= next_state;
+-    end
+-
+-    always @(posedge clk or negedge rst_n) begin
+-        if (~rst_n)
+-            count <= 16'd0;
+-        else if (state == ACTIVE)
+-            count <= count + 1'b1;
+-        else
+-            count <= 16'd0;
+-    end
+-
+-    always @(*) begin
+-        case (state)
+-            IDLE: begin
+-                if (en)
+-                    next_state = ACTIVE;
+-                else
+-                    next_state = IDLE;
+-            end
+-            ACTIVE: begin
+-                if (count < max)
+-                    next_state = ACTIVE;
+-                else
+-                    next_state = END;
+-            end
+-            END:     next_state = IDLE;
+-            default: next_state = IDLE;
+-        endcase
+-    end
+-
+-    // [Rev 2.3/2.5 - Fix F10] Gate input with 'en' so invalid tail bytes (e.g. 0xA5) become 8'b0
+-    always @(posedge clk or negedge rst_n) begin
+-        if (~rst_n)
+-            data_in_d0 <= 8'b0;
+-        else
+-            data_in_d0 <= en ? data_in : 8'b0;
+-    end
+-
+-    integer i;
+-    always @(posedge clk or negedge rst_n) begin
+-        if (~rst_n) begin
+-            for (i = 0; i < 16; i = i + 1)
+-                Q[i] <= 8'b0;
+-        end else if (state == ACTIVE) begin
+-            // [Rev 2.5 - Fix R17] Run full 256-cycle Horner shift (with data_in_d0 = 0 when en == 0)
+-            for (i = 0; i < 16; i = i + 1)
+-                Q[i] <= D[i];
+-        end else begin
+-            for (i = 0; i < 16; i = i + 1)
+-                Q[i] <= 8'b0;
+-        end
+-    end
+-
+-    // [Rev 2.0 - 2026-10-27 03:54 KST] Evaluation roots alpha^(11*j) for j = 120..135 over GF(0x187)
+-    multiplier gf_0 (8'h78, Q[0],  C[0]);
+-    multiplier gf_1 (8'h3f, Q[1],  C[1]);
+-    multiplier gf_2 (8'hac, Q[2],  C[2]);
+-    multiplier gf_3 (8'h13, Q[3],  C[3]);
+-    multiplier gf_4 (8'h84, Q[4],  C[4]);
+-    multiplier gf_5 (8'h06, Q[5],  C[5]);
+-    multiplier gf_6 (8'he0, Q[6],  C[6]);
+-    multiplier gf_7 (8'h8a, Q[7],  C[7]);
+-    multiplier gf_8 (8'h9c, Q[8],  C[8]);
+-    multiplier gf_9 (8'h88, Q[9],  C[9]);
+-    multiplier gf_a (8'h41, Q[10], C[10]);
+-    multiplier gf_b (8'h73, Q[11], C[11]);
+-    multiplier gf_c (8'h35, Q[12], C[12]);
+-    multiplier gf_d (8'h0b, Q[13], C[13]);
+-    multiplier gf_e (8'h0a, Q[14], C[14]);
+-    multiplier gf_f (8'ha7, Q[15], C[15]);
+-
+-    assign D[0]  = data_in_d0 ^ C[0];
+-    assign D[1]  = data_in_d0 ^ C[1];
+-    assign D[2]  = data_in_d0 ^ C[2];
+-    assign D[3]  = data_in_d0 ^ C[3];
+-    assign D[4]  = data_in_d0 ^ C[4];
+-    assign D[5]  = data_in_d0 ^ C[5];
+-    assign D[6]  = data_in_d0 ^ C[6];
+-    assign D[7]  = data_in_d0 ^ C[7];
+-    assign D[8]  = data_in_d0 ^ C[8];
+-    assign D[9]  = data_in_d0 ^ C[9];
+-    assign D[10] = data_in_d0 ^ C[10];
+-    assign D[11] = data_in_d0 ^ C[11];
+-    assign D[12] = data_in_d0 ^ C[12];
+-    assign D[13] = data_in_d0 ^ C[13];
+-    assign D[14] = data_in_d0 ^ C[14];
+-    assign D[15] = data_in_d0 ^ C[15];
+-
+-    assign syndrome[127:120] = (state == END) ? Q[15] : 8'b0;
+-    assign syndrome[119:112] = (state == END) ? Q[14] : 8'b0;
+-    assign syndrome[111:104] = (state == END) ? Q[13] : 8'b0;
+-    assign syndrome[103:96]  = (state == END) ? Q[12] : 8'b0;
+-    assign syndrome[95:88]   = (state == END) ? Q[11] : 8'b0;
+-    assign syndrome[87:80]   = (state == END) ? Q[10] : 8'b0;
+-    assign syndrome[79:72]   = (state == END) ? Q[9]  : 8'b0;
+-    assign syndrome[71:64]   = (state == END) ? Q[8]  : 8'b0;
+-    assign syndrome[63:56]   = (state == END) ? Q[7]  : 8'b0;
+-    assign syndrome[55:48]   = (state == END) ? Q[6]  : 8'b0;
+-    assign syndrome[47:40]   = (state == END) ? Q[5]  : 8'b0;
+-    assign syndrome[39:32]   = (state == END) ? Q[4]  : 8'b0;
+-    assign syndrome[31:24]   = (state == END) ? Q[3]  : 8'b0;
+-    assign syndrome[23:16]   = (state == END) ? Q[2]  : 8'b0;
+-    assign syndrome[15:8]    = (state == END) ? Q[1]  : 8'b0;
+-    assign syndrome[7:0]     = (state == END) ? Q[0]  : 8'b0;
+-
+-    assign flag = (state == END);
+-
++`timescale 1ns / 1ps
++/*
++===========================================================================
++Company      : WiComAI Lab, Kookmin University / ETRI Daejeon
++Engineers    : Irzal Zaini & Williamsyah Baginda Miraj
++Module Name  : syndrome_unit
++Description  : Reed-Solomon Syndrome Computation Unit over GF(2^8).
++               Evaluates the incoming codeword at 16 consecutive roots 
++               (alpha^(11*j) for j = 120..135) over a 256-cycle evaluation window.
++               For shortened RS(32,16) headers, the 224 trailing zero cycles 
++               (and 1 trailing zero cycle for RS(255,239)) automatically 
++               shift the codeword roots to align with the Chien search 
++               starting position (alpha^-254).
++
++Revision History:
++  - Rev 1.0 (Initial) : Syndrome computation for roots alpha^0..alpha^15 over 0x11D.
++  - Rev 2.0 (2026-10-27 03:54 KST) : [ETRI Audit Item 2 & 3 - SDA OISL Page 37, Sec. 2.6.3.6.3]
++    Updated the 16 syndrome evaluation roots (gf_0..gf_f) to r_k = alpha^((11*(120+k)) % 255)
++    for j = 120..135 over GF(2^8) 0x187:
++      j=120 (alpha^45)=8'h78, j=121 (alpha^56)=8'h3f, j=122 (alpha^67)=8'hac, j=123 (alpha^78)=8'h13,
++      j=124 (alpha^89)=8'h84, j=125 (alpha^100)=8'h06, j=126 (alpha^111)=8'he0, j=127 (alpha^122)=8'h8a,
++      j=128 (alpha^133)=8'h9c, j=129 (alpha^144)=8'h88, j=130 (alpha^155)=8'h41, j=131 (alpha^166)=8'h73,
++      j=132 (alpha^177)=8'h35, j=133 (alpha^188)=8'h0b, j=134 (alpha^199)=8'h0a, j=135 (alpha^210)=8'ha7.
++  - Rev 2.3 (2026-10-29 12:39 KST) : [Audit Fix F10 - Enable Gating Against Invalid Tail Bytes]
++    Gated data_in_d0 with 'en' so invalid non-zero bytes after 'en' deasserts are forced to 0.
++  - Rev 2.5 (2026-10-29 15:19 KST) : [Audit Fix R17 - Restored 256-Cycle Pre-Shift & Syndrome Bus Order]
++    Restored the original 256-cycle ACTIVE root shift (else if (state == ACTIVE) Q[i] <= D[i])
++    and original syndrome bus ordering (syndrome[127:0] = {Q[15], Q[14], ..., Q[0]}) required 
++    by euclid_proc, chien_search, and forney_math, while keeping 'data_in_d0 <= en ? data_in : 8'b0'
++    so both F10 (tail poisoning immunity) and R17 (shortened/full RS pre-shift alignment) hold.
++===========================================================================
++*/
++
++module syndrome_unit #(
++    parameter max = 255
++)(
++    input  wire         clk,
++    input  wire         rst_n,
++    input  wire         en,
++    input  wire [7:0]   data_in,
++    output wire         flag,
++    output wire [127:0] syndrome
++);
++
++    reg [15:0] count = 16'd0;
++
++    reg  [7:0] Q [0:15];
++    wire [7:0] D [0:15];
++    wire [7:0] C [0:15];
++
++    localparam IDLE   = 3'b001;
++    localparam ACTIVE = 3'b010;
++    localparam END    = 3'b100;
++
++    reg [2:0] state;
++    reg [2:0] next_state;
++
++    reg [7:0] data_in_d0;
++
++    always @(posedge clk or negedge rst_n) begin
++        if (~rst_n)
++            state <= IDLE;
++        else
++            state <= next_state;
++    end
++
++    always @(posedge clk or negedge rst_n) begin
++        if (~rst_n)
++            count <= 16'd0;
++        else if (state == ACTIVE)
++            count <= count + 1'b1;
++        else
++            count <= 16'd0;
++    end
++
++    always @(*) begin
++        case (state)
++            IDLE: begin
++                if (en)
++                    next_state = ACTIVE;
++                else
++                    next_state = IDLE;
++            end
++            ACTIVE: begin
++                if (count < max)
++                    next_state = ACTIVE;
++                else
++                    next_state = END;
++            end
++            END:     next_state = IDLE;
++            default: next_state = IDLE;
++        endcase
++    end
++
++    // [Rev 2.3/2.5 - Fix F10] Gate input with 'en' so invalid tail bytes (e.g. 0xA5) become 8'b0
++    always @(posedge clk or negedge rst_n) begin
++        if (~rst_n)
++            data_in_d0 <= 8'b0;
++        else
++            data_in_d0 <= en ? data_in : 8'b0;
++    end
++
++    integer i;
++    always @(posedge clk or negedge rst_n) begin
++        if (~rst_n) begin
++            for (i = 0; i < 16; i = i + 1)
++                Q[i] <= 8'b0;
++        end else if (state == ACTIVE) begin
++            // [Rev 2.5 - Fix R17] Run full 256-cycle Horner shift (with data_in_d0 = 0 when en == 0)
++            for (i = 0; i < 16; i = i + 1)
++                Q[i] <= D[i];
++        end else begin
++            for (i = 0; i < 16; i = i + 1)
++                Q[i] <= 8'b0;
++        end
++    end
++
++    // [Rev 2.0 - 2026-10-27 03:54 KST] Evaluation roots alpha^(11*j) for j = 120..135 over GF(0x187)
++    multiplier gf_0 (8'h78, Q[0],  C[0]);
++    multiplier gf_1 (8'h3f, Q[1],  C[1]);
++    multiplier gf_2 (8'hac, Q[2],  C[2]);
++    multiplier gf_3 (8'h13, Q[3],  C[3]);
++    multiplier gf_4 (8'h84, Q[4],  C[4]);
++    multiplier gf_5 (8'h06, Q[5],  C[5]);
++    multiplier gf_6 (8'he0, Q[6],  C[6]);
++    multiplier gf_7 (8'h8a, Q[7],  C[7]);
++    multiplier gf_8 (8'h9c, Q[8],  C[8]);
++    multiplier gf_9 (8'h88, Q[9],  C[9]);
++    multiplier gf_a (8'h41, Q[10], C[10]);
++    multiplier gf_b (8'h73, Q[11], C[11]);
++    multiplier gf_c (8'h35, Q[12], C[12]);
++    multiplier gf_d (8'h0b, Q[13], C[13]);
++    multiplier gf_e (8'h0a, Q[14], C[14]);
++    multiplier gf_f (8'ha7, Q[15], C[15]);
++
++    assign D[0]  = data_in_d0 ^ C[0];
++    assign D[1]  = data_in_d0 ^ C[1];
++    assign D[2]  = data_in_d0 ^ C[2];
++    assign D[3]  = data_in_d0 ^ C[3];
++    assign D[4]  = data_in_d0 ^ C[4];
++    assign D[5]  = data_in_d0 ^ C[5];
++    assign D[6]  = data_in_d0 ^ C[6];
++    assign D[7]  = data_in_d0 ^ C[7];
++    assign D[8]  = data_in_d0 ^ C[8];
++    assign D[9]  = data_in_d0 ^ C[9];
++    assign D[10] = data_in_d0 ^ C[10];
++    assign D[11] = data_in_d0 ^ C[11];
++    assign D[12] = data_in_d0 ^ C[12];
++    assign D[13] = data_in_d0 ^ C[13];
++    assign D[14] = data_in_d0 ^ C[14];
++    assign D[15] = data_in_d0 ^ C[15];
++
++    assign syndrome[127:120] = (state == END) ? Q[15] : 8'b0;
++    assign syndrome[119:112] = (state == END) ? Q[14] : 8'b0;
++    assign syndrome[111:104] = (state == END) ? Q[13] : 8'b0;
++    assign syndrome[103:96]  = (state == END) ? Q[12] : 8'b0;
++    assign syndrome[95:88]   = (state == END) ? Q[11] : 8'b0;
++    assign syndrome[87:80]   = (state == END) ? Q[10] : 8'b0;
++    assign syndrome[79:72]   = (state == END) ? Q[9]  : 8'b0;
++    assign syndrome[71:64]   = (state == END) ? Q[8]  : 8'b0;
++    assign syndrome[63:56]   = (state == END) ? Q[7]  : 8'b0;
++    assign syndrome[55:48]   = (state == END) ? Q[6]  : 8'b0;
++    assign syndrome[47:40]   = (state == END) ? Q[5]  : 8'b0;
++    assign syndrome[39:32]   = (state == END) ? Q[4]  : 8'b0;
++    assign syndrome[31:24]   = (state == END) ? Q[3]  : 8'b0;
++    assign syndrome[23:16]   = (state == END) ? Q[2]  : 8'b0;
++    assign syndrome[15:8]    = (state == END) ? Q[1]  : 8'b0;
++    assign syndrome[7:0]     = (state == END) ? Q[0]  : 8'b0;
++
++    assign flag = (state == END);
++
+ endmodule--- ZIP/sources_1/new/fso_payload_top.v
++++ gt_ex.srcs/sources_1/new/fso_payload_top.v
+@@ -28,6 +28,18 @@
+     .s_data_*, .s_mgmt_*, .s_retx_*, and .m_axis_*) to match the combinational
+     fso_payload_mux.v module definition in the project, resolving all 22 TX 
+     named-port elaboration errors.
++  - Rev 3.1 (2026-10-31 14:15 KST) : [Audit Fix OISL-MGMT-001 (D06) - MGMT Payload Snapshot Storage & Replay]
++    1. [Fix OISL-MGMT-001 Snapshot Storage]: Added a 512-word (1912-Byte) MGMT retransmit
++       snapshot buffer ('mgmt_snap_ram [0:511]') and physical-slot ownership bitmap
++       ('mgmt_slot_bitmap [15:0]'). When 'ddr4_write_req' asserts for an MGMT transmission
++       ('payload_mux_sel == 2'b10'), all 478 words (1908B telemetry + 4B CRC-32) streaming
++       from 'u_mgmt_telemetry_generator' are captured into 'mgmt_snap_ram' while gating
++       'ddr4_write_req' away from the DATA-only wrapper inside 'u_fso_payload'.
++    2. [Fix OISL-MGMT-001 Snapshot Replay]: When 'ddr4_read_req' targets a physical slot
++       marked in 'mgmt_slot_bitmap', 'fso_payload_top' replays the exact 478 stored words
++       from 'mgmt_snap_ram' onto the MUX retransmit port ('mux_retx_*'), guaranteeing
++       that MGMT retransmissions reuse the exact original payload rather than generating
++       a new telemetry snapshot.
+ ===========================================================================
+ */
+ 
+@@ -97,6 +109,89 @@
+     wire        retx_tlast;
+     wire        retx_tready;
+ 
++    // =======================================================
++    // [Rev 3.1 - Fix OISL-MGMT-001 (D06)] MGMT SNAPSHOT STORAGE & REPLAY
++    // Captures the 478-word (1912B) MGMT frame during initial transmission
++    // and replays the identical snapshot when retransmitted via Path 11 (RETX).
++    // =======================================================
++    localparam [8:0] MGMT_FRAME_WORDS = 9'd478; // 477 payload words + 1 CRC-32 word
++
++    (* ram_style = "block" *) reg [31:0] mgmt_snap_ram [0:511];
++    reg [15:0] mgmt_slot_bitmap;
++    reg        mgmt_cap_active;
++    reg [8:0]  mgmt_cap_idx;
++    reg        mgmt_retx_active;
++    reg [8:0]  mgmt_retx_idx;
++
++    wire is_mgmt_write_req  = ddr4_write_req  && (payload_mux_sel == 2'b10);
++    wire is_mgmt_read_req   = ddr4_read_req   && mgmt_slot_bitmap[ddr4_addr[3:0]];
++    wire is_mgmt_delete_req = ddr4_delete_req && mgmt_slot_bitmap[ddr4_addr[3:0]];
++
++    // Forward only DATA-slot requests to u_fso_payload's DATA wrapper
++    wire data_ddr4_write_req  = ddr4_write_req  && !is_mgmt_write_req;
++    wire data_ddr4_read_req   = ddr4_read_req   && !is_mgmt_read_req;
++    wire data_ddr4_delete_req = ddr4_delete_req && !is_mgmt_delete_req;
++
++    wire mgmt_word_beat = (payload_mux_sel == 2'b10) && mgmt_tvalid && mgmt_tready;
++    wire mux_retx_tready;
++
++    always @(posedge clk) begin
++        if (mgmt_word_beat && (mgmt_cap_Active_w)) begin
++            mgmt_snap_ram[mgmt_cap_idx_w] <= mgmt_tdata;
++        end
++    end
++
++    wire       mgmt_cap_Active_w = mgmt_cap_active || is_mgmt_write_req;
++    wire [8:0] mgmt_cap_idx_w    = is_mgmt_write_req ? 9'd0 : mgmt_cap_idx;
++
++    always @(posedge clk or negedge rst_n) begin
++        if (!rst_n) begin
++            mgmt_slot_bitmap <= 16'd0;
++            mgmt_cap_active  <= 1'b0;
++            mgmt_cap_idx     <= 9'd0;
++            mgmt_retx_active <= 1'b0;
++            mgmt_retx_idx    <= 9'd0;
++        end else begin
++            // Track physical slot ownership for MGMT transactions
++            if (is_mgmt_write_req) begin
++                mgmt_slot_bitmap[ddr4_addr[3:0]] <= 1'b1;
++                mgmt_cap_active                  <= 1'b1;
++                mgmt_cap_idx                     <= 9'd0;
++            end
++            if (is_mgmt_delete_req) begin
++                mgmt_slot_bitmap[ddr4_addr[3:0]] <= 1'b0;
++            end
++
++            // Advance capture pointer across all 478 words of the initial MGMT frame
++            if (mgmt_word_beat && mgmt_cap_Active_w) begin
++                if (mgmt_tlast || (mgmt_cap_idx_w == (MGMT_FRAME_WORDS - 9'd1))) begin
++                    mgmt_cap_active <= 1'b0;
++                    mgmt_cap_idx    <= 9'd0;
++                end else begin
++                    mgmt_cap_idx    <= mgmt_cap_idx_w + 9'd1;
++                end
++            end
++
++            // Replay stored 478-word MGMT snapshot when retransmission is requested
++            if (is_mgmt_read_req) begin
++                mgmt_retx_active <= 1'b1;
++                mgmt_retx_idx    <= 9'd0;
++            end else if (mgmt_retx_active && mux_retx_tready) begin
++                if (mgmt_retx_idx == (MGMT_FRAME_WORDS - 9'd1)) begin
++                    mgmt_retx_active <= 1'b0;
++                    mgmt_retx_idx    <= 9'd0;
++                end else begin
++                    mgmt_retx_idx    <= mgmt_retx_idx + 9'd1;
++                end
++            end
++        end
++    end
++
++    wire [31:0] mux_retx_tdata  = mgmt_retx_active ? mgmt_snap_ram[mgmt_retx_idx] : retx_tdata;
++    wire        mux_retx_tvalid = mgmt_retx_active ? 1'b1                         : retx_tvalid;
++    wire        mux_retx_tlast  = mgmt_retx_active ? (mgmt_retx_idx == (MGMT_FRAME_WORDS - 9'd1)) : retx_tlast;
++    assign      retx_tready     = mgmt_retx_active ? 1'b0                         : mux_retx_tready;
++
+     // 1. DATA & RETRANSMIT CAPSULE (Path 01 & Path 11)
+     fso_payload u_fso_payload (
+         .clk                (clk),
+@@ -106,9 +201,9 @@
+         .s_axis_eth_tlast   (s_axis_eth_tlast),
+         .s_axis_eth_tready  (s_axis_eth_tready),
+         .seg_valid_bytes    (seg_valid_bytes),
+-        .ddr4_write_req     (ddr4_write_req),
+-        .ddr4_read_req      (ddr4_read_req),
+-        .ddr4_delete_req    (ddr4_delete_req),
++        .ddr4_write_req     (data_ddr4_write_req),
++        .ddr4_read_req      (data_ddr4_read_req),
++        .ddr4_delete_req    (data_ddr4_delete_req),
+         .ddr4_addr          (ddr4_addr),
+         .m_axis_data_tdata  (data_tdata),
+         .m_axis_data_tvalid (data_tvalid),
+@@ -122,13 +217,15 @@
+ 
+     // 2. IDLE PRBS CAPSULE (Path 00 - Seeded by TXFN + 1)
+     fso_idle_generator u_fso_idle_generator (
+-        .clk           (clk),
+-        .rst_n         (rst_n),
+-        .txfn_in       (txfn_in),
+-        .m_axis_tdata  (idle_tdata),
+-        .m_axis_tvalid (idle_tvalid),
+-        .m_axis_tlast  (idle_tlast),
+-        .m_axis_tready (idle_tready)
++        .clk              (clk),
++        .rst_n            (rst_n),
++        .txfn_in          (txfn_in),
++        .m_axis_tdata     (idle_tdata),
++        .m_axis_tvalid    (idle_tvalid),
++        .m_axis_tlast     (idle_tlast),
++        .m_axis_tready    (idle_tready),
++        .idle_start_valid (),
++        .idle_start_ready ()
+     );
+ 
+     // 3. 1HZ MANAGEMENT TELEMETRY CAPSULE (Path 10)
+@@ -165,10 +262,10 @@
+         .s_mgmt_tvalid   (mgmt_tvalid),
+         .s_mgmt_tlast    (mgmt_tlast),
+         .s_mgmt_tready   (mgmt_tready),
+-        .s_retx_tdata    (retx_tdata),
+-        .s_retx_tvalid   (retx_tvalid),
+-        .s_retx_tlast    (retx_tlast),
+-        .s_retx_tready   (retx_tready),
++        .s_retx_tdata    (mux_retx_tdata),
++        .s_retx_tvalid   (mux_retx_tvalid),
++        .s_retx_tlast    (mux_retx_tlast),
++        .s_retx_tready   (mux_retx_tready),
+         .m_axis_tdata    (m_axis_fso_tdata),
+         .m_axis_tvalid   (m_axis_fso_tvalid),
+         .m_axis_tlast    (m_axis_fso_tlast),

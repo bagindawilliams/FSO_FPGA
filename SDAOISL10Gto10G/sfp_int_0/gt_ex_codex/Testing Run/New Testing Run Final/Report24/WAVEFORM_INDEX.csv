@@ -1,0 +1,8 @@
+top,config,snapshot,fileset,WDB,WCFG,Tcl,window,status
+tb_SDAOISL10Gto10G_top,BASIC_REPORT=1,report_top,report_baseline,pending new runtime,generated in same run,scripts/setup_new.tcl,500us watchdog; finish after transactions+10us,NOT_RUN
+tb_arq_tx_controller,original four scenarios,report_controller,report_baseline,pending new runtime,generated in same run,scripts/setup_new.tcl,50us runner cap,NOT_RUN
+tb_arq,CASE=0,report_arq_0,report_baseline,pending new runtime,generated in same run,scripts/setup_new.tcl,300us watchdog,NOT_RUN
+tb_arq,CASE=1,report_arq_1,report_baseline,pending new runtime,generated in same run,scripts/setup_new.tcl,300us watchdog,NOT_RUN
+tb_arq,CASE=2,report_arq_2,report_baseline,pending new runtime,generated in same run,scripts/setup_new.tcl,300us watchdog,NOT_RUN
+tb_RS,CHANNEL_ERROR=0,report_rs_clean,report_baseline,pending new runtime,generated in same run,scripts/setup_new.tcl,100us watchdog,NOT_RUN
+tb_RS,CHANNEL_ERROR=1,report_rs_mem,report_baseline,pending new runtime,generated in same run,scripts/setup_new.tcl,100us watchdog,NOT_RUN

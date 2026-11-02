@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/audit/20261101_module13/build/modules_20261101_175641_098035_tb_arq_tx_controller.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tb_arq_tx_controller" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+   </zoom_setting>
+   <column_width_setting>
+   </column_width_setting>
+   <WVObjectSize size="7" />
+   <wvobject type="group" fp_name="group23">
+      <obj_property name="label">System Clock / Control</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/tb_arq_tx_controller/clk">
+         <obj_property name="ElementShortName">clk</obj_property>
+         <obj_property name="ObjectShortName">clk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_arq_tx_controller/rst_n">
+         <obj_property name="ElementShortName">rst_n</obj_property>
+         <obj_property name="ObjectShortName">rst_n</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group26">
+      <obj_property name="label">Process and State</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_arq_tx_controller/delete_req_cnt">
+         <obj_property name="ElementShortName">delete_req_cnt[31:0]</obj_property>
+         <obj_property name="ObjectShortName">delete_req_cnt[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_arq_tx_controller/retx_req_cnt">
+         <obj_property name="ElementShortName">retx_req_cnt[31:0]</obj_property>
+         <obj_property name="ObjectShortName">retx_req_cnt[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_arq_tx_controller/write_req_cnt">
+         <obj_property name="ElementShortName">write_req_cnt[31:0]</obj_property>
+         <obj_property name="ObjectShortName">write_req_cnt[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_arq_tx_controller/tx_stall_mac">
+         <obj_property name="ElementShortName">tx_stall_mac</obj_property>
+         <obj_property name="ObjectShortName">tx_stall_mac</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_arq_tx_controller/ddr4_addr">
+         <obj_property name="ElementShortName">ddr4_addr[15:0]</obj_property>
+         <obj_property name="ObjectShortName">ddr4_addr[15:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_arq_tx_controller/ddr4_delete_req">
+         <obj_property name="ElementShortName">ddr4_delete_req</obj_property>
+         <obj_property name="ObjectShortName">ddr4_delete_req</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_arq_tx_controller/ddr4_read_req">
+         <obj_property name="ElementShortName">ddr4_read_req</obj_property>
+         <obj_property name="ObjectShortName">ddr4_read_req</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_arq_tx_controller/ddr4_write_req">
+         <obj_property name="ElementShortName">ddr4_write_req</obj_property>
+         <obj_property name="ObjectShortName">ddr4_write_req</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_arq_tx_controller/tx_frame_type">
+         <obj_property name="ElementShortName">tx_frame_type[1:0]</obj_property>
+         <obj_property name="ObjectShortName">tx_frame_type[1:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_arq_tx_controller/tx_trigger_gen">
+         <obj_property name="ElementShortName">tx_trigger_gen</obj_property>
+         <obj_property name="ObjectShortName">tx_trigger_gen</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group37">
+      <obj_property name="label">MGMT Path</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_arq_tx_controller/mgmt_tx_cnt">
+         <obj_property name="ElementShortName">mgmt_tx_cnt[31:0]</obj_property>
+         <obj_property name="ObjectShortName">mgmt_tx_cnt[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_arq_tx_controller/mgmt_tick_1hz">
+         <obj_property name="ElementShortName">mgmt_tick_1hz</obj_property>
+         <obj_property name="ObjectShortName">mgmt_tick_1hz</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group40">
+      <obj_property name="label">Header Path</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/tb_arq_tx_controller/header_gen_busy">
+         <obj_property name="ElementShortName">header_gen_busy</obj_property>
+         <obj_property name="ObjectShortName">header_gen_busy</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group42">
+      <obj_property name="label">Data Input</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_arq_tx_controller/rx_rxfn_in">
+         <obj_property name="ElementShortName">rx_rxfn_in[15:0]</obj_property>
+         <obj_property name="ObjectShortName">rx_rxfn_in[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_arq_tx_controller/tx_txfn_out">
+         <obj_property name="ElementShortName">tx_txfn_out[15:0]</obj_property>
+         <obj_property name="ObjectShortName">tx_txfn_out[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_arq_tx_controller/rx_ack_in">
+         <obj_property name="ElementShortName">rx_ack_in</obj_property>
+         <obj_property name="ObjectShortName">rx_ack_in</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group46">
+      <obj_property name="label">Payload Path</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_arq_tx_controller/payload_mux_sel">
+         <obj_property name="ElementShortName">payload_mux_sel[1:0]</obj_property>
+         <obj_property name="ObjectShortName">payload_mux_sel[1:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group48">
+      <obj_property name="label">Functional handshake / recorded controls</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/tb_arq_tx_controller/fso_data_valid">
+         <obj_property name="ElementShortName">fso_data_valid</obj_property>
+         <obj_property name="ObjectShortName">fso_data_valid</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_arq_tx_controller/rx_ack_valid_in">
+         <obj_property name="ElementShortName">rx_ack_valid_in</obj_property>
+         <obj_property name="ObjectShortName">rx_ack_valid_in</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_arq_tx_controller/last_data_txfn">
+         <obj_property name="ElementShortName">last_data_txfn[15:0]</obj_property>
+         <obj_property name="ObjectShortName">last_data_txfn[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+</wave_config>

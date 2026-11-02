@@ -1,0 +1,6 @@
+# New simulation only: exact tested top/profile required.
+foreach path {{/tb_arq_tx_controller/clk} {/tb_arq_tx_controller/rst_n} {/tb_arq_tx_controller/delete_req_cnt} {/tb_arq_tx_controller/retx_req_cnt} {/tb_arq_tx_controller/write_req_cnt} {/tb_arq_tx_controller/tx_stall_mac} {/tb_arq_tx_controller/ddr4_addr} {/tb_arq_tx_controller/ddr4_delete_req} {/tb_arq_tx_controller/ddr4_read_req} {/tb_arq_tx_controller/ddr4_write_req} {/tb_arq_tx_controller/tx_frame_type} {/tb_arq_tx_controller/tx_trigger_gen} {/tb_arq_tx_controller/mgmt_tx_cnt} {/tb_arq_tx_controller/mgmt_tick_1hz} {/tb_arq_tx_controller/header_gen_busy} {/tb_arq_tx_controller/rx_rxfn_in} {/tb_arq_tx_controller/tx_txfn_out} {/tb_arq_tx_controller/rx_ack_in} {/tb_arq_tx_controller/payload_mux_sel} {/tb_arq_tx_controller/fso_data_valid} {/tb_arq_tx_controller/rx_ack_valid_in} {/tb_arq_tx_controller/last_data_txfn}} {
+ if {![llength [get_objects -quiet $path]]} {error "Unresolved waveform object: $path. Wrong top/profile; do not ignore."}
+ log_wave [get_objects $path]
+}
+open_wave_config {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/Testing Run/New Testing Run Final/tb_arq_tx_controller__tb_arq_tx_controller__historical.wcfg}

@@ -1,0 +1,162 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/audit/20261101_module15/build/focused_20261101_182819_587776_tb_demux_preamble_128_verified.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tb_demux_preamble_128_verified" />
+            <top_module name="vcomponents" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+   </zoom_setting>
+   <column_width_setting>
+   </column_width_setting>
+   <WVObjectSize size="5" />
+   <wvobject type="group" fp_name="group1">
+      <obj_property name="label">Measurement / Checker</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_demux_preamble_128_verified/accepted_bytes">
+         <obj_property name="ElementShortName">accepted_bytes[31:0]</obj_property>
+         <obj_property name="ObjectShortName">accepted_bytes[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_demux_preamble_128_verified/delivered_bytes">
+         <obj_property name="ElementShortName">delivered_bytes[31:0]</obj_property>
+         <obj_property name="ObjectShortName">delivered_bytes[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_demux_preamble_128_verified/lpc_checked">
+         <obj_property name="ElementShortName">lpc_checked[31:0]</obj_property>
+         <obj_property name="ObjectShortName">lpc_checked[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_demux_preamble_128_verified/preambles_checked">
+         <obj_property name="ElementShortName">preambles_checked[31:0]</obj_property>
+         <obj_property name="ObjectShortName">preambles_checked[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group4">
+      <obj_property name="label">Process and State</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_demux_preamble_128_verified/demux_frame_id">
+         <obj_property name="ElementShortName">demux_frame_id[31:0]</obj_property>
+         <obj_property name="ObjectShortName">demux_frame_id[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="label">HISTORICAL_DEBUG demux_frame_id (not acceptance)</obj_property><obj_property name="DisplayName">label</obj_property></wvobject>
+      <wvobject type="array" fp_name="/tb_demux_preamble_128_verified/gth_rx_data">
+         <obj_property name="ElementShortName">gth_rx_data[31:0]</obj_property>
+         <obj_property name="ObjectShortName">gth_rx_data[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_demux_preamble_128_verified/accepted_words">
+         <obj_property name="ElementShortName">accepted_words[31:0]</obj_property>
+         <obj_property name="ObjectShortName">accepted_words[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_demux_preamble_128_verified/delivered_words">
+         <obj_property name="ElementShortName">delivered_words[31:0]</obj_property>
+         <obj_property name="ObjectShortName">delivered_words[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_demux_preamble_128_verified/lpc_byte_idx">
+         <obj_property name="ElementShortName">lpc_byte_idx[11:0]</obj_property>
+         <obj_property name="ObjectShortName">lpc_byte_idx[11:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_demux_preamble_128_verified/lpc_total_bytes">
+         <obj_property name="ElementShortName">lpc_total_bytes[15:0]</obj_property>
+         <obj_property name="ObjectShortName">lpc_total_bytes[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="label">HISTORICAL_DEBUG lpc_total_bytes (not acceptance)</obj_property><obj_property name="DisplayName">label</obj_property></wvobject>
+      <wvobject type="array" fp_name="/tb_demux_preamble_128_verified/total_word_idx">
+         <obj_property name="ElementShortName">total_word_idx[31:0]</obj_property>
+         <obj_property name="ObjectShortName">total_word_idx[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_demux_preamble_128_verified/preamble_match_cnt">
+         <obj_property name="ElementShortName">preamble_match_cnt[31:0]</obj_property>
+         <obj_property name="ObjectShortName">preamble_match_cnt[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   <wvobject type="array" fp_name="/tb_demux_preamble_128_verified/lpc_byte_stream">
+         <obj_property name="ElementShortName">lpc_byte_stream[7:0]</obj_property>
+         <obj_property name="ObjectShortName">lpc_byte_stream[7:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_demux_preamble_128_verified/total_lpc_words_captured">
+         <obj_property name="ElementShortName">total_lpc_words_captured[31:0]</obj_property>
+         <obj_property name="ObjectShortName">total_lpc_words_captured[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_demux_preamble_128_verified/b0_abs">
+         <obj_property name="ElementShortName">b0_abs[31:0]</obj_property>
+         <obj_property name="ObjectShortName">b0_abs[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_demux_preamble_128_verified/b1_abs">
+         <obj_property name="ElementShortName">b1_abs[31:0]</obj_property>
+         <obj_property name="ObjectShortName">b1_abs[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_demux_preamble_128_verified/b2_abs">
+         <obj_property name="ElementShortName">b2_abs[31:0]</obj_property>
+         <obj_property name="ObjectShortName">b2_abs[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_demux_preamble_128_verified/b3_abs">
+         <obj_property name="ElementShortName">b3_abs[31:0]</obj_property>
+         <obj_property name="ObjectShortName">b3_abs[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_demux_preamble_128_verified/preamble_extracted">
+         <obj_property name="ElementShortName">preamble_extracted[71:0]</obj_property>
+         <obj_property name="ObjectShortName">preamble_extracted[71:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      </wvobject>
+   <wvobject type="group" fp_name="group7">
+      <obj_property name="label">Data Input</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/tb_demux_preamble_128_verified/continuation_done">
+         <obj_property name="ElementShortName">continuation_done</obj_property>
+         <obj_property name="ObjectShortName">continuation_done</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property></wvobject>
+      <wvobject type="logic" fp_name="/tb_demux_preamble_128_verified/original_complete">
+         <obj_property name="ElementShortName">original_complete</obj_property>
+         <obj_property name="ObjectShortName">original_complete</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property></wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group12">
+      <obj_property name="label">System Clock / Control</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="group" fp_name="group14">
+      <obj_property name="label">Data Output</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_demux_preamble_128_verified/cdc3_data_out">
+         <obj_property name="ElementShortName">cdc3_data_out[127:0]</obj_property>
+         <obj_property name="ObjectShortName">cdc3_data_out[127:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_demux_preamble_128_verified/lpc_data_out">
+         <obj_property name="ElementShortName">lpc_data_out[95:0]</obj_property>
+         <obj_property name="ObjectShortName">lpc_data_out[95:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_demux_preamble_128_verified/out_lpc_byte_cnt">
+         <obj_property name="ElementShortName">out_lpc_byte_cnt[11:0]</obj_property>
+         <obj_property name="ObjectShortName">out_lpc_byte_cnt[11:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   <wvobject type="array" fp_name="/tb_demux_preamble_128_verified/out_lpc_word_cnt">
+         <obj_property name="ElementShortName">out_lpc_word_cnt[8:0]</obj_property>
+         <obj_property name="ObjectShortName">out_lpc_word_cnt[8:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      </wvobject>
+</wave_config>

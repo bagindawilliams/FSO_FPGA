@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/audit/20261101_module13/build/modules_20261101_180405_651227_tb_demux_decoder.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tb_demux_decoder" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+   </zoom_setting>
+   <column_width_setting>
+   </column_width_setting>
+   <WVObjectSize size="4" />
+   <wvobject type="group" fp_name="group22">
+      <obj_property name="label">System Clock / Control</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="group" fp_name="group23">
+      <obj_property name="label">Data Input</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_demux_decoder/cdc_data_in">
+         <obj_property name="ElementShortName">cdc_data_in[127:0]</obj_property>
+         <obj_property name="ObjectShortName">cdc_data_in[127:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_demux_decoder/in_byte_cnt">
+         <obj_property name="ElementShortName">in_byte_cnt[11:0]</obj_property>
+         <obj_property name="ObjectShortName">in_byte_cnt[11:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group25">
+      <obj_property name="label">Process and State</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_demux_decoder/demux_frame_id">
+         <obj_property name="ElementShortName">demux_frame_id[31:0]</obj_property>
+         <obj_property name="ObjectShortName">demux_frame_id[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_demux_decoder/word128_tmp">
+         <obj_property name="ElementShortName">word128_tmp[127:0]</obj_property>
+         <obj_property name="ObjectShortName">word128_tmp[127:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   <wvobject type="array" fp_name="/tb_demux_decoder/abs_b">
+         <obj_property name="ElementShortName">abs_b[31:0]</obj_property>
+         <obj_property name="ObjectShortName">abs_b[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_demux_decoder/frame_type_str">
+         <obj_property name="ElementShortName">frame_type_str[31:0]</obj_property>
+         <obj_property name="ObjectShortName">frame_type_str[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_demux_decoder/frame_type_str">
+         <obj_property name="ElementShortName">frame_type_str[31:0]</obj_property>
+         <obj_property name="ObjectShortName">frame_type_str[31:0]</obj_property>
+         <obj_property name="Radix">ASCIIRADIX</obj_property>
+      <obj_property name="label">ASCII (MSB-to-LSB): frame_type_str</obj_property><obj_property name="DisplayName">label</obj_property></wvobject>
+      <wvobject type="array" fp_name="/tb_demux_decoder/i">
+         <obj_property name="ElementShortName">i[31:0]</obj_property>
+         <obj_property name="ObjectShortName">i[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_demux_decoder/k">
+         <obj_property name="ElementShortName">k[31:0]</obj_property>
+         <obj_property name="ObjectShortName">k[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_demux_decoder/preamble_extracted">
+         <obj_property name="ElementShortName">preamble_extracted[71:0]</obj_property>
+         <obj_property name="ObjectShortName">preamble_extracted[71:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      </wvobject>
+   <wvobject type="group" fp_name="group27">
+      <obj_property name="label">Data Output</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_demux_decoder/lpc_data_out">
+         <obj_property name="ElementShortName">lpc_data_out[95:0]</obj_property>
+         <obj_property name="ObjectShortName">lpc_data_out[95:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_demux_decoder/out_byte_cnt">
+         <obj_property name="ElementShortName">out_byte_cnt[11:0]</obj_property>
+         <obj_property name="ObjectShortName">out_byte_cnt[11:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_demux_decoder/lpc_out_cnt">
+         <obj_property name="ElementShortName">lpc_out_cnt[31:0]</obj_property>
+         <obj_property name="ObjectShortName">lpc_out_cnt[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+</wave_config>

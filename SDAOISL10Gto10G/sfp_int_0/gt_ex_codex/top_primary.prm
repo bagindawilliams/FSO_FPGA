@@ -1,0 +1,12 @@
+===================================
+Configuration Memory information
+===================================
+File Format        MCS
+Interface          SPIX8
+Size               16M
+Start Address      0x00000000
+End Address        0x00FFFFFF
+
+Addr1         Addr2         Date                    File(s)
+0x00000000    0x0066ABB7    Mar 17 12:19:42 2026    /home/yrzal0/_FPGA/sfp_int/sfp_int_0/gt_ex/gt_ex.runs/impl_1/top.bit
+0x00800000    0x00E6ABB7    Mar 17 12:19:42 2026    /home/yrzal0/_FPGA/sfp_int/sfp_int_0/gt_ex/gt_ex.runs/impl_1/top.bit

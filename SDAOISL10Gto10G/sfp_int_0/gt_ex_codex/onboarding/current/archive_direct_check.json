@@ -1,0 +1,902 @@
+[
+  {
+    "member": "constrs_1/new/SDAOISL10Gto10G.xdc",
+    "workspace": "gt_ex.srcs/constrs_1/new/SDAOISL10Gto10G.xdc",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "constrs_1/imports/imports/gt_example_top.xdc",
+    "workspace": "gt_ex.srcs/constrs_1/imports/imports/gt_example_top.xdc",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/ip/eth_10g_pcs_pma_tx_0/eth_10g_pcs_pma_tx_0.xci",
+    "workspace": "gt_ex.srcs/sources_1/ip/eth_10g_pcs_pma_tx_0/eth_10g_pcs_pma_tx_0.xci",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/ip/gth_fso_64b66b/gth_fso_64b66b.xci",
+    "workspace": "gt_ex.srcs/sources_1/ip/gth_fso_64b66b/gth_fso_64b66b.xci",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/ip/bram_rs/bram_rs.xci",
+    "workspace": "gt_ex.srcs/sources_1/ip/bram_rs/bram_rs.xci",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/ip/clk_wiz_0/clk_wiz_0.xci",
+    "workspace": "gt_ex.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/ip/cross_gth_logic/cross_gth_logic.xci",
+    "workspace": "gt_ex.srcs/sources_1/ip/cross_gth_logic/cross_gth_logic.xci",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/ip/cross_gth_logic_head/cross_gth_logic_head.xci",
+    "workspace": "gt_ex.srcs/sources_1/ip/cross_gth_logic_head/cross_gth_logic_head.xci",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/ip/cross_gth_logic_load/cross_gth_logic_load.xci",
+    "workspace": "gt_ex.srcs/sources_1/ip/cross_gth_logic_load/cross_gth_logic_load.xci",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/ip/cross_logic_gth/cross_logic_gth.xci",
+    "workspace": "gt_ex.srcs/sources_1/ip/cross_logic_gth/cross_logic_gth.xci",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/ip/cross_logic_gth_head/cross_logic_gth_head.xci",
+    "workspace": "gt_ex.srcs/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head.xci",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/ip/cross_logic_gth_load/cross_logic_gth_load.xci",
+    "workspace": "gt_ex.srcs/sources_1/ip/cross_logic_gth_load/cross_logic_gth_load.xci",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/ip/delay_combiner/delay_combiner.xci",
+    "workspace": "gt_ex.srcs/sources_1/ip/delay_combiner/delay_combiner.xci",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/ip/gt/gt.xci",
+    "workspace": "gt_ex.srcs/sources_1/ip/gt/gt.xci",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/ip/gt_vio_0/gt_vio_0.xci",
+    "workspace": "gt_ex.srcs/sources_1/ip/gt_vio_0/gt_vio_0.xci",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/ip/reset_0/reset_0.xci",
+    "workspace": "gt_ex.srcs/sources_1/ip/reset_0/reset_0.xci",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/ip/serdes_assembler/serdes_assembler.xci",
+    "workspace": "gt_ex.srcs/sources_1/ip/serdes_assembler/serdes_assembler.xci",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/ip/serdes_framer/serdes_framer.xci",
+    "workspace": "gt_ex.srcs/sources_1/ip/serdes_framer/serdes_framer.xci",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/ip/eth_10g_pcs_pma_rx_0/eth_10g_pcs_pma_rx_0.xci",
+    "workspace": "gt_ex.srcs/sources_1/ip/eth_10g_pcs_pma_rx_0/eth_10g_pcs_pma_rx_0.xci",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/ethernet_frame_reassembly.v",
+    "workspace": "gt_ex.srcs/sources_1/new/ethernet_frame_reassembly.v",
+    "exists": true,
+    "same": false
+  },
+  {
+    "member": "sources_1/new/tb_demux_preamble_128.v",
+    "workspace": "gt_ex.srcs/sources_1/new/tb_demux_preamble_128.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/tb_lpc_dec_descrambler.v",
+    "workspace": "gt_ex.srcs/sources_1/new/tb_lpc_dec_descrambler.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/tb_FEC_Demux.v",
+    "workspace": "gt_ex.srcs/sources_1/new/tb_FEC_Demux.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/tb_rs_decoder_rx.v",
+    "workspace": "gt_ex.srcs/sources_1/new/tb_rs_decoder_rx.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/tb_cdc4_logic_gth.v",
+    "workspace": "gt_ex.srcs/sources_1/new/tb_cdc4_logic_gth.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/tb_fso_ethernet_deframer.v",
+    "workspace": "gt_ex.srcs/sources_1/new/tb_fso_ethernet_deframer.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/arq_rx_reorder_ddr4_wrapper.v",
+    "workspace": "gt_ex.srcs/sources_1/new/arq_rx_reorder_ddr4_wrapper.v",
+    "exists": true,
+    "same": false
+  },
+  {
+    "member": "sources_1/new/tb_reassembly_and_backend.v",
+    "workspace": "gt_ex.srcs/sources_1/new/tb_reassembly_and_backend.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/fso_crc_16_checker.v",
+    "workspace": "gt_ex.srcs/sources_1/new/fso_crc_16_checker.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/header_parser.v",
+    "workspace": "gt_ex.srcs/sources_1/new/header_parser.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/deframer_header.v",
+    "workspace": "gt_ex.srcs/sources_1/new/deframer_header.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/fso_crc_32_checker.v",
+    "workspace": "gt_ex.srcs/sources_1/new/fso_crc_32_checker.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/deframer_payload.v",
+    "workspace": "gt_ex.srcs/sources_1/new/deframer_payload.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/arq_rx_controller.v",
+    "workspace": "gt_ex.srcs/sources_1/new/arq_rx_controller.v",
+    "exists": true,
+    "same": false
+  },
+  {
+    "member": "sources_1/new/idle_discard.v",
+    "workspace": "gt_ex.srcs/sources_1/new/idle_discard.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/mgmt_extraction.v",
+    "workspace": "gt_ex.srcs/sources_1/new/mgmt_extraction.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/frame_demultiplexer.v",
+    "workspace": "gt_ex.srcs/sources_1/new/frame_demultiplexer.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/deframer.v",
+    "workspace": "gt_ex.srcs/sources_1/new/deframer.v",
+    "exists": true,
+    "same": false
+  },
+  {
+    "member": "sources_1/new/fso_ethernet_deframer.v",
+    "workspace": "gt_ex.srcs/sources_1/new/fso_ethernet_deframer.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/tb_fso_deframer_payload.v",
+    "workspace": "gt_ex.srcs/sources_1/new/tb_fso_deframer_payload.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/tb_SDAOISL10Gto10G_top.v",
+    "workspace": "gt_ex.srcs/sources_1/new/tb_SDAOISL10Gto10G_top.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/arq_tx_controller.v",
+    "workspace": "gt_ex.srcs/sources_1/new/arq_tx_controller.v",
+    "exists": true,
+    "same": false
+  },
+  {
+    "member": "sources_1/new/tb_arq_tx_controller.v",
+    "workspace": "gt_ex.srcs/sources_1/new/tb_arq_tx_controller.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/fso_crc_16.v",
+    "workspace": "gt_ex.srcs/sources_1/new/fso_crc_16.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/header_generator.v",
+    "workspace": "gt_ex.srcs/sources_1/new/header_generator.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/fso_header_top.v",
+    "workspace": "gt_ex.srcs/sources_1/new/fso_header_top.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/fso_crc_32.v",
+    "workspace": "gt_ex.srcs/sources_1/new/fso_crc_32.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/eth_axis_packet_gen.v",
+    "workspace": "gt_ex.srcs/sources_1/new/eth_axis_packet_gen.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/arq_ddr4_wrapper.v",
+    "workspace": "gt_ex.srcs/sources_1/new/arq_ddr4_wrapper.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/fso_axis_fifo.v",
+    "workspace": "gt_ex.srcs/sources_1/new/fso_axis_fifo.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/ethernet_fso_framer.v",
+    "workspace": "gt_ex.srcs/sources_1/new/ethernet_fso_framer.v",
+    "exists": true,
+    "same": false
+  },
+  {
+    "member": "sources_1/new/tb_fso_payload.v",
+    "workspace": "gt_ex.srcs/sources_1/new/tb_fso_payload.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/tb_fso_header_top.v",
+    "workspace": "gt_ex.srcs/sources_1/new/tb_fso_header_top.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/tb_idle_MGMT.v",
+    "workspace": "gt_ex.srcs/sources_1/new/tb_idle_MGMT.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/SDAOISL10Gto10G_top.v",
+    "workspace": "gt_ex.srcs/sources_1/new/SDAOISL10Gto10G_top.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/sda_encoder.v",
+    "workspace": "gt_ex.srcs/sources_1/new/sda_encoder.v",
+    "exists": true,
+    "same": false
+  },
+  {
+    "member": "sources_1/new/tb_x_gth_logic.v",
+    "workspace": "gt_ex.srcs/sources_1/new/tb_x_gth_logic.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/tb_cdc_logic_gth.v",
+    "workspace": "gt_ex.srcs/sources_1/new/tb_cdc_logic_gth.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/tb_error_inject.v",
+    "workspace": "gt_ex.srcs/sources_1/new/tb_error_inject.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/tb_Scrambler_LPC.v",
+    "workspace": "gt_ex.srcs/sources_1/new/tb_Scrambler_LPC.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/gth64b66b_tx.v",
+    "workspace": "gt_ex.srcs/sources_1/new/gth64b66b_tx.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/fso_gth_core_wrapper.v",
+    "workspace": "gt_ex.srcs/sources_1/new/fso_gth_core_wrapper.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/gth64b66b_rx.v",
+    "workspace": "gt_ex.srcs/sources_1/new/gth64b66b_rx.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/tb_gth64b66b_loopback.v",
+    "workspace": "gt_ex.srcs/sources_1/new/tb_gth64b66b_loopback.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/FEC_Demux.v",
+    "workspace": "gt_ex.srcs/sources_1/new/FEC_Demux.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/preamble_sda_decoder.v",
+    "workspace": "gt_ex.srcs/sources_1/new/preamble_sda_decoder.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/descrambler.v",
+    "workspace": "gt_ex.srcs/sources_1/new/descrambler.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/FEC_separator.v",
+    "workspace": "gt_ex.srcs/sources_1/new/FEC_separator.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/sda_decoder.v",
+    "workspace": "gt_ex.srcs/sources_1/new/sda_decoder.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/mac_ip_sniffer.v",
+    "workspace": "gt_ex.srcs/sources_1/new/mac_ip_sniffer.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/xgmii_tx_encoder.v",
+    "workspace": "gt_ex.srcs/sources_1/new/xgmii_tx_encoder.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/packaging_and_segmentation.v",
+    "workspace": "gt_ex.srcs/sources_1/new/packaging_and_segmentation.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/tb_cdc3_rx_gth_logic.v",
+    "workspace": "gt_ex.srcs/sources_1/new/tb_cdc3_rx_gth_logic.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/fso_idle_generator.v",
+    "workspace": "gt_ex.srcs/sources_1/new/fso_idle_generator.v",
+    "exists": true,
+    "same": false
+  },
+  {
+    "member": "sources_1/new/mgmt_telemetry_generator.v",
+    "workspace": "gt_ex.srcs/sources_1/new/mgmt_telemetry_generator.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/fso_payload_mux.v",
+    "workspace": "gt_ex.srcs/sources_1/new/fso_payload_mux.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/tb_mux_gearbox.v",
+    "workspace": "gt_ex.srcs/sources_1/new/tb_mux_gearbox.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/mux_gearbox_128.v",
+    "workspace": "gt_ex.srcs/sources_1/new/mux_gearbox_128.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/preamble_gen.v",
+    "workspace": "gt_ex.srcs/sources_1/new/preamble_gen.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/tb_top.v",
+    "workspace": "gt_ex.srcs/sources_1/new/tb_top.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/preamble_sda_dec.v",
+    "workspace": "gt_ex.srcs/sources_1/new/preamble_sda_dec.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/autorun.v",
+    "workspace": "gt_ex.srcs/sources_1/new/autorun.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/error.mem",
+    "workspace": "gt_ex.srcs/sources_1/new/error.mem",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/error_inject.v",
+    "workspace": "gt_ex.srcs/sources_1/new/error_inject.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/packet_rec.v",
+    "workspace": "gt_ex.srcs/sources_1/new/packet_rec.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/packet_send.v",
+    "workspace": "gt_ex.srcs/sources_1/new/packet_send.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/sample.mem",
+    "workspace": "gt_ex.srcs/sources_1/new/sample.mem",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/stream_input.v",
+    "workspace": "gt_ex.srcs/sources_1/new/stream_input.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/top.v",
+    "workspace": "gt_ex.srcs/sources_1/new/top.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/word_align.v",
+    "workspace": "gt_ex.srcs/sources_1/new/word_align.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/decoder/assembler.v",
+    "workspace": "gt_ex.srcs/sources_1/new/decoder/assembler.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/decoder/assembler_top.v",
+    "workspace": "gt_ex.srcs/sources_1/new/decoder/assembler_top.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/decoder/core_rx.v",
+    "workspace": "gt_ex.srcs/sources_1/new/decoder/core_rx.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/decoder/decoder_top.v",
+    "workspace": "gt_ex.srcs/sources_1/new/decoder/decoder_top.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/decoder/lpc_dec.v",
+    "workspace": "gt_ex.srcs/sources_1/new/decoder/lpc_dec.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/decoder/lpc_dec_top.v",
+    "workspace": "gt_ex.srcs/sources_1/new/decoder/lpc_dec_top.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/decoder/rs_decoder_64.v",
+    "workspace": "gt_ex.srcs/sources_1/new/decoder/rs_decoder_64.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/decoder/rx_gth_logic.v",
+    "workspace": "gt_ex.srcs/sources_1/new/decoder/rx_gth_logic.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/decoder/rx_logic_gth.v",
+    "workspace": "gt_ex.srcs/sources_1/new/decoder/rx_logic_gth.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/decoder/separator.v",
+    "workspace": "gt_ex.srcs/sources_1/new/decoder/separator.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/encoder/combiner.v",
+    "workspace": "gt_ex.srcs/sources_1/new/encoder/combiner.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/encoder/core_tx.v",
+    "workspace": "gt_ex.srcs/sources_1/new/encoder/core_tx.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/encoder/crc_16.v",
+    "workspace": "gt_ex.srcs/sources_1/new/encoder/crc_16.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/encoder/crc_32.v",
+    "workspace": "gt_ex.srcs/sources_1/new/encoder/crc_32.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/encoder/encoder_top.v",
+    "workspace": "gt_ex.srcs/sources_1/new/encoder/encoder_top.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/encoder/framer.v",
+    "workspace": "gt_ex.srcs/sources_1/new/encoder/framer.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/encoder/framer_top.v",
+    "workspace": "gt_ex.srcs/sources_1/new/encoder/framer_top.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/encoder/lpc.v",
+    "workspace": "gt_ex.srcs/sources_1/new/encoder/lpc.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/encoder/lpc_top.v",
+    "workspace": "gt_ex.srcs/sources_1/new/encoder/lpc_top.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/encoder/rs_encoder_64.v",
+    "workspace": "gt_ex.srcs/sources_1/new/encoder/rs_encoder_64.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/encoder/scrambler.v",
+    "workspace": "gt_ex.srcs/sources_1/new/encoder/scrambler.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/encoder/x_gth_logic.v",
+    "workspace": "gt_ex.srcs/sources_1/new/encoder/x_gth_logic.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/encoder/x_logic_gth.v",
+    "workspace": "gt_ex.srcs/sources_1/new/encoder/x_logic_gth.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/rs_codec/alpha_value.mem",
+    "workspace": "gt_ex.srcs/sources_1/new/rs_codec/alpha_value.mem",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/rs_codec/chien_search.v",
+    "workspace": "gt_ex.srcs/sources_1/new/rs_codec/chien_search.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/rs_codec/decimal_value.mem",
+    "workspace": "gt_ex.srcs/sources_1/new/rs_codec/decimal_value.mem",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/rs_codec/euclid_proc.v",
+    "workspace": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/rs_codec/forney_math.v",
+    "workspace": "gt_ex.srcs/sources_1/new/rs_codec/forney_math.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/rs_codec/inverter.v",
+    "workspace": "gt_ex.srcs/sources_1/new/rs_codec/inverter.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/rs_codec/multiplier.v",
+    "workspace": "gt_ex.srcs/sources_1/new/rs_codec/multiplier.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/rs_codec/rs_decoder.v",
+    "workspace": "gt_ex.srcs/sources_1/new/rs_codec/rs_decoder.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/rs_codec/rs_encoder.v",
+    "workspace": "gt_ex.srcs/sources_1/new/rs_codec/rs_encoder.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/rs_codec/syndrome_unit.v",
+    "workspace": "gt_ex.srcs/sources_1/new/rs_codec/syndrome_unit.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/demux_preamble_hotswap.v",
+    "workspace": "gt_ex.srcs/sources_1/new/demux_preamble_hotswap.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/tb_demux_decoder.v",
+    "workspace": "gt_ex.srcs/sources_1/new/tb_demux_decoder.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/eth_preamble_gen.v",
+    "workspace": "gt_ex.srcs/sources_1/new/eth_preamble_gen.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/mux_eth_32.v",
+    "workspace": "gt_ex.srcs/sources_1/new/mux_eth_32.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/demux_preamble_128.v",
+    "workspace": "gt_ex.srcs/sources_1/new/demux_preamble_128.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/tb_mux_eth_32.v",
+    "workspace": "gt_ex.srcs/sources_1/new/tb_mux_eth_32.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/eth_mac_segmenter.v",
+    "workspace": "gt_ex.srcs/sources_1/new/eth_mac_segmenter.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/eth_rx_front_end_top.v",
+    "workspace": "gt_ex.srcs/sources_1/new/eth_rx_front_end_top.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/eth_preamble_remover.v",
+    "workspace": "gt_ex.srcs/sources_1/new/eth_preamble_remover.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/xgmii_rx_parser.v",
+    "workspace": "gt_ex.srcs/sources_1/new/xgmii_rx_parser.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/tb_eth_rx_front_end_top.v",
+    "workspace": "gt_ex.srcs/sources_1/new/tb_eth_rx_front_end_top.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/eth_mac_packing_tx.v",
+    "workspace": "gt_ex.srcs/sources_1/new/eth_mac_packing_tx.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/xgmii_tx_formatter.v",
+    "workspace": "gt_ex.srcs/sources_1/new/xgmii_tx_formatter.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/eth_tx_back_end_top.v",
+    "workspace": "gt_ex.srcs/sources_1/new/eth_tx_back_end_top.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/tb_eth_tx_back_end_top.v",
+    "workspace": "gt_ex.srcs/sources_1/new/tb_eth_tx_back_end_top.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/tb_fso_gth_bridge_hotswap.v",
+    "workspace": "gt_ex.srcs/sources_1/new/tb_fso_gth_bridge_hotswap.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/error_inject_hotswap.v",
+    "workspace": "gt_ex.srcs/sources_1/new/error_inject_hotswap.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/fso_gth_bridge_hotswap.v",
+    "workspace": "gt_ex.srcs/sources_1/new/fso_gth_bridge_hotswap.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/tb_demux_preamble_hotswap.v",
+    "workspace": "gt_ex.srcs/sources_1/new/tb_demux_preamble_hotswap.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/xgmii_packet_gen.v",
+    "workspace": "gt_ex.srcs/sources_1/new/xgmii_packet_gen.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/FEC_MUX.v",
+    "workspace": "gt_ex.srcs/sources_1/new/FEC_MUX.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/tb_FEC_RS.v",
+    "workspace": "gt_ex.srcs/sources_1/new/tb_FEC_RS.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "sources_1/new/fso_payload_top.v",
+    "workspace": "gt_ex.srcs/sources_1/new/fso_payload_top.v",
+    "exists": true,
+    "same": false
+  },
+  {
+    "member": "sources_1/new/fso_payload.v",
+    "workspace": "gt_ex.srcs/sources_1/new/fso_payload.v",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "gt_ex.xpr",
+    "workspace": "gt_ex.srcs/gt_ex.xpr",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "run_waveforms.tcl.txt",
+    "workspace": "gt_ex.srcs/run_waveforms.tcl.txt",
+    "exists": true,
+    "same": true
+  },
+  {
+    "member": "setup_all_25_waveforms.tcl",
+    "workspace": "gt_ex.srcs/setup_all_25_waveforms.tcl",
+    "exists": true,
+    "same": true
+  }
+]

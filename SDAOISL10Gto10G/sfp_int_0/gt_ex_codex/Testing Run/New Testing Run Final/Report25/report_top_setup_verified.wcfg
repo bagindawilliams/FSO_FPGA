@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/audit/20261102_report25/runs/20261102_085051/setup_report_top.wdb" id="1">
+         <top_modules>
+            <top_module name="\tb_SDAOISL10Gto10G_top(BASIC_REPORT=1) " />
+            <top_module name="attributes" />
+            <top_module name="glbl" />
+            <top_module name="numeric_std" />
+            <top_module name="standard" />
+            <top_module name="std_logic_1164" />
+            <top_module name="std_logic_arith" />
+            <top_module name="std_logic_misc" />
+            <top_module name="std_logic_unsigned" />
+            <top_module name="textio" />
+            <top_module name="vcomponents" />
+            <top_module name="vital_primitives" />
+            <top_module name="vital_timing" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+   </zoom_setting>
+   <column_width_setting>
+   </column_width_setting>
+   <WVObjectSize size="6" />
+   <wvobject type="group" fp_name="group295">
+      <obj_property name="label">Clock / Reset</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/\tb_SDAOISL10Gto10G_top(BASIC_REPORT=1) /clk_tx">
+         <obj_property name="ElementShortName">clk_tx</obj_property>
+         <obj_property name="ObjectShortName">clk_tx</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/\tb_SDAOISL10Gto10G_top(BASIC_REPORT=1) /clk_rx">
+         <obj_property name="ElementShortName">clk_rx</obj_property>
+         <obj_property name="ObjectShortName">clk_rx</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/\tb_SDAOISL10Gto10G_top(BASIC_REPORT=1) /u_dut/rst_n">
+         <obj_property name="ElementShortName">rst_n</obj_property>
+         <obj_property name="ObjectShortName">rst_n</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group299">
+      <obj_property name="label">Ethernet input</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/\tb_SDAOISL10Gto10G_top(BASIC_REPORT=1) /grp1_pc1_gen_valid">
+         <obj_property name="ElementShortName">grp1_pc1_gen_valid</obj_property>
+         <obj_property name="ObjectShortName">grp1_pc1_gen_valid</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/\tb_SDAOISL10Gto10G_top(BASIC_REPORT=1) /grp1_pc1_gen_data">
+         <obj_property name="ElementShortName">grp1_pc1_gen_data[31:0]</obj_property>
+         <obj_property name="ObjectShortName">grp1_pc1_gen_data[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/\tb_SDAOISL10Gto10G_top(BASIC_REPORT=1) /\basic_report.input_bytes ">
+         <obj_property name="ElementShortName">\basic_report.input_bytes [31:0]</obj_property>
+         <obj_property name="ObjectShortName">\basic_report.input_bytes [31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group303">
+      <obj_property name="label">Segments / ARQ</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/\tb_SDAOISL10Gto10G_top(BASIC_REPORT=1) /u_dut/seg_axis_tvalid">
+         <obj_property name="ElementShortName">seg_axis_tvalid</obj_property>
+         <obj_property name="ObjectShortName">seg_axis_tvalid</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/\tb_SDAOISL10Gto10G_top(BASIC_REPORT=1) /u_dut/seg_axis_tready">
+         <obj_property name="ElementShortName">seg_axis_tready</obj_property>
+         <obj_property name="ObjectShortName">seg_axis_tready</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/\tb_SDAOISL10Gto10G_top(BASIC_REPORT=1) /u_dut/seg_axis_tlast">
+         <obj_property name="ElementShortName">seg_axis_tlast</obj_property>
+         <obj_property name="ObjectShortName">seg_axis_tlast</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/\tb_SDAOISL10Gto10G_top(BASIC_REPORT=1) /u_dut/seg_valid_bytes">
+         <obj_property name="ElementShortName">seg_valid_bytes[13:0]</obj_property>
+         <obj_property name="ObjectShortName">seg_valid_bytes[13:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/\tb_SDAOISL10Gto10G_top(BASIC_REPORT=1) /\basic_report.segs ">
+         <obj_property name="ElementShortName">\basic_report.segs [31:0]</obj_property>
+         <obj_property name="ObjectShortName">\basic_report.segs [31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/\tb_SDAOISL10Gto10G_top(BASIC_REPORT=1) /\basic_report.acks ">
+         <obj_property name="ElementShortName">\basic_report.acks [31:0]</obj_property>
+         <obj_property name="ObjectShortName">\basic_report.acks [31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/\tb_SDAOISL10Gto10G_top(BASIC_REPORT=1) /\basic_report.naks ">
+         <obj_property name="ElementShortName">\basic_report.naks [31:0]</obj_property>
+         <obj_property name="ObjectShortName">\basic_report.naks [31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/\tb_SDAOISL10Gto10G_top(BASIC_REPORT=1) /\basic_report.replays ">
+         <obj_property name="ElementShortName">\basic_report.replays [31:0]</obj_property>
+         <obj_property name="ObjectShortName">\basic_report.replays [31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group312">
+      <obj_property name="label">FSO transport</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/\tb_SDAOISL10Gto10G_top(BASIC_REPORT=1) /tx_fso_valid_out">
+         <obj_property name="ElementShortName">tx_fso_valid_out</obj_property>
+         <obj_property name="ObjectShortName">tx_fso_valid_out</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/\tb_SDAOISL10Gto10G_top(BASIC_REPORT=1) /tx_fso_data_out">
+         <obj_property name="ElementShortName">tx_fso_data_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">tx_fso_data_out[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/\tb_SDAOISL10Gto10G_top(BASIC_REPORT=1) /rx_fso_valid_out">
+         <obj_property name="ElementShortName">rx_fso_valid_out</obj_property>
+         <obj_property name="ObjectShortName">rx_fso_valid_out</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/\tb_SDAOISL10Gto10G_top(BASIC_REPORT=1) /rx_fso_data_out">
+         <obj_property name="ElementShortName">rx_fso_data_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">rx_fso_data_out[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/\tb_SDAOISL10Gto10G_top(BASIC_REPORT=1) /rx_preamble_locked">
+         <obj_property name="ElementShortName">rx_preamble_locked</obj_property>
+         <obj_property name="ObjectShortName">rx_preamble_locked</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/\tb_SDAOISL10Gto10G_top(BASIC_REPORT=1) /rx_block_locked">
+         <obj_property name="ElementShortName">rx_block_locked</obj_property>
+         <obj_property name="ObjectShortName">rx_block_locked</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group319">
+      <obj_property name="label">CRC / Reassembly</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/\tb_SDAOISL10Gto10G_top(BASIC_REPORT=1) /grp7_hdr_crc16_ok">
+         <obj_property name="ElementShortName">grp7_hdr_crc16_ok</obj_property>
+         <obj_property name="ObjectShortName">grp7_hdr_crc16_ok</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/\tb_SDAOISL10Gto10G_top(BASIC_REPORT=1) /grp7_pld_crc32_ok">
+         <obj_property name="ElementShortName">grp7_pld_crc32_ok</obj_property>
+         <obj_property name="ObjectShortName">grp7_pld_crc32_ok</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/\tb_SDAOISL10Gto10G_top(BASIC_REPORT=1) /grp8_reasm_eth_valid">
+         <obj_property name="ElementShortName">grp8_reasm_eth_valid</obj_property>
+         <obj_property name="ObjectShortName">grp8_reasm_eth_valid</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/\tb_SDAOISL10Gto10G_top(BASIC_REPORT=1) /grp8_reasm_eth_data">
+         <obj_property name="ElementShortName">grp8_reasm_eth_data[31:0]</obj_property>
+         <obj_property name="ObjectShortName">grp8_reasm_eth_data[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group324">
+      <obj_property name="label">XGMII / Result</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/\tb_SDAOISL10Gto10G_top(BASIC_REPORT=1) /pc2_xgmii_txd">
+         <obj_property name="ElementShortName">pc2_xgmii_txd[31:0]</obj_property>
+         <obj_property name="ObjectShortName">pc2_xgmii_txd[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/\tb_SDAOISL10Gto10G_top(BASIC_REPORT=1) /pc2_xgmii_txc">
+         <obj_property name="ElementShortName">pc2_xgmii_txc[3:0]</obj_property>
+         <obj_property name="ObjectShortName">pc2_xgmii_txc[3:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/\tb_SDAOISL10Gto10G_top(BASIC_REPORT=1) /\basic_report.output_bytes ">
+         <obj_property name="ElementShortName">\basic_report.output_bytes [31:0]</obj_property>
+         <obj_property name="ObjectShortName">\basic_report.output_bytes [31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/\tb_SDAOISL10Gto10G_top(BASIC_REPORT=1) /\basic_report.packets ">
+         <obj_property name="ElementShortName">\basic_report.packets [31:0]</obj_property>
+         <obj_property name="ObjectShortName">\basic_report.packets [31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/\tb_SDAOISL10Gto10G_top(BASIC_REPORT=1) /\basic_report.mgmt ">
+         <obj_property name="ElementShortName">\basic_report.mgmt [31:0]</obj_property>
+         <obj_property name="ObjectShortName">\basic_report.mgmt [31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/\tb_SDAOISL10Gto10G_top(BASIC_REPORT=1) /\basic_report.outstanding ">
+         <obj_property name="ElementShortName">\basic_report.outstanding [31:0]</obj_property>
+         <obj_property name="ObjectShortName">\basic_report.outstanding [31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/\tb_SDAOISL10Gto10G_top(BASIC_REPORT=1) /scb_matched_words">
+         <obj_property name="ElementShortName">scb_matched_words[31:0]</obj_property>
+         <obj_property name="ObjectShortName">scb_matched_words[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/\tb_SDAOISL10Gto10G_top(BASIC_REPORT=1) /scb_error_words">
+         <obj_property name="ElementShortName">scb_error_words[31:0]</obj_property>
+         <obj_property name="ObjectShortName">scb_error_words[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+</wave_config>

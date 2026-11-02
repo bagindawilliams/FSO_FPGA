@@ -1,0 +1,532 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/audit/20261101_module15_extended/build/focused_20261101_183304_140560_tb_gth64b66b_loopback_verified.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tb_gth64b66b_loopback_verified" />
+            <top_module name="vcomponents" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+   </zoom_setting>
+   <column_width_setting>
+   </column_width_setting>
+   <WVObjectSize size="16" />
+   <wvobject type="group" fp_name="group1">
+      <obj_property name="label">Clock Control</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/tb_gth64b66b_loopback_verified/rxn_in">
+         <obj_property name="ElementShortName">rxn_in</obj_property>
+         <obj_property name="ObjectShortName">rxn_in</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property></wvobject>
+   <wvobject type="logic" fp_name="/tb_gth64b66b_loopback_verified/rxp_in">
+         <obj_property name="ElementShortName">rxp_in</obj_property>
+         <obj_property name="ObjectShortName">rxp_in</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property></wvobject>
+      <wvobject type="logic" fp_name="/tb_gth64b66b_loopback_verified/txn_out">
+         <obj_property name="ElementShortName">txn_out</obj_property>
+         <obj_property name="ObjectShortName">txn_out</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property></wvobject>
+      <wvobject type="logic" fp_name="/tb_gth64b66b_loopback_verified/txp_out">
+         <obj_property name="ElementShortName">txp_out</obj_property>
+         <obj_property name="ObjectShortName">txp_out</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property></wvobject>
+      </wvobject>
+   <wvobject type="group" fp_name="group6">
+      <obj_property name="label">CDC / CDC Data In from MUX</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/frame_id">
+         <obj_property name="ElementShortName">frame_id[3:0]</obj_property>
+         <obj_property name="ObjectShortName">frame_id[3:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/mux_cdc_keep">
+         <obj_property name="ElementShortName">mux_cdc_keep[15:0]</obj_property>
+         <obj_property name="ObjectShortName">mux_cdc_keep[15:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/mux_data_in">
+         <obj_property name="ElementShortName">mux_data_in[127:0]</obj_property>
+         <obj_property name="ObjectShortName">mux_data_in[127:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      </wvobject>
+   <wvobject type="group" fp_name="group10">
+      <obj_property name="label">CDC / CDC Data Out to Error Inject</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/cdc2_data">
+         <obj_property name="ElementShortName">cdc2_data[31:0]</obj_property>
+         <obj_property name="ObjectShortName">cdc2_data[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/u_cdc2/frame_byte_cnt">
+         <obj_property name="ElementShortName">frame_byte_cnt[11:0]</obj_property>
+         <obj_property name="ObjectShortName">frame_byte_cnt[11:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/u_cdc2/byte_out">
+         <obj_property name="ElementShortName">byte_out[7:0]</obj_property>
+         <obj_property name="ObjectShortName">byte_out[7:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/u_cdc2/frame_out_id">
+         <obj_property name="ElementShortName">frame_out_id[31:0]</obj_property>
+         <obj_property name="ObjectShortName">frame_out_id[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      </wvobject>
+   <wvobject type="group" fp_name="group15">
+      <obj_property name="label">Error Injector</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/err_data">
+         <obj_property name="ElementShortName">err_data[31:0]</obj_property>
+         <obj_property name="ObjectShortName">err_data[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/u_error_inject/data_in">
+         <obj_property name="ElementShortName">data_in[31:0]</obj_property>
+         <obj_property name="ObjectShortName">data_in[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/u_error_inject/frame_byte_cnt">
+         <obj_property name="ElementShortName">frame_byte_cnt[11:0]</obj_property>
+         <obj_property name="ObjectShortName">frame_byte_cnt[11:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/u_error_inject/applied_mask">
+         <obj_property name="ElementShortName">applied_mask[31:0]</obj_property>
+         <obj_property name="ObjectShortName">applied_mask[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/u_error_inject/con_error">
+         <obj_property name="ElementShortName">con_error[15:0]</obj_property>
+         <obj_property name="ObjectShortName">con_error[15:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/u_error_inject/frame_out_id">
+         <obj_property name="ElementShortName">frame_out_id[31:0]</obj_property>
+         <obj_property name="ObjectShortName">frame_out_id[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      </wvobject>
+   <wvobject type="group" fp_name="group22">
+      <obj_property name="label">GTH TX Input — clk_312_5 312.5 MHz</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/tx_frame_id">
+         <obj_property name="ElementShortName">tx_frame_id[31:0]</obj_property>
+         <obj_property name="ObjectShortName">tx_frame_id[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/gt_txdata">
+         <obj_property name="ElementShortName">gt_txdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">gt_txdata[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/gt_txheader">
+         <obj_property name="ElementShortName">gt_txheader[5:0]</obj_property>
+         <obj_property name="ObjectShortName">gt_txheader[5:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/u_gth64b66b_tx/gt_txdata_out">
+         <obj_property name="ElementShortName">gt_txdata_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">gt_txdata_out[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/u_gth64b66b_tx/up_data_in">
+         <obj_property name="ElementShortName">up_data_in[31:0]</obj_property>
+         <obj_property name="ObjectShortName">up_data_in[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/tx_byte_cnt">
+         <obj_property name="ElementShortName">tx_byte_cnt[11:0]</obj_property>
+         <obj_property name="ObjectShortName">tx_byte_cnt[11:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/tx_byte_stream">
+         <obj_property name="ElementShortName">tx_byte_stream[7:0]</obj_property>
+         <obj_property name="ObjectShortName">tx_byte_stream[7:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_gth64b66b_loopback_verified/tx_stall_out">
+         <obj_property name="ElementShortName">tx_stall_out</obj_property>
+         <obj_property name="ObjectShortName">tx_stall_out</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property></wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/gt_txsequence">
+         <obj_property name="ElementShortName">gt_txsequence[6:0]</obj_property>
+         <obj_property name="ObjectShortName">gt_txsequence[6:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      </wvobject>
+   <wvobject type="group" fp_name="group32">
+      <obj_property name="label">GTH RX Output — clk_312_5 312.5 MHz</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/rx_frame_id">
+         <obj_property name="ElementShortName">rx_frame_id[31:0]</obj_property>
+         <obj_property name="ObjectShortName">rx_frame_id[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/rx_down_data">
+         <obj_property name="ElementShortName">rx_down_data[31:0]</obj_property>
+         <obj_property name="ObjectShortName">rx_down_data[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/rx_byte_cnt">
+         <obj_property name="ElementShortName">rx_byte_cnt[11:0]</obj_property>
+         <obj_property name="ObjectShortName">rx_byte_cnt[11:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/rx_byte_stream">
+         <obj_property name="ElementShortName">rx_byte_stream[7:0]</obj_property>
+         <obj_property name="ObjectShortName">rx_byte_stream[7:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_gth64b66b_loopback_verified/gt_rxgearboxslip">
+         <obj_property name="ElementShortName">gt_rxgearboxslip</obj_property>
+         <obj_property name="ObjectShortName">gt_rxgearboxslip</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property></wvobject>
+      <wvobject type="logic" fp_name="/tb_gth64b66b_loopback_verified/gth_link_up">
+         <obj_property name="ElementShortName">gth_link_up</obj_property>
+         <obj_property name="ObjectShortName">gth_link_up</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property></wvobject>
+      </wvobject>
+   <wvobject type="group" fp_name="group39">
+      <obj_property name="label">GTH RX Output — clk_312_5 312.5 MHz / gth</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/gt_rxdata">
+         <obj_property name="ElementShortName">gt_rxdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">gt_rxdata[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/gt_rxheader">
+         <obj_property name="ElementShortName">gt_rxheader[5:0]</obj_property>
+         <obj_property name="ObjectShortName">gt_rxheader[5:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/gt_rxstartofseq">
+         <obj_property name="ElementShortName">gt_rxstartofseq[1:0]</obj_property>
+         <obj_property name="ObjectShortName">gt_rxstartofseq[1:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group43">
+      <obj_property name="label">EXPECTED_CALCULATED (historical formulas)</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/prev_rx_frame_id">
+         <obj_property name="ElementShortName">prev_rx_frame_id[31:0]</obj_property>
+         <obj_property name="ObjectShortName">prev_rx_frame_id[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="other" fp_name="/tb_gth64b66b_loopback_verified/OISL_Effective_Data_Rate_Mbps">
+         <obj_property name="ElementShortName">OISL_Effective_Data_Rate_Mbps</obj_property>
+         <obj_property name="ObjectShortName">OISL_Effective_Data_Rate_Mbps</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="other" fp_name="/tb_gth64b66b_loopback_verified/net_byte_time_ns">
+         <obj_property name="ElementShortName">net_byte_time_ns</obj_property>
+         <obj_property name="ObjectShortName">net_byte_time_ns</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="other" fp_name="/tb_gth64b66b_loopback_verified/OISL_FCCH_Mbps">
+         <obj_property name="ElementShortName">OISL_FCCH_Mbps</obj_property>
+         <obj_property name="ObjectShortName">OISL_FCCH_Mbps</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="other" fp_name="/tb_gth64b66b_loopback_verified/OISL_Frame_Duration_us">
+         <obj_property name="ElementShortName">OISL_Frame_Duration_us</obj_property>
+         <obj_property name="ObjectShortName">OISL_Frame_Duration_us</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="other" fp_name="/tb_gth64b66b_loopback_verified/OISL_Frame_Rate_kHz">
+         <obj_property name="ElementShortName">OISL_Frame_Rate_kHz</obj_property>
+         <obj_property name="ObjectShortName">OISL_Frame_Rate_kHz</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/SIM_MODE">
+         <obj_property name="ElementShortName">SIM_MODE[31:0]</obj_property>
+         <obj_property name="ObjectShortName">SIM_MODE[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/ST_DONE">
+         <obj_property name="ElementShortName">ST_DONE[1:0]</obj_property>
+         <obj_property name="ObjectShortName">ST_DONE[1:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/ST_GAP">
+         <obj_property name="ElementShortName">ST_GAP[1:0]</obj_property>
+         <obj_property name="ObjectShortName">ST_GAP[1:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/ST_STREAM">
+         <obj_property name="ElementShortName">ST_STREAM[1:0]</obj_property>
+         <obj_property name="ObjectShortName">ST_STREAM[1:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="other" fp_name="/tb_gth64b66b_loopback_verified/time_end">
+         <obj_property name="ElementShortName">time_end</obj_property>
+         <obj_property name="ObjectShortName">time_end</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="other" fp_name="/tb_gth64b66b_loopback_verified/time_start">
+         <obj_property name="ElementShortName">time_start</obj_property>
+         <obj_property name="ObjectShortName">time_start</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      </wvobject>
+   <wvobject type="group" fp_name="group56">
+      <obj_property name="label">Measurement / Checker</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/iw">
+         <obj_property name="ElementShortName">iw[31:0]</obj_property>
+         <obj_property name="ObjectShortName">iw[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/ow">
+         <obj_property name="ElementShortName">ow[31:0]</obj_property>
+         <obj_property name="ObjectShortName">ow[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group59">
+      <obj_property name="label">Process and State</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/frame_id">
+         <obj_property name="ElementShortName">frame_id[3:0]</obj_property>
+         <obj_property name="ObjectShortName">frame_id[3:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/prev_rx_frame_id">
+         <obj_property name="ElementShortName">prev_rx_frame_id[31:0]</obj_property>
+         <obj_property name="ObjectShortName">prev_rx_frame_id[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/rx_frame_id">
+         <obj_property name="ElementShortName">rx_frame_id[31:0]</obj_property>
+         <obj_property name="ObjectShortName">rx_frame_id[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/tx_frame_id">
+         <obj_property name="ElementShortName">tx_frame_id[31:0]</obj_property>
+         <obj_property name="ObjectShortName">tx_frame_id[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/cdc2_data">
+         <obj_property name="ElementShortName">cdc2_data[31:0]</obj_property>
+         <obj_property name="ObjectShortName">cdc2_data[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/err_data">
+         <obj_property name="ElementShortName">err_data[31:0]</obj_property>
+         <obj_property name="ObjectShortName">err_data[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/gt_rxdata">
+         <obj_property name="ElementShortName">gt_rxdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">gt_rxdata[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/gt_txdata">
+         <obj_property name="ElementShortName">gt_txdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">gt_txdata[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/mux_cdc_keep">
+         <obj_property name="ElementShortName">mux_cdc_keep[15:0]</obj_property>
+         <obj_property name="ObjectShortName">mux_cdc_keep[15:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/rx_byte_cnt">
+         <obj_property name="ElementShortName">rx_byte_cnt[11:0]</obj_property>
+         <obj_property name="ObjectShortName">rx_byte_cnt[11:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/tx_byte_cnt">
+         <obj_property name="ElementShortName">tx_byte_cnt[11:0]</obj_property>
+         <obj_property name="ObjectShortName">tx_byte_cnt[11:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/cycle_cnt">
+         <obj_property name="ElementShortName">cycle_cnt[15:0]</obj_property>
+         <obj_property name="ObjectShortName">cycle_cnt[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/rx_byte_stream">
+         <obj_property name="ElementShortName">rx_byte_stream[7:0]</obj_property>
+         <obj_property name="ObjectShortName">rx_byte_stream[7:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/tx_byte_stream">
+         <obj_property name="ElementShortName">tx_byte_stream[7:0]</obj_property>
+         <obj_property name="ObjectShortName">tx_byte_stream[7:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/SIM_MODE">
+         <obj_property name="ElementShortName">SIM_MODE[31:0]</obj_property>
+         <obj_property name="ObjectShortName">SIM_MODE[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/ST_DONE">
+         <obj_property name="ElementShortName">ST_DONE[1:0]</obj_property>
+         <obj_property name="ObjectShortName">ST_DONE[1:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/ST_GAP">
+         <obj_property name="ElementShortName">ST_GAP[1:0]</obj_property>
+         <obj_property name="ObjectShortName">ST_GAP[1:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/ST_STREAM">
+         <obj_property name="ElementShortName">ST_STREAM[1:0]</obj_property>
+         <obj_property name="ObjectShortName">ST_STREAM[1:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_gth64b66b_loopback_verified/gt_rxgearboxslip">
+         <obj_property name="ElementShortName">gt_rxgearboxslip</obj_property>
+         <obj_property name="ObjectShortName">gt_rxgearboxslip</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property></wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/gt_rxstartofseq">
+         <obj_property name="ElementShortName">gt_rxstartofseq[1:0]</obj_property>
+         <obj_property name="ObjectShortName">gt_rxstartofseq[1:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/gt_txsequence">
+         <obj_property name="ElementShortName">gt_txsequence[6:0]</obj_property>
+         <obj_property name="ObjectShortName">gt_txsequence[6:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/lock_losses">
+         <obj_property name="ElementShortName">lock_losses[31:0]</obj_property>
+         <obj_property name="ObjectShortName">lock_losses[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="other" fp_name="/tb_gth64b66b_loopback_verified/measured_312_period_ns">
+         <obj_property name="ElementShortName">measured_312_period_ns</obj_property>
+         <obj_property name="ObjectShortName">measured_312_period_ns</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_gth64b66b_loopback_verified/prev_lock">
+         <obj_property name="ElementShortName">prev_lock</obj_property>
+         <obj_property name="ObjectShortName">prev_lock</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property></wvobject>
+      <wvobject type="logic" fp_name="/tb_gth64b66b_loopback_verified/seen_lock">
+         <obj_property name="ElementShortName">seen_lock</obj_property>
+         <obj_property name="ObjectShortName">seen_lock</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property></wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/slips">
+         <obj_property name="ElementShortName">slips[31:0]</obj_property>
+         <obj_property name="ObjectShortName">slips[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/tb_state">
+         <obj_property name="ElementShortName">tb_state[1:0]</obj_property>
+         <obj_property name="ObjectShortName">tb_state[1:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="other" fp_name="/tb_gth64b66b_loopback_verified/time_start">
+         <obj_property name="ElementShortName">time_start</obj_property>
+         <obj_property name="ObjectShortName">time_start</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      </wvobject>
+   <wvobject type="group" fp_name="group64">
+      <obj_property name="label">System Clock / Control</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="group" fp_name="group65">
+      <obj_property name="label">MEASURED transfer timestamps</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="group" fp_name="group66">
+      <obj_property name="label">Data Output</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/rx_down_data">
+         <obj_property name="ElementShortName">rx_down_data[31:0]</obj_property>
+         <obj_property name="ObjectShortName">rx_down_data[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   <wvobject type="logic" fp_name="/tb_gth64b66b_loopback_verified/tx_stall_out">
+         <obj_property name="ElementShortName">tx_stall_out</obj_property>
+         <obj_property name="ObjectShortName">tx_stall_out</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property></wvobject>
+      <wvobject type="logic" fp_name="/tb_gth64b66b_loopback_verified/txn_out">
+         <obj_property name="ElementShortName">txn_out</obj_property>
+         <obj_property name="ObjectShortName">txn_out</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property></wvobject>
+      <wvobject type="logic" fp_name="/tb_gth64b66b_loopback_verified/txp_out">
+         <obj_property name="ElementShortName">txp_out</obj_property>
+         <obj_property name="ObjectShortName">txp_out</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property></wvobject>
+      </wvobject>
+   <wvobject type="group" fp_name="group69">
+      <obj_property name="label">Data Input</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/mux_data_in">
+         <obj_property name="ElementShortName">mux_data_in[127:0]</obj_property>
+         <obj_property name="ObjectShortName">mux_data_in[127:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   <wvobject type="logic" fp_name="/tb_gth64b66b_loopback_verified/gth_link_up">
+         <obj_property name="ElementShortName">gth_link_up</obj_property>
+         <obj_property name="ObjectShortName">gth_link_up</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property></wvobject>
+      <wvobject type="logic" fp_name="/tb_gth64b66b_loopback_verified/rxn_in">
+         <obj_property name="ElementShortName">rxn_in</obj_property>
+         <obj_property name="ObjectShortName">rxn_in</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property></wvobject>
+      <wvobject type="logic" fp_name="/tb_gth64b66b_loopback_verified/rxp_in">
+         <obj_property name="ElementShortName">rxp_in</obj_property>
+         <obj_property name="ObjectShortName">rxp_in</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property></wvobject>
+      </wvobject>
+   <wvobject type="group" fp_name="group79">
+      <obj_property name="label">Header Path</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/gt_rxheader">
+         <obj_property name="ElementShortName">gt_rxheader[5:0]</obj_property>
+         <obj_property name="ObjectShortName">gt_rxheader[5:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   <wvobject type="array" fp_name="/tb_gth64b66b_loopback_verified/gt_txheader">
+         <obj_property name="ElementShortName">gt_txheader[5:0]</obj_property>
+         <obj_property name="ObjectShortName">gt_txheader[5:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      </wvobject>
+   <wvobject type="group" fp_name="group97">
+      <obj_property name="label">EXPECTED_CALCULATED (not frame-edge measurement)</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="other" fp_name="/tb_gth64b66b_loopback_verified/OISL_Effective_Data_Rate_Mbps">
+         <obj_property name="ElementShortName">OISL_Effective_Data_Rate_Mbps</obj_property>
+         <obj_property name="ObjectShortName">OISL_Effective_Data_Rate_Mbps</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="other" fp_name="/tb_gth64b66b_loopback_verified/net_byte_time_ns">
+         <obj_property name="ElementShortName">net_byte_time_ns</obj_property>
+         <obj_property name="ObjectShortName">net_byte_time_ns</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="other" fp_name="/tb_gth64b66b_loopback_verified/OISL_FCCH_Mbps">
+         <obj_property name="ElementShortName">OISL_FCCH_Mbps</obj_property>
+         <obj_property name="ObjectShortName">OISL_FCCH_Mbps</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   <wvobject type="other" fp_name="/tb_gth64b66b_loopback_verified/OISL_Frame_Duration_us">
+         <obj_property name="ElementShortName">OISL_Frame_Duration_us</obj_property>
+         <obj_property name="ObjectShortName">OISL_Frame_Duration_us</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="other" fp_name="/tb_gth64b66b_loopback_verified/OISL_Frame_Rate_kHz">
+         <obj_property name="ElementShortName">OISL_Frame_Rate_kHz</obj_property>
+         <obj_property name="ObjectShortName">OISL_Frame_Rate_kHz</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="other" fp_name="/tb_gth64b66b_loopback_verified/time_end">
+         <obj_property name="ElementShortName">time_end</obj_property>
+         <obj_property name="ObjectShortName">time_end</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      </wvobject>
+</wave_config>

@@ -1,0 +1,1642 @@
+    Demonstration Report:
+FSO System Prototype Based on
+           FPGA
+                            2026.10.23
+                      Prof. Jang Yeong Min
+
+               Kookmin University, Seoul, Korea
+     Wireless Communications and Artificial Intelligence Lab.
+                 https://wireless.kookmin.ac.kr
+Presentation Overview
+ 1.   Explanation of Previous System (14 August 2026) (Slide 3-5)
+ 2.   Problem of Previous System (Slide 6)
+ 3.   Solution and How to Solve the Problem (Slide 7)
+ 4.   New System Architecture (Slide 8 & 9)
+ 5.   Result of New System (Simulation Based) (Slide 10-15)
+ 6.   Hardware Demo (Slide 16-19)
+ 7.   Detailed System Update for System Architecture (Slide 20-24)
+ 8.   ARQ Selective Repeat (Slide 25-27)
+ 9.   Future Plan of Research and Paper (Slide 28-31 )
+10.   Detailed System Explanation for Each Module (Slide 32-82)
+
+                                                                     2
+System Architecture (previous system)
+System Architecture (14 August 2026)
+
+
+
+
+               This process for SDA Frame Encoder   This process for SDA Frame Decoder
+
+
+
+
+                                                                                         3
+System Architecture (previous system)
+System Architecture (14 August 2026)
+
+
+                                        This process for SDA Frame Encoder
+
+
+
+
+                                        This process for SDA Frame Decoder
+
+
+
+
+                                                                             4
+System Architecture (previous system)
+System Architecture (14 August 2026)
+
+
+
+
+                                        5
+Previous System Problem (Demo 14 August 2026)
+Previous data path
+
+                                               FPGA TX                                      FPGA RX
+      PC1              RGMII 1 Gbps                                Fiber Optic Link                             RGMII 1 Gbps                PC2
+                                              SDA Encoder                                  SDA Decoder
+
+Bottleneck: the 10G optical link is fed by a 1 Gbps RGMII Ethernet interface
+
+
+
+            1 Gbps data input                                 Throughput instability                             No multi-frame support
+  PC side uses RGMII (1G Ethernet), far              Data rate fluctuates between 6.1 Gbps and           Data longer than one FSO payload is not
+  below the 10 Gbps optical line rate.               8 Gbps; not fixed to SDA OISL Table 2-4.            segmented across consecutive frames.
+
+
+
+
+            Frame gap 10 ns                                   No error injection                                 ARQ not implemented
+  Gap between FSO frames; SDA OISL                   No controlled way to inject bit errors and          Lost or corrupted frames are not
+  requires a continuous frame stream.                verify FEC / CRC behaviour.                         retransmitted.
+
+
+
+                                                                                                                                                   6
+How We Resolved the Problem ?
+New modules following SDA OISL v2.1.2 · 43 custom modules + 9 IP cores = 52 architectural blocks (TX + RX)
+
+
+ 1 Gbps RGMII input                  10GBASE-R over SFP+ (Intel X520 NIC) → XGMII 32-bit @ 312.5 MHz              Complete
+
+
+ Fluctuated Throughput               Fixed frame timing per OISL Table 2-4: 2.4936 µs / frame and 6.121 Gbps
+                                                                                                                  Complete
+ 6.1 – 8 Gbps                        Effective Data Rate
+
+                                     By Adding Multiplexer and Fifo Buffer for Arbitration (Multiframe Mux) and
+ Frame gap 10 ns                                                                                                  Complete
+                                     transmit idle when No Data / MGMT.
+
+                                     Adding Multiframe Module (Payload, Idle, MGMT, MUX Arbitration) based on
+ No multi-frame                                                                                                   Complete
+                                     SDA OISL Figure 2-6
+
+                                     Error Injector: simulation mode (error.mem XOR) and hardware mode (manual
+ No error injection                                                                                               Complete
+                                     VOA)
+
+
+ ARQ not implemented                 ARQ Selective Repeat (SDA OCT method with SDA OISL header parameters)        In progress
+
+
+                                                                                                                                7
+   System Architecture (proposed system structure)
+   Blue color: New Module                              Architecture Upgrade Summary Total Update :
+                                                           ●    New Custom Modules: 43 Modules
+                                                           ●    New IP Cores / Buffers: 9 IPs
+                                                           ●    Total Architectural Changes: 52 Blocks
+
+
+
+
+FPGA TX (Encoder) - Architecture Upgrade Summary Total Update (Encoder Only):           FPGA RX (Decoder) - Architecture Upgrade Summary Total Update (Decoder Only):
+   ●    New Custom Modules: 25 Modules                                                      ●    New Custom Modules: 18 Modules
+   ●    New IP Cores / Buffers: 4 IPs                                                       ●    New IP Cores / Buffers: 5 IPs
+   ●    Total Architectural Changes: 29 Blocks                                              ●    Total Architectural Changes: 23 Blocks
+
+
+                                                                                                                                                                        8
+New Testing Environment
+
+
+
+
+                          9
+Effective Data Rate
+Following SDA OISL Table 2-4: Maximum Effective Data Rates for Frame Configurations
+
+
+
+
+                                                                      Frame Duration                                                                                  Fast
+                                                                      = Total Frame / 10 Gbps                                               Effective   Frame
+                                                                                                Baud Rate             Frame Duration                                  Control
+                                                                                                                                            Data Rate   Rate
+                                                                      = 24936 bit / 10 Gbps                                                                           Channel
+                                                                      = 2.4936 us
+                                                                                                                                            6121.270
+                                Data Rate for one data                                          10000 Mbaud           2.4936 us
+                                                                                                                                            Mbps        401.02        6.416
+                                                                                                (312.5 MHz x 32 Bit   (In this slide show
+                                                                                                                                            (6,121      66 kHz        Mbps
+                                                                                                = 10 Gbps)            2,493.600 ns)
+                                                                                                                                            Gbps)
+
+
+
+
+                                                                                                Effective Payload Data Rate
+                                                                                                Payload = 1908 Byte = 15,264 bit
+                 FCCH (Fast Control Channel 16-bit)      Frame Rate
+                                                                                                                                                                 10
+Task Completed
+
+  0 ns                                        2.4936 µs                                         6121.27
+  Frame gap                                   Frame duration                                    Mbps effective data rate
+  3117-byte frames sent back-to-back          24,936 bits at 10,000 Mbaud                       Matches SDA OISL Table 2-4
+
+
+TX encoder pipeline following SDA OISL (simulation verified)
+
+   XGMII        Packing &      Header     Payload       CDC         RS(32,16)                                    Preamble
+                                                                                 Scrambler           LPC                      CDC → GTH
+    10G         Segment.      + CRC-16   + CRC-32    312.5→200     RS(255,239)                                    + MUX
+
+
+
+
+    Frame gap solved                          Data rate following SDA OISL                       ARQ – still in development
+                                              Error injector (simulation + hardware          Memory visibility · RAM usage · Retransmit &
+    All TX modules following SDA OISL
+                                              mode)                                          reorder
+
+
+
+
+                                                                                                                                        11
+Power Consumption & Resource Utilization
+Vivado post-implementation report · Kintex UltraScale XCKU060-FFVA1156
+
+
+  4.02 W                                 30.6 °C                                  2.96 W                                  0.72 W
+  Total on-chip power                    Junction temperature                     Dynamic power (74%)                     Static power (18%)
+  Power to off-chip devices: 0 W         Thermal margin 69.4 °C (47.4 W)          Mostly logic and signal switching       Leakage, independent of activity
+
+
+
+
+  Logic + signals = 2.26 W (56%) of the total; the 10G optical interface (GTH) needs only 0.33 W. Impact on the project: next slide.
+  Confidence: Low (vectorless estimate) – to be confirmed by on-board measurement.
+
+                                                                                                                                                             12
+ Impact on the FPGA Project
+ What the Vivado post-implementation report means for the Encoder + Decoder design
+
+
+    36% LUT used                                                       5% BRAM used                                                      4.016 W
+    64% LUT capacity remains                                           External DDR still needed for ARQ                                 Vivado on-chip power estimate
+
+
+
+
+     1 RESOURCE HEADROOM                                                                                2 POWER & THERMAL
+
+     Space for additional FPGA functions                                                                An initial baseline, not a hardware measurement
+         LUT 36% and BRAM 5% used in this design.                                                           4.016 W on-chip; estimated junction temperature 30.6°C.
+         Low utilization alone does not guarantee timing closure.                                           74% dynamic power → real traffic activity matters.
+
+
+
+     3 HIGH-SPEED TIMING                                                                                4 SYSTEM-LEVEL SCALING
+
+     Timing closure is the next critical gate                                                           ARQ and net payload rate need separate validation
+         Check WNS/TNS and critical paths at the selected clocks.                                           BRAM 5% does not include a validated DDR ARQ budget.
+         If needed: 64-bit @ 156.25 MHz + FIFO/CDC redesign.                                                10-Gb/s OISL signaling ≠ 10-Gb/s Ethernet payload.
+
+
+
+   NEXT VALIDATION                1. Measure board power & temperature                  2. Test ARQ/DDR + end-to-end UDP
+
+
+
+Vivado power confidence: LOW. Values describe the implemented design; they do not establish total board power or end-to-end system compliance.
+                                                                                                                                                                         13
+This Year Plan (2026)
+                                                                                 Hardware
+           Half-Duplex →                      ARQ
+                                                                                 Implementation &                  Final Report
+           Full-Duplex                        Implementation
+                                                                                 Demo
+
+
+
+
+           12 – 23 Oct                     26 Oct – 6 Nov                        9 – 20 Nov                    23 Nov – 1 Dec
+
+
+
+
+Sprint 5                 Current   Sprint 6                 Planned   Sprint 7                Planned   Sprint 8                  Planned
+
+RX Pipeline, Simulation            Hardware Implementation,           Full-Duplex Prototyping           Final Submission
+& ETRI Demo                        Python BER Ecosystem &
+                                   Validation
+GTH RX, ARQ RX, end-to-end         Python automation,                 Full-duplex integration, stress   Architecture / schematic doc,
+simplex sim, ILA setup, live       RS(255,239) limit validation       test                              ARQ viability report, ETRI
+demo                                                                                                    handoff
+
+
+                                                                                                                                            14
+Module Reference
+                                                   XGMII (Clause 46), 10GBASE-R PCS (Clause 49): IDLE 0x07,
+    XGMII / 10G Ethernet    IEEE 802.3             IPG ≥ 12 bytes, preamble / SFD
+
+
+
+                                                   Frame format, CRC-16 / CRC-32, RS(32,16) header,
+    SDA Encoder & Decoder   SDA OISL v2.1.2        RS(255,239) payload, scrambler, LPC, preamble (Sec. 2.6.3,
+                                                   Table 2-4)
+
+
+
+                            AMD Xilinx PG182 &     UltraScale Transceivers Wizard (PG182) and GTH
+    GTH Transceiver                                Transceivers User Guide (UG576)
+                            UG576
+
+
+                            SDA OCT v4.0.0 + SDA   Technical Selective Repeat procedure from SDA OCT, using
+    ARQ                                            SDA OISL header parameters
+                            OISL v2.1.2
+
+
+
+
+                                                                                                                15
+Hardware Demo
+
+      PC1 (TX)                           FPGA1                                        FPGA2                              PC2 (RX)
+ X520 NIC              SFP+ 10G   AXKU062                        Patch cord      AXKU062             SFP+ 10G    X520 NIC
+ UDP / TCP sender                 SDA Encoder                 (+ manual VOA)     SDA Decoder                     Wireshark / receiver
+
+
+
+
+Demo procedure
+
+
+  1    Calibration                   2    Send traffic                    3    Monitor                   4      Verify
+
+ Connect PC1 ↔ PC2 with a          PC1 sends UDP / TCP                  Vivado ILA on FPGA2 shows      Wireshark on PC2 captures
+ patch cord; check SFP+ link       packets through the PCIe             frame sync, CRC status and     the packets; compare sent vs
+ up.                               X520 NIC at 10 Gbps.                 recovered data.                received count and
+                                                                                                       throughput.
+
+
+  Hardware Preparation – Demo on 23 October 2026                               Full Hardware Demo on 01 December 2026
+
+
+                                                                                                                                        16
+Hardware Demo – Calibration Setup
+Step 1: before the FPGAs go into the path, the two PCs are linked directly with a fiber patch cord to measure the best-case 10G link
+(baseline).
+
+  PC1 TX                                            Fiber patch cord · SFP+ 10 Gbps                 PC2 RX
+  192.168.10.1 · PCIe X520 NIC (SFP+)                No FPGA in the path (calibration)              192.168.10.2 · PCIe X520 NIC (SFP+)
+
+
+
+Firewall on PC 1                                 Firewall on PC 2
+                                                                                               1    Connect
+                                                                                             SFP+ patch cord between the two X520 NICs, static IPs
+                                                                                             192.168.10.1 (PC 1) and 192.168.10.2(PC 2).
+
+
+
+                                                                                               2    Open port 5201
+                                                                                             ufw allows TCP 5201 (iperf3) only from the peer
+                                                                                             PC.
+
+
+                                                                                               3    Measure
+                                                                                             ping both ways, then iperf3 TCP in both directions
+                                                                                             (next slide).
+
+
+                                                                                                                                                 17
+Hardware Demo – Calibration Result
+This is testing calibration between PC1 and PC2 ping and iperf3 (TCP, 10 seconds) in both directions over the patch cord.
+
+(PC 2) → (PC 1)                                        (PC 1) → (PC 2)
+                                                                                                   ≈ 0.2 ms
+                                                                                                   ping round trip, 0% packet loss
+
+
+
+
+                                                                                                   9.42 Gbps
+                                                                                                   TCP sender (9.37–9.38 at receiver), both
+                                                                                                   directions
+
+
+
+                                                                                                   52 / 300
+                                                                                                   TCP retransmissions, mostly in the first second
+                                                                                                   while TCP ramps up
+
+
+
+
+  Why 9.42 and not 10 Gbps? Each 1448-byte TCP payload uses a 1538-byte slot on the wire (Ethernet, IP and TCP headers, preamble, IPG):
+  10 Gbps × 1448 / 1538 ≈ 9.41 Gbps. So PCs, NICs and patch cord already run at full 10G. Later with the FPGA OISL link in the path, the
+  ceiling becomes 6.12 Gbps (OISL Table 2-4).
+
+
+                                                                                                                                                18
+Hardware Demo – Calibration Result
+This is testing calibration between PC1 and PC2 ping and iperf3 (UDP, 10 seconds) in both directions over the patch cord.
+
+(PC 1) → (PC 2) Ping Test                             (PC 1) → (PC 2) UDP Packet Test
+                                                                                                              ≈ 0.22 ms
+                                                                                                              ping round trip, 0% packet loss
+
+
+
+
+                                                                                                              9.68 Gbps
+                                                                                                              UDP sender (9.37–9.38 at
+                                                                                                              receiver), both directions
+
+
+
+                                                                                                              0% loss
+                                                                                                              0 of 6,133,317 datagrams lost, jitter
+                                                                                                              0.002 ms
+
+
+
+  Why 9.68 and not 10 Gbps? Each 1972-byte UDP payload takes a 2038-byte slot on the wire (28 B UDP/IP header + 38 B Ethernet
+  header, FCS, preamble and gap): 10 Gbps × 1972 / 2038 ≈ 9.68 Gbps. So the PCs, NICs and patch cord already carry full 10G with no
+  loss. With the FPGA OISL link in the path, the ceiling becomes 6.12 Gbps (OISL Table 2-4).
+
+
+                                                                                                                                                19
+ Detailed System Update
+Detail Explanation for New System Architecture
+System Architecture (proposed system structure)
+Blue color: New Module
+
+
+
+
+                                                  21
+System Architecture (proposed system structure)
+FPGA TX (Encoder) - Architecture Upgrade Summary Total Update (Encoder Only):
+   ●     New Custom Modules: 25 Modules
+   ●     New IP Cores / Buffers: 4 IPs
+   ●     Total Architectural Changes: 29 Blocks
+
+
+1. System Input & XGMII Front-End (Total: 4 Modules, 1 IP)
+                                                                                         3. ARQ TX Management (Total: 2 Module)
+   ●     Create Module – Data Management / Packet Generator (PCIe/NIC Simulator)
+   ●     Create Module – XGMII Parser                                                       ●     Create Module – ARQ TX Controller
+   ●     Create Module – Ethernet Preamble Remover                                          ●     Create Module – ARQ Retransmit RAM (Memory/Buffer Controller)
+   ●     Create Module – Packing and Segmentation
+   ●     Create IP – 10G Ethernet PCS/PMA (MAC + PHY)                                    4. Post-FEC & Egress Pipeline (Total: 3 Modules, 2 IPs)
+
+2. SDA Framer & Payload Multiplexing (Total: 15 Modules, 1 IPs)                             ●     Create Module – Preamble 72-bit Generator
+                                                                                            ●     Create Module – Multiplexer for Preamble and LPC
+   ●     Create Module – Ethernet to FSO Framer & Data Checker                              ●     Create Module – Error Injector
+   ●     Create Module – FSO Header Generator                                               ●     Update IP – Clock Domain Crossing Async FIFO (200 MHz to 312.5
+   ●     Create Module – CRC 16                                                                   MHz)
+   ●     Create Module – FSO Header MUX                                                     ●     Create Module – 64b/66b Sync Gearbox TX: Verilog code to encode and
+   ●     Create Module – FSO Payload                                                              align 32-bit payloads into 64b/66b blocks with sync headers.
+   ●     Create Module – 3x CRC 32 (DATA & IDLE & MGMT)                                     ●     Create IP – GTH Transceiver (10 Gbps SFP+ TX with 64b/66b Gearbox)
+   ●     Create Module – IDLE Payload Generator
+   ●     Create Module – Telemetry / MGMT Generator
+   ●     Create Module – Header Multiplexer (Frame Header & IDLE)
+   ●     Create Module – Payload Multiplexer (DATA & IDLE & MGMT)
+   ●     Create Module – 3x FIFO Buffers (for Payload, IDLE, and MGMT synchronization)
+   ●     Update IP – Clock Domain Crossing Async FIFO (312.5 MHz to 200 MHz)                                                                                      22
+System Architecture (proposed system structure)
+Blue color: New Module
+
+
+
+
+                                                  23
+System Architecture (proposed system structure)
+FPGA RX (Decoder) - Architecture Upgrade Summary Total Update (Decoder Only):
+   ●      New Custom Modules: 18 Modules
+   ●      New IP Cores / Buffers: 5 IPs
+                                                                                                     3. ARQ & Frame Routing Management (Total: 7 Modules, 1 IP)
+   ●      Total Architectural Changes: 23 Blocks
+                                                                                                        ●      Create Module – CRC 16 Checker
+1. Physical Ingress & Synchronization (Total: 3 Modules, 2 IPs)                                         ●      Create Module – Header Parser
+                                                                                                        ●      Create Module – ARQ RX Controller (Evaluates CRC status and generates ACK/NAK
+                                                                                                               signals for the ARQ TX Controller).
+    ●     Create IP – GTH Transceiver RX (Receives the 10 Gbps optical signal via SFP+).
+                                                                                                        ●      Create Module – CRC 32 Checker
+    ●     Create Module – 64b/66b Sync Gearbox RX: Verilog code to achieve block lock and decode
+                                                                                                        ●      Create Module – Frame Demultiplexer (Dynamically routes the 1908-byte payload based
+          64b/66b blocks back to 32-bit data.
+                                                                                                               on its Frame Type indicator).
+    ●     Update IP – Clock Domain Crossing / CDC (Bridges 312.5 MHz GTH clock to 200 MHz Logic
+                                                                                                        ●      Create Module – MGMT Extractor (Extracts timestamp data for the Satellite CPU).
+          clock for baseband processing).
+                                                                                                        ●      Create Module – IDLE Discard (Safely drops dummy IDLE frames from the pipeline).
+    ●     Create Module – Demultiplexer (Separates the 3108-byte FSO frame and Preamble).
+                                                                                                        ●      Create IP – ARQ RX Reorder Buffer (Buffers and re-sequences out-of-order 1908-byte
+    ●     Create Module – Preamble Extractor (Extracts the 72-bit Preamble to maintain continuous
+                                                                                                               payloads before reassembly).
+          data stream synchronization).
+
+                                                                                                     4. Payload Reassembly & Egress Back-End (Total: 5 Modules, 1 IPs)
+2. Data Validation & Post-FEC CDC (Total: 3 Modules, 1 IP)
+
+                                                                                                        ●      Create Module – Ethernet Frame Reassembly (Stitches the 1908-byte FSO payloads
+    ●     Create Module – Header & Payload Demultiplexer (Splits the decoded stream into a 32-byte
+                                                                                                               back into their original, dynamic-sized Ethernet frames).
+          header and a 2040-byte payload for error checking).
+                                                                                                        ●      Create Module – Ethernet Preamble Generator (Generates the standard 7-byte Preamble
+    ●     Update IP – Clock Domain Crossing / CDC (Bridges the 200 MHz baseband data back to the
+                                                                                                               and 1-byte SFD).
+          312.5 MHz domain after FEC decoding).
+                                                                                                        ●      Create Module – Ethernet Multiplexer (Combines the standard Ethernet Preamble with
+    ●     Update Module – CRC-16 Checker (Validates the integrity of the 14-byte Frame Header).
+                                                                                                               the reassembled Ethernet Payload).
+    ●     Update Module – CRC-32 Checker (Validates the integrity of the 1908-byte FSO Payload).
+                                                                                                        ●      Create Module – XGMII TX Formatter & IPG: Verilog code to insert Terminate (0xFD) and
+                                                                                                               12-byte Inter-Packet Gap.
+                                                                                                        ●      Create Module – Ethernet MAC Packing (Dynamic Ethernet MAC Transmit Stream
+                                                                                                               Packer)
+                                                                                                        ●      Create IP – XGMII Formatter & 10G PCS/PMA TX (Formats the 32-bit data and transmits
+                                                                                                               the rebuilt Ethernet packages via SFP+ TX to the Receiver PC)                       24
+ARQ Selective Repeat
+   Detailed Explanation for ARQ
+   ARQ Selective Repeat
+
+
+
+The initial development of the Automatic Repeat
+Request (ARQ) system was based on SDA OISL
+Standard v2.1.2, particularly for the frame header
+structure, ARQ configuration parameters, and
+acknowledgement (ACK/NAK) signaling.
+
+During further development, SDA OCT Standard
+v4.0.0 was adopted as an additional technical
+reference to clarify the operational aspects of ARQ,
+including frame identification, retransmission control,
+buffer management, and in-order frame delivery.
+
+Reference -> SDA OCT with SDA OISL Parameter
+
+
+
+
+                                                          26
+ARQ Selective Repeat (2)
+
+
+
+
+                           27
+Project Plan
+
+
+
+
+               28
+Future Plan (28 September 2026)
+Feature / Metric          SDA OISL V2.1.2 Standard (Current)             SDA OCT V4.0.0 Standard (Next-Gen. US                    ESA ESTOL v3.1 Standard (European
+                                                                         Standard)                                                Standard)
+
+Physical Optical          10 Gbps (10000 Mbaud physical optical link).   10 Gbps (10000 Mbaud physical optical link via GTH).     10 Gbps (11.3 Gbaud physical optical link).
+                          (Ref: SDA OISL Sec. 2.6.3)                     (Ref: SDA OCT V4.0.0 Sec. 3.3)
+Signaling Rate
+                                                                                                                                  (Ref: ESTOL v3.1 Sec. 3.5.1)
+
+Net Effective Data Rate 6.1 Gbps max net effective throughput Up to 1.17 Gbps (PL_RATE 4 high protection) / 1.73 Up to 10.0 Gbps net user data rate upper
+                        due to LPC and RS overhead.           Gbps (PL_RATE 2).                                  bound (leaner frame without LPC).
+(Throughput)
+                                                                         (Trade-off: High redundancy/coding gain for 5000 km
+                                                                         ultra-long distance S2S links) LDPC provides a very      (Ref: ESTOL v3.1 Sec. 3.5.1)
+                          (Ref: SDA OISL Sec. 2.4, Table 2-4)            massive additional coding gain, about 3 to 4 dB higher
+                                                                         than Reed-Solomon, approaching the Shannon Limit
+                                                                         (maximum physical limit of communication)
+
+                                                                         (Ref: SDA OCT V4.0.0 Sec. 3.4.9, Table 3-20)
+
+Payload FEC Algorithm     Reed-Solomon       RS(255,       239)   with   5G NR LDPC (Base Graph 1) with variable code rates.      Reed-Solomon RS(255, 239) with interleaving
+                          interleaving depth 8.                                                                                   depth 8.
+                                                                         (Ref: SDA OCT V4.0.0 Sec. 3.4.5.3)
+                          Ref: SDA OISL Sec. 2.6.3.6.3)                                                                           (Ref:   ESTOL    v3.1          Sec.     3.5.3,
+                                                                                                                                  ESTOL-OOK-43110)
+
+Header FEC                Reed-Solomon RS(32, 16).                       Convolutional Code 1/6.                                  Convolutional Code 1/6.
+
+                          (Ref: SDA OISL Sec. 2.6.3.6.4)                                                                          (Ref:   ESTOL    v3.1          Sec.     3.5.3,
+                                                                         (Ref: SDA OCT V4.0.0 Sec. 3.4.5.2)                       ESTOL-OOK-43120)
+
+                                                                                                                                                                                   29
+Future Plan for SCIE Paper (28 September 2026)
+
+              Tentative Title                   Journal Name        IF    JCR IF %   Rating   Submission   WiComAI Lab Team
+                                                                                                 Date
+  FPGA-Based Edge AI Acceleration Across         IEEE Wireless     13.4     4%        Q1      March 2027         FPGA
+    Kintex, Alinx, and Zynq Platforms: A        communications
+Comprehensive Survey and Application Case
+        Study on Free Space Optics
+
+  AM-Tone-Assisted Beam Acquisition for         IEEE Internet of   8.7     5.8 %      Q1      April 2027         PAT
+ Optical Inter-Satellite Links Under Pointing    Things Journal
+                 Uncertainty
+
+ Reliable FPGA Architectures for Free-Space     IEEE Internet of   8.7     5.8 %      Q1      Sept. 2027         FPGA
+Optical and Inter-Satellite Communication: A     Things Journal
+Survey of Error Control, Fault Tolerance, and
+                Link Recovery
+
+Disturbance-Aware Predictive Fine-Pointing        Alexandria       6.4      7%        Q1       Dec. 2027         PAT
+     Control for Optical Inter-Satellite         Engineering
+  Communication Under Spacecraft Jitter            Journal
+
+
+                                                                                                                              30
+Future Plan (28 September 2026)
+
+    Phase                          Development Content & Objectives                                 Theoretical Foundation               WiComAI Lab Team
+ Year 1 (2027)     Baseband Extension Following SDA OCT:                                        Error Control Coding, FEC, SDA OISL,
+(Months 1 - 12)    Benchmarking alternative following the SDA OISL as the baseline with other   SDA OCT, ESA ESTOL
+                   Standards that are SDA OCT, and ESTOL v3.1 over wired SFP+.
+                                                                                                                                             FPGA Team
+ Year 2 (2028)     Baseband Extension Following ESA ESTOL:                                      Error Control Coding, FEC, SDA OISL,
+(Months 13 - 24)   Benchmarking alternative following the SDA OISL as the baseline with other   SDA OCT, ESA ESTOL
+                   Standards that are SDA OCT, and ESTOL v3.1 over wired SFP+.
+
+ Year 1 (2027)     AM Tone Modulation Modeling:                                                 Amplitude Modulation, SDA OISL
+ (Months 1 - 6)    Establishing PAT baseline via SDA OISL V2.1.2 before developing simulation   V.2.1.2 , SDA OCT V4.0 Standard
+                   models for the advanced 40/50 kHz AM Tone generator with dynamic MI
+                   scaling.
+
+ Year 1 (2027)     AM Tone Demodulation Algorithms:                                             Signal Demodulation, Digital Signal
+(Months 7 - 12)    Formulating signal processing algorithms to accurately extract AM Tone       Processing, SDA OISL V.2.1.2 , SDA OCT
+                   magnitude and phase from simulated receiver data.                            V4.0 Standard
+                                                                                                                                             PAT Team
+ Year 2 (2028)     PAT State Machine Integration:                                               Control Theory, SDA OISL V.2.1.2 PAT
+(Months 13 - 18)   Synthesizing modulation and demodulation models to build the                 Protocol, SDA OCT V4.0 Standard PAT
+                   autonomous spatial acquisition and tracking sequence.                        Protocol
+
+ Year 2 (2028)     System Simulation & Evaluation:                                              Optical Beam Tracking, System
+(Months 19 - 24)   Evaluating the end-to-end tracking lock performance under simulated S2S      Optimization, SDA OISL V.2.1.2 , SDA
+                   link conditions and generating final reports.                                OCT V4.0 Standard
+
+
+
+                                                                                                                                                            31
+Detailed System Explanation
+Explanation of all the system by the module with detail
+ New Module for XGMII TX –
+ XGMII System Architecture
+
+  XGMII - 32 bit Testing
+
+
+
+
+                                            XGMII 32-bit Interface @ 312.5 MHz              Packaging and segmentation of ethernet
+We used packet generator to send
+                                            • Receives 10-Gbps Ethernet data from           frames to conform to the FSO frame format
+ethernet data with jumbo frame (2000 byte                                                   following SDA OISL. Ethernet Frame will send
+                                            MAC/PCS-PMA
+data)                                                                                       1900 Byte + 8 Byte FSO Payload Header
+                                            • Transfers 32 bits (4 bytes) per clock cycle
+                                                                                            (Following table 2-18)
+                                            at 312.5 MHz -> 10 Gbps
+                                            • Detects and removes Ethernet Preamble (7      Data :
+                                            bytes) and SFD (1 byte)                         Packaging threshold -> 1900 byte
+                                            • Extracts the valid Ethernet frame for the     Segmentation threshold -> 1900 byte
+
+
+
+                                                                                                                                           33
+New Module for XGMII TX –
+Creating IP for 10G Data Transfer on FPGA TX and RX (2 IP)
+
+
+
+
+Base-R Using 64b/66b Line Encoding,               XGMII / Core Clock : 312.5 MHz [31:0]
+Following IEEE Ethernet 802.3 Standard            The transfer capacity of this system is 312.5 MHz
+                                                  times 32-bit, resulting in exactly 10 Gbps.
+
+
+
+
+                                                          Our FPGA Board is xcku060-ffva1156-2-i (Kintex
+                                                          UltraScale)
+                                                          Reference Clock (Physical Oscillator) : 156.25 MHz
+
+                                                          Standard frequency of the physical oscillator
+                                                          crystal on the FPGA board for 10G network
+
+
+
+
+                                                                                                          34
+New Module for XGMII TX –
+Creating Packet Generator Based on IEEE 802.3
+
+Data Frame Standard Based on IEEE 802.3
+
+
+
+
+Flowchart XGMII
+
+
+
+
+                                                35
+New Module for XGMII TX –
+Creating Packet Generator Based on IEEE 802.3
+
+XGMII Module - Trial Packet Generator Process - 2000 byte (Jumbo Frame)
+
+
+
+                                             Reason why we choose send jumbo frame
+                                             ● It tests the truncation of a complete block (the first 1900 bytes).
+                               Core Module
+                               for Packet
+                                             ● The remaining data (100 bytes) behaves exactly like a Mini Frame, testing
+                                Generator      the entry of Zero Padding mode.
+                                             ● Back-to-back transmissions force the electrical system (XGMII) to physically
+                                               create an Inter-Packet Gap (IPG), while the Segmenter is busy padding.
+                                               This demonstrates the effectiveness of Elastic FIFO.
+
+
+
+
+                                                                                                                    36
+New Module - Creating XGMII Module for 312.5 MHz 32 bit
+for FPGA TX
+XGMII Module - Trial Packet Generator Process - 2000 byte (Jumbo Frame)
+(Packet Generator -> XGMII -> Parser -> Preamble Remover -> Packaging and Segmentation)
+ (Throughput) 312.5 * 32 bit = 10 Gbps
+
+
+
+
+                                                                                      Frame Data –
+                                                                                       32-bit/clock
+                                                                                     fso_data_out
+                                                                                     [31:0] outputs
+                                                                                        4 bytes of
+                                                                                       packet data
+                                                                                       every clock
+                                                                                          cycle.
+
+
+
+
+                        IDLE         Preamble [55:0] 7 Byte.
+                     (07070707)      Start of Frame Delimiter (SFD) [7:0] 1 Byte
+
+  Parsed Data -> Raw Data and Electrical Translator to AXI-Stream
+  Clean Data   -> Discard the first 8 bytes (Preamble and SFD)
+  FSO Data Out -> Payload Data                                                                37
+ New Module - Creating XGMII Module for 312.5 MHz 32 bit
+ for FPGA TX
+XGMII Module - Trial Packet Generator Process - 2000 byte (Jumbo Frame)
+(Packet Generator -> XGMII -> Parser -> Preamble Remover -> Packaging and Segmentation)
+
+
+
+
+   From a 2000-byte Jumbo Frame, Packaging & Segmentation Module counts exactly 475 cycles (get by 475x4=1908).
+   At exactly the 475th cycle, the fso_last flag is raised to notify the downstream Framer block that a
+   1908-byte FSO block has been completed and is ready to be packed.                                              38
+ New Module - Creating XGMII Module for 312.5 MHz 32 bit
+ for FPGA TX
+XGMII Module - Trial Packet Generator Process - 2000 byte (Jumbo Frame)
+(Packet Generator -> XGMII -> Parser -> Preamble Remover -> Packaging and Segmentation)
+
+
+
+
+                                                                                        Jumbo Frame (500 cycles) - Block 1 (475 cycles)
+                                                                                        = Remaining 25 data cycles.
+   The second Jumbo Frame enters immediately after the first Jumbo Frame. As per IEEE
+   802.3 standards, our electrical transmitter forcibly inserts exactly 3 pure IPG      The segmenter needs 475−25= 450 Zero Padding
+   clock cycles (07070707). Our Elastic FIFO in the Segmenter absorbs this second       cycles to complete the second FSO Block.
+   Jumbo Frame without killing gen_tready (without backpressure), proving the system
+   is immune to extreme asynchronous traffic.                                                                                          39
+New Module - Creating XGMII Module for 312.5 MHz 32 bit –
+Inter Packet Gap for FPGA TX and RX
+        The XGMII standard defines that this pause (IPG) must   The MAC standard defines that the minimum distance
+        be filled with an Idle control character.               between Ethernet packets (after the termination
+                                                                character to the start of the next packet) must be 96 bit
+        The Idle character in XGMII is represented by a Data    times.
+        value of 0x07 and a Control Bit of 1.
+                                                                Our XGMII data line has a width of 32-bits (4 Bytes) per
+                                                                clock cycle.
+
+                                                                Inter Packet Gap 12 Byte = 12 / 4 = 3 Clock Cycle.
+
+
+
+
+        Our XGMII Code
+
+
+
+
+                                                                                                                            40
+  New Module for FSO Payload –
+  Creating Header Generator, CRC 16 and Header MUX
+Core Engine for Header Module (FSO Header Frame following SDA OISL & ARQ following SDA OCT)
+
+
+
+Header Generator          ARQ TX CONTROLLER                CRC 16
+
+Making header following   Control ARQ, creating TXFN and   Header 14 Byte + 2 Byte
+SDA OISL Table 2-9        receiving RXFN,and ACK or NAK    from CRC 16 = 16 Byte
+
+
+
+
+                                                                                          41
+ New Module for FSO Frame –
+ Creating Header Generator, CRC 16 and Header MUX
+
+Mathematical Proof (Setup Phase, following table 2-9 and table 2-10)
+
+                                                 Basic Architecture Rules
+                                                  ● Reserved Bits Mandate: The SDA OISL
+                                                    standard requires all reserved bits to be
+                                                    set to a logical 1 (not 0).
+                                                  ● LSB-First (Little-Endian) Transmission
+                                                    Architecture: For multi-byte data (such as
+                                                    16-bit TXFN or 40-bit TX_TS), the least
+                                                    significant byte (Least Significant Byte)
+                                                    must be transmitted first.
+                                                  ● Simulation Test Parameters: TXFN = 0x1234,
+                                                    RXFN = 0xABCD, FRAME_TYPE = 01 (DATA),
+                                                    ACK/ACK_val = 1, TOD_SECONDS = 50,
+                                                    FCCH_OPCODE = 0xA.
+
+
+
+                       d0 & d1 (TXFN Transmission 0x1234):
+                       d0 = LSB of TXFN -> 0x34.
+                       d1 = MSB of TXFN -> 0x12.
+
+                       d2 & d3 (RXFN Transmission 0xABCD):
+                       d2 = LSB of RXFN -> 0xCD.
+                       d3 = MSB of RXFN -> 0xAB.
+
+                       d5 to d9 (TX_TS Transmission 0x1122334455):
+                       Reverse order from the lowest byte: d5=0x55,
+                       d6=0x44, d7=0x33, d8=0x22, d9=0x11.
+
+                       d12 & d13 (FCCH Payload Transmission 0x9988):
+                       d12 = LSB -> 0x88.
+                       d13 = MSB -> 0x99.
+
+                                                                                                 42
+ New Module for FSO Frame –
+ Creating Header Generator, CRC 16 and Header MUX
+
+Asynchronous Parameter Assimilation (Setup Phase, following table 2-9 and table 2-10)
+
+
+
+
+                                                                We injected a scenario where TXFN = 0x1234, RXFN =
+                                                                0xABCD, FRAME_TYPE = 01 (DATA), ACK = 1, and TOD_SECONDS
+                                                                = 50 and FCCH_OPCODE = 0xA.
+
+                                                                The signal stability before trigger_header_gen is
+                                                                triggered proves that our system setup time is perfectly
+                                                                met without any risk of metastability.
+
+
+
+
+                                                                                                                      43
+ New Module for FSO Frame –
+ Creating Header Generator, CRC 16 and Header MUX
+
+Core Engine for Header (Setup Phase, following table 2-9 and table 2-10)
+
+
+
+
+                                                               Right after trigger_header_gen pulses one cycle, our
+                                                               machine responds instantly. The system_busy signal
+                                                               immediately goes up, locking the system.
+
+                                                               The header_en_out signal is now a constant 1 for exactly
+                                                               14 clock cycles. During these 14 cycles, 112-bit
+                                                               register spits out 8-bit data per clock cycle into the
+                                                               CRC-16 math circuit.
+
+
+
+
+                                                                                                                      44
+  New Module for FSO Frame –
+  Creating Payload Module, CRC 32, ARQ, FIFO & MUX
+Core Engine for FSO Payload (FSO Payload Frame following SDA OISL & ARQ following SDA OCT)
+Testing Sending 2000 Byte data
+
+
+
+
+   Packaging & Segmentation
+                              FSO Formatter                         CRC 32
+   (Sending 2000 Byte Data)
+                              1900 Byte data from Packaging &       1908 Byte from FSO
+   Divide into 2 data 1900
+                              Segmentation + 4 Byte FSO Payload     Formatter + 4 Byte CRC 32
+   Byte and
+                              Header + 4 Byte FSO Packet Header =   = 1912 Byte (SDA OISL
+   100+1800ZeroPedding Byte
+                              1908 Byte (SDA OISL Table 2-18)       Figure 2-17)
+   Data
+
+
+                                                                                                45
+  New Module for FSO Frame –
+  Creating Payload Module, CRC 32, ARQ, FIFO & MUX
+Core Engine for FSO Payload (FSO Payload Frame following SDA OISL & ARQ following SDA OCT)
+Testing Sending 2000 Byte data
+
+
+
+                                         Packaging & Segmentation (Sending 2000 Byte Data)
+                                         Divide into 2 data 1900 Byte and 100+1800ZeroPedding Byte Data
+
+
+                                         FSO Formatter
+                                         1900 Byte data from Packaging & Segmentation + 4 Byte FSO Payload
+                                         Header + 4 Byte FSO Packet Header = 1908 Byte (SDA OISL Table 2-18)
+
+
+                                         CRC 32
+                                         1908 Byte from FSO Formatter + 4 Byte CRC 32 = 1912 Byte (SDA OISL Figure 2-17)
+
+
+
+
+                                                                                                                           46
+  New Module for FSO Frame –
+  Creating Payload Module, CRC 32, ARQ, FIFO & MUX
+Core Engine for FSO Payload (FSO Payload Frame following SDA OISL & ARQ following SDA OCT)
+Testing Sending 2000 Byte data
+(Divide into 2 data 1900 Byte and 100+1800ZeroPedding Byte Data)
+
+
+
+
+                                                      Dual Storage (FIFO & ARQ)
+
+                                                      ARQ RAM -> Storage all the Payload Data and repair if NAK
+                                                      FIFO    -> for sending the data to the next FSM (Payload MUX)
+                                                                                                                      47
+  New Module for FSO Frame –
+  Creating Payload Module, CRC 32, ARQ, FIFO & MUX
+Core Engine for FSO Payload (FSO Payload Frame following SDA OISL & ARQ following SDA OCT)
+Testing Sending 2000 Byte data
+(Divide into 2 data 1900 Byte and 100+1800ZeroPedding Byte Data)
+
+
+
+
+                                                        Interpacket GAP only at
+                                                        Ethernet Frame
+
+
+
+
+                                                   When it comes to FSO Frame     NO FRAME GAP
+                                                   there is no Frame GAP
+
+
+
+
+                                                                                                 48
+  New Module for FSO Frame –
+  Creating IDLE Module, CRC 32, FIFO & MUX
+Core Engine for FSO IDLE Payload (FSO IDLE Payload Frame following SDA OISL)
+
+
+
+
+  IDLE Generator(1908 Byte)
+                                          IDLE GENERATOR WITH CRC 32
+  Following SDA OISL 2.6.3.5.1.2 that
+  IDLE frames shall be constructed as a   1908 Byte from FSO IDLE + 4
+  pseudo-random binary sequence(PRBS)     Byte CRC 32 = 1912 Byte (SDA
+  using the same generator as the frame   OISL 2.6.3.5.1.2)
+  scrambler
+                                                                               49
+  New Module for FSO Frame –
+  Creating IDLE Module, CRC 32, FIFO & MUX
+Core Engine for FSO IDLE Payload
+
+                                     FRAMETYPE:00 IDLE
+                                                                   RAW IDLE Data (1908 Byte, or 477 Clock Cycle)
+
+                                                                   Following SDA OISL 2.6.3.5.1.2 that IDLE
+                                                                   frames shall be constructed as a pseudo-random
+                                                                   binary sequence(PRBS) using the same generator
+                                                                   as the frame scrambler
+
+
+
+
+                                              IDLE with CRC 32
+
+                                              1908 Byte from RAW IDLE Data + 4 Byte CRC 32 = 1912 Byte or 478
+                                              Clock Cycle
+
+                                                    IDLE Data (1912 Byte) send to FIFO_IDLE and MUX
+
+                                                    NO FRAME GAP
+
+
+
+
+                                                                                                                50
+  New Module for FSO Frame –
+  Creating MGMT Module, CRC 32, FIFO & MUX
+Core Engine for FSO MGMT Payload (FSO MGMT Payload Frame following SDA OISL)
+
+
+
+
+  MGMT Generator(1908 Byte)
+                                            MGMT GENERATOR WITH CRC 32
+  Following SDA OISL 2.6.3.5.2.3 that The
+  MGMT/PNT Frames are used to communicate
+                                            Starting from Padding 229 bits to 256 bits
+  OISL frame timestamps and calculated
+                                            (32 bytes) MGMT + 1876 Byte Zero Padding +
+  range and range timestamp between the
+                                            4 Byte CRC 32 = 1912 Byte
+  OISLs. Table 2-14 defines the MGMT/PNT
+  payload.                                                                               51
+  New Module for FSO Frame –
+  Creating MGMT Module, CRC 32, FIFO & MUX
+Core Engine for FSO MGMT Payload
+(FSO MGMT Payload Frame following SDA OISL)
+
+
+
+
+                                              52
+  New Module for FSO Frame –
+  Creating MGMT Module, CRC 32, FIFO & MUX
+Core Engine for FSO MGMT Payload
+(FSO MGMT Payload Frame following SDA OISL)
+
+
+
+
+                                              Range Meter = 5000 KM
+
+                                              confirms that the IEEE 754 Double Precision (64-bit)
+                                              format is perfectly captured by our architecture. The
+                                              simulated optical link (Space-to-Space) distance is
+                                              set at an extreme distance of 5,000 kilometers
+                                              (5,000,000 meters), which is the target specification
+                                              for the Cross-Plane orbit SDA constellation.
+
+
+
+
+                                                                                                      53
+  New Module for FSO Frame –
+  Creating MGMT Module, CRC 32, FIFO & MUX
+Core Engine for FSO MGMT Payload
+(FSO MGMT Payload Frame following SDA OISL)
+
+
+
+                                              Range_ts_sec = 57f9f900 (Hexadecimal) or 1.476.000.000 in decimal
+
+                                              The satellite system uses the GPS Epoch (starting on January 6,
+                                              1980). The number 1,476,000,000 seconds represents an increase of
+                                              approximately 46.77 years since that Epoch on this simulation
+                                              test (October 9,2026)
+
+
+
+
+                                                                                                            54
+  New Module for FSO Frame –
+  Creating MGMT Module, CRC 32, FIFO & MUX
+Core Engine for FSO MGMT Payload
+
+
+                                                                         MGMT Generator work parallel to prepare the
+                                                                         Telemetry data, as here we see while the frame
+                                                                         type still 00, MGMT already prepare the 1908 Byte
+                                                                         Telemetry Data (SDA OISL Table 2-14)
+
+                                                                         Padding 229 bits to 256 bits (32 bytes) MGMT +
+                                                                         1876 Byte Zero Padding = 1908 Byte
+
+
+
+                                                                         1908 Byte Raw MGMT Data + 4 Byte crc 32 = 1912
+                                                                         Byte or 478 Clock Cycle
+
+
+
+
+                                        As we can see MGMT Store to FIFO_MGMT.
+
+                                        Starting from Padding 229 bits to 256 bits (32 bytes) MGMT + 1876 Byte Zero Padding
+                                        + 4 Byte CRC 32 = 1912 Byte
+
+
+
+
+                                                                                                                     55
+  Update Module for FSO Frame –
+  Update Module for Cyclic Redundancy Check
+Core Engine for CRC 16 & CRC 32
+
+ CRC 16 [7:0] -> Location Frame Header. 14 Byte Data from Header Generator + 2 Byte CRC 16 = 16 Byte
+
+
+
+
+                                                                                                        We follow SDA
+                                                                                                        OISL 2.6.3.6.1
+
+
+
+ CRC 32 [31:0] -> Location Frame Payload. 1908 Byte Data from FSO Payload + 4 Byte CRC 32 = 1912 Byte
+
+
+
+
+                                                                                                                         56
+  Update Module for Clock Domain Crossing 312.5 MHz to 200 MHz –
+  Update Module for CDC Header and CDC Payload
+
+FIFO and Clock Domain Crossing
+         FIFO and Clock Domain Crossing for FSO Header                   FIFO and Clock Domain Crossing for FSO Payload
+
+
+
+
+               Input Side (Framer to CDC): The speed is 312.5 MHz × 32 bit = 10 Gbps 312.5 MHz × 32-bit = 10 Gbps.
+              Output Side (CDC to FEC): The speed is 200.0 MHz × 64 bit = 12.8 Gbps 200.0 MHz × 64-bit = 12.8 Gbps.
+                                                                                                                          57
+  Update Module for FSO Frame –
+  Update Module for CRC
+FIFO and Clock Domain Crossing (Testing Sending Jumbo Frame 2000 Byte)
+2000 Byte -> Divide to 2 Data. Data 1 (1912 Byte) + Data 2 (112 Byte Data+1800 Byte Zero Padding)
+
+
+
+                                                          Data Input From Framer TX to FIFO and Clock Domain Crossing
+
+
+
+
+                                                         No Gap Between Data 1 and Data 2. It solved for Inter-Packet Gap
+
+
+
+
+                                                                                                                            58
+  Update Module for FSO Frame –
+  Update Module for CRC
+FIFO and Clock Domain Crossing (Testing Sending Jumbo Frame 2000 Byte)
+2000 Byte -> Divide to 2 Data. Data 1 (1912 Byte) + Data 2 (112 Byte Data+1800 Byte Zero Padding)
+
+
+
+
+                                                              The FSM in the CDC intentionally holds the payload for 164
+                                                              cycles to wait for the FEC (Reed-Solomon) to finish
+                                                              calculating the parity of the header. In the final MUX
+                                                              Gearbox, this 164-cycle gap will be precisely filled by the
+                                                              72-bit preamble and parity RS, so that the final flow to the
+                                                              optical laser (GTH) returns to continuous without any gap.
+
+
+
+
+                FEC Latency
+
+
+
+
+                                                                                                                         59
+  Module for FEC Reed Solomon –
+  Module for RS Header
+Reed Solomon for Header Data. RS (32,16)
+                                                               - Input Header   : 16 Cycles   x
+                                                               1 Byte = 16 Bytes or 2 Words
+
+                                                               - RS Head Out    : 32 Cycles   x
+                                                               1 Byte = 32 Bytes or 4 Words
+
+
+
+
+                                           FSO Header Data 16 Byte
+
+
+
+
+                                                   FSO Header Data 16 Byte
+                                                   (Active Phase)
+
+
+
+
+                                                                FSO Header RS Parity Data 16 Byte
+                                                                (Flush Phase)
+
+
+
+
+                                                                                              60
+  Module for FEC Reed Solomon –
+  Module for RS Payload
+Reed Solomon for Payload Data. RS (255,239)
+                                                FSO Payload Data 1912 Byte
+                                                (Active Phase)
+
+
+
+
+                                              FSO Payload Parity Data 128 Byte
+                                              (Flush Phase)
+
+
+
+
+                                              - Input Payload : 239 Cycles x 8
+                                              Byte = 1912 Bytes or 239 Words
+                                              - RS Load Out    : 255 Cycles x 8
+                                              Byte = 2040 Bytes or 255 Words
+
+
+
+
+                                                                             61
+  Module for FEC Multiplexer –
+  Module for FEC Multiplexer
+Multiplexer from RS Solomon. Merge FSO Header Data and FSO Payload Data
+                                                                          Combiner
+
+                                                                          FSO Header with RS Parity Data:
+                                                                          32 Byte (4 Words)
+
+                                                                          FSO Payload with RS Parity Data:
+                                                                          2040 Byte (255 Words)
+
+                                                                          Data Out: 32+2040=2072 Byte(259 Words)
+
+
+
+
+                                                                                                             62
+  Module for Scrambler –
+  Module for Scrambler
+Scrambler Data
+The scrambler randomizes the bit sequence before transmission. Its purpose is to avoid long, consecutive
+strings of '0' or '1' bits, maintaining Direct Current balance and ensuring successful clock recovery on the
+receiving device (GTH Transceiver).
+
+
+
+
+The randomization process is carried out through a pure XOR logic operation between the 64-bit input data
+(data_in_d0) and the active PRBS state vector (S). For each pair of bytes entering the scrambler, the bits shall
+enter the scrambler in the order byte 0 (MSB) to byte 1 (LSB).
+
+
+
+
+                                                                                                                   63
+  Module for Scrambler –
+  Module for Scrambler
+Scrambler Data
+
+
+
+                           Data from FEC Multiplexer
+
+                                  2072 Byte
+
+
+
+
+                                  Scrambler Data
+
+                                    2072 Byte
+
+
+
+
+                                                       64
+  Module for Line Product Code –
+  Module for LPC (24,16)
+LPC Data
+LPC serves as a secondary layer Forward Error Correction (FEC) mechanism after Reed-Solomon. This
+compression method detects and corrects additional bit errors that may occur during optical
+transmission.
+
+
+                                                    Distributes the 64-bit bus of the Scrambler into
+                                                    four parallel lines of 16 bits each. These four
+                                                    lines are processed simultaneously by four
+                                                    instances of the lpc submodule (lpc_3 to lpc_0).
+
+                                                    In each lpc.v sub-module, the 16-bit input is first
+                                                    mapped into the encryption component of the matrix
+                                                    E[0:15]. Then, the module computes the Horizontal
+                                                    (H[0:3]) and Vertical (V[0:3]) vectors using
+                                                    high-speed cascaded linear XOR equations.
+
+
+
+
+                                                                                                          65
+ Module for Line Product Code –
+ Module for LPC (23,16)
+LPC Data
+
+
+
+                                  Data from FEC Multiplexer
+
+                                         2072 Byte
+
+
+
+
+                                         Scrambler Data
+
+                                           2072 Byte
+
+
+
+
+                                                              66
+New Module for Preamble Generator –
+Module for Preamble Sequence (24,16)
+                                       5555555555555555d5 -> 72 bit or 9 byte
+
+                                       Show that preamble data 72 bit (9
+                                       Byte) already been transfer without
+                                       scrambled and LPC
+
+
+
+
+                                                                             67
+   New Module for Preamble –
+   Module for Multiplexer for LPC Data and Preamble
+
+                                                                                                Data from LPC (24,16) -> 3108 Byte
+
+
+
+
+                                                                                                     Preamble Data -> 9 Byte
+
+
+
+
+                               Total = 3108   Byte (LPC) + 9   Byte (Preamble) = 3117   Byte or 24936 bits.
+
+
+
+Byte 1 to Byte 9 (9 bytes / 72 bits): Preamble (Pure, unscrambled, used by the Frame Synchronizer at the receiver as a
+reference for the frame zero point).
+
+Byte 10 to Byte 57 (48 bytes / 384 bits): Encoded Header (derived from the 32-byte RS Header that has been scrambled and
+expanded by LPC 16/24 to 48 bytes).
+
+Byte 58 to Byte 3117 (3060 bytes / 24,480 bits): Encoded Payload (derived from the 2040-byte RS Payload that has been scrambled
+and expanded by LPC 16/24 to 3060 bytes).
+
+                                                                                                                               68
+  Update Module for Clock Domain Crossing –
+  Module for CDC Logic Clk to GTH
+We put same condition sending 2000 Byte.
+2000 Byte -> Divide to 2 Data Frame.
+                                              Data In from Multiplexer to CDC
+                                                  3117 Byte or 24936 bits
+
+
+
+
+                                                      Data Out from CDC to GTH
+                                                      3117 Byte or 24936 bits
+
+
+
+
+                                                                           69
+  Update Module for Clock Domain Crossing –
+  Module for CDC Logic Clk to GTH
+We put same condition sending 2000 Byte.     This interval is not an optical
+                                           transmission pause, but a Bandwidth
+2000 Byte -> Divide to 2 Data Frame.             Rate-Matching mechanism.
+
+
+
+                                                                   Write Domain (200 MHz x 128 bit)
+                                                                   Read Domain (312.5 MHz x 32 bit)
+
+                                                                   At   the  10.0   Gbps   optical  line   rate,
+                                                                   transmitting one complete 24,936-bit OISL
+                                                                   frame requires 2.4936 μs for frame duration
+                                                                   (24,936 bit / 10 Gbps= 2.4936 μs or 2493.6 in
+                                                                   nanosecond)
+
+
+                                                                   However, because the 128-bit write bus
+                                                                   operates at a 25.6 Gbps burst rate, the MUX
+                                                                   Gearbox finishes writing all 3117 Bytes into
+                                                                   the CDC FIFO in just 975.0 ns.
+
+                                                                   To match the 10.0 Gbps average line rate and
+                                                                   prevent FIFO overflow, the write interface
+                                                                   remains idle for the remaining 304 clock
+                                                                   cycle
+
+               NO GAP.                                             (24933.6 ns-975.0 ns ≈ 1520.0 ns or 304 clock
+     synchronous with no pauses                                    cycle)
+    between frames and no pauses
+                                                                   while the upstream FEC/LPC pipeline processes
+                                                                   the next frame.
+
+                                                                                                             70
+  Update Module for Clock Domain Crossing –
+  Module for CDC Logic Clk to GTH
+We put same condition sending 2000 Byte.
+2000 Byte -> Divide to 2 Data Frame.
+
+
+
+
+                                              Data In from Multiplexer to CDC
+                                                  3117 Byte or 24936 bits
+
+
+
+
+                                                                                71
+  Update Module for Clock Domain Crossing –
+  Module for CDC Logic Clk to GTH
+We put same condition sending 2000 Byte.
+2000 Byte -> Divide to 2 Data Frame.
+
+
+
+
+                                             Data Out from CDC to GTH
+                                             3117 Byte or 24936 bits
+
+                             Sending continuously without any gap. Data 1 and Data 2
+
+       Following SDA OISL “Transmission of modem frames shall be synchronous with no pauses between frames
+        and no pauses between any of the bits comprising the frame components in Table 2-8. From the values
+                       in Table 2-8, the total frame size shall be 72+384+24480=24936 bits.”                  72
+Update Module for Clock Domain Crossing –
+Module for CDC Logic Clk to GTH
+
+
+
+
+                                                                                                               Fast
+                                                                                          Effective   Frame
+                                              Baud Rate             Frame Duration                             Control
+                                                                                          Data Rate   Rate
+                                                                                                               Channel
+
+
+
+                                                                                          6121.270
+                     Data Rate for one data   10000 Mbaud           2.4936 us
+                                                                                          Mbps        401.02   6.416
+                                              (312.5 MHz x 32 Bit   (In this slide show
+                                                                                          (6,121      66 kHz   Mbps
+                                              = 10 Gbps)            2,493.600 ns)
+                                                                                          Gbps)
+
+
+
+
+                                                                                                                73
+  New Module for Error Inject –
+  Module for Error Inject for Simulation Mode and Hardware Mode
+
+
+
+
+In Here we make 2 mode error injector
+ 1.   Simulation Mode -> using Digital Memory Injection Active (error.mem)
+      The error.mem file contains 48 rows of 32-bit words (index 0 to 47,
+      total 48×4 Bytes=192 Bytes).
+      XOR the 32 bit data stream with hexadecimal data from error.mem
+
+ 2.   Hardware Mode -> Digital Bypass + Active VOA Manual Hardware (Single
+      Mode 0.9-1m /t49G/51 LC/PC)
+      3117 bytes of data pass through the GTH TX and SFP+ TX with the same
+      pipe latency. Bit errors are then physically generated in the real
+      world by turning the damping screw on the Manual Variable Optical
+      Attenuator (LC/PC /t49G/51)
+
+                                                                             Manual Variable Attenuator (Single Mode)-0.9-1m /t49G/51
+                                                                                      Connector type: LC/PC. Brand : Fiberpia
+
+
+                                                                                                                                  74
+    New Module for Error Inject –
+    Module for Error Inject for Simulation Mode
+
+
+
+
+Simulation Mode -> using Digital Memory Injection Active (error.mem)
+The error.mem file contains 48 rows of 32-bit words (index 0 to 47, total
+48×4 Bytes=192 Bytes).
+
+XOR the 32 bit data stream with hexadecimal data from error.mem
+
+
+3 Operational Zones:
+
+Zone 1 – Preamble & Header Protection -> For the first 15 words (60 bytes = Byte 1 to Byte 60), which includes 9 bytes of preamble +
+48 bytes of LPC header + 3 bytes of margin
+
+Zone 2 – Payload Error Injection -> From word 16 to word 63 (48 words = 192 bytes, i.e., Byte 61 to Byte 252), the module reads 48
+lines of the garbled pattern from error.mem and XORs them with the payload data.
+
+Zone 3 – Payload Remainder Pass-Through -> From word 64 to byte 3117 (the remaining 2865 bytes, i.e., Byte 253 to Byte 3117), the
+data Pass-Through. Right on reaching Byte 3117, the FSM immediately rolls back to Zone 1 (IDLE) to protect the Preamble of the next
+frame without ever dropping the gth_tx_valid_out signal.
+
+                                                                                                                                 75
+  New Module for Error Inject –
+  Module for Error Inject for Simulation Mode
+We put same condition sending 2000 Byte.                               Data In from CDC transfer 3117 Byte to Error Inject
+2000 Byte -> Divide to 2 Data Frame.
+
+
+
+
+                Data Out From transfer 3117 Byte to GTH
+
+       Zone 1 – Preamble & Header Protection -> Byte 1 to Byte 60
+
+        Zone 2 – Payload Error Injection -> Byte 61 to Byte 252
+
+    Zone 3 – Payload Remainder Pass-Through -> Byte 253 to Byte 3117
+                                                                                                                         76
+  New Module for Error Inject –
+  Module for Error Inject for Simulation Mode
+Error Inject with Error.mem for Simulation Mode
+                                                                   Data In from CDC transfer 3117 Byte to Error Inject
+
+
+
+
+                                                                                 Data Out to GTH (Error Injected)
+
+
+
+
+                                         Data from CDC XOR with error.mem data
+
+
+
+
+                                                                                                                         77
+  New Module for Gigabit Transceiver High Performance (GTH) –
+  Module for GTH TX
+GTH TX from FPGA 1 to GTH RX FPGA 2   Data transfer from FPGA 1 -> all the frame duration, data rate still same
+
+
+
+
+                                                                                                                  78
+  New Module for Gigabit Transceiver High Performance (GTH) –
+  Module for GTH TX
+GTH TX from FPGA 1 to GTH RX FPGA 2
+                                             Data In from Error Injector
+
+
+
+
+                                                  Data Out from GTH TX FPGA 1
+ (322.265625 MHz = 312.5 MHz x (66/64))      (bit-reversal so that the MSB is sent
+                                                        first optically)
+
+
+
+
+                                                                                     79
+ New Module for Gigabit Transceiver High Performance (GTH) –
+ Module for GTH RX
+GTH RX FPGA 2
+
+
+
+
+                                   Data Receive from FPGA 1 -> all the frame duration, data
+                                                        rate still same
+
+
+
+
+                                                                                              80
+ New Module for Gigabit Transceiver High Performance (GTH) –
+ Module for GTH RX
+GTH RX FPGA 2
+                                                       Data In from Error Injector
+
+
+
+
+                                                            Data Out from GTH TX FPGA 1
+                                              (bit-reversal so that the MSB is sent first optically)
+
+
+
+                                       Data Out from GTH RX -> Bit Reversal Restoration
+                            module reversing the order of bits detects the first word Preamble FSO
+                                      (32'h5555_555555), and writes 3117 Byte valid data
+
+
+
+
+                                                                                                       81
+  Update Module for Clock Domain Crossing –
+  Module CDC GTH to Logic Clk
+CDC for GTH 312.5 MHz to Logic Clk 200 MHz)                                  Data from GTH RX
+
+
+
+
+                                                                             Data out from CDC
+
+
+
+
+                                              all the frame duration, data
+                                                     rate still same
+
+                                                                                                 82
+    System Architecture
+following SDA OCT (2027)
+System Architecture following SDA OCT(2027)
+
+
+
+
+                                              84
+System Architecture following SDA OCT(2027)
+
+
+
+
+                                              85
+     System Architecture
+following ESA ESTOL(2028)
+System Architecture following ESA ESTOL(2028)
+
+
+
+
+                                                87
+System Architecture following ESA ESTOL(2028)
+
+
+
+
+                                                88
+

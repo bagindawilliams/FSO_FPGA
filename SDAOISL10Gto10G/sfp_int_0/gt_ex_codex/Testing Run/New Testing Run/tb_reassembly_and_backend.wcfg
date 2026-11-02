@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/audit/20261101_module13/build/modules_20261101_180405_651227_tb_reassembly_and_backend.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tb_reassembly_and_backend" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+   </zoom_setting>
+   <column_width_setting>
+   </column_width_setting>
+   <WVObjectSize size="4" />
+   <wvobject type="group" fp_name="group19">
+      <obj_property name="label">System Clock / Control</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="group" fp_name="group20">
+      <obj_property name="label">Process and State</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_reassembly_and_backend/reassembled_eth_tdata">
+         <obj_property name="ElementShortName">reassembled_eth_tdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">reassembled_eth_tdata[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_reassembly_and_backend/s_axis_fso_tdata">
+         <obj_property name="ElementShortName">s_axis_fso_tdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">s_axis_fso_tdata[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_reassembly_and_backend/reassembled_pkt_bytes">
+         <obj_property name="ElementShortName">reassembled_pkt_bytes[15:0]</obj_property>
+         <obj_property name="ObjectShortName">reassembled_pkt_bytes[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_reassembly_and_backend/reassembled_pkt_cnt">
+         <obj_property name="ElementShortName">reassembled_pkt_cnt[15:0]</obj_property>
+         <obj_property name="ObjectShortName">reassembled_pkt_cnt[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_reassembly_and_backend/w">
+         <obj_property name="ElementShortName">w[31:0]</obj_property>
+         <obj_property name="ObjectShortName">w[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group25">
+      <obj_property name="label">Data Output</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_reassembly_and_backend/eth_out_words">
+         <obj_property name="ElementShortName">eth_out_words[31:0]</obj_property>
+         <obj_property name="ObjectShortName">eth_out_words[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_reassembly_and_backend/xgmii_pkt_words">
+         <obj_property name="ElementShortName">xgmii_pkt_words[31:0]</obj_property>
+         <obj_property name="ObjectShortName">xgmii_pkt_words[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   <wvobject type="array" fp_name="/tb_reassembly_and_backend/pc2_xgmii_txc">
+         <obj_property name="ElementShortName">pc2_xgmii_txc[3:0]</obj_property>
+         <obj_property name="ObjectShortName">pc2_xgmii_txc[3:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_reassembly_and_backend/pc2_xgmii_txd">
+         <obj_property name="ElementShortName">pc2_xgmii_txd[31:0]</obj_property>
+         <obj_property name="ObjectShortName">pc2_xgmii_txd[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      </wvobject>
+   <wvobject type="group" fp_name="group30">
+      <obj_property name="label">Data Input</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/tb_reassembly_and_backend/in_xgmii_frame">
+         <obj_property name="ElementShortName">in_xgmii_frame</obj_property>
+         <obj_property name="ObjectShortName">in_xgmii_frame</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property></wvobject>
+   </wvobject>
+</wave_config>

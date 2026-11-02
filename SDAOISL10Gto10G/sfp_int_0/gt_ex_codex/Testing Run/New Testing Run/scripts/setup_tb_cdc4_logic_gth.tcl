@@ -1,0 +1,8 @@
+# New simulation only: configure and elaborate matching top, remain at0ns, then log selected signals.
+if {![llength [get_objects /tb_cdc4_logic_gth_verified_v2/*]]} {error "Wrong simulation top"}
+foreach p [list {/tb_cdc4_logic_gth_verified_v2/hi} {/tb_cdc4_logic_gth_verified_v2/ho} {/tb_cdc4_logic_gth_verified_v2/pi} {/tb_cdc4_logic_gth_verified_v2/po} {/tb_cdc4_logic_gth_verified_v2/cdc4_TXFN} {/tb_cdc4_logic_gth_verified_v2/txfn_low} {/tb_cdc4_logic_gth_verified_v2/cdc4_MGMT_RANGE} {/tb_cdc4_logic_gth_verified_v2/mgmt_captured} {/tb_cdc4_logic_gth_verified_v2/mgmt_vec} {/tb_cdc4_logic_gth_verified_v2/cdc4_frame_id} {/tb_cdc4_logic_gth_verified_v2/c} {/tb_cdc4_logic_gth_verified_v2/cdc4_ASCII_TAG} {/tb_cdc4_logic_gth_verified_v2/cdc4_ETH_FCS} {/tb_cdc4_logic_gth_verified_v2/cdc4_FRAME_TYPE} {/tb_cdc4_logic_gth_verified_v2/f} {/tb_cdc4_logic_gth_verified_v2/cdc4_HDR_CRC16} {/tb_cdc4_logic_gth_verified_v2/header_in} {/tb_cdc4_logic_gth_verified_v2/header_out} {/tb_cdc4_logic_gth_verified_v2/out_hdr_byte_cnt} {/tb_cdc4_logic_gth_verified_v2/hdr_cnt} {/tb_cdc4_logic_gth_verified_v2/cdc4_FSO_PKT_HDR} {/tb_cdc4_logic_gth_verified_v2/cdc4_FSO_PLD_HDR} {/tb_cdc4_logic_gth_verified_v2/cdc4_PLD_CRC32} {/tb_cdc4_logic_gth_verified_v2/payload_in} {/tb_cdc4_logic_gth_verified_v2/payload_out} {/tb_cdc4_logic_gth_verified_v2/out_pld_total_bytes} {/tb_cdc4_logic_gth_verified_v2/out_pld_word_cnt} {/tb_cdc4_logic_gth_verified_v2/pld_cnt}] {
+ set o [get_objects -quiet $p]
+ if {[llength $o]} {log_wave $o} else {puts "LOGGING_PATH_UNRESOLVED $p"}
+}
+open_wave_config {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/Testing Run/New Testing Run/tb_cdc4_logic_gth.wcfg}
+# This script does not run the simulation.

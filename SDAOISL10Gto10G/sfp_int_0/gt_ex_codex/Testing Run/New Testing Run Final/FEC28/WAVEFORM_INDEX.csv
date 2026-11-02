@@ -1,0 +1,2 @@
+TB,run,WDB,sha256,WCFG,window,status
+tb_RS CHANNEL_ERROR=1,20261102_104414,/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/audit/20261102_fec28/runs/20261102_104414/runtime_report28_rs_original.wdb,1600d39a7a89b7c0ea82ef8c55d3051e058c18fe783f80e9f2c7c31768a308f7,/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/audit/20261102_fec28/runs/20261102_104414/runtime_report28_rs_original.wcfg,0–32.55us; injector1.05–1.18us; mismatch8.0375us,INJECTOR_VERIFIED_SCOPED; DECODE_FAIL; GUI_NOT_VERIFIED

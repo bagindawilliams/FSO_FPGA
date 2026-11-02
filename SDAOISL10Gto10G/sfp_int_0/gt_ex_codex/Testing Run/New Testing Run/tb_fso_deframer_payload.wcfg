@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/audit/20261101_module13/build/modules_20261101_180405_651227_tb_fso_deframer_payload.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tb_fso_deframer_payload" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+   </zoom_setting>
+   <column_width_setting>
+   </column_width_setting>
+   <WVObjectSize size="7" />
+   <wvobject type="group" fp_name="group22">
+      <obj_property name="label">System Clock / Control</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="group" fp_name="group23">
+      <obj_property name="label">Payload Path</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_fso_deframer_payload/m_axis_pld_tdata">
+         <obj_property name="ElementShortName">m_axis_pld_tdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">m_axis_pld_tdata[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   <wvobject type="array" fp_name="/tb_fso_deframer_payload/payload_in">
+         <obj_property name="ElementShortName">payload_in[31:0]</obj_property>
+         <obj_property name="ObjectShortName">payload_in[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_fso_deframer_payload/pld_crc_ok">
+         <obj_property name="ElementShortName">pld_crc_ok</obj_property>
+         <obj_property name="ObjectShortName">pld_crc_ok</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property></wvobject>
+      <wvobject type="logic" fp_name="/tb_fso_deframer_payload/pld_check_done">
+         <obj_property name="ElementShortName">pld_check_done</obj_property>
+         <obj_property name="ObjectShortName">pld_check_done</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property></wvobject>
+      </wvobject>
+   <wvobject type="group" fp_name="group25">
+      <obj_property name="label">Header Path</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/tb_fso_deframer_payload/hdr_crc_ok">
+         <obj_property name="ElementShortName">hdr_crc_ok</obj_property>
+         <obj_property name="ObjectShortName">hdr_crc_ok</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property></wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group27">
+      <obj_property name="label">Data Input</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_fso_deframer_payload/rx_txfn">
+         <obj_property name="ElementShortName">rx_txfn[15:0]</obj_property>
+         <obj_property name="ObjectShortName">rx_txfn[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_fso_deframer_payload/drained_word_cnt">
+         <obj_property name="ElementShortName">drained_word_cnt[31:0]</obj_property>
+         <obj_property name="ObjectShortName">drained_word_cnt[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   <wvobject type="array" fp_name="/tb_fso_deframer_payload/in_byte_cnt">
+         <obj_property name="ElementShortName">in_byte_cnt[15:0]</obj_property>
+         <obj_property name="ObjectShortName">in_byte_cnt[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      </wvobject>
+   <wvobject type="group" fp_name="group32">
+      <obj_property name="label">Process and State</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_fso_deframer_payload/frame_id">
+         <obj_property name="ElementShortName">frame_id[3:0]</obj_property>
+         <obj_property name="ObjectShortName">frame_id[3:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_fso_deframer_payload/calculated_crc32">
+         <obj_property name="ElementShortName">calculated_crc32[31:0]</obj_property>
+         <obj_property name="ObjectShortName">calculated_crc32[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_fso_deframer_payload/received_crc32">
+         <obj_property name="ElementShortName">received_crc32[31:0]</obj_property>
+         <obj_property name="ObjectShortName">received_crc32[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_fso_deframer_payload/frame_type_str">
+         <obj_property name="ElementShortName">frame_type_str[31:0]</obj_property>
+         <obj_property name="ObjectShortName">frame_type_str[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   <wvobject type="array" fp_name="/tb_fso_deframer_payload/frame_type_str">
+         <obj_property name="ElementShortName">frame_type_str[31:0]</obj_property>
+         <obj_property name="ObjectShortName">frame_type_str[31:0]</obj_property>
+         <obj_property name="Radix">ASCIIRADIX</obj_property>
+      <obj_property name="label">ASCII (MSB-to-LSB): frame_type_str</obj_property><obj_property name="DisplayName">label</obj_property></wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group38">
+      <obj_property name="label">Data Output</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_fso_deframer_payload/out_byte_cnt">
+         <obj_property name="ElementShortName">out_byte_cnt[15:0]</obj_property>
+         <obj_property name="ObjectShortName">out_byte_cnt[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group41">
+      <obj_property name="label">MGMT Path</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_fso_deframer_payload/mgmt_lsb_vec">
+         <obj_property name="ElementShortName">mgmt_lsb_vec[255:0]</obj_property>
+         <obj_property name="ObjectShortName">mgmt_lsb_vec[255:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+</wave_config>

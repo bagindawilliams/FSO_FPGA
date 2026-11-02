@@ -1,0 +1,2 @@
+top,run,WDB,sha256,WCFG,status
+tb_RS CHANNEL_ERROR=1,20261102_104414,/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/audit/20261102_fec28/runs/20261102_104414/runtime_report28_rs_original.wdb,1600d39a7a89b7c0ea82ef8c55d3051e058c18fe783f80e9f2c7c31768a308f7,/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/Testing Run/New Testing Run Final/FEC29/RS_FRAME0_LANES0_2_RUN104414.wcfg,MODEL_MATCH_SCOPED; DECODE_LANE2_FAIL; GUI_NOT_VERIFIED

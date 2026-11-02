@@ -1,0 +1,866 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/simulation/demo_release/runs/xsim_20261101_170951_6SojfL/export/xsim/tb_etri_main.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tb_etri_main" />
+            <top_module name="vcomponents" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+   </zoom_setting>
+   <column_width_setting>
+   </column_width_setting>
+   <WVObjectSize size="12" />
+   <wvobject type="group" fp_name="group1">
+      <obj_property name="label">/tb_etri_main: Clock and Reset</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/clk_logic">
+         <obj_property name="ElementShortName">clk_logic</obj_property>
+         <obj_property name="ObjectShortName">clk_logic</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/tx0_clk">
+         <obj_property name="ElementShortName">tx0_clk</obj_property>
+         <obj_property name="ObjectShortName">tx0_clk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/rx0_clk">
+         <obj_property name="ElementShortName">rx0_clk</obj_property>
+         <obj_property name="ObjectShortName">rx0_clk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/rst_n">
+         <obj_property name="ElementShortName">rst_n</obj_property>
+         <obj_property name="ObjectShortName">rst_n</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/gth_tx_ready">
+         <obj_property name="ElementShortName">gth_tx_ready</obj_property>
+         <obj_property name="ObjectShortName">gth_tx_ready</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/gth_rx_ready">
+         <obj_property name="ElementShortName">gth_rx_ready</obj_property>
+         <obj_property name="ObjectShortName">gth_rx_ready</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group8">
+      <obj_property name="label">/tb_etri_main: Ethernet Input</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/\gen_sim_mode.gen_axis_tdata ">
+         <obj_property name="ElementShortName">\gen_sim_mode.gen_axis_tdata [31:0]</obj_property>
+         <obj_property name="ObjectShortName">\gen_sim_mode.gen_axis_tdata [31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/\gen_sim_mode.gen_axis_tvalid ">
+         <obj_property name="ElementShortName">\gen_sim_mode.gen_axis_tvalid </obj_property>
+         <obj_property name="ObjectShortName">\gen_sim_mode.gen_axis_tvalid </obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/\gen_sim_mode.gen_axis_tready ">
+         <obj_property name="ElementShortName">\gen_sim_mode.gen_axis_tready </obj_property>
+         <obj_property name="ObjectShortName">\gen_sim_mode.gen_axis_tready </obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/\gen_sim_mode.gen_axis_tkeep ">
+         <obj_property name="ElementShortName">\gen_sim_mode.gen_axis_tkeep [3:0]</obj_property>
+         <obj_property name="ObjectShortName">\gen_sim_mode.gen_axis_tkeep [3:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/\gen_sim_mode.gen_axis_tlast ">
+         <obj_property name="ElementShortName">\gen_sim_mode.gen_axis_tlast </obj_property>
+         <obj_property name="ObjectShortName">\gen_sim_mode.gen_axis_tlast </obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group14">
+      <obj_property name="label">/tb_etri_main: Segmentation and Frame Identity</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/seg_axis_tdata">
+         <obj_property name="ElementShortName">seg_axis_tdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">seg_axis_tdata[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/seg_axis_tvalid">
+         <obj_property name="ElementShortName">seg_axis_tvalid</obj_property>
+         <obj_property name="ObjectShortName">seg_axis_tvalid</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/seg_axis_tready">
+         <obj_property name="ElementShortName">seg_axis_tready</obj_property>
+         <obj_property name="ObjectShortName">seg_axis_tready</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/seg_axis_tlast">
+         <obj_property name="ElementShortName">seg_axis_tlast</obj_property>
+         <obj_property name="ObjectShortName">seg_axis_tlast</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/seg_valid_bytes">
+         <obj_property name="ElementShortName">seg_valid_bytes[13:0]</obj_property>
+         <obj_property name="ObjectShortName">seg_valid_bytes[13:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_encoder_inst/u_eth_fso_framer/u_arq_tx_controller/tx_frame_type">
+         <obj_property name="ElementShortName">tx_frame_type[1:0]</obj_property>
+         <obj_property name="ObjectShortName">tx_frame_type[1:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_encoder_inst/u_eth_fso_framer/u_arq_tx_controller/tx_txfn_out">
+         <obj_property name="ElementShortName">tx_txfn_out[15:0]</obj_property>
+         <obj_property name="ObjectShortName">tx_txfn_out[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_encoder_inst/u_eth_fso_framer/u_arq_tx_controller/global_txfn">
+         <obj_property name="ElementShortName">global_txfn[15:0]</obj_property>
+         <obj_property name="ObjectShortName">global_txfn[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/sda_encoder_inst/u_eth_fso_framer/u_arq_tx_controller/ddr4_write_req">
+         <obj_property name="ElementShortName">ddr4_write_req</obj_property>
+         <obj_property name="ObjectShortName">ddr4_write_req</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group24">
+      <obj_property name="label">/tb_etri_main: FEC Encoding and Transport</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/tx_fso_data_out">
+         <obj_property name="ElementShortName">tx_fso_data_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">tx_fso_data_out[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/tx_fso_valid_out">
+         <obj_property name="ElementShortName">tx_fso_valid_out</obj_property>
+         <obj_property name="ObjectShortName">tx_fso_valid_out</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/rx_fso_data_out">
+         <obj_property name="ElementShortName">rx_fso_data_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">rx_fso_data_out[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/rx_fso_valid_out">
+         <obj_property name="ElementShortName">rx_fso_valid_out</obj_property>
+         <obj_property name="ObjectShortName">rx_fso_valid_out</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group29">
+      <obj_property name="label">/tb_etri_main: GTH and Frame Cadence</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/gt_txdata_int">
+         <obj_property name="ElementShortName">gt_txdata_int[31:0]</obj_property>
+         <obj_property name="ObjectShortName">gt_txdata_int[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/gt_txsequence_int">
+         <obj_property name="ElementShortName">gt_txsequence_int[6:0]</obj_property>
+         <obj_property name="ObjectShortName">gt_txsequence_int[6:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/gt_txheader_int">
+         <obj_property name="ElementShortName">gt_txheader_int[5:0]</obj_property>
+         <obj_property name="ObjectShortName">gt_txheader_int[5:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/gt_rxdata_int">
+         <obj_property name="ElementShortName">gt_rxdata_int[31:0]</obj_property>
+         <obj_property name="ObjectShortName">gt_rxdata_int[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/gt_rxdatavalid_int">
+         <obj_property name="ElementShortName">gt_rxdatavalid_int[1:0]</obj_property>
+         <obj_property name="ObjectShortName">gt_rxdatavalid_int[1:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/gt_rxheader_int">
+         <obj_property name="ElementShortName">gt_rxheader_int[5:0]</obj_property>
+         <obj_property name="ObjectShortName">gt_rxheader_int[5:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/gt_rxheadervalid_int">
+         <obj_property name="ElementShortName">gt_rxheadervalid_int[1:0]</obj_property>
+         <obj_property name="ObjectShortName">gt_rxheadervalid_int[1:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/gt_rxgearboxslip_int">
+         <obj_property name="ElementShortName">gt_rxgearboxslip_int</obj_property>
+         <obj_property name="ObjectShortName">gt_rxgearboxslip_int</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/rx_block_locked">
+         <obj_property name="ElementShortName">rx_block_locked</obj_property>
+         <obj_property name="ObjectShortName">rx_block_locked</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/u_gth64b66b_tx/words_avail">
+         <obj_property name="ElementShortName">words_avail[11:0]</obj_property>
+         <obj_property name="ObjectShortName">words_avail[11:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/u_gth64b66b_tx/wr_ptr">
+         <obj_property name="ElementShortName">wr_ptr[11:0]</obj_property>
+         <obj_property name="ObjectShortName">wr_ptr[11:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/u_gth64b66b_tx/rd_ptr">
+         <obj_property name="ElementShortName">rd_ptr[11:0]</obj_property>
+         <obj_property name="ObjectShortName">rd_ptr[11:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/u_gth64b66b_tx/tx_active_reg">
+         <obj_property name="ElementShortName">tx_active_reg</obj_property>
+         <obj_property name="ObjectShortName">tx_active_reg</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/u_gth64b66b_rx/words_in_buf">
+         <obj_property name="ElementShortName">words_in_buf[11:0]</obj_property>
+         <obj_property name="ObjectShortName">words_in_buf[11:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/u_gth64b66b_rx/raw_wr_ptr">
+         <obj_property name="ElementShortName">raw_wr_ptr[11:0]</obj_property>
+         <obj_property name="ObjectShortName">raw_wr_ptr[11:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/u_gth64b66b_rx/commit_wr_ptr">
+         <obj_property name="ElementShortName">commit_wr_ptr[11:0]</obj_property>
+         <obj_property name="ObjectShortName">commit_wr_ptr[11:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/u_gth64b66b_rx/rd_ptr">
+         <obj_property name="ElementShortName">rd_ptr[11:0]</obj_property>
+         <obj_property name="ObjectShortName">rd_ptr[11:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/u_gth64b66b_rx/rx_mem_we">
+         <obj_property name="ElementShortName">rx_mem_we</obj_property>
+         <obj_property name="ObjectShortName">rx_mem_we</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group48">
+      <obj_property name="label">/tb_etri_main: FEC Decoding and CRC</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_core_rx/en">
+         <obj_property name="ElementShortName">en</obj_property>
+         <obj_property name="ObjectShortName">en</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_core_rx/data_in">
+         <obj_property name="ElementShortName">data_in[127:0]</obj_property>
+         <obj_property name="ObjectShortName">data_in[127:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_core_rx/preamble_valid">
+         <obj_property name="ElementShortName">preamble_valid</obj_property>
+         <obj_property name="ObjectShortName">preamble_valid</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_core_rx/preamble_extracted">
+         <obj_property name="ElementShortName">preamble_extracted[71:0]</obj_property>
+         <obj_property name="ObjectShortName">preamble_extracted[71:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_core_rx/lpc_data_raw">
+         <obj_property name="ElementShortName">lpc_data_raw[95:0]</obj_property>
+         <obj_property name="ObjectShortName">lpc_data_raw[95:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_core_rx/lpc_valid_raw">
+         <obj_property name="ElementShortName">lpc_valid_raw</obj_property>
+         <obj_property name="ObjectShortName">lpc_valid_raw</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_core_rx/lpc_dv">
+         <obj_property name="ElementShortName">lpc_dv</obj_property>
+         <obj_property name="ObjectShortName">lpc_dv</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_core_rx/lpc">
+         <obj_property name="ElementShortName">lpc[63:0]</obj_property>
+         <obj_property name="ObjectShortName">lpc[63:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_core_rx/descrambler_dv">
+         <obj_property name="ElementShortName">descrambler_dv</obj_property>
+         <obj_property name="ObjectShortName">descrambler_dv</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_core_rx/descrambled_data">
+         <obj_property name="ElementShortName">descrambled_data[63:0]</obj_property>
+         <obj_property name="ObjectShortName">descrambled_data[63:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_core_rx/rs_head_dv">
+         <obj_property name="ElementShortName">rs_head_dv</obj_property>
+         <obj_property name="ObjectShortName">rs_head_dv</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_core_rx/rs_head">
+         <obj_property name="ElementShortName">rs_head[7:0]</obj_property>
+         <obj_property name="ObjectShortName">rs_head[7:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_core_rx/rs_load_dv">
+         <obj_property name="ElementShortName">rs_load_dv</obj_property>
+         <obj_property name="ObjectShortName">rs_load_dv</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_core_rx/rs_load">
+         <obj_property name="ElementShortName">rs_load[63:0]</obj_property>
+         <obj_property name="ObjectShortName">rs_load[63:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_core_rx/header_dv">
+         <obj_property name="ElementShortName">header_dv</obj_property>
+         <obj_property name="ObjectShortName">header_dv</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_core_rx/header">
+         <obj_property name="ElementShortName">header[7:0]</obj_property>
+         <obj_property name="ObjectShortName">header[7:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_core_rx/payload_dv">
+         <obj_property name="ElementShortName">payload_dv</obj_property>
+         <obj_property name="ObjectShortName">payload_dv</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_core_rx/payload">
+         <obj_property name="ElementShortName">payload[63:0]</obj_property>
+         <obj_property name="ObjectShortName">payload[63:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_cdc_rx_4/count">
+         <obj_property name="ElementShortName">count[15:0]</obj_property>
+         <obj_property name="ObjectShortName">count[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_cdc_rx_4/state">
+         <obj_property name="ElementShortName">state[2:0]</obj_property>
+         <obj_property name="ObjectShortName">state[2:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_cdc_rx_4/head_empty">
+         <obj_property name="ElementShortName">head_empty</obj_property>
+         <obj_property name="ObjectShortName">head_empty</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_cdc_rx_4/load_empty">
+         <obj_property name="ElementShortName">load_empty</obj_property>
+         <obj_property name="ObjectShortName">load_empty</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_cdc_rx_4/head_rd_rst_busy">
+         <obj_property name="ElementShortName">head_rd_rst_busy</obj_property>
+         <obj_property name="ObjectShortName">head_rd_rst_busy</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_cdc_rx_4/load_rd_rst_busy">
+         <obj_property name="ElementShortName">load_rd_rst_busy</obj_property>
+         <obj_property name="ObjectShortName">load_rd_rst_busy</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_cdc_rx_4/rd_head">
+         <obj_property name="ElementShortName">rd_head</obj_property>
+         <obj_property name="ObjectShortName">rd_head</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_cdc_rx_4/rd_load">
+         <obj_property name="ElementShortName">rd_load</obj_property>
+         <obj_property name="ObjectShortName">rd_load</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_cdc_rx_4/header_dv">
+         <obj_property name="ElementShortName">header_dv</obj_property>
+         <obj_property name="ObjectShortName">header_dv</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_cdc_rx_4/header">
+         <obj_property name="ElementShortName">header[7:0]</obj_property>
+         <obj_property name="ObjectShortName">header[7:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_cdc_rx_4/payload_dv">
+         <obj_property name="ElementShortName">payload_dv</obj_property>
+         <obj_property name="ObjectShortName">payload_dv</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_cdc_rx_4/payload">
+         <obj_property name="ElementShortName">payload[31:0]</obj_property>
+         <obj_property name="ObjectShortName">payload[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/hdr_crc_ok">
+         <obj_property name="ElementShortName">hdr_crc_ok</obj_property>
+         <obj_property name="ObjectShortName">hdr_crc_ok</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/pld_crc_ok">
+         <obj_property name="ElementShortName">pld_crc_ok</obj_property>
+         <obj_property name="ObjectShortName">pld_crc_ok</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group81">
+      <obj_property name="label">/tb_etri_main: ARQ Feedback and Replay</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_encoder_inst/u_eth_fso_framer/u_arq_tx_controller/del_q_cnt">
+         <obj_property name="ElementShortName">del_q_cnt[4:0]</obj_property>
+         <obj_property name="ObjectShortName">del_q_cnt[4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_encoder_inst/u_eth_fso_framer/u_arq_tx_controller/rx_rxfn_in">
+         <obj_property name="ElementShortName">rx_rxfn_in[15:0]</obj_property>
+         <obj_property name="ObjectShortName">rx_rxfn_in[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/sda_encoder_inst/u_eth_fso_framer/u_arq_tx_controller/rx_ack_in">
+         <obj_property name="ElementShortName">rx_ack_in</obj_property>
+         <obj_property name="ObjectShortName">rx_ack_in</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/sda_encoder_inst/u_eth_fso_framer/u_arq_tx_controller/rx_ack_valid_in">
+         <obj_property name="ElementShortName">rx_ack_valid_in</obj_property>
+         <obj_property name="ObjectShortName">rx_ack_valid_in</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_encoder_inst/u_eth_fso_framer/u_arq_tx_controller/ddr4_addr">
+         <obj_property name="ElementShortName">ddr4_addr[15:0]</obj_property>
+         <obj_property name="ObjectShortName">ddr4_addr[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/sda_encoder_inst/u_eth_fso_framer/u_arq_tx_controller/ddr4_read_req">
+         <obj_property name="ElementShortName">ddr4_read_req</obj_property>
+         <obj_property name="ObjectShortName">ddr4_read_req</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/sda_encoder_inst/u_eth_fso_framer/u_arq_tx_controller/ddr4_delete_req">
+         <obj_property name="ElementShortName">ddr4_delete_req</obj_property>
+         <obj_property name="ObjectShortName">ddr4_delete_req</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_encoder_inst/u_eth_fso_framer/u_arq_tx_controller/alloc_phys_slot">
+         <obj_property name="ElementShortName">alloc_phys_slot[3:0]</obj_property>
+         <obj_property name="ObjectShortName">alloc_phys_slot[3:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_encoder_inst/u_eth_fso_framer/u_arq_tx_controller/target_index">
+         <obj_property name="ElementShortName">target_index[1:0]</obj_property>
+         <obj_property name="ObjectShortName">target_index[1:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_encoder_inst/u_eth_fso_framer/u_arq_tx_controller/track_valid">
+         <obj_property name="ElementShortName">track_valid[0:3]</obj_property>
+         <obj_property name="ObjectShortName">track_valid[0:3]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_encoder_inst/u_eth_fso_framer/u_arq_tx_controller/track_txfn">
+         <obj_property name="ElementShortName">track_txfn[0:3][15:0]</obj_property>
+         <obj_property name="ObjectShortName">track_txfn[0:3][15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_encoder_inst/u_eth_fso_framer/u_arq_tx_controller/track_timer">
+         <obj_property name="ElementShortName">track_timer[0:3][15:0]</obj_property>
+         <obj_property name="ObjectShortName">track_timer[0:3][15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_encoder_inst/u_eth_fso_framer/u_arq_tx_controller/track_retx">
+         <obj_property name="ElementShortName">track_retx[0:3][2:0]</obj_property>
+         <obj_property name="ObjectShortName">track_retx[0:3][2:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_encoder_inst/u_eth_fso_framer/u_arq_tx_controller/track_slot">
+         <obj_property name="ElementShortName">track_slot[0:3][3:0]</obj_property>
+         <obj_property name="ObjectShortName">track_slot[0:3][3:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/local_fb_rxfn_w">
+         <obj_property name="ElementShortName">local_fb_rxfn_w[15:0]</obj_property>
+         <obj_property name="ObjectShortName">local_fb_rxfn_w[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/local_fb_ack_w">
+         <obj_property name="ElementShortName">local_fb_ack_w</obj_property>
+         <obj_property name="ObjectShortName">local_fb_ack_w</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/local_fb_ack_valid_w">
+         <obj_property name="ElementShortName">local_fb_ack_valid_w</obj_property>
+         <obj_property name="ObjectShortName">local_fb_ack_valid_w</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/peer_rxfn_w">
+         <obj_property name="ElementShortName">peer_rxfn_w[15:0]</obj_property>
+         <obj_property name="ObjectShortName">peer_rxfn_w[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/peer_ack_w">
+         <obj_property name="ElementShortName">peer_ack_w</obj_property>
+         <obj_property name="ObjectShortName">peer_ack_w</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/peer_ack_valid_w">
+         <obj_property name="ElementShortName">peer_ack_valid_w</obj_property>
+         <obj_property name="ObjectShortName">peer_ack_valid_w</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group102">
+      <obj_property name="label">/tb_etri_main: Reorder and Reassembly</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/deframed_data_tdata">
+         <obj_property name="ElementShortName">deframed_data_tdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">deframed_data_tdata[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/deframed_data_tvalid">
+         <obj_property name="ElementShortName">deframed_data_tvalid</obj_property>
+         <obj_property name="ObjectShortName">deframed_data_tvalid</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/deframed_data_tlast">
+         <obj_property name="ElementShortName">deframed_data_tlast</obj_property>
+         <obj_property name="ObjectShortName">deframed_data_tlast</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/deframed_data_tready">
+         <obj_property name="ElementShortName">deframed_data_tready</obj_property>
+         <obj_property name="ObjectShortName">deframed_data_tready</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group107">
+      <obj_property name="label">/tb_etri_main: Ethernet Output</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/pc2_xgmii_txd">
+         <obj_property name="ElementShortName">pc2_xgmii_txd[31:0]</obj_property>
+         <obj_property name="ObjectShortName">pc2_xgmii_txd[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/pc2_xgmii_txc">
+         <obj_property name="ElementShortName">pc2_xgmii_txc[3:0]</obj_property>
+         <obj_property name="ObjectShortName">pc2_xgmii_txc[3:0]</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group110">
+      <obj_property name="label">/tb_etri_main: Scoreboard and Error Counters</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_etri_main/xpackets">
+         <obj_property name="ElementShortName">xpackets[31:0]</obj_property>
+         <obj_property name="ObjectShortName">xpackets[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/xbytes">
+         <obj_property name="ElementShortName">xbytes[31:0]</obj_property>
+         <obj_property name="ObjectShortName">xbytes[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/er">
+         <obj_property name="ElementShortName">er[31:0]</obj_property>
+         <obj_property name="ObjectShortName">er[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/ew">
+         <obj_property name="ElementShortName">ew[31:0]</obj_property>
+         <obj_property name="ObjectShortName">ew[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/segs">
+         <obj_property name="ElementShortName">segs[31:0]</obj_property>
+         <obj_property name="ObjectShortName">segs[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/mgdeliver">
+         <obj_property name="ElementShortName">mgdeliver[31:0]</obj_property>
+         <obj_property name="ObjectShortName">mgdeliver[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/acks">
+         <obj_property name="ElementShortName">acks[31:0]</obj_property>
+         <obj_property name="ObjectShortName">acks[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/naks">
+         <obj_property name="ElementShortName">naks[31:0]</obj_property>
+         <obj_property name="ObjectShortName">naks[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/replays">
+         <obj_property name="ElementShortName">replays[31:0]</obj_property>
+         <obj_property name="ObjectShortName">replays[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/txerr">
+         <obj_property name="ElementShortName">txerr[31:0]</obj_property>
+         <obj_property name="ObjectShortName">txerr[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/phyerr">
+         <obj_property name="ElementShortName">phyerr[31:0]</obj_property>
+         <obj_property name="ObjectShortName">phyerr[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/rxerr">
+         <obj_property name="ElementShortName">rxerr[31:0]</obj_property>
+         <obj_property name="ObjectShortName">rxerr[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/fifo_starved_slots">
+         <obj_property name="ElementShortName">fifo_starved_slots[31:0]</obj_property>
+         <obj_property name="ObjectShortName">fifo_starved_slots[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/lockloss">
+         <obj_property name="ElementShortName">lockloss[31:0]</obj_property>
+         <obj_property name="ObjectShortName">lockloss[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/txoverflow">
+         <obj_property name="ElementShortName">txoverflow[31:0]</obj_property>
+         <obj_property name="ObjectShortName">txoverflow[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/rxoverflow">
+         <obj_property name="ElementShortName">rxoverflow[31:0]</obj_property>
+         <obj_property name="ObjectShortName">rxoverflow[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group127">
+      <obj_property name="label">/tb_etri_main: Existing counters and RS lanes</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/grp1_pc1_clk_cnt">
+         <obj_property name="ElementShortName">grp1_pc1_clk_cnt[15:0]</obj_property>
+         <obj_property name="ObjectShortName">grp1_pc1_clk_cnt[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/grp1_pc1_byte_cnt">
+         <obj_property name="ElementShortName">grp1_pc1_byte_cnt[15:0]</obj_property>
+         <obj_property name="ObjectShortName">grp1_pc1_byte_cnt[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/grp1_seg_clk_cnt">
+         <obj_property name="ElementShortName">grp1_seg_clk_cnt[15:0]</obj_property>
+         <obj_property name="ObjectShortName">grp1_seg_clk_cnt[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/grp1_seg_byte_cnt">
+         <obj_property name="ElementShortName">grp1_seg_byte_cnt[15:0]</obj_property>
+         <obj_property name="ObjectShortName">grp1_seg_byte_cnt[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/grp2_hdr_clk_cnt">
+         <obj_property name="ElementShortName">grp2_hdr_clk_cnt[7:0]</obj_property>
+         <obj_property name="ObjectShortName">grp2_hdr_clk_cnt[7:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/grp2_hdr_byte_cnt">
+         <obj_property name="ElementShortName">grp2_hdr_byte_cnt[7:0]</obj_property>
+         <obj_property name="ObjectShortName">grp2_hdr_byte_cnt[7:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/grp2_pld_clk_cnt">
+         <obj_property name="ElementShortName">grp2_pld_clk_cnt[15:0]</obj_property>
+         <obj_property name="ObjectShortName">grp2_pld_clk_cnt[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/grp2_pld_byte_cnt">
+         <obj_property name="ElementShortName">grp2_pld_byte_cnt[15:0]</obj_property>
+         <obj_property name="ObjectShortName">grp2_pld_byte_cnt[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/grp6_rs_pld_clk_cnt">
+         <obj_property name="ElementShortName">grp6_rs_pld_clk_cnt[8:0]</obj_property>
+         <obj_property name="ObjectShortName">grp6_rs_pld_clk_cnt[8:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/grp6_rs_pld_byte_cnt">
+         <obj_property name="ElementShortName">grp6_rs_pld_byte_cnt[11:0]</obj_property>
+         <obj_property name="ObjectShortName">grp6_rs_pld_byte_cnt[11:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/grp8_reasm_clk_cnt">
+         <obj_property name="ElementShortName">grp8_reasm_clk_cnt[15:0]</obj_property>
+         <obj_property name="ObjectShortName">grp8_reasm_clk_cnt[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/grp8_reasm_byte_cnt">
+         <obj_property name="ElementShortName">grp8_reasm_byte_cnt[15:0]</obj_property>
+         <obj_property name="ObjectShortName">grp8_reasm_byte_cnt[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/scb_matched_words">
+         <obj_property name="ElementShortName">scb_matched_words[31:0]</obj_property>
+         <obj_property name="ObjectShortName">scb_matched_words[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/scb_error_words">
+         <obj_property name="ElementShortName">scb_error_words[31:0]</obj_property>
+         <obj_property name="ObjectShortName">scb_error_words[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_core_rx/rs_decoder_inst/out_byte_cnt">
+         <obj_property name="ElementShortName">out_byte_cnt[8:0]</obj_property>
+         <obj_property name="ObjectShortName">out_byte_cnt[8:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_core_rx/rs_decoder_inst/repaired_symbol_cnt">
+         <obj_property name="ElementShortName">repaired_symbol_cnt[11:0]</obj_property>
+         <obj_property name="ObjectShortName">repaired_symbol_cnt[11:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_core_rx/rs_decoder_64_inst/rs_decoder_0/out_byte_cnt">
+         <obj_property name="ElementShortName">out_byte_cnt[8:0]</obj_property>
+         <obj_property name="ObjectShortName">out_byte_cnt[8:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_core_rx/rs_decoder_64_inst/rs_decoder_0/repaired_symbol_cnt">
+         <obj_property name="ElementShortName">repaired_symbol_cnt[11:0]</obj_property>
+         <obj_property name="ObjectShortName">repaired_symbol_cnt[11:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_core_rx/rs_decoder_64_inst/rs_decoder_1/out_byte_cnt">
+         <obj_property name="ElementShortName">out_byte_cnt[8:0]</obj_property>
+         <obj_property name="ObjectShortName">out_byte_cnt[8:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_core_rx/rs_decoder_64_inst/rs_decoder_1/repaired_symbol_cnt">
+         <obj_property name="ElementShortName">repaired_symbol_cnt[11:0]</obj_property>
+         <obj_property name="ObjectShortName">repaired_symbol_cnt[11:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_core_rx/rs_decoder_64_inst/rs_decoder_2/out_byte_cnt">
+         <obj_property name="ElementShortName">out_byte_cnt[8:0]</obj_property>
+         <obj_property name="ObjectShortName">out_byte_cnt[8:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_core_rx/rs_decoder_64_inst/rs_decoder_2/repaired_symbol_cnt">
+         <obj_property name="ElementShortName">repaired_symbol_cnt[11:0]</obj_property>
+         <obj_property name="ObjectShortName">repaired_symbol_cnt[11:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_core_rx/rs_decoder_64_inst/rs_decoder_3/out_byte_cnt">
+         <obj_property name="ElementShortName">out_byte_cnt[8:0]</obj_property>
+         <obj_property name="ObjectShortName">out_byte_cnt[8:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_core_rx/rs_decoder_64_inst/rs_decoder_3/repaired_symbol_cnt">
+         <obj_property name="ElementShortName">repaired_symbol_cnt[11:0]</obj_property>
+         <obj_property name="ObjectShortName">repaired_symbol_cnt[11:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_core_rx/rs_decoder_64_inst/rs_decoder_4/out_byte_cnt">
+         <obj_property name="ElementShortName">out_byte_cnt[8:0]</obj_property>
+         <obj_property name="ObjectShortName">out_byte_cnt[8:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_core_rx/rs_decoder_64_inst/rs_decoder_4/repaired_symbol_cnt">
+         <obj_property name="ElementShortName">repaired_symbol_cnt[11:0]</obj_property>
+         <obj_property name="ObjectShortName">repaired_symbol_cnt[11:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_core_rx/rs_decoder_64_inst/rs_decoder_5/out_byte_cnt">
+         <obj_property name="ElementShortName">out_byte_cnt[8:0]</obj_property>
+         <obj_property name="ObjectShortName">out_byte_cnt[8:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_core_rx/rs_decoder_64_inst/rs_decoder_5/repaired_symbol_cnt">
+         <obj_property name="ElementShortName">repaired_symbol_cnt[11:0]</obj_property>
+         <obj_property name="ObjectShortName">repaired_symbol_cnt[11:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_core_rx/rs_decoder_64_inst/rs_decoder_6/out_byte_cnt">
+         <obj_property name="ElementShortName">out_byte_cnt[8:0]</obj_property>
+         <obj_property name="ObjectShortName">out_byte_cnt[8:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_core_rx/rs_decoder_64_inst/rs_decoder_6/repaired_symbol_cnt">
+         <obj_property name="ElementShortName">repaired_symbol_cnt[11:0]</obj_property>
+         <obj_property name="ObjectShortName">repaired_symbol_cnt[11:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_core_rx/rs_decoder_64_inst/rs_decoder_7/out_byte_cnt">
+         <obj_property name="ElementShortName">out_byte_cnt[8:0]</obj_property>
+         <obj_property name="ObjectShortName">out_byte_cnt[8:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/bench/u_dut/sda_decoder_inst/u_core_rx/rs_decoder_64_inst/rs_decoder_7/repaired_symbol_cnt">
+         <obj_property name="ElementShortName">repaired_symbol_cnt[11:0]</obj_property>
+         <obj_property name="ObjectShortName">repaired_symbol_cnt[11:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/aw">
+         <obj_property name="ElementShortName">aw[31:0]</obj_property>
+         <obj_property name="ObjectShortName">aw[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/ar">
+         <obj_property name="ElementShortName">ar[31:0]</obj_property>
+         <obj_property name="ObjectShortName">ar[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/pw">
+         <obj_property name="ElementShortName">pw[31:0]</obj_property>
+         <obj_property name="ObjectShortName">pw[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/rn">
+         <obj_property name="ElementShortName">rn[31:0]</obj_property>
+         <obj_property name="ObjectShortName">rn[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/cw">
+         <obj_property name="ElementShortName">cw[31:0]</obj_property>
+         <obj_property name="ObjectShortName">cw[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/cr">
+         <obj_property name="ElementShortName">cr[31:0]</obj_property>
+         <obj_property name="ObjectShortName">cr[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/dunder">
+         <obj_property name="ElementShortName">dunder[31:0]</obj_property>
+         <obj_property name="ObjectShortName">dunder[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/dover">
+         <obj_property name="ElementShortName">dover[31:0]</obj_property>
+         <obj_property name="ObjectShortName">dover[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/cdc_reject">
+         <obj_property name="ElementShortName">cdc_reject[31:0]</obj_property>
+         <obj_property name="ObjectShortName">cdc_reject[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/account_errors">
+         <obj_property name="ElementShortName">account_errors[31:0]</obj_property>
+         <obj_property name="ObjectShortName">account_errors[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/outstanding">
+         <obj_property name="ElementShortName">outstanding[31:0]</obj_property>
+         <obj_property name="ObjectShortName">outstanding[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/drops">
+         <obj_property name="ElementShortName">drops[31:0]</obj_property>
+         <obj_property name="ObjectShortName">drops[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group172">
+      <obj_property name="label">ETRI input transfer counters</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_etri_main/ingress/packet_index">
+         <obj_property name="ElementShortName">packet_index[31:0]</obj_property>
+         <obj_property name="ObjectShortName">packet_index[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/ingress/total_bytes">
+         <obj_property name="ElementShortName">total_bytes[31:0]</obj_property>
+         <obj_property name="ObjectShortName">total_bytes[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/ingress/total_beats">
+         <obj_property name="ElementShortName">total_beats[31:0]</obj_property>
+         <obj_property name="ObjectShortName">total_beats[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/ingress/accepted_bytes">
+         <obj_property name="ElementShortName">accepted_bytes[31:0]</obj_property>
+         <obj_property name="ObjectShortName">accepted_bytes[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/ingress/accepted_beats">
+         <obj_property name="ElementShortName">accepted_beats[31:0]</obj_property>
+         <obj_property name="ObjectShortName">accepted_beats[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/ingress/elapsed_cycles">
+         <obj_property name="ElementShortName">elapsed_cycles[31:0]</obj_property>
+         <obj_property name="ObjectShortName">elapsed_cycles[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/ingress/stalled_cycles">
+         <obj_property name="ElementShortName">stalled_cycles[31:0]</obj_property>
+         <obj_property name="ObjectShortName">stalled_cycles[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_etri_main/ingress/stability_errors">
+         <obj_property name="ElementShortName">stability_errors[31:0]</obj_property>
+         <obj_property name="ObjectShortName">stability_errors[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="other" fp_name="/tb_etri_main/ingress/first_accept_ns">
+         <obj_property name="ElementShortName">first_accept_ns</obj_property>
+         <obj_property name="ObjectShortName">first_accept_ns</obj_property>
+      </wvobject>
+      <wvobject type="other" fp_name="/tb_etri_main/ingress/last_accept_ns">
+         <obj_property name="ElementShortName">last_accept_ns</obj_property>
+         <obj_property name="ObjectShortName">last_accept_ns</obj_property>
+      </wvobject>
+   </wvobject>
+</wave_config>

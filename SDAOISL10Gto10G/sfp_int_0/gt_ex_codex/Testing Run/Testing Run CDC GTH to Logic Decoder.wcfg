@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="tb_cdc3_rx_gth_logic_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tb_cdc3_rx_gth_logic" />
+            <top_module name="vcomponents" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="7,475.001 ns"></ZoomEndTime>
+      <Cursor1Time time="2,736.100 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="243"></NameColumnWidth>
+      <ValueColumnWidth column_width="138"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="3" />
+   <wvobject type="group" fp_name="group179">
+      <obj_property name="label">Data In from GTH RX(312.5 MHz)</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="logic" fp_name="/tb_cdc3_rx_gth_logic/clk_gth">
+         <obj_property name="ElementShortName">clk_gth</obj_property>
+         <obj_property name="ObjectShortName">clk_gth</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_cdc3_rx_gth_logic/gth_rx_dv">
+         <obj_property name="ElementShortName">gth_rx_dv</obj_property>
+         <obj_property name="ObjectShortName">gth_rx_dv</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_cdc3_rx_gth_logic/gth_rx_data">
+         <obj_property name="ElementShortName">gth_rx_data[31:0]</obj_property>
+         <obj_property name="ObjectShortName">gth_rx_data[31:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_cdc3_rx_gth_logic/in_byte_stream">
+         <obj_property name="ElementShortName">in_byte_stream[7:0]</obj_property>
+         <obj_property name="ObjectShortName">in_byte_stream[7:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_cdc3_rx_gth_logic/in_byte_cnt">
+         <obj_property name="ElementShortName">in_byte_cnt[11:0]</obj_property>
+         <obj_property name="ObjectShortName">in_byte_cnt[11:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_cdc3_rx_gth_logic/in_clk_cnt">
+         <obj_property name="ElementShortName">in_clk_cnt[15:0]</obj_property>
+         <obj_property name="ObjectShortName">in_clk_cnt[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_cdc3_rx_gth_logic/in_frame_id">
+         <obj_property name="ElementShortName">in_frame_id[31:0]</obj_property>
+         <obj_property name="ObjectShortName">in_frame_id[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group180">
+      <obj_property name="label">Data Out from CDC 3(200 MHz)</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="logic" fp_name="/tb_cdc3_rx_gth_logic/rst_n">
+         <obj_property name="ElementShortName">rst_n</obj_property>
+         <obj_property name="ObjectShortName">rst_n</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_cdc3_rx_gth_logic/clk_logic">
+         <obj_property name="ElementShortName">clk_logic</obj_property>
+         <obj_property name="ObjectShortName">clk_logic</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_cdc3_rx_gth_logic/cdc3_flag_out">
+         <obj_property name="ElementShortName">cdc3_flag_out</obj_property>
+         <obj_property name="ObjectShortName">cdc3_flag_out</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_cdc3_rx_gth_logic/out_frame_id">
+         <obj_property name="ElementShortName">out_frame_id[31:0]</obj_property>
+         <obj_property name="ObjectShortName">out_frame_id[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_cdc3_rx_gth_logic/cdc3_data_out">
+         <obj_property name="ElementShortName">cdc3_data_out[127:0]</obj_property>
+         <obj_property name="ObjectShortName">cdc3_data_out[127:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_cdc3_rx_gth_logic/out_byte_stream">
+         <obj_property name="ElementShortName">out_byte_stream[7:0]</obj_property>
+         <obj_property name="ObjectShortName">out_byte_stream[7:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_cdc3_rx_gth_logic/out_word128_cnt">
+         <obj_property name="ElementShortName">out_word128_cnt[15:0]</obj_property>
+         <obj_property name="ObjectShortName">out_word128_cnt[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_cdc3_rx_gth_logic/out_clk_cnt">
+         <obj_property name="ElementShortName">out_clk_cnt[15:0]</obj_property>
+         <obj_property name="ObjectShortName">out_clk_cnt[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_cdc3_rx_gth_logic/out_frame_byte_cnt">
+         <obj_property name="ElementShortName">out_frame_byte_cnt[11:0]</obj_property>
+         <obj_property name="ObjectShortName">out_frame_byte_cnt[11:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group181">
+      <obj_property name="label">Math</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="other" fp_name="/tb_cdc3_rx_gth_logic/last_gth_edge_ns">
+         <obj_property name="ElementShortName">last_gth_edge_ns</obj_property>
+         <obj_property name="ObjectShortName">last_gth_edge_ns</obj_property>
+      </wvobject>
+      <wvobject type="other" fp_name="/tb_cdc3_rx_gth_logic/measured_gth_period_ns">
+         <obj_property name="ElementShortName">measured_gth_period_ns</obj_property>
+         <obj_property name="ObjectShortName">measured_gth_period_ns</obj_property>
+      </wvobject>
+      <wvobject type="other" fp_name="/tb_cdc3_rx_gth_logic/measured_byte_time_ns">
+         <obj_property name="ElementShortName">measured_byte_time_ns</obj_property>
+         <obj_property name="ObjectShortName">measured_byte_time_ns</obj_property>
+      </wvobject>
+      <wvobject type="other" fp_name="/tb_cdc3_rx_gth_logic/time_start">
+         <obj_property name="ElementShortName">time_start</obj_property>
+         <obj_property name="ObjectShortName">time_start</obj_property>
+      </wvobject>
+      <wvobject type="other" fp_name="/tb_cdc3_rx_gth_logic/time_end">
+         <obj_property name="ElementShortName">time_end</obj_property>
+         <obj_property name="ObjectShortName">time_end</obj_property>
+      </wvobject>
+      <wvobject type="other" fp_name="/tb_cdc3_rx_gth_logic/OISL_Frame_Duration_us">
+         <obj_property name="ElementShortName">OISL_Frame_Duration_us</obj_property>
+         <obj_property name="ObjectShortName">OISL_Frame_Duration_us</obj_property>
+      </wvobject>
+      <wvobject type="other" fp_name="/tb_cdc3_rx_gth_logic/OISL_Effective_Data_Rate_Mbps">
+         <obj_property name="ElementShortName">OISL_Effective_Data_Rate_Mbps</obj_property>
+         <obj_property name="ObjectShortName">OISL_Effective_Data_Rate_Mbps</obj_property>
+      </wvobject>
+      <wvobject type="other" fp_name="/tb_cdc3_rx_gth_logic/OISL_Frame_Rate_kHz">
+         <obj_property name="ElementShortName">OISL_Frame_Rate_kHz</obj_property>
+         <obj_property name="ObjectShortName">OISL_Frame_Rate_kHz</obj_property>
+      </wvobject>
+      <wvobject type="other" fp_name="/tb_cdc3_rx_gth_logic/OISL_FCCH_Mbps">
+         <obj_property name="ElementShortName">OISL_FCCH_Mbps</obj_property>
+         <obj_property name="ObjectShortName">OISL_FCCH_Mbps</obj_property>
+      </wvobject>
+   </wvobject>
+</wave_config>

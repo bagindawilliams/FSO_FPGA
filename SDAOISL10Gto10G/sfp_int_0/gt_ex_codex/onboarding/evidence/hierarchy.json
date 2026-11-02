@@ -1,0 +1,2498 @@
+{
+  "method": "Static lexical candidate graph, includes both generate branches; not Vivado elaboration",
+  "modules": {
+    "gt_example_stimulus_8b10b": "imports/gt_example_stimulus_8b10b.v",
+    "tb_mux_gearbox": "gt_ex.srcs/sources_1/new/tb_mux_gearbox.v",
+    "tb_demux_decoder": "gt_ex.srcs/sources_1/new/tb_demux_decoder.v",
+    "tb_mux_eth_32": "gt_ex.srcs/sources_1/new/tb_mux_eth_32.v",
+    "tb_eth_rx_front_end_top": "gt_ex.srcs/sources_1/new/tb_eth_rx_front_end_top.v",
+    "tb_eth_tx_back_end_top": "gt_ex.srcs/sources_1/new/tb_eth_tx_back_end_top.v",
+    "error_inject_hotswap": "gt_ex.srcs/sources_1/new/error_inject_hotswap.v",
+    "tb_fso_gth_bridge_hotswap": "gt_ex.srcs/sources_1/new/tb_fso_gth_bridge_hotswap.v",
+    "tb_demux_preamble_hotswap": "gt_ex.srcs/sources_1/new/tb_demux_preamble_hotswap.v",
+    "fso_gth_bridge_hotswap": "gt_ex.srcs/sources_1/new/fso_gth_bridge_hotswap.v",
+    "demux_preamble_hotswap": "gt_ex.srcs/sources_1/new/demux_preamble_hotswap.v",
+    "stream_input": "gt_ex.srcs/sources_1/new/stream_input.v",
+    "gt_prbs_any": "imports/gt_prbs_any.v",
+    "gt_example_checking_8b10b": "imports/gt_example_checking_8b10b.v",
+    "eth_mac_segmenter": "gt_ex.srcs/sources_1/new/eth_mac_segmenter.v",
+    "mac_ip_sniffer": "gt_ex.srcs/sources_1/new/mac_ip_sniffer.v",
+    "tb_fso_header_top": "gt_ex.srcs/sources_1/new/tb_fso_header_top.v",
+    "tb_arq_tx_controller": "gt_ex.srcs/sources_1/new/tb_arq_tx_controller.v",
+    "tb_fso_payload": "gt_ex.srcs/sources_1/new/tb_fso_payload.v",
+    "tb_idle_MGMT": "gt_ex.srcs/sources_1/new/tb_idle_MGMT.v",
+    "assembler": "gt_ex.srcs/sources_1/new/decoder/assembler.v",
+    "assembler_top": "gt_ex.srcs/sources_1/new/decoder/assembler_top.v",
+    "crc_16": "gt_ex.srcs/sources_1/new/encoder/crc_16.v",
+    "crc_32": "gt_ex.srcs/sources_1/new/encoder/crc_32.v",
+    "decoder_top": "gt_ex.srcs/sources_1/new/decoder/decoder_top.v",
+    "encoder_top": "gt_ex.srcs/sources_1/new/encoder/encoder_top.v",
+    "framer": "gt_ex.srcs/sources_1/new/encoder/framer.v",
+    "framer_top": "gt_ex.srcs/sources_1/new/encoder/framer_top.v",
+    "gt_example_bit_synchronizer": "imports/gt_example_bit_sync.v",
+    "gt_example_gtwiz_userclk_rx": "imports/gt_example_gtwiz_userclk_rx.v",
+    "gt_example_gtwiz_userclk_tx": "imports/gt_example_gtwiz_userclk_tx.v",
+    "gt_example_init": "imports/gt_example_init.v",
+    "gt_example_reset_synchronizer": "imports/gt_example_reset_sync.v",
+    "gt_example_top": "imports/gt_example_top.v",
+    "gt_example_wrapper": "imports/gt_example_wrapper.v",
+    "packet_rec": "gt_ex.srcs/sources_1/new/packet_rec.v",
+    "packet_send": "gt_ex.srcs/sources_1/new/packet_send.v",
+    "preamble_sda_dec": "gt_ex.srcs/sources_1/new/preamble_sda_dec.v",
+    "separator": "gt_ex.srcs/sources_1/new/decoder/separator.v",
+    "top": "gt_ex.srcs/sources_1/new/top.v",
+    "word_align": "gt_ex.srcs/sources_1/new/word_align.v",
+    "xgmii_packet_gen": "gt_ex.srcs/sources_1/new/xgmii_packet_gen.v",
+    "tb_top": "gt_ex.srcs/sources_1/new/tb_top.v",
+    "tb_x_gth_logic": "gt_ex.srcs/sources_1/new/tb_x_gth_logic.v",
+    "combiner": "gt_ex.srcs/sources_1/new/encoder/combiner.v",
+    "tb_FEC_RS": "gt_ex.srcs/sources_1/new/tb_FEC_RS.v",
+    "tb_Scrambler_LPC": "gt_ex.srcs/sources_1/new/tb_Scrambler_LPC.v",
+    "tb_cdc_logic_gth": "gt_ex.srcs/sources_1/new/tb_cdc_logic_gth.v",
+    "tb_error_inject": "gt_ex.srcs/sources_1/new/tb_error_inject.v",
+    "tb_gth64b66b_loopback": "gt_ex.srcs/sources_1/new/tb_gth64b66b_loopback.v",
+    "tb_cdc3_rx_gth_logic": "gt_ex.srcs/sources_1/new/tb_cdc3_rx_gth_logic.v",
+    "tb_demux_preamble_128": "gt_ex.srcs/sources_1/new/tb_demux_preamble_128.v",
+    "tb_lpc_dec_descrambler": "gt_ex.srcs/sources_1/new/tb_lpc_dec_descrambler.v",
+    "tb_FEC_Demux": "gt_ex.srcs/sources_1/new/tb_FEC_Demux.v",
+    "tb_rs_decoder_rx": "gt_ex.srcs/sources_1/new/tb_rs_decoder_rx.v",
+    "tb_cdc4_logic_gth": "gt_ex.srcs/sources_1/new/tb_cdc4_logic_gth.v",
+    "tb_fso_ethernet_deframer": "gt_ex.srcs/sources_1/new/tb_fso_ethernet_deframer.v",
+    "tb_reassembly_and_backend": "gt_ex.srcs/sources_1/new/tb_reassembly_and_backend.v",
+    "tb_fso_deframer_payload": "gt_ex.srcs/sources_1/new/tb_fso_deframer_payload.v",
+    "tb_SDAOISL10Gto10G_top": "gt_ex.srcs/sources_1/new/tb_SDAOISL10Gto10G_top.v",
+    "FEC_Demux": "gt_ex.srcs/sources_1/new/FEC_Demux.v",
+    "FEC_MUX": "gt_ex.srcs/sources_1/new/FEC_MUX.v",
+    "arq_ddr4_wrapper": "gt_ex.srcs/sources_1/new/arq_ddr4_wrapper.v",
+    "arq_rx_controller": "gt_ex.srcs/sources_1/new/arq_rx_controller.v",
+    "arq_rx_reorder_ddr4_wrapper": "gt_ex.srcs/sources_1/new/arq_rx_reorder_ddr4_wrapper.v",
+    "arq_tx_controller": "gt_ex.srcs/sources_1/new/arq_tx_controller.v",
+    "autorun": "gt_ex.srcs/sources_1/new/autorun.v",
+    "chien_search": "gt_ex.srcs/sources_1/new/rs_codec/chien_search.v",
+    "core_rx": "gt_ex.srcs/sources_1/new/decoder/core_rx.v",
+    "core_tx": "gt_ex.srcs/sources_1/new/encoder/core_tx.v",
+    "deframer": "gt_ex.srcs/sources_1/new/deframer.v",
+    "deframer_header": "gt_ex.srcs/sources_1/new/deframer_header.v",
+    "deframer_payload": "gt_ex.srcs/sources_1/new/deframer_payload.v",
+    "demux_preamble_128": "gt_ex.srcs/sources_1/new/demux_preamble_128.v",
+    "descrambler": "gt_ex.srcs/sources_1/new/descrambler.v",
+    "error_inject": "gt_ex.srcs/sources_1/new/error_inject.v",
+    "eth_axis_packet_gen": "gt_ex.srcs/sources_1/new/eth_axis_packet_gen.v",
+    "eth_mac_packing_tx": "gt_ex.srcs/sources_1/new/eth_mac_packing_tx.v",
+    "eth_preamble_gen": "gt_ex.srcs/sources_1/new/eth_preamble_gen.v",
+    "eth_preamble_remover": "gt_ex.srcs/sources_1/new/eth_preamble_remover.v",
+    "eth_rx_front_end_top": "gt_ex.srcs/sources_1/new/eth_rx_front_end_top.v",
+    "eth_tx_back_end_top": "gt_ex.srcs/sources_1/new/eth_tx_back_end_top.v",
+    "ethernet_frame_reassembly": "gt_ex.srcs/sources_1/new/ethernet_frame_reassembly.v",
+    "ethernet_fso_framer": "gt_ex.srcs/sources_1/new/ethernet_fso_framer.v",
+    "euclid_proc": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v",
+    "forney_math": "gt_ex.srcs/sources_1/new/rs_codec/forney_math.v",
+    "frame_demultiplexer": "gt_ex.srcs/sources_1/new/frame_demultiplexer.v",
+    "fso_axis_fifo": "gt_ex.srcs/sources_1/new/fso_axis_fifo.v",
+    "fso_crc_16": "gt_ex.srcs/sources_1/new/fso_crc_16.v",
+    "fso_crc_16_checker": "gt_ex.srcs/sources_1/new/fso_crc_16_checker.v",
+    "fso_crc_32": "gt_ex.srcs/sources_1/new/fso_crc_32.v",
+    "fso_crc_32_checker": "gt_ex.srcs/sources_1/new/fso_crc_32_checker.v",
+    "fso_ethernet_deframer": "gt_ex.srcs/sources_1/new/fso_ethernet_deframer.v",
+    "fso_gth_core_wrapper": "gt_ex.srcs/sources_1/new/fso_gth_core_wrapper.v",
+    "fso_header_top": "gt_ex.srcs/sources_1/new/fso_header_top.v",
+    "fso_idle_generator": "gt_ex.srcs/sources_1/new/fso_idle_generator.v",
+    "fso_payload": "gt_ex.srcs/sources_1/new/fso_payload.v",
+    "fso_payload_mux": "gt_ex.srcs/sources_1/new/fso_payload_mux.v",
+    "fso_payload_top": "gt_ex.srcs/sources_1/new/fso_payload_top.v",
+    "gth64b66b_rx": "gt_ex.srcs/sources_1/new/gth64b66b_rx.v",
+    "gth64b66b_tx": "gt_ex.srcs/sources_1/new/gth64b66b_tx.v",
+    "header_generator": "gt_ex.srcs/sources_1/new/header_generator.v",
+    "header_parser": "gt_ex.srcs/sources_1/new/header_parser.v",
+    "idle_discard": "gt_ex.srcs/sources_1/new/idle_discard.v",
+    "inverter": "gt_ex.srcs/sources_1/new/rs_codec/inverter.v",
+    "lpc": "gt_ex.srcs/sources_1/new/encoder/lpc.v",
+    "lpc_dec": "gt_ex.srcs/sources_1/new/decoder/lpc_dec.v",
+    "lpc_dec_top": "gt_ex.srcs/sources_1/new/decoder/lpc_dec_top.v",
+    "lpc_top": "gt_ex.srcs/sources_1/new/encoder/lpc_top.v",
+    "mgmt_extraction": "gt_ex.srcs/sources_1/new/mgmt_extraction.v",
+    "mgmt_telemetry_generator": "gt_ex.srcs/sources_1/new/mgmt_telemetry_generator.v",
+    "multiplier": "gt_ex.srcs/sources_1/new/rs_codec/multiplier.v",
+    "mux_eth_32": "gt_ex.srcs/sources_1/new/mux_eth_32.v",
+    "mux_gearbox_128": "gt_ex.srcs/sources_1/new/mux_gearbox_128.v",
+    "packaging_and_segmentation": "gt_ex.srcs/sources_1/new/packaging_and_segmentation.v",
+    "preamble_gen": "gt_ex.srcs/sources_1/new/preamble_gen.v",
+    "preamble_sda_decoder": "gt_ex.srcs/sources_1/new/preamble_sda_decoder.v",
+    "rs_decoder": "gt_ex.srcs/sources_1/new/rs_codec/rs_decoder.v",
+    "rs_decoder_64": "gt_ex.srcs/sources_1/new/decoder/rs_decoder_64.v",
+    "rs_encoder": "gt_ex.srcs/sources_1/new/rs_codec/rs_encoder.v",
+    "rs_encoder_64": "gt_ex.srcs/sources_1/new/encoder/rs_encoder_64.v",
+    "rx_gth_logic": "gt_ex.srcs/sources_1/new/decoder/rx_gth_logic.v",
+    "rx_logic_gth": "gt_ex.srcs/sources_1/new/decoder/rx_logic_gth.v",
+    "scrambler": "gt_ex.srcs/sources_1/new/encoder/scrambler.v",
+    "sda_decoder": "gt_ex.srcs/sources_1/new/sda_decoder.v",
+    "sda_encoder": "gt_ex.srcs/sources_1/new/sda_encoder.v",
+    "syndrome_unit": "gt_ex.srcs/sources_1/new/rs_codec/syndrome_unit.v",
+    "x_gth_logic": "gt_ex.srcs/sources_1/new/encoder/x_gth_logic.v",
+    "x_logic_gth": "gt_ex.srcs/sources_1/new/encoder/x_logic_gth.v",
+    "xgmii_rx_parser": "gt_ex.srcs/sources_1/new/xgmii_rx_parser.v",
+    "xgmii_tx_encoder": "gt_ex.srcs/sources_1/new/xgmii_tx_encoder.v",
+    "xgmii_tx_formatter": "gt_ex.srcs/sources_1/new/xgmii_tx_formatter.v",
+    "SDAOISL10Gto10G_top": "gt_ex.srcs/sources_1/new/SDAOISL10Gto10G_top.v",
+    "gt_example_top_sim": "imports/gt_example_top_sim.v"
+  },
+  "reachable": [
+    "BUFG_GT",
+    "FEC_Demux",
+    "FEC_MUX",
+    "IBUFDS_GTE3",
+    "IBUFGDS",
+    "SDAOISL10Gto10G_top",
+    "arq_ddr4_wrapper",
+    "arq_rx_controller",
+    "arq_rx_reorder_ddr4_wrapper",
+    "arq_tx_controller",
+    "autorun",
+    "bram_rs",
+    "chien_search",
+    "clk_wiz_0",
+    "core_rx",
+    "core_tx",
+    "cross_gth_logic",
+    "cross_gth_logic_head",
+    "cross_gth_logic_load",
+    "cross_logic_gth",
+    "cross_logic_gth_head",
+    "cross_logic_gth_load",
+    "deframer",
+    "deframer_header",
+    "deframer_payload",
+    "demux_preamble_128",
+    "descrambler",
+    "error_inject",
+    "eth_10g_pcs_pma_rx_0",
+    "eth_10g_pcs_pma_tx_0",
+    "eth_axis_packet_gen",
+    "eth_mac_packing_tx",
+    "eth_preamble_gen",
+    "eth_preamble_remover",
+    "eth_rx_front_end_top",
+    "eth_tx_back_end_top",
+    "ethernet_frame_reassembly",
+    "ethernet_fso_framer",
+    "euclid_proc",
+    "forney_math",
+    "frame_demultiplexer",
+    "fso_axis_fifo",
+    "fso_crc_16",
+    "fso_crc_16_checker",
+    "fso_crc_32",
+    "fso_crc_32_checker",
+    "fso_ethernet_deframer",
+    "fso_gth_core_wrapper",
+    "fso_header_top",
+    "fso_idle_generator",
+    "fso_payload",
+    "fso_payload_mux",
+    "fso_payload_top",
+    "gth64b66b_rx",
+    "gth64b66b_tx",
+    "gth_fso_64b66b",
+    "header_generator",
+    "header_parser",
+    "idle_discard",
+    "inverter",
+    "lpc",
+    "lpc_dec",
+    "lpc_dec_top",
+    "lpc_top",
+    "mgmt_extraction",
+    "mgmt_telemetry_generator",
+    "multiplier",
+    "mux_eth_32",
+    "mux_gearbox_128",
+    "packaging_and_segmentation",
+    "preamble_gen",
+    "preamble_sda_decoder",
+    "rs_decoder",
+    "rs_decoder_64",
+    "rs_encoder",
+    "rs_encoder_64",
+    "rx_gth_logic",
+    "rx_logic_gth",
+    "scrambler",
+    "sda_decoder",
+    "sda_encoder",
+    "syndrome_unit",
+    "x_gth_logic",
+    "x_logic_gth",
+    "xgmii_rx_parser",
+    "xgmii_tx_encoder",
+    "xgmii_tx_formatter"
+  ],
+  "edges": [
+    {
+      "parent": "gt_example_stimulus_8b10b",
+      "module": "gt_example_reset_synchronizer",
+      "instance": "example_stimulus_reset_synchronizer_inst",
+      "file": "imports/gt_example_stimulus_8b10b.v"
+    },
+    {
+      "parent": "gt_example_stimulus_8b10b",
+      "module": "gt_prbs_any",
+      "instance": "prbs_any_gen_inst",
+      "file": "imports/gt_example_stimulus_8b10b.v"
+    },
+    {
+      "parent": "tb_mux_gearbox",
+      "module": "preamble_gen",
+      "instance": "u_preamble",
+      "file": "gt_ex.srcs/sources_1/new/tb_mux_gearbox.v"
+    },
+    {
+      "parent": "tb_mux_gearbox",
+      "module": "mux_gearbox_128",
+      "instance": "u_mux",
+      "file": "gt_ex.srcs/sources_1/new/tb_mux_gearbox.v"
+    },
+    {
+      "parent": "tb_demux_decoder",
+      "module": "preamble_sda_decoder",
+      "instance": "u_checker",
+      "file": "gt_ex.srcs/sources_1/new/tb_demux_decoder.v"
+    },
+    {
+      "parent": "tb_demux_decoder",
+      "module": "demux_preamble_128",
+      "instance": "u_demux",
+      "file": "gt_ex.srcs/sources_1/new/tb_demux_decoder.v"
+    },
+    {
+      "parent": "tb_mux_eth_32",
+      "module": "mux_eth_32",
+      "instance": "u_mux",
+      "file": "gt_ex.srcs/sources_1/new/tb_mux_eth_32.v"
+    },
+    {
+      "parent": "tb_mux_eth_32",
+      "module": "eth_preamble_gen",
+      "instance": "u_pre_gen",
+      "file": "gt_ex.srcs/sources_1/new/tb_mux_eth_32.v"
+    },
+    {
+      "parent": "tb_eth_rx_front_end_top",
+      "module": "eth_axis_packet_gen",
+      "instance": "u_packet_gen",
+      "file": "gt_ex.srcs/sources_1/new/tb_eth_rx_front_end_top.v"
+    },
+    {
+      "parent": "tb_eth_rx_front_end_top",
+      "module": "eth_rx_front_end_top",
+      "instance": "u_front_end_dut",
+      "file": "gt_ex.srcs/sources_1/new/tb_eth_rx_front_end_top.v"
+    },
+    {
+      "parent": "tb_eth_rx_front_end_top",
+      "module": "xgmii_tx_encoder",
+      "instance": "u_tx_encoder",
+      "file": "gt_ex.srcs/sources_1/new/tb_eth_rx_front_end_top.v"
+    },
+    {
+      "parent": "tb_eth_tx_back_end_top",
+      "module": "eth_tx_back_end_top",
+      "instance": "uut",
+      "file": "gt_ex.srcs/sources_1/new/tb_eth_tx_back_end_top.v"
+    },
+    {
+      "parent": "tb_fso_gth_bridge_hotswap",
+      "module": "gth64b66b_rx",
+      "instance": "u_gth64b66b_rx",
+      "file": "gt_ex.srcs/sources_1/new/tb_fso_gth_bridge_hotswap.v"
+    },
+    {
+      "parent": "tb_fso_gth_bridge_hotswap",
+      "module": "fso_gth_core_wrapper",
+      "instance": "u_fso_gth_core",
+      "file": "gt_ex.srcs/sources_1/new/tb_fso_gth_bridge_hotswap.v"
+    },
+    {
+      "parent": "tb_fso_gth_bridge_hotswap",
+      "module": "gth64b66b_tx",
+      "instance": "u_gth64b66b_tx",
+      "file": "gt_ex.srcs/sources_1/new/tb_fso_gth_bridge_hotswap.v"
+    },
+    {
+      "parent": "tb_demux_preamble_hotswap",
+      "module": "demux_preamble_hotswap",
+      "instance": "uut",
+      "file": "gt_ex.srcs/sources_1/new/tb_demux_preamble_hotswap.v"
+    },
+    {
+      "parent": "fso_gth_bridge_hotswap",
+      "module": "BUFG_GT",
+      "instance": "u_bufg_tx",
+      "file": "gt_ex.srcs/sources_1/new/fso_gth_bridge_hotswap.v"
+    },
+    {
+      "parent": "fso_gth_bridge_hotswap",
+      "module": "BUFG_GT",
+      "instance": "u_bufg_rx",
+      "file": "gt_ex.srcs/sources_1/new/fso_gth_bridge_hotswap.v"
+    },
+    {
+      "parent": "fso_gth_bridge_hotswap",
+      "module": "gth_fso_64b66b",
+      "instance": "u_gth_fso",
+      "file": "gt_ex.srcs/sources_1/new/fso_gth_bridge_hotswap.v"
+    },
+    {
+      "parent": "fso_gth_bridge_hotswap",
+      "module": "IBUFDS_GTE3",
+      "instance": "u_ibufds_refclk",
+      "file": "gt_ex.srcs/sources_1/new/fso_gth_bridge_hotswap.v"
+    },
+    {
+      "parent": "gt_example_checking_8b10b",
+      "module": "gt_example_reset_synchronizer",
+      "instance": "example_checking_reset_synchronizer_inst",
+      "file": "imports/gt_example_checking_8b10b.v"
+    },
+    {
+      "parent": "gt_example_checking_8b10b",
+      "module": "gt_prbs_any",
+      "instance": "prbs_any_chk_inst",
+      "file": "imports/gt_example_checking_8b10b.v"
+    },
+    {
+      "parent": "tb_fso_header_top",
+      "module": "fso_header_top",
+      "instance": "u_dut",
+      "file": "gt_ex.srcs/sources_1/new/tb_fso_header_top.v"
+    },
+    {
+      "parent": "tb_arq_tx_controller",
+      "module": "arq_tx_controller",
+      "instance": "u_dut",
+      "file": "gt_ex.srcs/sources_1/new/tb_arq_tx_controller.v"
+    },
+    {
+      "parent": "tb_fso_payload",
+      "module": "fso_payload",
+      "instance": "u_fso_payload",
+      "file": "gt_ex.srcs/sources_1/new/tb_fso_payload.v"
+    },
+    {
+      "parent": "tb_fso_payload",
+      "module": "eth_axis_packet_gen",
+      "instance": "u_packet_gen",
+      "file": "gt_ex.srcs/sources_1/new/tb_fso_payload.v"
+    },
+    {
+      "parent": "tb_fso_payload",
+      "module": "packaging_and_segmentation",
+      "instance": "u_segmenter",
+      "file": "gt_ex.srcs/sources_1/new/tb_fso_payload.v"
+    },
+    {
+      "parent": "tb_idle_MGMT",
+      "module": "mgmt_telemetry_generator",
+      "instance": "u_mgmt_capsule",
+      "file": "gt_ex.srcs/sources_1/new/tb_idle_MGMT.v"
+    },
+    {
+      "parent": "tb_idle_MGMT",
+      "module": "fso_payload_mux",
+      "instance": "u_mux",
+      "file": "gt_ex.srcs/sources_1/new/tb_idle_MGMT.v"
+    },
+    {
+      "parent": "tb_idle_MGMT",
+      "module": "fso_idle_generator",
+      "instance": "u_idle_capsule",
+      "file": "gt_ex.srcs/sources_1/new/tb_idle_MGMT.v"
+    },
+    {
+      "parent": "assembler",
+      "module": "serdes_assembler",
+      "instance": "serdes_inst",
+      "file": "gt_ex.srcs/sources_1/new/decoder/assembler.v"
+    },
+    {
+      "parent": "assembler_top",
+      "module": "mux_eth_32",
+      "instance": "mux_eth_inst",
+      "file": "gt_ex.srcs/sources_1/new/decoder/assembler_top.v"
+    },
+    {
+      "parent": "assembler_top",
+      "module": "crc_16",
+      "instance": "crc_16_inst",
+      "file": "gt_ex.srcs/sources_1/new/decoder/assembler_top.v"
+    },
+    {
+      "parent": "assembler_top",
+      "module": "crc_32",
+      "instance": "crc_32_inst",
+      "file": "gt_ex.srcs/sources_1/new/decoder/assembler_top.v"
+    },
+    {
+      "parent": "assembler_top",
+      "module": "eth_preamble_gen",
+      "instance": "eth_pre_gen_inst",
+      "file": "gt_ex.srcs/sources_1/new/decoder/assembler_top.v"
+    },
+    {
+      "parent": "assembler_top",
+      "module": "assembler",
+      "instance": "assembler_inst",
+      "file": "gt_ex.srcs/sources_1/new/decoder/assembler_top.v"
+    },
+    {
+      "parent": "decoder_top",
+      "module": "assembler_top",
+      "instance": "assembler_top_inst",
+      "file": "gt_ex.srcs/sources_1/new/decoder/decoder_top.v"
+    },
+    {
+      "parent": "decoder_top",
+      "module": "rx_logic_gth",
+      "instance": "rx_logic_gth_inst",
+      "file": "gt_ex.srcs/sources_1/new/decoder/decoder_top.v"
+    },
+    {
+      "parent": "decoder_top",
+      "module": "rx_gth_logic",
+      "instance": "rx_gth_logic_inst",
+      "file": "gt_ex.srcs/sources_1/new/decoder/decoder_top.v"
+    },
+    {
+      "parent": "decoder_top",
+      "module": "core_rx",
+      "instance": "core_rx_inst",
+      "file": "gt_ex.srcs/sources_1/new/decoder/decoder_top.v"
+    },
+    {
+      "parent": "encoder_top",
+      "module": "x_logic_gth",
+      "instance": "x_logic_gth_inst",
+      "file": "gt_ex.srcs/sources_1/new/encoder/encoder_top.v"
+    },
+    {
+      "parent": "encoder_top",
+      "module": "preamble_gen",
+      "instance": "preamble_inst",
+      "file": "gt_ex.srcs/sources_1/new/encoder/encoder_top.v"
+    },
+    {
+      "parent": "encoder_top",
+      "module": "x_gth_logic",
+      "instance": "x_gth_logic_inst",
+      "file": "gt_ex.srcs/sources_1/new/encoder/encoder_top.v"
+    },
+    {
+      "parent": "encoder_top",
+      "module": "framer_top",
+      "instance": "framer_top_inst",
+      "file": "gt_ex.srcs/sources_1/new/encoder/encoder_top.v"
+    },
+    {
+      "parent": "encoder_top",
+      "module": "core_tx",
+      "instance": "core_tx_inst",
+      "file": "gt_ex.srcs/sources_1/new/encoder/encoder_top.v"
+    },
+    {
+      "parent": "encoder_top",
+      "module": "mux_gearbox_128",
+      "instance": "mux_inst",
+      "file": "gt_ex.srcs/sources_1/new/encoder/encoder_top.v"
+    },
+    {
+      "parent": "framer",
+      "module": "serdes_framer",
+      "instance": "serdes_inst",
+      "file": "gt_ex.srcs/sources_1/new/encoder/framer.v"
+    },
+    {
+      "parent": "framer_top",
+      "module": "framer",
+      "instance": "framer_inst",
+      "file": "gt_ex.srcs/sources_1/new/encoder/framer_top.v"
+    },
+    {
+      "parent": "framer_top",
+      "module": "crc_16",
+      "instance": "crc_16_inst",
+      "file": "gt_ex.srcs/sources_1/new/encoder/framer_top.v"
+    },
+    {
+      "parent": "framer_top",
+      "module": "crc_32",
+      "instance": "crc_32_inst",
+      "file": "gt_ex.srcs/sources_1/new/encoder/framer_top.v"
+    },
+    {
+      "parent": "gt_example_gtwiz_userclk_rx",
+      "module": "BUFG_GT",
+      "instance": "bufg_gt_usrclk_inst",
+      "file": "imports/gt_example_gtwiz_userclk_rx.v"
+    },
+    {
+      "parent": "gt_example_gtwiz_userclk_rx",
+      "module": "BUFG_GT",
+      "instance": "bufg_gt_usrclk2_inst",
+      "file": "imports/gt_example_gtwiz_userclk_rx.v"
+    },
+    {
+      "parent": "gt_example_gtwiz_userclk_tx",
+      "module": "BUFG_GT",
+      "instance": "bufg_gt_usrclk_inst",
+      "file": "imports/gt_example_gtwiz_userclk_tx.v"
+    },
+    {
+      "parent": "gt_example_gtwiz_userclk_tx",
+      "module": "BUFG_GT",
+      "instance": "bufg_gt_usrclk2_inst",
+      "file": "imports/gt_example_gtwiz_userclk_tx.v"
+    },
+    {
+      "parent": "gt_example_init",
+      "module": "gt_example_bit_synchronizer",
+      "instance": "bit_synchronizer_tx_init_done_inst",
+      "file": "imports/gt_example_init.v"
+    },
+    {
+      "parent": "gt_example_init",
+      "module": "gt_example_bit_synchronizer",
+      "instance": "bit_synchronizer_rx_init_done_inst",
+      "file": "imports/gt_example_init.v"
+    },
+    {
+      "parent": "gt_example_init",
+      "module": "gt_example_bit_synchronizer",
+      "instance": "bit_synchronizer_rx_data_good_inst",
+      "file": "imports/gt_example_init.v"
+    },
+    {
+      "parent": "gt_example_init",
+      "module": "gt_example_reset_synchronizer",
+      "instance": "reset_synchronizer_reset_all_inst",
+      "file": "imports/gt_example_init.v"
+    },
+    {
+      "parent": "gt_example_top",
+      "module": "BUFG",
+      "instance": "bufg_clk_freerun_inst",
+      "file": "imports/gt_example_top.v"
+    },
+    {
+      "parent": "gt_example_top",
+      "module": "gt_example_bit_synchronizer",
+      "instance": "bit_synchronizer_link_down_latched_reset_inst",
+      "file": "imports/gt_example_top.v"
+    },
+    {
+      "parent": "gt_example_top",
+      "module": "gt_example_bit_synchronizer",
+      "instance": "bit_synchronizer_vio_gtpowergood_0_inst",
+      "file": "imports/gt_example_top.v"
+    },
+    {
+      "parent": "gt_example_top",
+      "module": "gt_example_bit_synchronizer",
+      "instance": "bit_synchronizer_vio_gtpowergood_1_inst",
+      "file": "imports/gt_example_top.v"
+    },
+    {
+      "parent": "gt_example_top",
+      "module": "gt_example_bit_synchronizer",
+      "instance": "bit_synchronizer_vio_gtpowergood_2_inst",
+      "file": "imports/gt_example_top.v"
+    },
+    {
+      "parent": "gt_example_top",
+      "module": "gt_example_bit_synchronizer",
+      "instance": "bit_synchronizer_vio_gtpowergood_3_inst",
+      "file": "imports/gt_example_top.v"
+    },
+    {
+      "parent": "gt_example_top",
+      "module": "gt_example_bit_synchronizer",
+      "instance": "bit_synchronizer_vio_txpmaresetdone_0_inst",
+      "file": "imports/gt_example_top.v"
+    },
+    {
+      "parent": "gt_example_top",
+      "module": "gt_example_bit_synchronizer",
+      "instance": "bit_synchronizer_vio_txpmaresetdone_1_inst",
+      "file": "imports/gt_example_top.v"
+    },
+    {
+      "parent": "gt_example_top",
+      "module": "gt_example_bit_synchronizer",
+      "instance": "bit_synchronizer_vio_txpmaresetdone_2_inst",
+      "file": "imports/gt_example_top.v"
+    },
+    {
+      "parent": "gt_example_top",
+      "module": "gt_example_bit_synchronizer",
+      "instance": "bit_synchronizer_vio_txpmaresetdone_3_inst",
+      "file": "imports/gt_example_top.v"
+    },
+    {
+      "parent": "gt_example_top",
+      "module": "gt_example_bit_synchronizer",
+      "instance": "bit_synchronizer_vio_rxpmaresetdone_0_inst",
+      "file": "imports/gt_example_top.v"
+    },
+    {
+      "parent": "gt_example_top",
+      "module": "gt_example_bit_synchronizer",
+      "instance": "bit_synchronizer_vio_rxpmaresetdone_1_inst",
+      "file": "imports/gt_example_top.v"
+    },
+    {
+      "parent": "gt_example_top",
+      "module": "gt_example_bit_synchronizer",
+      "instance": "bit_synchronizer_vio_rxpmaresetdone_2_inst",
+      "file": "imports/gt_example_top.v"
+    },
+    {
+      "parent": "gt_example_top",
+      "module": "gt_example_bit_synchronizer",
+      "instance": "bit_synchronizer_vio_rxpmaresetdone_3_inst",
+      "file": "imports/gt_example_top.v"
+    },
+    {
+      "parent": "gt_example_top",
+      "module": "gt_example_bit_synchronizer",
+      "instance": "bit_synchronizer_vio_gtwiz_reset_tx_done_0_inst",
+      "file": "imports/gt_example_top.v"
+    },
+    {
+      "parent": "gt_example_top",
+      "module": "gt_example_bit_synchronizer",
+      "instance": "bit_synchronizer_vio_gtwiz_reset_rx_done_0_inst",
+      "file": "imports/gt_example_top.v"
+    },
+    {
+      "parent": "gt_example_top",
+      "module": "gt_example_bit_synchronizer",
+      "instance": "bit_synchronizer_vio_rxbufstatus_0_inst",
+      "file": "imports/gt_example_top.v"
+    },
+    {
+      "parent": "gt_example_top",
+      "module": "gt_example_bit_synchronizer",
+      "instance": "bit_synchronizer_vio_rxbufstatus_1_inst",
+      "file": "imports/gt_example_top.v"
+    },
+    {
+      "parent": "gt_example_top",
+      "module": "gt_example_bit_synchronizer",
+      "instance": "bit_synchronizer_vio_rxbufstatus_2_inst",
+      "file": "imports/gt_example_top.v"
+    },
+    {
+      "parent": "gt_example_top",
+      "module": "gt_example_bit_synchronizer",
+      "instance": "bit_synchronizer_vio_rxbufstatus_3_inst",
+      "file": "imports/gt_example_top.v"
+    },
+    {
+      "parent": "gt_example_top",
+      "module": "gt_example_bit_synchronizer",
+      "instance": "bit_synchronizer_vio_rxbufstatus_4_inst",
+      "file": "imports/gt_example_top.v"
+    },
+    {
+      "parent": "gt_example_top",
+      "module": "gt_example_bit_synchronizer",
+      "instance": "bit_synchronizer_vio_rxbufstatus_5_inst",
+      "file": "imports/gt_example_top.v"
+    },
+    {
+      "parent": "gt_example_top",
+      "module": "gt_example_bit_synchronizer",
+      "instance": "bit_synchronizer_vio_rxbufstatus_6_inst",
+      "file": "imports/gt_example_top.v"
+    },
+    {
+      "parent": "gt_example_top",
+      "module": "gt_example_bit_synchronizer",
+      "instance": "bit_synchronizer_vio_rxbufstatus_7_inst",
+      "file": "imports/gt_example_top.v"
+    },
+    {
+      "parent": "gt_example_top",
+      "module": "gt_example_bit_synchronizer",
+      "instance": "bit_synchronizer_vio_rxbufstatus_8_inst",
+      "file": "imports/gt_example_top.v"
+    },
+    {
+      "parent": "gt_example_top",
+      "module": "gt_example_bit_synchronizer",
+      "instance": "bit_synchronizer_vio_rxbufstatus_9_inst",
+      "file": "imports/gt_example_top.v"
+    },
+    {
+      "parent": "gt_example_top",
+      "module": "gt_example_bit_synchronizer",
+      "instance": "bit_synchronizer_vio_rxbufstatus_10_inst",
+      "file": "imports/gt_example_top.v"
+    },
+    {
+      "parent": "gt_example_top",
+      "module": "gt_example_bit_synchronizer",
+      "instance": "bit_synchronizer_vio_rxbufstatus_11_inst",
+      "file": "imports/gt_example_top.v"
+    },
+    {
+      "parent": "gt_example_top",
+      "module": "gt_example_init",
+      "instance": "example_init_inst",
+      "file": "imports/gt_example_top.v"
+    },
+    {
+      "parent": "gt_example_top",
+      "module": "gt_example_wrapper",
+      "instance": "example_wrapper_inst",
+      "file": "imports/gt_example_top.v"
+    },
+    {
+      "parent": "gt_example_top",
+      "module": "gt_example_reset_synchronizer",
+      "instance": "reset_synchronizer_prbs_match_all_inst",
+      "file": "imports/gt_example_top.v"
+    },
+    {
+      "parent": "gt_example_top",
+      "module": "IBUFDS_GTE3",
+      "instance": "IBUFDS_GTE3_MGTREFCLK0_X1Y2_INST",
+      "file": "imports/gt_example_top.v"
+    },
+    {
+      "parent": "gt_example_top",
+      "module": "gt_vio_0",
+      "instance": "gt_vio_0_inst",
+      "file": "imports/gt_example_top.v"
+    },
+    {
+      "parent": "gt_example_wrapper",
+      "module": "gt_example_gtwiz_userclk_rx",
+      "instance": "gtwiz_userclk_rx_inst",
+      "file": "imports/gt_example_wrapper.v"
+    },
+    {
+      "parent": "gt_example_wrapper",
+      "module": "gt_example_gtwiz_userclk_tx",
+      "instance": "gtwiz_userclk_tx_inst",
+      "file": "imports/gt_example_wrapper.v"
+    },
+    {
+      "parent": "gt_example_wrapper",
+      "module": "gt",
+      "instance": "gt_inst",
+      "file": "imports/gt_example_wrapper.v"
+    },
+    {
+      "parent": "packet_rec",
+      "module": "word_align",
+      "instance": "word_align_m0",
+      "file": "gt_ex.srcs/sources_1/new/packet_rec.v"
+    },
+    {
+      "parent": "top",
+      "module": "xgmii_packet_gen",
+      "instance": "packet_gen_inst",
+      "file": "gt_ex.srcs/sources_1/new/top.v"
+    },
+    {
+      "parent": "top",
+      "module": "IBUFGDS",
+      "instance": "sys_clk_inst",
+      "file": "gt_ex.srcs/sources_1/new/top.v"
+    },
+    {
+      "parent": "top",
+      "module": "autorun",
+      "instance": "autorun_inst",
+      "file": "gt_ex.srcs/sources_1/new/top.v"
+    },
+    {
+      "parent": "top",
+      "module": "packet_send",
+      "instance": "packet_send_m0",
+      "file": "gt_ex.srcs/sources_1/new/top.v"
+    },
+    {
+      "parent": "top",
+      "module": "reset_0",
+      "instance": "tx_reset_m0",
+      "file": "gt_ex.srcs/sources_1/new/top.v"
+    },
+    {
+      "parent": "top",
+      "module": "reset_0",
+      "instance": "rx_reset_m0",
+      "file": "gt_ex.srcs/sources_1/new/top.v"
+    },
+    {
+      "parent": "top",
+      "module": "eth_tx_back_end_top",
+      "instance": "back_end_inst",
+      "file": "gt_ex.srcs/sources_1/new/top.v"
+    },
+    {
+      "parent": "top",
+      "module": "eth_rx_front_end_top",
+      "instance": "front_end_inst",
+      "file": "gt_ex.srcs/sources_1/new/top.v"
+    },
+    {
+      "parent": "top",
+      "module": "clk_wiz_0",
+      "instance": "clk_wiz_0_inst",
+      "file": "gt_ex.srcs/sources_1/new/top.v"
+    },
+    {
+      "parent": "top",
+      "module": "packet_rec",
+      "instance": "packet_rec_m0",
+      "file": "gt_ex.srcs/sources_1/new/top.v"
+    },
+    {
+      "parent": "top",
+      "module": "gt_example_top",
+      "instance": "gtx_exdes_m0",
+      "file": "gt_ex.srcs/sources_1/new/top.v"
+    },
+    {
+      "parent": "top",
+      "module": "decoder_top",
+      "instance": "decoder_top_inst",
+      "file": "gt_ex.srcs/sources_1/new/top.v"
+    },
+    {
+      "parent": "top",
+      "module": "encoder_top",
+      "instance": "encoder_top_inst",
+      "file": "gt_ex.srcs/sources_1/new/top.v"
+    },
+    {
+      "parent": "top",
+      "module": "error_inject",
+      "instance": "error_inject_inst",
+      "file": "gt_ex.srcs/sources_1/new/top.v"
+    },
+    {
+      "parent": "tb_top",
+      "module": "top",
+      "instance": "uut",
+      "file": "gt_ex.srcs/sources_1/new/tb_top.v"
+    },
+    {
+      "parent": "tb_x_gth_logic",
+      "module": "x_gth_logic",
+      "instance": "u_cdc_tx_1",
+      "file": "gt_ex.srcs/sources_1/new/tb_x_gth_logic.v"
+    },
+    {
+      "parent": "combiner",
+      "module": "delay_combiner",
+      "instance": "delay_inst",
+      "file": "gt_ex.srcs/sources_1/new/encoder/combiner.v"
+    },
+    {
+      "parent": "tb_FEC_RS",
+      "module": "FEC_MUX",
+      "instance": "u_fec_mux",
+      "file": "gt_ex.srcs/sources_1/new/tb_FEC_RS.v"
+    },
+    {
+      "parent": "tb_FEC_RS",
+      "module": "rs_encoder_64",
+      "instance": "u_rs_payload",
+      "file": "gt_ex.srcs/sources_1/new/tb_FEC_RS.v"
+    },
+    {
+      "parent": "tb_FEC_RS",
+      "module": "syndrome_unit",
+      "instance": "u_hdr_synd_chk",
+      "file": "gt_ex.srcs/sources_1/new/tb_FEC_RS.v"
+    },
+    {
+      "parent": "tb_FEC_RS",
+      "module": "syndrome_unit",
+      "instance": "u_pld_synd_chk_lane7",
+      "file": "gt_ex.srcs/sources_1/new/tb_FEC_RS.v"
+    },
+    {
+      "parent": "tb_FEC_RS",
+      "module": "rs_encoder",
+      "instance": "u_rs_head",
+      "file": "gt_ex.srcs/sources_1/new/tb_FEC_RS.v"
+    },
+    {
+      "parent": "tb_Scrambler_LPC",
+      "module": "lpc_top",
+      "instance": "u_lpc_top",
+      "file": "gt_ex.srcs/sources_1/new/tb_Scrambler_LPC.v"
+    },
+    {
+      "parent": "tb_Scrambler_LPC",
+      "module": "scrambler",
+      "instance": "u_scrambler",
+      "file": "gt_ex.srcs/sources_1/new/tb_Scrambler_LPC.v"
+    },
+    {
+      "parent": "tb_Scrambler_LPC",
+      "module": "descrambler",
+      "instance": "u_rx_descrambler",
+      "file": "gt_ex.srcs/sources_1/new/tb_Scrambler_LPC.v"
+    },
+    {
+      "parent": "tb_Scrambler_LPC",
+      "module": "lpc_dec_top",
+      "instance": "u_rx_lpc_dec_top",
+      "file": "gt_ex.srcs/sources_1/new/tb_Scrambler_LPC.v"
+    },
+    {
+      "parent": "tb_cdc_logic_gth",
+      "module": "x_logic_gth",
+      "instance": "u_cdc2",
+      "file": "gt_ex.srcs/sources_1/new/tb_cdc_logic_gth.v"
+    },
+    {
+      "parent": "tb_error_inject",
+      "module": "x_logic_gth",
+      "instance": "u_cdc2",
+      "file": "gt_ex.srcs/sources_1/new/tb_error_inject.v"
+    },
+    {
+      "parent": "tb_error_inject",
+      "module": "error_inject",
+      "instance": "u_error_inject",
+      "file": "gt_ex.srcs/sources_1/new/tb_error_inject.v"
+    },
+    {
+      "parent": "tb_gth64b66b_loopback",
+      "module": "gth64b66b_rx",
+      "instance": "u_gth64b66b_rx",
+      "file": "gt_ex.srcs/sources_1/new/tb_gth64b66b_loopback.v"
+    },
+    {
+      "parent": "tb_gth64b66b_loopback",
+      "module": "fso_gth_core_wrapper",
+      "instance": "u_fso_gth_core",
+      "file": "gt_ex.srcs/sources_1/new/tb_gth64b66b_loopback.v"
+    },
+    {
+      "parent": "tb_gth64b66b_loopback",
+      "module": "x_logic_gth",
+      "instance": "u_cdc2",
+      "file": "gt_ex.srcs/sources_1/new/tb_gth64b66b_loopback.v"
+    },
+    {
+      "parent": "tb_gth64b66b_loopback",
+      "module": "gth64b66b_tx",
+      "instance": "u_gth64b66b_tx",
+      "file": "gt_ex.srcs/sources_1/new/tb_gth64b66b_loopback.v"
+    },
+    {
+      "parent": "tb_gth64b66b_loopback",
+      "module": "error_inject",
+      "instance": "u_error_inject",
+      "file": "gt_ex.srcs/sources_1/new/tb_gth64b66b_loopback.v"
+    },
+    {
+      "parent": "tb_cdc3_rx_gth_logic",
+      "module": "rx_gth_logic",
+      "instance": "u_cdc3",
+      "file": "gt_ex.srcs/sources_1/new/tb_cdc3_rx_gth_logic.v"
+    },
+    {
+      "parent": "tb_demux_preamble_128",
+      "module": "preamble_sda_decoder",
+      "instance": "u_preamble_dec",
+      "file": "gt_ex.srcs/sources_1/new/tb_demux_preamble_128.v"
+    },
+    {
+      "parent": "tb_demux_preamble_128",
+      "module": "rx_gth_logic",
+      "instance": "u_cdc3",
+      "file": "gt_ex.srcs/sources_1/new/tb_demux_preamble_128.v"
+    },
+    {
+      "parent": "tb_demux_preamble_128",
+      "module": "demux_preamble_128",
+      "instance": "u_demux_128",
+      "file": "gt_ex.srcs/sources_1/new/tb_demux_preamble_128.v"
+    },
+    {
+      "parent": "tb_lpc_dec_descrambler",
+      "module": "lpc_top",
+      "instance": "u_ref_lpc_top",
+      "file": "gt_ex.srcs/sources_1/new/tb_lpc_dec_descrambler.v"
+    },
+    {
+      "parent": "tb_lpc_dec_descrambler",
+      "module": "scrambler",
+      "instance": "u_ref_scrambler",
+      "file": "gt_ex.srcs/sources_1/new/tb_lpc_dec_descrambler.v"
+    },
+    {
+      "parent": "tb_lpc_dec_descrambler",
+      "module": "descrambler",
+      "instance": "u_dut_descrambler",
+      "file": "gt_ex.srcs/sources_1/new/tb_lpc_dec_descrambler.v"
+    },
+    {
+      "parent": "tb_lpc_dec_descrambler",
+      "module": "lpc_dec_top",
+      "instance": "u_dut_lpc_dec_top",
+      "file": "gt_ex.srcs/sources_1/new/tb_lpc_dec_descrambler.v"
+    },
+    {
+      "parent": "tb_FEC_Demux",
+      "module": "FEC_Demux",
+      "instance": "u_fec_demux",
+      "file": "gt_ex.srcs/sources_1/new/tb_FEC_Demux.v"
+    },
+    {
+      "parent": "tb_rs_decoder_rx",
+      "module": "rs_encoder_64",
+      "instance": "u_ref_rs_pld_enc",
+      "file": "gt_ex.srcs/sources_1/new/tb_rs_decoder_rx.v"
+    },
+    {
+      "parent": "tb_rs_decoder_rx",
+      "module": "rs_decoder_64",
+      "instance": "u_dut_rs_pld_dec",
+      "file": "gt_ex.srcs/sources_1/new/tb_rs_decoder_rx.v"
+    },
+    {
+      "parent": "tb_rs_decoder_rx",
+      "module": "rs_encoder",
+      "instance": "u_ref_rs_hdr_enc",
+      "file": "gt_ex.srcs/sources_1/new/tb_rs_decoder_rx.v"
+    },
+    {
+      "parent": "tb_rs_decoder_rx",
+      "module": "rs_decoder",
+      "instance": "u_dut_rs_hdr_dec",
+      "file": "gt_ex.srcs/sources_1/new/tb_rs_decoder_rx.v"
+    },
+    {
+      "parent": "tb_cdc4_logic_gth",
+      "module": "rx_logic_gth",
+      "instance": "u_cdc4",
+      "file": "gt_ex.srcs/sources_1/new/tb_cdc4_logic_gth.v"
+    },
+    {
+      "parent": "tb_fso_ethernet_deframer",
+      "module": "fso_ethernet_deframer",
+      "instance": "u_dut",
+      "file": "gt_ex.srcs/sources_1/new/tb_fso_ethernet_deframer.v"
+    },
+    {
+      "parent": "tb_reassembly_and_backend",
+      "module": "eth_tx_back_end_top",
+      "instance": "u_backend",
+      "file": "gt_ex.srcs/sources_1/new/tb_reassembly_and_backend.v"
+    },
+    {
+      "parent": "tb_reassembly_and_backend",
+      "module": "ethernet_frame_reassembly",
+      "instance": "u_reassembly",
+      "file": "gt_ex.srcs/sources_1/new/tb_reassembly_and_backend.v"
+    },
+    {
+      "parent": "tb_fso_deframer_payload",
+      "module": "deframer_payload",
+      "instance": "u_dut",
+      "file": "gt_ex.srcs/sources_1/new/tb_fso_deframer_payload.v"
+    },
+    {
+      "parent": "tb_SDAOISL10Gto10G_top",
+      "module": "SDAOISL10Gto10G_top",
+      "instance": "u_dut",
+      "file": "gt_ex.srcs/sources_1/new/tb_SDAOISL10Gto10G_top.v"
+    },
+    {
+      "parent": "chien_search",
+      "module": "multiplier",
+      "instance": "gf_1",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/chien_search.v"
+    },
+    {
+      "parent": "chien_search",
+      "module": "multiplier",
+      "instance": "gf_2",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/chien_search.v"
+    },
+    {
+      "parent": "chien_search",
+      "module": "multiplier",
+      "instance": "gf_3",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/chien_search.v"
+    },
+    {
+      "parent": "chien_search",
+      "module": "multiplier",
+      "instance": "gf_4",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/chien_search.v"
+    },
+    {
+      "parent": "chien_search",
+      "module": "multiplier",
+      "instance": "gf_5",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/chien_search.v"
+    },
+    {
+      "parent": "chien_search",
+      "module": "multiplier",
+      "instance": "gf_6",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/chien_search.v"
+    },
+    {
+      "parent": "chien_search",
+      "module": "multiplier",
+      "instance": "gf_7",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/chien_search.v"
+    },
+    {
+      "parent": "chien_search",
+      "module": "multiplier",
+      "instance": "gf_8",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/chien_search.v"
+    },
+    {
+      "parent": "core_rx",
+      "module": "FEC_Demux",
+      "instance": "fec_demux_inst",
+      "file": "gt_ex.srcs/sources_1/new/decoder/core_rx.v"
+    },
+    {
+      "parent": "core_rx",
+      "module": "descrambler",
+      "instance": "descrambler_inst",
+      "file": "gt_ex.srcs/sources_1/new/decoder/core_rx.v"
+    },
+    {
+      "parent": "core_rx",
+      "module": "rs_decoder_64",
+      "instance": "rs_decoder_64_inst",
+      "file": "gt_ex.srcs/sources_1/new/decoder/core_rx.v"
+    },
+    {
+      "parent": "core_rx",
+      "module": "preamble_sda_decoder",
+      "instance": "preamble_sda_decoder_inst",
+      "file": "gt_ex.srcs/sources_1/new/decoder/core_rx.v"
+    },
+    {
+      "parent": "core_rx",
+      "module": "lpc_dec_top",
+      "instance": "lpc_dec_top_inst",
+      "file": "gt_ex.srcs/sources_1/new/decoder/core_rx.v"
+    },
+    {
+      "parent": "core_rx",
+      "module": "demux_preamble_128",
+      "instance": "demux_inst",
+      "file": "gt_ex.srcs/sources_1/new/decoder/core_rx.v"
+    },
+    {
+      "parent": "core_rx",
+      "module": "rs_decoder",
+      "instance": "rs_decoder_inst",
+      "file": "gt_ex.srcs/sources_1/new/decoder/core_rx.v"
+    },
+    {
+      "parent": "core_tx",
+      "module": "lpc_top",
+      "instance": "lpc_top_inst",
+      "file": "gt_ex.srcs/sources_1/new/encoder/core_tx.v"
+    },
+    {
+      "parent": "core_tx",
+      "module": "scrambler",
+      "instance": "scrambler_inst",
+      "file": "gt_ex.srcs/sources_1/new/encoder/core_tx.v"
+    },
+    {
+      "parent": "core_tx",
+      "module": "FEC_MUX",
+      "instance": "u_fec_mux",
+      "file": "gt_ex.srcs/sources_1/new/encoder/core_tx.v"
+    },
+    {
+      "parent": "core_tx",
+      "module": "rs_encoder_64",
+      "instance": "rs_encoder_64_inst",
+      "file": "gt_ex.srcs/sources_1/new/encoder/core_tx.v"
+    },
+    {
+      "parent": "core_tx",
+      "module": "rs_encoder",
+      "instance": "rs_enc_header_inst",
+      "file": "gt_ex.srcs/sources_1/new/encoder/core_tx.v"
+    },
+    {
+      "parent": "deframer",
+      "module": "arq_rx_controller",
+      "instance": "u_arq_rx_controller",
+      "file": "gt_ex.srcs/sources_1/new/deframer.v"
+    },
+    {
+      "parent": "deframer",
+      "module": "deframer_header",
+      "instance": "u_deframer_header",
+      "file": "gt_ex.srcs/sources_1/new/deframer.v"
+    },
+    {
+      "parent": "deframer",
+      "module": "frame_demultiplexer",
+      "instance": "u_frame_demultiplexer",
+      "file": "gt_ex.srcs/sources_1/new/deframer.v"
+    },
+    {
+      "parent": "deframer",
+      "module": "deframer_payload",
+      "instance": "u_deframer_payload",
+      "file": "gt_ex.srcs/sources_1/new/deframer.v"
+    },
+    {
+      "parent": "deframer_header",
+      "module": "header_parser",
+      "instance": "u_header_parser",
+      "file": "gt_ex.srcs/sources_1/new/deframer_header.v"
+    },
+    {
+      "parent": "deframer_header",
+      "module": "fso_crc_16_checker",
+      "instance": "u_crc16_checker",
+      "file": "gt_ex.srcs/sources_1/new/deframer_header.v"
+    },
+    {
+      "parent": "deframer_payload",
+      "module": "fso_crc_32_checker",
+      "instance": "u_crc32_checker",
+      "file": "gt_ex.srcs/sources_1/new/deframer_payload.v"
+    },
+    {
+      "parent": "eth_rx_front_end_top",
+      "module": "xgmii_rx_parser",
+      "instance": "u_rx_parser",
+      "file": "gt_ex.srcs/sources_1/new/eth_rx_front_end_top.v"
+    },
+    {
+      "parent": "eth_rx_front_end_top",
+      "module": "eth_preamble_remover",
+      "instance": "u_preamble_remover",
+      "file": "gt_ex.srcs/sources_1/new/eth_rx_front_end_top.v"
+    },
+    {
+      "parent": "eth_rx_front_end_top",
+      "module": "packaging_and_segmentation",
+      "instance": "u_segmenter",
+      "file": "gt_ex.srcs/sources_1/new/eth_rx_front_end_top.v"
+    },
+    {
+      "parent": "eth_rx_front_end_top",
+      "module": "eth_10g_pcs_pma_rx_0",
+      "instance": "physical_mac_rx_inst",
+      "file": "gt_ex.srcs/sources_1/new/eth_rx_front_end_top.v"
+    },
+    {
+      "parent": "eth_tx_back_end_top",
+      "module": "eth_mac_packing_tx",
+      "instance": "u_packing",
+      "file": "gt_ex.srcs/sources_1/new/eth_tx_back_end_top.v"
+    },
+    {
+      "parent": "eth_tx_back_end_top",
+      "module": "xgmii_tx_formatter",
+      "instance": "u_formatter",
+      "file": "gt_ex.srcs/sources_1/new/eth_tx_back_end_top.v"
+    },
+    {
+      "parent": "eth_tx_back_end_top",
+      "module": "eth_10g_pcs_pma_tx_0",
+      "instance": "physical_mac_tx_inst",
+      "file": "gt_ex.srcs/sources_1/new/eth_tx_back_end_top.v"
+    },
+    {
+      "parent": "ethernet_frame_reassembly",
+      "module": "mux_eth_32",
+      "instance": "u_mux_eth_32",
+      "file": "gt_ex.srcs/sources_1/new/ethernet_frame_reassembly.v"
+    },
+    {
+      "parent": "ethernet_frame_reassembly",
+      "module": "eth_preamble_gen",
+      "instance": "u_eth_preamble_gen",
+      "file": "gt_ex.srcs/sources_1/new/ethernet_frame_reassembly.v"
+    },
+    {
+      "parent": "ethernet_fso_framer",
+      "module": "arq_tx_controller",
+      "instance": "u_arq_tx_controller",
+      "file": "gt_ex.srcs/sources_1/new/ethernet_fso_framer.v"
+    },
+    {
+      "parent": "ethernet_fso_framer",
+      "module": "fso_header_top",
+      "instance": "u_fso_header_top",
+      "file": "gt_ex.srcs/sources_1/new/ethernet_fso_framer.v"
+    },
+    {
+      "parent": "ethernet_fso_framer",
+      "module": "fso_payload_top",
+      "instance": "u_fso_payload_top",
+      "file": "gt_ex.srcs/sources_1/new/ethernet_fso_framer.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "inverter",
+      "instance": "invert_0",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_B",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_D",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_B16",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_B15",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_B14",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_B13",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_B12",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_B11",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_B10",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_B9",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_B8",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_B7",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_B6",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_B5",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_B4",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_B3",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_B2",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_B1",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_D15",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_D14",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_D13",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_D12",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_D11",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_D10",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_D9",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_D8",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_D7",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_D6",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_D5",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_D4",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_D3",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_D2",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_D1",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_D0",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_X16",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_X14",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_X13",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_X12",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_X11",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_X10",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_X9",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_X8",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_X7",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_X6",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_X5",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_X4",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_X3",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_X2",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_X1",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_X0",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_X00",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_Y15",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_Y14",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_Y13",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_Y12",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_Y11",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_Y10",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_Y9",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_Y8",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_Y7",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_Y6",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_Y5",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_Y4",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_Y3",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_Y2",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_Y1",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "euclid_proc",
+      "module": "multiplier",
+      "instance": "gf_Y0",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v"
+    },
+    {
+      "parent": "forney_math",
+      "module": "inverter",
+      "instance": "invert_0",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/forney_math.v"
+    },
+    {
+      "parent": "forney_math",
+      "module": "multiplier",
+      "instance": "gf_0",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/forney_math.v"
+    },
+    {
+      "parent": "forney_math",
+      "module": "multiplier",
+      "instance": "gf_d0",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/forney_math.v"
+    },
+    {
+      "parent": "forney_math",
+      "module": "multiplier",
+      "instance": "gf_1",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/forney_math.v"
+    },
+    {
+      "parent": "forney_math",
+      "module": "multiplier",
+      "instance": "gf_2",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/forney_math.v"
+    },
+    {
+      "parent": "forney_math",
+      "module": "multiplier",
+      "instance": "gf_3",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/forney_math.v"
+    },
+    {
+      "parent": "forney_math",
+      "module": "multiplier",
+      "instance": "gf_4",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/forney_math.v"
+    },
+    {
+      "parent": "forney_math",
+      "module": "multiplier",
+      "instance": "gf_5",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/forney_math.v"
+    },
+    {
+      "parent": "forney_math",
+      "module": "multiplier",
+      "instance": "gf_6",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/forney_math.v"
+    },
+    {
+      "parent": "forney_math",
+      "module": "multiplier",
+      "instance": "gf_7",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/forney_math.v"
+    },
+    {
+      "parent": "frame_demultiplexer",
+      "module": "idle_discard",
+      "instance": "u_idle_discard",
+      "file": "gt_ex.srcs/sources_1/new/frame_demultiplexer.v"
+    },
+    {
+      "parent": "frame_demultiplexer",
+      "module": "mgmt_extraction",
+      "instance": "u_mgmt_extraction",
+      "file": "gt_ex.srcs/sources_1/new/frame_demultiplexer.v"
+    },
+    {
+      "parent": "frame_demultiplexer",
+      "module": "arq_rx_reorder_ddr4_wrapper",
+      "instance": "u_arq_rx_reorder",
+      "file": "gt_ex.srcs/sources_1/new/frame_demultiplexer.v"
+    },
+    {
+      "parent": "fso_ethernet_deframer",
+      "module": "deframer",
+      "instance": "u_deframer",
+      "file": "gt_ex.srcs/sources_1/new/fso_ethernet_deframer.v"
+    },
+    {
+      "parent": "fso_gth_core_wrapper",
+      "module": "BUFG_GT",
+      "instance": "u_bufg_gt_tx",
+      "file": "gt_ex.srcs/sources_1/new/fso_gth_core_wrapper.v"
+    },
+    {
+      "parent": "fso_gth_core_wrapper",
+      "module": "BUFG_GT",
+      "instance": "u_bufg_gt_rx",
+      "file": "gt_ex.srcs/sources_1/new/fso_gth_core_wrapper.v"
+    },
+    {
+      "parent": "fso_gth_core_wrapper",
+      "module": "gth_fso_64b66b",
+      "instance": "u_gth_fso_64b66b",
+      "file": "gt_ex.srcs/sources_1/new/fso_gth_core_wrapper.v"
+    },
+    {
+      "parent": "fso_gth_core_wrapper",
+      "module": "IBUFDS_GTE3",
+      "instance": "u_ibufds_gte3_refclk",
+      "file": "gt_ex.srcs/sources_1/new/fso_gth_core_wrapper.v"
+    },
+    {
+      "parent": "fso_header_top",
+      "module": "header_generator",
+      "instance": "u_header_gen",
+      "file": "gt_ex.srcs/sources_1/new/fso_header_top.v"
+    },
+    {
+      "parent": "fso_header_top",
+      "module": "fso_crc_16",
+      "instance": "u_crc_16",
+      "file": "gt_ex.srcs/sources_1/new/fso_header_top.v"
+    },
+    {
+      "parent": "fso_idle_generator",
+      "module": "fso_crc_32",
+      "instance": "u_fso_crc_32_idle",
+      "file": "gt_ex.srcs/sources_1/new/fso_idle_generator.v"
+    },
+    {
+      "parent": "fso_idle_generator",
+      "module": "fso_axis_fifo",
+      "instance": "fifo_idle",
+      "file": "gt_ex.srcs/sources_1/new/fso_idle_generator.v"
+    },
+    {
+      "parent": "fso_payload",
+      "module": "fso_crc_32",
+      "instance": "u_fso_crc_32",
+      "file": "gt_ex.srcs/sources_1/new/fso_payload.v"
+    },
+    {
+      "parent": "fso_payload",
+      "module": "fso_axis_fifo",
+      "instance": "fifo_data",
+      "file": "gt_ex.srcs/sources_1/new/fso_payload.v"
+    },
+    {
+      "parent": "fso_payload",
+      "module": "arq_ddr4_wrapper",
+      "instance": "u_arq_ddr4_wrapper",
+      "file": "gt_ex.srcs/sources_1/new/fso_payload.v"
+    },
+    {
+      "parent": "fso_payload_top",
+      "module": "fso_payload",
+      "instance": "u_fso_payload",
+      "file": "gt_ex.srcs/sources_1/new/fso_payload_top.v"
+    },
+    {
+      "parent": "fso_payload_top",
+      "module": "mgmt_telemetry_generator",
+      "instance": "u_mgmt_telemetry_generator",
+      "file": "gt_ex.srcs/sources_1/new/fso_payload_top.v"
+    },
+    {
+      "parent": "fso_payload_top",
+      "module": "fso_payload_mux",
+      "instance": "u_fso_payload_mux",
+      "file": "gt_ex.srcs/sources_1/new/fso_payload_top.v"
+    },
+    {
+      "parent": "fso_payload_top",
+      "module": "fso_idle_generator",
+      "instance": "u_fso_idle_generator",
+      "file": "gt_ex.srcs/sources_1/new/fso_payload_top.v"
+    },
+    {
+      "parent": "lpc_dec_top",
+      "module": "lpc_dec",
+      "instance": "lpc_dec_3",
+      "file": "gt_ex.srcs/sources_1/new/decoder/lpc_dec_top.v"
+    },
+    {
+      "parent": "lpc_dec_top",
+      "module": "lpc_dec",
+      "instance": "lpc_dec_2",
+      "file": "gt_ex.srcs/sources_1/new/decoder/lpc_dec_top.v"
+    },
+    {
+      "parent": "lpc_dec_top",
+      "module": "lpc_dec",
+      "instance": "lpc_dec_1",
+      "file": "gt_ex.srcs/sources_1/new/decoder/lpc_dec_top.v"
+    },
+    {
+      "parent": "lpc_dec_top",
+      "module": "lpc_dec",
+      "instance": "lpc_dec_0",
+      "file": "gt_ex.srcs/sources_1/new/decoder/lpc_dec_top.v"
+    },
+    {
+      "parent": "lpc_top",
+      "module": "lpc",
+      "instance": "lpc_3",
+      "file": "gt_ex.srcs/sources_1/new/encoder/lpc_top.v"
+    },
+    {
+      "parent": "lpc_top",
+      "module": "lpc",
+      "instance": "lpc_2",
+      "file": "gt_ex.srcs/sources_1/new/encoder/lpc_top.v"
+    },
+    {
+      "parent": "lpc_top",
+      "module": "lpc",
+      "instance": "lpc_1",
+      "file": "gt_ex.srcs/sources_1/new/encoder/lpc_top.v"
+    },
+    {
+      "parent": "lpc_top",
+      "module": "lpc",
+      "instance": "lpc_0",
+      "file": "gt_ex.srcs/sources_1/new/encoder/lpc_top.v"
+    },
+    {
+      "parent": "mgmt_telemetry_generator",
+      "module": "fso_crc_32",
+      "instance": "u_fso_crc_32_mgmt",
+      "file": "gt_ex.srcs/sources_1/new/mgmt_telemetry_generator.v"
+    },
+    {
+      "parent": "mgmt_telemetry_generator",
+      "module": "fso_axis_fifo",
+      "instance": "fifo_mgmt",
+      "file": "gt_ex.srcs/sources_1/new/mgmt_telemetry_generator.v"
+    },
+    {
+      "parent": "rs_decoder",
+      "module": "forney_math",
+      "instance": "forney_math_inst",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/rs_decoder.v"
+    },
+    {
+      "parent": "rs_decoder",
+      "module": "chien_search",
+      "instance": "chien_search_inst",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/rs_decoder.v"
+    },
+    {
+      "parent": "rs_decoder",
+      "module": "syndrome_unit",
+      "instance": "syndrome_unit_inst",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/rs_decoder.v"
+    },
+    {
+      "parent": "rs_decoder",
+      "module": "euclid_proc",
+      "instance": "euclid_proc_inst",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/rs_decoder.v"
+    },
+    {
+      "parent": "rs_decoder",
+      "module": "bram_rs",
+      "instance": "bram_rs_inst",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/rs_decoder.v"
+    },
+    {
+      "parent": "rs_decoder_64",
+      "module": "rs_decoder",
+      "instance": "rs_decoder_7",
+      "file": "gt_ex.srcs/sources_1/new/decoder/rs_decoder_64.v"
+    },
+    {
+      "parent": "rs_decoder_64",
+      "module": "rs_decoder",
+      "instance": "rs_decoder_6",
+      "file": "gt_ex.srcs/sources_1/new/decoder/rs_decoder_64.v"
+    },
+    {
+      "parent": "rs_decoder_64",
+      "module": "rs_decoder",
+      "instance": "rs_decoder_5",
+      "file": "gt_ex.srcs/sources_1/new/decoder/rs_decoder_64.v"
+    },
+    {
+      "parent": "rs_decoder_64",
+      "module": "rs_decoder",
+      "instance": "rs_decoder_4",
+      "file": "gt_ex.srcs/sources_1/new/decoder/rs_decoder_64.v"
+    },
+    {
+      "parent": "rs_decoder_64",
+      "module": "rs_decoder",
+      "instance": "rs_decoder_3",
+      "file": "gt_ex.srcs/sources_1/new/decoder/rs_decoder_64.v"
+    },
+    {
+      "parent": "rs_decoder_64",
+      "module": "rs_decoder",
+      "instance": "rs_decoder_2",
+      "file": "gt_ex.srcs/sources_1/new/decoder/rs_decoder_64.v"
+    },
+    {
+      "parent": "rs_decoder_64",
+      "module": "rs_decoder",
+      "instance": "rs_decoder_1",
+      "file": "gt_ex.srcs/sources_1/new/decoder/rs_decoder_64.v"
+    },
+    {
+      "parent": "rs_decoder_64",
+      "module": "rs_decoder",
+      "instance": "rs_decoder_0",
+      "file": "gt_ex.srcs/sources_1/new/decoder/rs_decoder_64.v"
+    },
+    {
+      "parent": "rs_encoder",
+      "module": "multiplier",
+      "instance": "gf_0",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/rs_encoder.v"
+    },
+    {
+      "parent": "rs_encoder",
+      "module": "multiplier",
+      "instance": "gf_1",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/rs_encoder.v"
+    },
+    {
+      "parent": "rs_encoder",
+      "module": "multiplier",
+      "instance": "gf_2",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/rs_encoder.v"
+    },
+    {
+      "parent": "rs_encoder",
+      "module": "multiplier",
+      "instance": "gf_3",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/rs_encoder.v"
+    },
+    {
+      "parent": "rs_encoder",
+      "module": "multiplier",
+      "instance": "gf_4",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/rs_encoder.v"
+    },
+    {
+      "parent": "rs_encoder",
+      "module": "multiplier",
+      "instance": "gf_5",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/rs_encoder.v"
+    },
+    {
+      "parent": "rs_encoder",
+      "module": "multiplier",
+      "instance": "gf_6",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/rs_encoder.v"
+    },
+    {
+      "parent": "rs_encoder",
+      "module": "multiplier",
+      "instance": "gf_7",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/rs_encoder.v"
+    },
+    {
+      "parent": "rs_encoder",
+      "module": "multiplier",
+      "instance": "gf_8",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/rs_encoder.v"
+    },
+    {
+      "parent": "rs_encoder",
+      "module": "multiplier",
+      "instance": "gf_9",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/rs_encoder.v"
+    },
+    {
+      "parent": "rs_encoder",
+      "module": "multiplier",
+      "instance": "gf_a",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/rs_encoder.v"
+    },
+    {
+      "parent": "rs_encoder",
+      "module": "multiplier",
+      "instance": "gf_b",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/rs_encoder.v"
+    },
+    {
+      "parent": "rs_encoder",
+      "module": "multiplier",
+      "instance": "gf_c",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/rs_encoder.v"
+    },
+    {
+      "parent": "rs_encoder",
+      "module": "multiplier",
+      "instance": "gf_d",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/rs_encoder.v"
+    },
+    {
+      "parent": "rs_encoder",
+      "module": "multiplier",
+      "instance": "gf_e",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/rs_encoder.v"
+    },
+    {
+      "parent": "rs_encoder",
+      "module": "multiplier",
+      "instance": "gf_f",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/rs_encoder.v"
+    },
+    {
+      "parent": "rs_encoder_64",
+      "module": "rs_encoder",
+      "instance": "rs_encoder_7",
+      "file": "gt_ex.srcs/sources_1/new/encoder/rs_encoder_64.v"
+    },
+    {
+      "parent": "rs_encoder_64",
+      "module": "rs_encoder",
+      "instance": "rs_encoder_6",
+      "file": "gt_ex.srcs/sources_1/new/encoder/rs_encoder_64.v"
+    },
+    {
+      "parent": "rs_encoder_64",
+      "module": "rs_encoder",
+      "instance": "rs_encoder_5",
+      "file": "gt_ex.srcs/sources_1/new/encoder/rs_encoder_64.v"
+    },
+    {
+      "parent": "rs_encoder_64",
+      "module": "rs_encoder",
+      "instance": "rs_encoder_4",
+      "file": "gt_ex.srcs/sources_1/new/encoder/rs_encoder_64.v"
+    },
+    {
+      "parent": "rs_encoder_64",
+      "module": "rs_encoder",
+      "instance": "rs_encoder_3",
+      "file": "gt_ex.srcs/sources_1/new/encoder/rs_encoder_64.v"
+    },
+    {
+      "parent": "rs_encoder_64",
+      "module": "rs_encoder",
+      "instance": "rs_encoder_2",
+      "file": "gt_ex.srcs/sources_1/new/encoder/rs_encoder_64.v"
+    },
+    {
+      "parent": "rs_encoder_64",
+      "module": "rs_encoder",
+      "instance": "rs_encoder_1",
+      "file": "gt_ex.srcs/sources_1/new/encoder/rs_encoder_64.v"
+    },
+    {
+      "parent": "rs_encoder_64",
+      "module": "rs_encoder",
+      "instance": "rs_encoder_0",
+      "file": "gt_ex.srcs/sources_1/new/encoder/rs_encoder_64.v"
+    },
+    {
+      "parent": "rx_gth_logic",
+      "module": "cross_gth_logic",
+      "instance": "u_async_fifo_rx3",
+      "file": "gt_ex.srcs/sources_1/new/decoder/rx_gth_logic.v"
+    },
+    {
+      "parent": "rx_logic_gth",
+      "module": "cross_logic_gth_head",
+      "instance": "cross_head_inst",
+      "file": "gt_ex.srcs/sources_1/new/decoder/rx_logic_gth.v"
+    },
+    {
+      "parent": "rx_logic_gth",
+      "module": "cross_logic_gth_load",
+      "instance": "cross_load_inst",
+      "file": "gt_ex.srcs/sources_1/new/decoder/rx_logic_gth.v"
+    },
+    {
+      "parent": "sda_decoder",
+      "module": "fso_ethernet_deframer",
+      "instance": "u_fso_ethernet_deframer",
+      "file": "gt_ex.srcs/sources_1/new/sda_decoder.v"
+    },
+    {
+      "parent": "sda_decoder",
+      "module": "rx_logic_gth",
+      "instance": "u_cdc_rx_4",
+      "file": "gt_ex.srcs/sources_1/new/sda_decoder.v"
+    },
+    {
+      "parent": "sda_decoder",
+      "module": "rx_gth_logic",
+      "instance": "u_cdc_rx_3",
+      "file": "gt_ex.srcs/sources_1/new/sda_decoder.v"
+    },
+    {
+      "parent": "sda_decoder",
+      "module": "core_rx",
+      "instance": "u_core_rx",
+      "file": "gt_ex.srcs/sources_1/new/sda_decoder.v"
+    },
+    {
+      "parent": "sda_decoder",
+      "module": "ethernet_frame_reassembly",
+      "instance": "u_ethernet_frame_reassembly",
+      "file": "gt_ex.srcs/sources_1/new/sda_decoder.v"
+    },
+    {
+      "parent": "sda_encoder",
+      "module": "x_logic_gth",
+      "instance": "u_cdc_tx_2",
+      "file": "gt_ex.srcs/sources_1/new/sda_encoder.v"
+    },
+    {
+      "parent": "sda_encoder",
+      "module": "preamble_gen",
+      "instance": "u_preamble_gen",
+      "file": "gt_ex.srcs/sources_1/new/sda_encoder.v"
+    },
+    {
+      "parent": "sda_encoder",
+      "module": "x_gth_logic",
+      "instance": "u_cdc_tx_1",
+      "file": "gt_ex.srcs/sources_1/new/sda_encoder.v"
+    },
+    {
+      "parent": "sda_encoder",
+      "module": "core_tx",
+      "instance": "u_encoder_fec",
+      "file": "gt_ex.srcs/sources_1/new/sda_encoder.v"
+    },
+    {
+      "parent": "sda_encoder",
+      "module": "ethernet_fso_framer",
+      "instance": "u_eth_fso_framer",
+      "file": "gt_ex.srcs/sources_1/new/sda_encoder.v"
+    },
+    {
+      "parent": "sda_encoder",
+      "module": "error_inject",
+      "instance": "u_error_injector",
+      "file": "gt_ex.srcs/sources_1/new/sda_encoder.v"
+    },
+    {
+      "parent": "sda_encoder",
+      "module": "mux_gearbox_128",
+      "instance": "u_mux_gearbox",
+      "file": "gt_ex.srcs/sources_1/new/sda_encoder.v"
+    },
+    {
+      "parent": "syndrome_unit",
+      "module": "multiplier",
+      "instance": "gf_0",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/syndrome_unit.v"
+    },
+    {
+      "parent": "syndrome_unit",
+      "module": "multiplier",
+      "instance": "gf_1",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/syndrome_unit.v"
+    },
+    {
+      "parent": "syndrome_unit",
+      "module": "multiplier",
+      "instance": "gf_2",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/syndrome_unit.v"
+    },
+    {
+      "parent": "syndrome_unit",
+      "module": "multiplier",
+      "instance": "gf_3",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/syndrome_unit.v"
+    },
+    {
+      "parent": "syndrome_unit",
+      "module": "multiplier",
+      "instance": "gf_4",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/syndrome_unit.v"
+    },
+    {
+      "parent": "syndrome_unit",
+      "module": "multiplier",
+      "instance": "gf_5",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/syndrome_unit.v"
+    },
+    {
+      "parent": "syndrome_unit",
+      "module": "multiplier",
+      "instance": "gf_6",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/syndrome_unit.v"
+    },
+    {
+      "parent": "syndrome_unit",
+      "module": "multiplier",
+      "instance": "gf_7",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/syndrome_unit.v"
+    },
+    {
+      "parent": "syndrome_unit",
+      "module": "multiplier",
+      "instance": "gf_8",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/syndrome_unit.v"
+    },
+    {
+      "parent": "syndrome_unit",
+      "module": "multiplier",
+      "instance": "gf_9",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/syndrome_unit.v"
+    },
+    {
+      "parent": "syndrome_unit",
+      "module": "multiplier",
+      "instance": "gf_a",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/syndrome_unit.v"
+    },
+    {
+      "parent": "syndrome_unit",
+      "module": "multiplier",
+      "instance": "gf_b",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/syndrome_unit.v"
+    },
+    {
+      "parent": "syndrome_unit",
+      "module": "multiplier",
+      "instance": "gf_c",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/syndrome_unit.v"
+    },
+    {
+      "parent": "syndrome_unit",
+      "module": "multiplier",
+      "instance": "gf_d",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/syndrome_unit.v"
+    },
+    {
+      "parent": "syndrome_unit",
+      "module": "multiplier",
+      "instance": "gf_e",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/syndrome_unit.v"
+    },
+    {
+      "parent": "syndrome_unit",
+      "module": "multiplier",
+      "instance": "gf_f",
+      "file": "gt_ex.srcs/sources_1/new/rs_codec/syndrome_unit.v"
+    },
+    {
+      "parent": "x_gth_logic",
+      "module": "cross_gth_logic_load",
+      "instance": "cross_load_inst",
+      "file": "gt_ex.srcs/sources_1/new/encoder/x_gth_logic.v"
+    },
+    {
+      "parent": "x_gth_logic",
+      "module": "cross_gth_logic_head",
+      "instance": "cross_head_inst",
+      "file": "gt_ex.srcs/sources_1/new/encoder/x_gth_logic.v"
+    },
+    {
+      "parent": "x_logic_gth",
+      "module": "cross_logic_gth",
+      "instance": "u_async_fifo",
+      "file": "gt_ex.srcs/sources_1/new/encoder/x_logic_gth.v"
+    },
+    {
+      "parent": "SDAOISL10Gto10G_top",
+      "module": "sda_encoder",
+      "instance": "sda_encoder_inst",
+      "file": "gt_ex.srcs/sources_1/new/SDAOISL10Gto10G_top.v"
+    },
+    {
+      "parent": "SDAOISL10Gto10G_top",
+      "module": "IBUFGDS",
+      "instance": "sys_clk_inst",
+      "file": "gt_ex.srcs/sources_1/new/SDAOISL10Gto10G_top.v"
+    },
+    {
+      "parent": "SDAOISL10Gto10G_top",
+      "module": "gth64b66b_rx",
+      "instance": "u_gth64b66b_rx",
+      "file": "gt_ex.srcs/sources_1/new/SDAOISL10Gto10G_top.v"
+    },
+    {
+      "parent": "SDAOISL10Gto10G_top",
+      "module": "fso_gth_core_wrapper",
+      "instance": "u_fso_gth_core",
+      "file": "gt_ex.srcs/sources_1/new/SDAOISL10Gto10G_top.v"
+    },
+    {
+      "parent": "SDAOISL10Gto10G_top",
+      "module": "autorun",
+      "instance": "autorun_inst",
+      "file": "gt_ex.srcs/sources_1/new/SDAOISL10Gto10G_top.v"
+    },
+    {
+      "parent": "SDAOISL10Gto10G_top",
+      "module": "eth_axis_packet_gen",
+      "instance": "packet_gen_inst",
+      "file": "gt_ex.srcs/sources_1/new/SDAOISL10Gto10G_top.v"
+    },
+    {
+      "parent": "SDAOISL10Gto10G_top",
+      "module": "eth_tx_back_end_top",
+      "instance": "back_end_inst",
+      "file": "gt_ex.srcs/sources_1/new/SDAOISL10Gto10G_top.v"
+    },
+    {
+      "parent": "SDAOISL10Gto10G_top",
+      "module": "eth_rx_front_end_top",
+      "instance": "front_end_inst",
+      "file": "gt_ex.srcs/sources_1/new/SDAOISL10Gto10G_top.v"
+    },
+    {
+      "parent": "SDAOISL10Gto10G_top",
+      "module": "clk_wiz_0",
+      "instance": "clk_wiz_0_inst",
+      "file": "gt_ex.srcs/sources_1/new/SDAOISL10Gto10G_top.v"
+    },
+    {
+      "parent": "SDAOISL10Gto10G_top",
+      "module": "gth64b66b_tx",
+      "instance": "u_gth64b66b_tx",
+      "file": "gt_ex.srcs/sources_1/new/SDAOISL10Gto10G_top.v"
+    },
+    {
+      "parent": "SDAOISL10Gto10G_top",
+      "module": "sda_decoder",
+      "instance": "sda_decoder_inst",
+      "file": "gt_ex.srcs/sources_1/new/SDAOISL10Gto10G_top.v"
+    },
+    {
+      "parent": "SDAOISL10Gto10G_top",
+      "module": "xgmii_tx_encoder",
+      "instance": "xgmii_encoder_inst",
+      "file": "gt_ex.srcs/sources_1/new/SDAOISL10Gto10G_top.v"
+    },
+    {
+      "parent": "gt_example_top_sim",
+      "module": "gt_example_top",
+      "instance": "example_top_inst",
+      "file": "imports/gt_example_top_sim.v"
+    }
+  ]
+}

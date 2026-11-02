@@ -1,0 +1,19 @@
+test,path,clock,unit,reset,increment_or_derivation,expected,evidence_limit
+main,/tb_etri_main/ingress/total_bytes,tx0_clk,accepted Ethernet bytes,rst_n=0,valid && ready; sum keep bits,2000; includes dummy FCS; excludes XGMII preamble/control,Current runtime pending
+main,/tb_etri_main/ingress/total_beats,tx0_clk,accepted32-bit transfers,rst_n=0,valid && ready,500 for this full-keep2000byte stimulus,Current runtime pending
+main,/tb_etri_main/ingress/accepted_bytes,tx0_clk,current packet accepted bytes,reset and accepted last,sum keep on valid && ready; clears on last,Returns0 on final beat; use total_bytes for final2000,Source reviewed
+main,/tb_etri_main/ingress/elapsed_cycles,tx0_clk,cycles from first offer including stalls/valid gaps,reset and accepted last,active packet each clock,Measured; not prescribed equal to500,Source reviewed
+main,/tb_etri_main/ingress/stalled_cycles,tx0_clk,AXI stalled cycles,reset and accepted last,valid && !ready,Measured; three in historicalmain is not guaranteed current,Source reviewed
+main,/tb_etri_main/ingress/packet_index,tx0_clk,TB completed packet ordinal,rst_n=0,accepted last,1; not protocol TXFN,Source reviewed
+main,/tb_etri_main/er,rx0_clk,compared Ethernet output bytes,TB initialization,XGMII data lane insidepacket after7preamble/SFD bytes,2000; no control/idle/preamble counted,Full byte oracle unchanged
+main,/tb_etri_main/xpackets,rx0_clk,completed XGMII packets,TB initialization,valid /T/ after2000checked bytes,1,Full byte oracle unchanged
+main,/tb_etri_main/segs,tx0_clk,completed segments,TB initialization,seg_axis_tvalid && seg_axis_tready && seg_axis_tlast,2; metadata1900 then100,Acceptance unchanged
+main,/tb_etri_main/outstanding,TX controller state monitor,active tracked transactions,derived state,controller tracking state,0 after successful ACK; drops must also0,Current runtime pending
+demux,/tb_demux_decoder/input_accepted_bytes,clk200MHz,input bus bytes,rst_n=0,cdc_valid_in at rising edge; +16,12480 slots bytes =12468frame bytes +12historicaltail,Current runtime pending
+demux,/tb_demux_decoder/input_byte_first,clk200MHz interface,one-based position of first byte in offered word,0 if invalid,derived accepted_total%3117+1 for currently offered word,1..3117; finalwordmaycrossframe/tail,Not accepted total
+demux,/tb_demux_decoder/input_crosses_boundary,clk200MHz interface,boundary indicator,0 if invalid,first/last offered-byte frame differ,Explicitly show split word; do not realign with padding,Current runtime pending
+demux,/tb_demux_decoder/output_accepted_bytes,clk200MHz,accepted LPC-coded bytes,rst_n=0,lpc_valid_out at rising edge; +12,12432,Byte oracle retained
+demux,/tb_demux_decoder/out_clk_cnt,clk200MHz interface,offered valid word index; NOT elapsed clock count,0 if invalid,derived frame_words+1 whenvalid,1..259,Stable-phase assertion prepared
+demux,/tb_demux_decoder/out_byte_cnt,clk200MHz interface,last byte position of offered word,0 if invalid,12*(frame_words+1) whenvalid,12..3108,Stable-phase assertion prepared
+demux,/tb_demux_decoder/elapsed_cycles,clk200MHz,all postreset cycles,rst_n=0,each rising edge,Measured; includes input/output idle intervals,Source reviewed
+demux,/tb_demux_decoder/output_frame_type,clk200MHz interface,TB scenario string,WAIT if invalid,scenario lookup from current output frame index,DAT1/DAT2/IDLE/MGMT; not decoded header,Current runtime pending

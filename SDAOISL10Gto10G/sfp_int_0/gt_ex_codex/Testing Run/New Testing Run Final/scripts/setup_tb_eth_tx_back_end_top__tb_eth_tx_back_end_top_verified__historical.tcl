@@ -1,0 +1,6 @@
+# New simulation only: exact tested top/profile required.
+foreach path {{/tb_eth_tx_back_end_top_verified/clk} {/tb_eth_tx_back_end_top_verified/rst_n} {/tb_eth_tx_back_end_top_verified/iw} {/tb_eth_tx_back_end_top_verified/ow} {/tb_eth_tx_back_end_top_verified/packets} {/tb_eth_tx_back_end_top_verified/data_in} {/tb_eth_tx_back_end_top_verified/in_byte_cnt} {/tb_eth_tx_back_end_top_verified/in_word_cnt} {/tb_eth_tx_back_end_top_verified/inside_packet} {/tb_eth_tx_back_end_top_verified/i} {/tb_eth_tx_back_end_top_verified/txn_unused} {/tb_eth_tx_back_end_top_verified/txp_unused} {/tb_eth_tx_back_end_top_verified/xgmii_byte_cnt} {/tb_eth_tx_back_end_top_verified/xgmii_word_cnt} {/tb_eth_tx_back_end_top_verified/raw_xgmii_idx} {/tb_eth_tx_back_end_top_verified/xgmii_active} {/tb_eth_tx_back_end_top_verified/xgmii_txc} {/tb_eth_tx_back_end_top_verified/xgmii_txd} {/tb_eth_tx_back_end_top_verified/en}} {
+ if {![llength [get_objects -quiet $path]]} {error "Unresolved waveform object: $path. Wrong top/profile; do not ignore."}
+ log_wave [get_objects $path]
+}
+open_wave_config {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/Testing Run/New Testing Run Final/tb_eth_tx_back_end_top__tb_eth_tx_back_end_top_verified__historical.wcfg}

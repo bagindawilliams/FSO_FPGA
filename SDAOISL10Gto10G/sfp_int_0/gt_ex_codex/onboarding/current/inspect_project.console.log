@@ -1,0 +1,202 @@
+
+****** Vivado v2025.2 (64-bit)
+  **** SW Build 6299465 on Fri Nov 14 12:34:56 MST 2025
+  **** IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+  **** SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+  **** Start of session at: Sun Nov  1 02:00:11 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source inspect_project.tcl
+# open_project -read_only {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.xpr}
+INFO: [Project 1-313] Project file moved from '/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex' since last save.
+Scanning sources...
+Finished scanning sources
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:emb-plus-vpr-4616:part0:1.0 available at /2025.2/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/emb-plus-vpr-4616/1.0/board.xml as part xcve2302-sfva784-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:emb-plus-vpr-4616:part0:1.1 available at /2025.2/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/emb-plus-vpr-4616/1.1/board.xml as part xcve2302-sfva784-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:v80:part0:1.0 available at /2025.2/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/v80/1.0/board.xml as part xcv80-lsva4737-2mhp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vck190:part0:2.2 available at /2025.2/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vck190/production/2.2/board.xml as part xcvc1902-vsva2197-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vck190:part0:3.0 available at /2025.2/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vck190/production/3.0/board.xml as part xcvc1902-vsva2197-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vck190:part0:3.1 available at /2025.2/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vck190/production/3.1/board.xml as part xcvc1902-vsva2197-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vck190:part0:3.2 available at /2025.2/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vck190/production/3.2/board.xml as part xcvc1902-vsva2197-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vck190:part0:3.3 available at /2025.2/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vck190/production/3.3/board.xml as part xcvc1902-vsva2197-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vck190:part0:3.4 available at /2025.2/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vck190/production/3.4/board.xml as part xcvc1902-vsva2197-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vck190_newl:part0:1.0 available at /2025.2/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vck190_newl/production/1.0/board.xml as part xcvc1902-vsva2197-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vck190_newl:part0:1.1 available at /2025.2/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vck190_newl/production/1.1/board.xml as part xcvc1902-vsva2197-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vck190_newl:part0:1.2 available at /2025.2/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vck190_newl/production/1.2/board.xml as part xcvc1902-vsva2197-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vck190_newl:part0:1.3 available at /2025.2/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vck190_newl/production/1.3/board.xml as part xcvc1902-vsva2197-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vek280:part0:1.0 available at /2025.2/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vek280/production/1.0/board.xml as part xcve2802-vsvh1760-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vek280:part0:1.1 available at /2025.2/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vek280/production/1.1/board.xml as part xcve2802-vsvh1760-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vek280:part0:1.2 available at /2025.2/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vek280/production/1.2/board.xml as part xcve2802-vsvh1760-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vek385:part0:1.0 available at /2025.2/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vek385/1.0/board.xml as part xc2ve3858-ssva2112-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vek385:part0:1.1 available at /2025.2/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vek385/1.1/board.xml as part xc2ve3858-ssva2112-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vek385_1:part0:1.0 available at /2025.2/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vek385_2/1.0/board.xml as part xc2ve3858-ssva2112-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vhk158:part0:1.0 available at /2025.2/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vhk158/production/1.0/board.xml as part xcvh1582-vsva3697-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vhk158:part0:1.1 available at /2025.2/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vhk158/production/1.1/board.xml as part xcvh1582-vsva3697-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vhk158:part0:1.2 available at /2025.2/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vhk158/production/1.2/board.xml as part xcvh1582-vsva3697-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vmk180:part0:2.2 available at /2025.2/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vmk180/production/2.2/board.xml as part xcvm1802-vsva2197-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vmk180:part0:3.0 available at /2025.2/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vmk180/production/3.0/board.xml as part xcvm1802-vsva2197-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vmk180:part0:3.1 available at /2025.2/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vmk180/production/3.1/board.xml as part xcvm1802-vsva2197-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vmk180:part0:3.2 available at /2025.2/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vmk180/production/3.2/board.xml as part xcvm1802-vsva2197-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vmk180:part0:3.3 available at /2025.2/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vmk180/production/3.3/board.xml as part xcvm1802-vsva2197-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vmk180_newl:part0:1.0 available at /2025.2/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vmk180_newl/production/1.0/board.xml as part xcvm1802-vsva2197-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vmk180_newl:part0:1.1 available at /2025.2/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vmk180_newl/production/1.1/board.xml as part xcvm1802-vsva2197-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vpk120:part0:1.0 available at /2025.2/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vpk120/production/1.0/board.xml as part xcvp1202-vsva2785-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vpk120:part0:1.1 available at /2025.2/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vpk120/production/1.1/board.xml as part xcvp1202-vsva2785-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vpk120:part0:1.2 available at /2025.2/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vpk120/production/1.2/board.xml as part xcvp1202-vsva2785-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vpk180:part0:1.0 available at /2025.2/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vpk180/production/1.0/board.xml as part xcvp1802-lsvc4072-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vpk180:part0:1.1 available at /2025.2/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vpk180/production/1.1/board.xml as part xcvp1802-lsvc4072-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vpk180:part0:1.2 available at /2025.2/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vpk180/production/1.2/board.xml as part xcvp1802-lsvc4072-2mp-e-s specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vrk160:part0:1.0 available at /2025.2/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vrk160/1.0/board.xml as part xcvr1602-vsva2488-2mp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vrk160:part0:1.1 available at /2025.2/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vrk160/1.1/board.xml as part xcvr1602-vsva2488-2mp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu208ld:part0:2.0 available at /2025.2/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu208ld/production/2.0/board.xml as part xczu58dr-fsvg1517-2-i specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu216ld:part0:2.0 available at /2025.2/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu216ld/production/2.0/board.xml as part xczu59dr-ffvf1760-2-i specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu670ld:part0:1.0 available at /2025.2/2025.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu670ld/1.0/board.xml as part xczu57dr-fsve1156-2-i specified in board_part file is either invalid or not available
+WARNING: [Project 1-5713] Board part '' set for the project  is not found. BoardPart property will be unset. Please select board from latest repo build 
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/2025.2/2025.2/data/ip'.
+WARNING: [IP_Flow 19-2162] IP 'serdes_assembler' is locked:
+* Project containing IP 'serdes_assembler' is read-only.
+WARNING: [IP_Flow 19-2162] IP 'reset_0' is locked:
+* Project containing IP 'reset_0' is read-only.
+WARNING: [IP_Flow 19-2162] IP 'gt' is locked:
+* Project containing IP 'gt' is read-only.
+WARNING: [IP_Flow 19-2162] IP 'gt_vio_0' is locked:
+* Project containing IP 'gt_vio_0' is read-only.
+WARNING: [IP_Flow 19-2162] IP 'serdes_framer' is locked:
+* Project containing IP 'serdes_framer' is read-only.
+WARNING: [IP_Flow 19-2162] IP 'eth_10g_pcs_pma_tx_0' is locked:
+* Project containing IP 'eth_10g_pcs_pma_tx_0' is read-only. * IP 'eth_10g_pcs_pma_tx_0' contains one or more locked subcores.
+WARNING: [IP_Flow 19-2162] IP 'cross_logic_gth_load' is locked:
+* Project containing IP 'cross_logic_gth_load' is read-only.
+WARNING: [IP_Flow 19-2162] IP 'cross_logic_gth_head' is locked:
+* Project containing IP 'cross_logic_gth_head' is read-only.
+WARNING: [IP_Flow 19-2162] IP 'bram_rs' is locked:
+* Project containing IP 'bram_rs' is read-only.
+WARNING: [IP_Flow 19-2162] IP 'cross_gth_logic' is locked:
+* Project containing IP 'cross_gth_logic' is read-only.
+WARNING: [IP_Flow 19-2162] IP 'gth_fso_64b66b' is locked:
+* Project containing IP 'gth_fso_64b66b' is read-only.
+WARNING: [IP_Flow 19-2162] IP 'cross_logic_gth' is locked:
+* Project containing IP 'cross_logic_gth' is read-only.
+WARNING: [IP_Flow 19-2162] IP 'cross_gth_logic_load' is locked:
+* Project containing IP 'cross_gth_logic_load' is read-only.
+WARNING: [IP_Flow 19-2162] IP 'cross_gth_logic_head' is locked:
+* Project containing IP 'cross_gth_logic_head' is read-only.
+WARNING: [IP_Flow 19-2162] IP 'eth_10g_pcs_pma_rx_0' is locked:
+* Project containing IP 'eth_10g_pcs_pma_rx_0' is read-only. * IP 'eth_10g_pcs_pma_rx_0' contains one or more locked subcores.
+WARNING: [IP_Flow 19-2162] IP 'clk_wiz_0' is locked:
+* Project containing IP 'clk_wiz_0' is read-only.
+# puts "ONBOARD_TOP=[get_property top [get_filesets sources_1]]"
+ONBOARD_TOP=SDAOISL10Gto10G_top
+# puts "ONBOARD_PART=[get_property part [current_project]]"
+ONBOARD_PART=xcku060-ffva1156-2-i
+# puts "ONBOARD_GENERIC=[get_property generic [get_filesets sources_1]]"
+ONBOARD_GENERIC=
+# foreach f [get_files -compile_order sources -used_in synthesis] {puts "ONBOARD_SOURCE=$f"}
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.gen/sources_1/ip/eth_10g_pcs_pma_tx_0/eth_10g_pcs_pma_tx_0.dcp
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/sda_codec_0.gen/sources_1/ip/cross_logic_gth_load/cross_logic_gth_load.dcp
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/sda_codec_0.gen/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head.dcp
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.gen/sources_1/ip/bram_rs/bram_rs.dcp
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/sda_codec_0.gen/sources_1/ip/cross_gth_logic/cross_gth_logic.dcp
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.gen/sources_1/ip/gth_fso_64b66b/gth_fso_64b66b.dcp
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/sda_codec_0.gen/sources_1/ip/cross_logic_gth/cross_logic_gth.dcp
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/sda_codec_0.gen/sources_1/ip/cross_gth_logic_load/cross_gth_logic_load.dcp
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/sda_codec_0.gen/sources_1/ip/cross_gth_logic_head/cross_gth_logic_head.dcp
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.gen/sources_1/ip/eth_10g_pcs_pma_rx_0/eth_10g_pcs_pma_rx_0.dcp
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.dcp
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/FEC_Demux.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/FEC_MUX.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/arq_ddr4_wrapper.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/arq_rx_controller.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/arq_rx_reorder_ddr4_wrapper.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/arq_tx_controller.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/autorun.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/rs_codec/chien_search.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/decoder/core_rx.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/encoder/core_tx.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/deframer.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/deframer_header.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/deframer_payload.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/demux_preamble_128.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/descrambler.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/error_inject.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/eth_axis_packet_gen.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/eth_mac_packing_tx.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/eth_preamble_gen.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/eth_preamble_remover.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/eth_rx_front_end_top.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/eth_tx_back_end_top.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/ethernet_frame_reassembly.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/ethernet_fso_framer.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/rs_codec/forney_math.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/frame_demultiplexer.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/fso_axis_fifo.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/fso_crc_16.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/fso_crc_16_checker.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/fso_crc_32.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/fso_crc_32_checker.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/fso_ethernet_deframer.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/fso_gth_core_wrapper.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/fso_header_top.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/fso_idle_generator.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/fso_payload.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/fso_payload_mux.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/fso_payload_top.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/gth64b66b_rx.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/gth64b66b_tx.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/header_generator.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/header_parser.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/idle_discard.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/rs_codec/inverter.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/encoder/lpc.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/decoder/lpc_dec.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/decoder/lpc_dec_top.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/encoder/lpc_top.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/mgmt_extraction.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/mgmt_telemetry_generator.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/rs_codec/multiplier.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/mux_eth_32.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/mux_gearbox_128.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/packaging_and_segmentation.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/preamble_gen.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/preamble_sda_decoder.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/rs_codec/rs_decoder.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/decoder/rs_decoder_64.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/rs_codec/rs_encoder.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/encoder/rs_encoder_64.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/decoder/rx_gth_logic.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/decoder/rx_logic_gth.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/encoder/scrambler.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/sda_decoder.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/sda_encoder.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/rs_codec/syndrome_unit.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/encoder/x_gth_logic.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/encoder/x_logic_gth.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/xgmii_rx_parser.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/xgmii_tx_encoder.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/xgmii_tx_formatter.v
+ONBOARD_SOURCE=/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/gt_ex.srcs/sources_1/new/SDAOISL10Gto10G_top.v
+# foreach ip [get_ips] {puts "ONBOARD_IP=$ip"}
+ONBOARD_IP=bram_rs
+ONBOARD_IP=clk_wiz_0
+ONBOARD_IP=cross_gth_logic
+ONBOARD_IP=cross_gth_logic_head
+ONBOARD_IP=cross_gth_logic_load
+ONBOARD_IP=cross_logic_gth
+ONBOARD_IP=cross_logic_gth_head
+ONBOARD_IP=cross_logic_gth_load
+ONBOARD_IP=delay_combiner
+ONBOARD_IP=eth_10g_pcs_pma_rx_0
+ONBOARD_IP=eth_10g_pcs_pma_tx_0
+ONBOARD_IP=gt
+ONBOARD_IP=gt_vio_0
+ONBOARD_IP=gth_fso_64b66b
+ONBOARD_IP=reset_0
+ONBOARD_IP=serdes_assembler
+ONBOARD_IP=serdes_framer
+# close_project
+# exit
+INFO: [Common 17-206] Exiting Vivado at Sun Nov  1 02:00:15 2026...

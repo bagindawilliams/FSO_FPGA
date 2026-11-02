@@ -1,0 +1,8 @@
+# New simulation only: configure and elaborate matching top, remain at0ns, then log selected signals.
+if {![llength [get_objects /tb_demux_preamble_128_verified/*]]} {error "Wrong simulation top"}
+foreach p [list {/tb_demux_preamble_128_verified/accepted_bytes} {/tb_demux_preamble_128_verified/delivered_bytes} {/tb_demux_preamble_128_verified/lpc_checked} {/tb_demux_preamble_128_verified/preambles_checked} {/tb_demux_preamble_128_verified/demux_frame_id} {/tb_demux_preamble_128_verified/gth_rx_data} {/tb_demux_preamble_128_verified/accepted_words} {/tb_demux_preamble_128_verified/delivered_words} {/tb_demux_preamble_128_verified/lpc_byte_idx} {/tb_demux_preamble_128_verified/lpc_total_bytes} {/tb_demux_preamble_128_verified/total_word_idx} {/tb_demux_preamble_128_verified/preamble_match_cnt} {/tb_demux_preamble_128_verified/lpc_byte_stream} {/tb_demux_preamble_128_verified/total_lpc_words_captured} {/tb_demux_preamble_128_verified/b0_abs} {/tb_demux_preamble_128_verified/b1_abs} {/tb_demux_preamble_128_verified/b2_abs} {/tb_demux_preamble_128_verified/b3_abs} {/tb_demux_preamble_128_verified/preamble_extracted} {/tb_demux_preamble_128_verified/continuation_done} {/tb_demux_preamble_128_verified/original_complete} {/tb_demux_preamble_128_verified/cdc3_data_out} {/tb_demux_preamble_128_verified/lpc_data_out} {/tb_demux_preamble_128_verified/out_lpc_byte_cnt} {/tb_demux_preamble_128_verified/out_lpc_word_cnt}] {
+ set o [get_objects -quiet $p]
+ if {[llength $o]} {log_wave $o} else {puts "LOGGING_PATH_UNRESOLVED $p"}
+}
+open_wave_config {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/Testing Run/New Testing Run/tb_demux_preamble_128.wcfg}
+# This script does not run the simulation.

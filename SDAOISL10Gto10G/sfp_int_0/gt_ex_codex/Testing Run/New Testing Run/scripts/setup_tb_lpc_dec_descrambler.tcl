@@ -1,0 +1,8 @@
+# New simulation only: configure and elaborate matching top, remain at0ns, then log selected signals.
+if {![llength [get_objects /tb_lpc_dec_descrambler/*]]} {error "Wrong simulation top"}
+foreach p [list {/tb_lpc_dec_descrambler/desc_frame_id} {/tb_lpc_dec_descrambler/frame_id} {/tb_lpc_dec_descrambler/rx_desc_data} {/tb_lpc_dec_descrambler/rx_lpc_dec_data} {/tb_lpc_dec_descrambler/tx_lpc_data} {/tb_lpc_dec_descrambler/tx_mux_data} {/tb_lpc_dec_descrambler/tx_scr_data} {/tb_lpc_dec_descrambler/frame_byte_idx} {/tb_lpc_dec_descrambler/err_rot_idx} {/tb_lpc_dec_descrambler/cycle_cnt} {/tb_lpc_dec_descrambler/full_96b_err_mask} {/tb_lpc_dec_descrambler/sub_err_mask} {/tb_lpc_dec_descrambler/ST_DONE} {/tb_lpc_dec_descrambler/ST_GAP} {/tb_lpc_dec_descrambler/ST_STREAM} {/tb_lpc_dec_descrambler/exp_rd_ptr} {/tb_lpc_dec_descrambler/exp_wr_ptr} {/tb_lpc_dec_descrambler/rx_desc_state_25b} {/tb_lpc_dec_descrambler/tb_state} {/tb_lpc_dec_descrambler/total_corrected_bits} {/tb_lpc_dec_descrambler/tx_scr_state_25b} {/tb_lpc_dec_descrambler/INJECT_1BIT_PER_SUBBLOCK} {/tb_lpc_dec_descrambler/noisy_lpc_in} {/tb_lpc_dec_descrambler/rx_lpc3_running_disp} {/tb_lpc_dec_descrambler/tx_lpc3_running_disp} {/tb_lpc_dec_descrambler/byte_stream_out} {/tb_lpc_dec_descrambler/matched_words} {/tb_lpc_dec_descrambler/mismatched_words}] {
+ set o [get_objects -quiet $p]
+ if {[llength $o]} {log_wave $o} else {puts "LOGGING_PATH_UNRESOLVED $p"}
+}
+open_wave_config {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/Testing Run/New Testing Run/tb_lpc_dec_descrambler.wcfg}
+# This script does not run the simulation.

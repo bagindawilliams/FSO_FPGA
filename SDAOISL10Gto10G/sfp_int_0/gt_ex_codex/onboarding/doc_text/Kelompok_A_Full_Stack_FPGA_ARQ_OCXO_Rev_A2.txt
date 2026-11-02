@@ -1,0 +1,884 @@
+ KELOMPOK A / 01 • ORIENTASI
+
+ System Guidelines untuk Agent Full Stack
+ FPGA
+
+ Prototipe FPGA
+ SDA OISL 10G-to-10G
+ Paket orientasi agent baru • Rev A.2 • 31 Oktober 2026
+
+ Acuan: SDA OISL v2.1.2. Baseline RTL: Rev 3.0, ZIP 31 Oktober 2026 pukul 12:55. Dokumen ini
+ menyatukan ruang lingkup proyek, landasan teknis, hasil audit yang tersedia, dan keputusan
+ pengembangan yang masih terbuka.
+
+ Kesimpulan yang harus dibawa oleh agent baru
+
+ Bukti regresi FEC kuat, tetapi modem keseluruhan belum lulus end-to-end. Pada baseline 12:55
+ masih terdapat masalah batas paket Ethernet, pengikatan seed IDLE, struktur CDC feedback,
+ serta cakupan ARQ MGMT. Rencana perbaikan developer belum sama dengan hasil verifikasi
+ revisi baru.
+
+ Target demo tetap paket Ethernet 2.000 byte → 1.900 + 100 byte, diselingi IDLE dan MGMT. Uji
+ multi-paket dan stress membantu auditor memeriksa ketangguhan; tidak otomatis menambah
+ kewajiban MTU 9.000 atau 16.000 byte.
+
+ 1PPS, GNSS, OCXO, timekeeper nyata, dan pengukuran ranging dipisahkan dari demo simulasi
+ saat ini. Penambahannya memerlukan keputusan antarmuka dan cakupan bersama ETRI.
+
+ Isi paket
+
+ 18 halaman panduan ini dilengkapi lampiran berkas di dalam PDF: standar v2.1.2, panduan
+ proyek, arsitektur sistem/ARQ, tanggapan guideline, laporan audit HTML lengkap, dan ZIP bukti
+ audit. Buka panel Attachments pada pembaca PDF yang mendukungnya.
+
+ Ini merupakan panduan orientasi dan kompilasi bukti terdahulu, bukan standar baru, sertifikasi kepatuhan, atau audit
+ ulang RTL pada tanggal pembuatan PDF.
+
+
+
+
+SDA OISL • Kelompok A • Rev A.2 • Baseline 31 Oct 2026 / 12:55                                                          1
+ KELOMPOK A / 02 • ACUAN
+
+ Dokumen yang dibaca dan urutan otoritas
+
+   Dokumen                                   Peran / cara membaca
+
+
+   [S1] SDA OISL v2.1.2;                     Acuan normatif proyek. Utamakan §2.6.3, Tabel 2-9, 2-11, 2-14 dan 2-18;
+   SDA-9100-0001-03; 3 Jan 2022              coding dan framing terkait.
+
+
+   [S2] Project Guideline FSO System         Rancangan sistem dan alur modul. Beberapa angka/label perlu
+   Prototype Based on FPGA                   dicocokkan dengan S1 dan RTL aktual.
+
+
+   [S3] System Architecture SDAOISL          Peta rancangan. Diagram tidak membuktikan bahwa setiap fungsi telah
+   10Gto10G; [S4] ARQ System                 terimplementasi atau diuji.
+   Architecture
+
+
+   [S5] Response Comment Project             Komentar dan tanggapan teknis. Usulan dalam balasan bukan otomatis
+   Guideline (DOCX)                          persetujuan final ETRI.
+
+
+   [A1] Audit SDA OISL 31Oct2026 1255        Bukti perilaku baseline tertentu, log, source, stimulus, dan batas
+                                             pengujian.
+
+
+   SDA OCT 4.0.0 (2024), UG576, PG182        OCT 4.0.0 hanya pembanding, bukan pengganti v2.1.2. UG576/PG182
+                                             untuk desain GTH dan IP vendor.
+
+
+
+ Jika terjadi konflik: tampilkan requirement standar, keputusan scope yang disepakati,
+ implementasi RTL, dan bukti simulasi secara terpisah. Jangan membenarkan ketidakpatuhan
+ hanya karena kode berjalan; jangan menganggap seluruh standar sebagai deliverable demo
+ tanpa kesepakatan scope.
+
+ Baca ulang S2 untuk ranah proyek; baca S1 untuk angka/bit normatif; gunakan A1 untuk
+ mengetahui hasil yang benar-benar diuji. Laporan simulasi 23 Oktober dan proposal penelitian
+ merupakan konteks historis, bukan status terbaru seluruh modul.
+
+
+
+
+SDA OISL • Kelompok A • Rev A.2 • Baseline 31 Oct 2026 / 12:55                                                         2
+ KELOMPOK A / 03 • SCOPE
+
+ Apa yang harus selesai sekarang?
+
+   Area                  Lingkup saat ini                            Batas / pengembangan
+
+
+   Demo utama            Ethernet 2.000 B, dua DATA 1.900 + 100 B,   Periksa konfigurasi TB: SIM_MODE dan
+                         IDLE, MGMT; ARQ DATA aktif                  LOOPBACK_ARQ_DIRECT. Mode loopback
+                                                                     bukan bukti dua terminal independen.
+
+
+   Ketangguhan audit     Dua paket 2.000 B + mini + paket biasa;     Auditor boleh membuat TB terarah tanpa
+                         stall, antrean, loss, retry, reset          mewajibkan penulisan ulang seluruh TB
+                                                                     developer.
+
+
+   Egress Ethernet       Profil kelipatan 4 byte pada jalur 32 bit   Akurasi byte ingress tidak membuktikan
+                                                                     akurasi byte egress.
+
+
+   Waktu / telemetry     Timestamp statis sebagai stimulus demo      Snapshot konsisten tetap perlu; waktu nyata,
+                                                                     akurasi absolut dan ranging belum
+                                                                     dibuktikan.
+
+
+   FEC / PHY             RS, scrambler, LPC aktif;                   Inversi disparity OFF bukan LPC OFF. Tunnel
+                         ACTIVE_DISP_INV_EN=0                        laboratorium bukan native optical PHY yang
+                                                                     tersertifikasi.
+
+
+   Hardware              Persiapan menuju ALINX AXKU062              Vivado, CDC constraints, timing, bitstream
+                                                                     dan PC-ke-PC fisik memerlukan tahap
+                                                                     pembuktian tersendiri.
+
+
+
+ Jangan memperluas scope menjadi MTU penuh 16.383 byte, GNSS wajib, orbit/PNT, atau
+ implementasi DDR4 eksternal penuh tanpa keputusan proyek. Namun bug yang menyebabkan
+ demo 2.000 byte atau multi-paket kehilangan data tetap menjadi prioritas.
+
+ Pengecualian PNT/orbit oleh Dr. Lim pernah disampaikan pengguna. Untuk laporan kontraktual,
+ lampirkan email primer yang mengonfirmasi; PDF ini tidak mengubah pernyataan percakapan
+ menjadi persetujuan formal ETRI.
+
+
+
+
+SDA OISL • Kelompok A • Rev A.2 • Baseline 31 Oct 2026 / 12:55                                                     3
+ KELOMPOK A / 04 • ARSITEKTUR
+
+ Alur data dan identitas modul
+ Jalur data yang dituju
+
+ PC1 / NIC Ethernet → frontend XGMII → packaging & segmentation → scheduler
+ DATA/IDLE/MGMT dan header ARQ → CRC/FEC/scrambler/LPC/mux → CDC/GTH → media optik →
+ demux/decoder → validasi CRC/ARQ/reorder → reassembly Ethernet → backend XGMII → PC2.
+
+   Tanggung jawab                      Modul utama yang perlu dikenali
+
+
+   Integrasi aktif                     SDAOISL10Gto10G_top.v; sda_encoder.v; sda_decoder.v
+
+
+   Segmentasi / payload TX             packaging_and_segmentation.v; fso_payload.v; fso_payload_top.v;
+                                       ethernet_fso_framer.v
+
+
+   Sumber non-DATA                     fso_idle_generator.v; mgmt_telemetry_generator.v
+
+
+   ARQ / penyimpanan                   arq_tx_controller.v; arq_ddr4_wrapper.v; arq_rx_reorder_ddr4_wrapper.v
+
+
+   Reassembly / egress                 ethernet_frame_reassembly.v; eth_tx_back_end_top.v; xgmii_tx_formatter.v
+
+
+   Coding                              rs_codec/*; encoder/lpc.v; decoder/lpc_dec.v; scrambler dan demux terkait
+
+
+
+ Pisahkan local RX CRC feedback yang akan dimuat pada header TX keluar dari ACK peer yang
+ membebaskan tracker TX lokal. Pertukaran kedua jalur dapat menghasilkan loopback semu
+ yang lulus tetapi gagal dua terminal.
+
+ Nama wrapper “ddr4” tidak membuktikan penggunaan controller DDR4 fisik. Periksa
+ implementasi RAM, tag, latency, dan konfigurasi aktif. Begitu pula modul lama
+ encoder_top/decoder_top atau wrapper lain tidak boleh dianggap jalur utama hanya dari nama.
+
+ Pada baseline, mux_eth_32/eth_preamble_gen masih mempunyai jejak struktural, sedangkan
+ output reassembly dikendalikan FSM langsung. Tentukan file terpakai melalui hierarki top,
+ generate/parameter dan dependensi TB; jangan menghapus file yang tidak terlihat di jalur
+ utama secara otomatis. [S2–S4, A1]
+
+
+
+
+SDA OISL • Kelompok A • Rev A.2 • Baseline 31 Oct 2026 / 12:55                                                     4
+ KELOMPOK A / 05 • BYTE & CLOCK
+
+ Angka dasar yang tidak boleh tertukar
+
+   Tahap                                     Ukuran / interpretasi
+
+
+   Header                                    14 B informasi + 2 B CRC-16 = 16 B; RS(32,16) → 32 B; LPC → 48 B
+
+
+   Payload sebelum FEC                       1.908 B informasi + 4 B CRC-32 = 1.912 B = 8 × 239 B
+
+
+   Payload setelah FEC/LPC                   8 × 255 B = 2.040 B; LPC 24/16 → 3.060 B
+
+
+   Frame optik                               9 B preamble + 48 B header + 3.060 B payload = 3.117 B = 24.936 bit
+
+
+   Durasi pada 10 Gb/s                       24.936 / 10¹⁰ = 2,4936 µs = 2.493,6 ns
+
+
+   Ethernet pada demo                        Segmen awal 1.900 B; paket 2.000 B → 1.900 + 100 B; bukan 1.908 B
+                                             Ethernet murni per frame
+
+
+   Rasio informasi                           1.908 / 3.117 × 10 Gb/s ≈ 6,12127 Gb/s; bukan throughput Ethernet
+                                             universal
+
+
+
+ Untuk satu paket 2.000 byte yang menghabiskan dua frame penuh, batas dari pembagian
+ tersebut sekitar 3,20821 Gb/s sebelum IDLE/MGMT/retry. Pemadatan beberapa paket dapat
+ mengubah efisiensi; setiap klaim throughput harus menyebut stimulus dan overhead.
+
+ Pada 312,5 MHz: 779,25 siklus/frame. Pada 322,265625 MHz: 803,6015625 siklus/frame. Pada
+ 200 MHz: 498,72 siklus/frame. Bedakan clock bus, jumlah beat payload (477 kata 32-bit setelah
+ CRC), dan waktu frame optik.
+
+ 10G-to-10G merujuk antarmuka, bukan jaminan payload 10 Gb/s. Backpressure internal AXI
+ tidak otomatis mengendalikan pengirim Ethernet fisik; ukur backlog, drop, dan mekanisme flow
+ control nyata. Counter harus membedakan byte L2, preamble, delimiter, slot bus, serta byte
+ frame optik. [S1, A1]
+
+
+
+
+SDA OISL • Kelompok A • Rev A.2 • Baseline 31 Oct 2026 / 12:55                                                     5
+ KELOMPOK A / 06 • FEC
+
+ Yang telah diuji dan batas klaim
+
+   Bukti baseline 12:55 [A1]                        Hasil / batas
+
+
+   GF(2⁸), polinomial 0x187                         65.536 perkalian dan 255 invers nonzero: 0 mismatch/failure.
+
+
+   RS dasar dan extended                            14 kasus dasar; 372 kasus k=16 + 595 kasus k=239: lulus pada
+                                                    stimulus terpilih.
+
+
+   RS streaming                                     4 run × 30 frame = 120 frame, interval 498/499 siklus: 0
+                                                    mismatch.
+
+
+   Delapan lane RS                                  Empat frame dengan 8 error per codeword/lane: 64 B header dan
+                                                    956 word payload keluaran diperiksa benar.
+
+
+   LPC inversion OFF                                65.536 input × 25 pola = 1.638.400 kasus, 0 failure; pola tanpa
+                                                    error dan single-bit pada 24 posisi.
+
+
+   Scrambler/LPC, demux, CRC                        Regresi rantai terpilih lulus; tidak menyatakan seluruh PHY sudah
+                                                    terbukti.
+
+
+
+ RS(255,239) mempunyai 16 simbol parity dan jaminan koreksi hingga 8 simbol error per
+ codeword untuk decoding error-only. Delapan lane dapat memulihkan total 64 simbol jika setiap
+ lane tidak melebihi 8; bukan sembarang 64 error yang terkumpul pada satu lane.
+
+ Mask TB lama E175_0023_4600_8792 mempunyai dua lane nol: hanya 48 simbol payload rusak
+ per frame. Varian auditor E175_1123_4622_8792 mengaktifkan delapan lane. Selalu laporkan
+ injeksi aktual, bukan nama TB.
+
+ Model bram_rs per lane tetap 8-bit, dengan latency yang sesuai model/IP; bus gabungan
+ delapan lane 64-bit bukan alasan memperlebar satu BRAM lane menjadi 64-bit. Jangan
+ mengganti parameter FEC yang sudah lulus tanpa bukti kebutuhan.
+
+ Belum dibuktikan: seluruh pola multi-error, active disparity ON, BER fisik, latency implementasi
+ vendor, timing closure, dan koreksi dalam full PHY hardware. Pertahankan regresi FEC setelah
+ perubahan control plane.
+
+
+
+
+SDA OISL • Kelompok A • Rev A.2 • Baseline 31 Oct 2026 / 12:55                                                          6
+ KELOMPOK A / 07 • ARQ
+
+ Kontrak fungsi dan pertimbangan waktu
+ SDA v2.1.2 §2.6.3.3.2–3 menetapkan urutan frame dan ARQ; DATA serta MGMT termasuk
+ cakupan ARQ, IDLE dikecualikan. Parameter ARQ tetap selama sesi. Ini mendukung parameter
+ statis, tetapi tidak membuktikan konfigurasi default prototipe memenuhi seluruh kebutuhan
+ operasi. [S1]
+
+ Yang harus dibedakan
+
+ TXFN adalah identitas frame; alamat slot RAM adalah lokasi fisik. ACK harus cocok dengan
+ identitas tracker, bukan hanya bit rendah alamat. Slot dengan pending delete belum boleh
+ dipakai ulang. Reorder perlu mengenali kemajuan non-DATA agar tidak menunggu frame DATA
+ yang memang tidak ada.
+
+ Uji lama yang lulus: ACK tidak menghapus frame salah; delete tertunda menghasilkan tag 0002
+ jika hanya frame pertama di-ACK, dan 0000 jika keduanya di-ACK; reorder 1,3,2 serta recovery
+ tanpa IDLE lulus untuk stimulus audit. Ini belum pembuktian formal semua race
+ queue/allocator. [A1]
+
+ Holdoff bukan sekadar jumlah beat RAM
+
+ Tabel 2-11 menggunakan ARQ_HOLDOFF_NFRAMES 0,16,…,4.080. Pada 10 Gb/s, 4.080 ×
+ 2,4936 µs = 10,173888 ms. Bandingkan dengan RTT, processing, antrean dan margin yang
+ dituju. Usulan skala ×64 dalam diskusi guideline merupakan tailoring yang masih perlu
+ keputusan, bukan otomatis nilai normatif baru. [S1, S5]
+
+ Timer baseline lulus dua frekuensi: 128 interval pada 322.265.625 Hz terdiri atas 51×803 +
+ 77×804 siklus; pada 312.500.000 Hz, 96×779 + 32×780. Source belum generik untuk clock
+ sembarang. Kasus tick lalu non-DATA yang diuji tidak double-count; kombinasi event lainnya
+ tetap perlu cakupan terpisah.
+
+ SIM_SCALE_ENABLE hanya mempercepat pengujian tertentu. Hasil simulasi berskala tidak boleh
+ diterjemahkan menjadi waktu holdoff hardware tanpa mengembalikan parameter dan frekuensi
+ aktual.
+
+
+
+
+SDA OISL • Kelompok A • Rev A.2 • Baseline 31 Oct 2026 / 12:55                                  7
+ KELOMPOK A / 08 • TRACKING
+
+ Temuan terbuka pada baseline 12:55
+
+   ID tetap / alias audit                 Temuan & langkah pembuktian
+
+
+   OISL-ETH-001 / D02                     Dua paket 64 B tergabung menjadi satu /T/ dengan 136 B. Lima paket
+                                          menghasilkan satu /T/ dengan 5.740 B. Kandidat jeda 4 siklus harus diuji
+                                          seluruh pipeline, seluruh byte, urutan, panjang, dan stall.
+
+
+   OISL-IDLE-001 / D03                    DATA→IDLE TXFN=1 masih memakai seed=1, seharusnya 2. Start/commit
+                                          frame harus melatch TXFN sebelum Word 0 ditawarkan; data yang sudah
+                                          valid tidak boleh berubah saat tertahan.
+
+
+   OISL-CDC-001 / B14/D05                 Writer FIFO memakai edge valid sebagai clock; sinkronisasi balik memakai
+                                          clock yang dipilih mux logika. Gunakan clock sumber kontinu, event enable,
+                                          Gray pointer, reset/domain dan constraint yang benar.
+
+
+   OISL-MGMT-001 / D06                    MGMT belum mendapatkan tracking/retransmisi dan feedback seperti DATA.
+                                          Tetapkan implementasi MGMT ARQ atau nyatakan batas kepatuhan; jangan
+                                          sekadar mengganti conditional RX.
+
+
+
+ Status keempatnya: FIX_PLANNED berdasarkan tanggapan developer; belum VERIFIED_SCOPED
+ untuk revisi pengganti karena tidak ada hasil audit revisi tersebut yang dijadikan baseline
+ dokumen ini.
+
+ D03: pertahankan aturan seed TXFN+1; jangan menggantinya menjadi TXFN modulo 63 tanpa
+ dasar standar. Uji batas 62, 63, 64, 65.535 dan rollover, transisi DATA/MGMT/RETX→IDLE, late
+ selection, serta stall Word 0.
+
+ D05: menambah kedalaman FIFO saja tidak menutup masalah clock. Uji full/drain/refill/wrap,
+ reset kedua domain, event lokal dan peer; overflow harus terlihat dan kebijakan pemulihannya
+ jelas. Icarus tidak membuktikan ketiadaan metastabilitas.
+
+ D06: uji CRC MGMT benar/salah, header tidak dipercaya, ACK hilang, retransmisi, duplikasi
+ A–B–A dan wrap TXFN. Payload retransmisi dan identitas harus konsisten; jangan menganggap
+ window 64 otomatis cukup terhadap RTT.
+
+
+
+
+SDA OISL • Kelompok A • Rev A.2 • Baseline 31 Oct 2026 / 12:55                                                         8
+ KELOMPOK A / 09 • HISTORI
+
+ Baseline, status, dan ID yang tidak rancu
+ Baseline otoritatif: Keseluruhan Codingan SDAOISL10Gto10G 31 Oct 2026 (12.55 pm).zip; 150 file. Audit ID:
+ SDA-20261031-1255-A. SHA-256:
+
+ 7d67c455f6a9f8130cece7c3555369ea304
+ d3725e9453a8cdf7e26b0550146a6
+
+
+   Tahap historis                           Cara membawa status ke agent baru
+
+
+   29–30 Oktober; Rev 2.x                   Rangkaian perbaikan RS, segmentasi, ARQ, CDC dan counter. Klaim rilis
+                                            bukan bukti penutupan sendiri.
+
+
+   Rev 2.9 / 30 Okt 18:47                   Perbaikan batch 1–2 pada sebelas modul; menjadi konteks temuan B dan
+                                            C-A.
+
+
+   Rev 3.0 / ZIP 31 Okt 11:39               Input sebelumnya keliru menurut pengguna. Laporan tetap rekam arsip
+                                            tersebut; tidak dipakai untuk status source pengganti.
+
+
+   Rev 3.0 / ZIP 31 Okt 12:55               Baseline A1 yang dipakai di sini; empat area terbuka pada halaman 8.
+
+
+   Tanggapan developer lanjutan             Rencana implementasi, bukan bukti bahwa kode baru telah diterima dan
+                                            lulus audit.
+
+
+
+   ID tetap                                          Status terbatas yang dipertahankan
+
+
+   OISL-REL-001 (D01)                                SUPERSEDED_INPUT: koreksi baseline, bukan nama bug slot ARQ.
+
+
+   OISL-ARQ-001 (B11/C-A005)                         VERIFIED_SCOPED: delete/reuse untuk kasus teruji.
+
+
+   OISL-TIM-001 (B13/D04)                            VERIFIED_SCOPED: dua frekuensi dan kasus event yang
+                                                     dilaporkan.
+
+
+   OISL-RASM-001 (C-A002)                            VERIFIED_SCOPED: keluaran unit tahan stall; D02 integrasi tetap
+                                                     terbuka.
+
+
+   OISL-IDLE-002 (B15)                               VERIFIED_SCOPED: stabilitas held beat; binding TXFN D03
+                                                     berbeda.
+
+
+ Untuk temuan baru gunakan ID tetap berurutan per subsistem; simpan alias lama bersama nama laporan asal. Format
+ status: OPEN → FIX_PLANNED → FIX_IMPLEMENTED → VERIFIED_SCOPED; SCOPE_LIMITATION dan SUPERSEDED_INPUT
+ dicatat terpisah. Jangan memakai kata AMAN tanpa menyebut batas buktinya.
+
+
+
+
+SDA OISL • Kelompok A • Rev A.2 • Baseline 31 Oct 2026 / 12:55                                                         9
+ KELOMPOK A / 10 • WAKTU
+
+ 1PPS, GNSS, OCXO dan timestamp
+ SDA menentukan format dan makna timestamp, bukan menyediakan sumber waktu untuk
+ FPGA. Mengisi field sesuai bit layout berbeda dari mengukur waktu optical egress yang akurat.
+ Timestamp statis saat ini merupakan stimulus demo, bukan bukti sinkronisasi waktu atau
+ ranging. [S1 §2.6.3.3.4, Tabel 2-14; S5]
+
+   Komponen                              Peran / keputusan yang dibutuhkan
+
+
+   Clock FPGA / timekeeper               Menghitung waktu lokal. 200 MHz nominal memungkinkan +5.000 ps per tick;
+                                         ketepatan hitungan tidak menghapus drift osilator.
+
+
+   1PPS                                  Menandai batas detik. Memerlukan capture lintas domain, definisi edge, offset,
+                                         jitter dan deteksi hilang; tidak membawa tanggal/epoch sendiri.
+
+
+   GNSS / UART                           Dapat memberikan waktu absolut dan status valid. Hubungan pesan UART
+                                         terhadap edge PPS dan timescale harus didefinisikan. M5Stack M135 disebut
+                                         sebagai opsi, bukan integrasi yang telah terbukti.
+
+
+   OCXO                                  Sumber frekuensi stabil / holdover. Bukan penyedia epoch otomatis; disiplin,
+                                         warm-up dan target drift harus dibahas dengan ETRI.
+
+
+   Timestamp header & MGMT               Latch snapshot atomik; tentukan titik TX/RX fisik, kompensasi latency,
+                                         TS-applies, valid flag dan perilaku saat referensi hilang.
+
+
+
+ Jangan menambah +3.200 ps pada tiap clock 322,265625 MHz: hitungan menjadi 1,03125 detik
+ per detik nominal, selisih 31,25 ms/detik. Clock 312,5 MHz dan 322,265625 MHz tidak dapat
+ dipertukarkan hanya karena keduanya membawa layanan 10G.
+
+ Pertanyaan keputusan ke ETRI sebelum penambahan
+
+ Apakah target hanya format timestamp, waktu lokal berjalan, atau sinkronisasi absolut? Berapa
+ toleransi akurasi/jitter dan holdover? Timescale UTC/TAI/GPS mana, epoch apa, bagaimana leap
+ second? Titik referensi TX/RX dan latency mana yang dikalibrasi? Apakah 1PPS eksternal wajib;
+ siapa menyediakan GNSS/OCXO dan antarmukanya?
+
+ Keputusan saat ini: lanjutkan demo yang disepakati; jangan menjadikan OCXO/GNSS/PNT
+ sebagai blocker baru. Status pengembangan: SCOPE_LIMITATION / keputusan tertunda, bukan
+ klaim fungsi selesai.
+
+
+
+
+SDA OISL • Kelompok A • Rev A.2 • Baseline 31 Oct 2026 / 12:55                                                          10
+ KELOMPOK A / 11 • HARDWARE
+
+ Gerbang verifikasi sebelum demonstrasi papan
+ Panduan proyek menyebut ALINX AXKU062, Kintex UltraScale xcku060-ffva1156-2-i, NIC
+ berbasis Intel 82599ES, serta SFP+ komersial. Itu konteks rancangan; detail pin, rail, frekuensi
+ dan konfigurasi harus dibuktikan dari perangkat/proyek aktual. [S2]
+
+   Tahap                             Bukti yang diperlukan
+
+
+   RTL fungsional                    Source hash, parameter, oracle independen, scoreboard byte, coverage skenario,
+                                     log dan expected/actual.
+
+
+   IP vendor / elaborasi             Model IP yang benar, latency FIFO/BRAM, seluruh port/width; xsim dengan library
+                                     vendor. Stub kosong tidak membuktikan fungsi.
+
+
+   CDC / reset                       Clock domain dan reset release per domain; asynchronous FIFO/handshake; report
+                                     CDC dan constraint fisik.
+
+
+   Synthesis / implementation        Tidak ada error kritis; clock constraints, resource, timing setup/hold dan routing.
+                                     Tidak dapat disimpulkan dari simulasi Icarus.
+
+
+   Hardware PC-ke-PC                 Ethernet FCS valid, paket diterima NIC/aplikasi, panjang/byte benar,
+                                     drop/retry/throughput, GTH lock serta pengukuran latency.
+
+
+   PHY SDA native                    Buktikan framing/rate/DC behavior dan persyaratan terkait secara terpisah dari
+                                     tunnel 64B/66B laboratorium.
+
+
+
+ 64B/66B gearbox mengatur pembentukan blok; jangan menyatakan gearbox saja menjamin DC
+ balance. Identifikasi scrambler, coding dan konfigurasi jalur fisik yang benar-benar aktif.
+ Mempertahankan isi frame di dalam tunnel belum membuktikan waveform SDA native.
+
+ Jangan menyalin usulan perubahan “Packet_Mode” ke semua .xci: tanggapan terakhir
+ mengonfirmasi FIFO terkait memakai antarmuka Native. Inspeksi IP aktual terlebih dahulu.
+ Model bram_rs per lane tetap 8-bit.
+
+ Untuk 1PPS/UART tambahan, validasi skematik, VCCO bank, IOSTANDARD, level input, konektor
+ dan arah sinyal sebelum wiring. Konflik tegangan FMC yang pernah dibahas belum diselesaikan
+ oleh PDF ini; pin clock dan level translator harus mengikuti verifikasi board, bukan asumsi
+ percakapan.
+
+
+
+
+SDA OISL • Kelompok A • Rev A.2 • Baseline 31 Oct 2026 / 12:55                                                             11
+ KELOMPOK A / 12 • HANDOFF
+
+ Cara agent baru melanjutkan audit
+ Instruksi awal yang dapat disalin
+
+ “Gunakan dokumen Kelompok A ini sebagai konteks. Mulai dari source ZIP dan laporan audit
+ dengan hash yang dinyatakan, jangan mencampur alias temuan lintas laporan. Fokus demo
+ 2.000 B → 1.900 + 100 B, IDLE dan MGMT; uji multi-paket/stress sebagai audit tambahan.
+ Bedakan fakta source, hasil eksekusi, perhitungan, usulan developer, dan hal belum diuji.
+ Jangan menyatakan seluruh kode aman hanya dari PASS unit.”
+
+ Prosedur dan keluaran minimum
+
+ 1. Inventarisasi arsip, hash per file, diff baseline, top/parameter/dependensi aktif. Catat
+ Icarus/Python dan model IP yang digunakan.
+ 2. Reproduksi bug lama sebelum menyimpulkan perbaikannya; jalankan TB terarah serta
+ regresi FEC/ARQ. Ukur byte input/output, frame count, TLAST, /T/, urutan, retry dan overflow.
+ 3. Catat PASS, FAIL, BLOCKED_DEPENDENCY, TIMEOUT dan NOT_RUN secara berbeda. Exit code
+ nol atau elaborasi dengan modul diabaikan bukan kelulusan fungsi.
+ 4. Untuk setiap temuan: ID tetap, alias+laporan asal, hash, modul/baris, pemicu,
+ expected/actual, dampak demo, penyebab, kandidat solusi, bukti dan acceptance.
+ 5. Hasil akhir: ringkasan, tracking temuan, matriks data-in/data-out, kepatuhan dengan
+ referensi pasal, batas bukti, log dan runner yang dapat diulang.
+
+ Laporan audit lengkap & sumber terlampir
+
+ PDF menyematkan berkas asli S1–S5, laporan HTML A1 dan ZIP evidence sebagai attachments.
+ S1 tetap standar lengkap yang otoritatif. A1 memuat source bernomor baris, log, stimulus dan
+ model; gunakan artefak itu untuk memeriksa ulang klaim ringkasan ini.
+
+ Buka laporan audit lengkap A1 pada akun asal. Tautan ini bukan pemberian akses otomatis kepada rekan. Jika viewer
+ PDF tidak menampilkan attachments, kirimkan juga file aslinya secara terpisah.
+
+ Catatan konsistensi A1: satu sel tabel recovery masih menyebut “akurasi timer D04 terbuka”; bagian D04 dan
+ histogram memberikan hasil scoped PASS dua frekuensi. Gunakan bukti rinci tersebut, sambil mempertahankan batas
+ cakupan event dan hardware. Tidak ada run RTL baru dilakukan untuk penyusunan PDF ini.
+
+ Bahasa kerja: Indonesia untuk audit internal; Inggris untuk laporan ETRI. Sebelum pelaporan eksternal, sertakan
+ keputusan scope dan sumber email primer. Tujuan handoff adalah menyelaraskan bukti dan keputusan, bukan
+ memindahkan klaim “100% aman” tanpa verifikasi.
+
+
+
+
+SDA OISL • Kelompok A • Rev A.2 • Baseline 31 Oct 2026 / 12:55                                                       12
+ KELOMPOK A / 13 • MANDAT FULL STACK
+
+ Agent implementasi sistem FPGA
+ Full stack pada proyek ini berarti menangani rantai modem secara menyeluruh: RTL TX/RX,
+ antarmuka dan CDC, memori, testbench, konfigurasi Vivado/IP/constraints, integrasi papan,
+ serta dokumentasi rilis. Bukan hanya web frontend/backend, dan bukan hanya auditor yang
+ menuliskan temuan.
+
+   Ranah                            Tugas agent / hasil yang dituntut
+
+
+   Requirement & arsitektur         Petakan requirement S1 ke modul, parameter, clock, data width dan acceptance.
+                                    Jelaskan perubahan interface sebelum menyebarkannya ke instansiasi.
+
+
+   RTL & integrasi                  Perbaiki temuan dengan diff terarah, jaga struktur dan komentar yang relevan,
+                                    perbarui port pada semua caller, hindari jalur bypass yang membuat TB lulus tetapi
+                                    tidak dipakai sistem.
+
+
+   Verifikasi                       Reproduksi bug baseline lalu jalankan unit, integrasi dan regresi. Pisahkan DUT,
+                                    model IP dan oracle. Jangan mengubah expected output agar mengikuti bug DUT.
+
+
+   Vivado & hardware                Periksa IP asli, XDC, clock/reset, CDC, resource dan timing ketika file/tools tersedia.
+                                    Jika tidak tersedia, tandai BLOCKED atau NOT_RUN.
+
+
+   Rilis & pelaporan                Sediakan source ZIP baru, manifest SHA-256, diff, revision notes, konfigurasi, log,
+                                    runner, serta tracking ID tetap. Bahasa diskusi Indonesia; laporan ETRI Inggris.
+
+
+
+ Instruksi prioritas: selesaikan OISL-ETH-001, OISL-IDLE-001, OISL-CDC-001 dan keputusan
+ implementasi OISL-MGMT-001. Pertahankan regresi FEC yang lulus. Jangan mengalihkan
+ pekerjaan menjadi migrasi DDR4, MTU besar atau pemasangan OCXO tanpa keputusan scope.
+
+ Agent boleh menyiapkan kandidat solusi dan TB tambahan, tetapi status FIX_IMPLEMENTED
+ harus disertai hash rilis. Status VERIFIED_SCOPED memerlukan bukti pengujian pada hash itu.
+ Pernyataan developer dan audit independen tetap dipisahkan.
+
+ Dokumen ini menjadi pembaruan Kelompok A untuk agent full stack. Halaman 1–12 mempertahankan konteks baseline;
+ halaman 13–18 menambahkan mandat implementasi serta evaluasi lampiran ARQ/OCXO. Tidak ada audit RTL baru
+ pada pembuatan revisi PDF ini.
+
+
+
+
+SDA OISL • Kelompok A • Rev A.2 • Baseline 31 Oct 2026 / 12:55                                                            13
+ KELOMPOK A / 14 • ARQ & MEMORI
+
+ Membaca ulang pembahasan ARQ kita
+ [FAKTA SUMBER] S6 adalah kutipan percakapan bertanggal 28 Oktober, dengan nomor cetak
+ 165–171. Isinya membahas Selective Repeat, loopback versus dua terminal, kebutuhan RAM
+ pada 5.000 km, BRAM simulasi dan rencana DDR4. Angka parameter dan klaim “100%” di sana
+ tidak menggantikan hasil baseline 31 Oktober.
+
+ Perhitungan kapasitas yang dapat direproduksi
+
+ [ASUMSI] Jarak tetap R = 5.000.000 m, c = 299.792.458 m/s, frame T = 2,4936 µs; semua slot
+ frame membutuhkan penyimpanan 1.912 B. Tambahan processing/queue belum termasuk RTT
+ propagasi. MB di bawah adalah desimal; MiB memakai 2²⁰ byte.
+
+ [HASIL HITUNGAN] RTT = 2R/c ≈ 33,356410 ms. N = ceil(RTT/T) = 13.377 slot. Jika budget RTT
+ dibulatkan menjadi 35 ms, N = 14.036 slot. Pembulatan kapasitas harus ke atas, bukan
+ pembulatan terdekat.
+
+   Budget                       N slot          Payload / bank     Slot 2 KiB / bank
+
+
+   RTT propagasi                13.377          25,576824 MB       27,396096 MB
+
+
+   RTT 35 ms                    14.036          26,836832 MB       28,745728 MB
+
+
+   Usulan window 16.320         16.320          31,203840 MB       33,423360 MB
+
+
+
+ [INTERPRETASI] Sekitar 25 MB adalah estimasi satu buffer pada asumsi tersebut. TX
+ retransmission + RX reorder dengan alokasi sama pada satu terminal menjadi sekitar 51,15 MB
+ data murni untuk RTT propagasi. Ini bukan identitas universal “satu arah 25 MB, dua arah 50
+ MB”; kebutuhan RX ditentukan loss pattern, holdoff, reordering dan kebijakan drop.
+
+ Jika seluruh 65.536 identitas TXFN diberi alamat langsung Base + (TXFN << 11), ruang alamat
+ per bank adalah 134.217.728 B = 128 MiB; dua bank terpisah menjadi 256 MiB. Jangan
+ menyamakan window aktif 13–16 ribu frame dengan alokasi langsung seluruh namespace.
+
+ Usulan 255×64 dalam S6 bukan nilai Tabel 2-11 v2.1.2 yang telah disepakati. Dimensi memori,
+ holdoff dan jarak harus diputuskan bersama. Kapasitas board dan bandwidth DDR4 yang dikutip
+ S6 masih memerlukan manual, konfigurasi MIG dan bukti implementasi aktual.
+
+
+
+
+SDA OISL • Kelompok A • Rev A.2 • Baseline 31 Oct 2026 / 12:55                                 14
+ KELOMPOK A / 15 • KONTRAK ARQ
+
+ BRAM sekarang, DDR4 sebagai tahap
+ berikutnya
+
+   Mode                              Kontrak implementasi / acceptance
+
+
+   Simulasi BRAM                     Model kapasitas kecil, latency eksplisit, full/empty dan backpressure benar. Uji
+                                     ACK/NAK/timeout/drop/delete/reuse dengan scoreboard; parameter simulasi tidak
+                                     boleh mengubah semantik protokol.
+
+
+   Demo hardware BRAM                Periksa resource untuk kedua bank dan seluruh pipeline, bukan ARQ saja. Bila
+                                     window penuh, tahan alokasi atau terapkan drop terdefinisi; tidak boleh overwrite
+                                     frame aktif.
+
+
+   DDR4/MIG mendatang                Memerlukan controller, calibration-ready, AXI command/data/response, burst
+                                     alignment, arbitration TX/RX, FIFO bridging dan reset/error recovery.
+                                     USE_DDR4_MIG atau SIM_SCALE_ENABLE saja bukan implementasi DDR4.
+
+
+
+ [INTERPRETASI] Kebutuhan bandwidth dinilai dari semua transaksi. Pada contoh saturasi, satu
+ bank menulis 1.912 B setiap 2,4936 µs ≈ 0,76676 GB/s. TX write + RX write + RX drain read ≈
+ 2,30028 GB/s sebelum retransmission read, metadata dan overhead. Peak DDR4 teoritis tidak
+ sama dengan bandwidth efektif berkelanjutan.
+
+ Kontrak yang wajib diuji oleh agent
+
+ Identitas frame dan slot terpisah; ACK duplicate/stale tidak membebaskan frame baru. Pending
+ delete harus melindungi slot sampai operasi selesai sesuai interface memori. Tracker dan RAM
+ boleh berbeda kedalaman hanya bila admission control benar. Ring buffer harus memiliki
+ proteksi full dan definisi wrap yang konsisten.
+
+ Loopback langsung memakai local feedback hanya dalam konfigurasi eksplisit. Dua terminal
+ memakai ACK peer untuk tracker lokal, local CRC feedback untuk header balasan. Uji dua
+ instance dengan delay feedback agar bug routing tidak tertutup loopback.
+
+ MGMT ARQ memerlukan penyimpanan, identitas retransmisi, CRC feedback, duplicate
+ suppression dan urutan yang konsisten. IDLE tidak disimpan sebagai frame ARQ, tetapi
+ kemajuan urutannya tetap relevan pada reorder.
+
+ S6 mengusulkan error burst >8 simbol agar ARQ terpicu. Itu kandidat stimulus, bukan jaminan
+ CRC akan gagal: distribusi per lane, efek LPC dan payload yang keluar harus diperiksa. Pisahkan
+ uji FEC uncorrectable dari uji ARQ dengan CRC-fail terkontrol; pastikan retransmisi berikutnya
+ bersih dan byte akhir cocok.
+
+
+
+
+SDA OISL • Kelompok A • Rev A.2 • Baseline 31 Oct 2026 / 12:55                                                       15
+ KELOMPOK A / 16 • OCXO & TIMESTAMP
+
+ Koreksi terhadap lampiran diskusi lama
+ [FAKTA SUMBER] S7 adalah kutipan percakapan 28 Oktober, nomor cetak 172–179, mengenai
+ OCXO, 1PPS, OCT clock, timestamp header/MGMT dan TWTT. Dokumen ini merekam
+ pembahasan, bukan datasheet osilator atau bukti pengukuran hardware.
+
+   Pernyataan pada S7                          Pedoman agent full stack
+
+
+   OCXO menjamin akurasi sub-ns                Belum dibuktikan. Stabilitas frekuensi memerlukan part number,
+                                               temperatur, aging, averaging time dan disciplining. Akurasi waktu
+                                               absolut juga bergantung referensi, capture dan kalibrasi.
+
+
+   PPS langsung mereset counter sekaligus      Pisahkan timekeeping dan scheduling. Definisikan prioritas PPS versus
+   trigger MGMT                                rollover lokal, cegah double increment/trigger, dan tangani
+                                               missing/spurious PPS.
+
+
+   +3.200 ps pada tx0_clk                      Hanya sesuai 312,5 MHz. Pada 322,265625 MHz salah. Kandidat 200
+                                               MHz +5.000 ps masih memerlukan clock aktual dan kebijakan disiplin.
+
+
+   TX latency tetap 2.313.200 ps               Angka historis, belum kalibrasi on-wire. FIFO, stall, fase CDC, gearbox
+                                               dan reset dapat memengaruhi latency; ukur titik referensi yang sama.
+
+
+   MGMT 8 + 469 + 1 = 478 kata = 1.912 B       Salah hitung. 1.912/4 = 477 kata. Jika metadata 8 kata, padding 468
+                                               kata dan CRC 1 kata menghasilkan 477.
+
+
+   SMA H12/G12 dapat langsung menerima         Belum diverifikasi dari manual/skema dalam penambahan ini. Validasi
+   OCXO/PPS                                    jalur, bank, VCCO, standar listrik dan single-ended/differential; PPS
+                                               bukan clock berfrekuensi tinggi yang selalu dapat dipertukarkan.
+
+
+
+ [HASIL HITUNGAN] Counter 40-bit dapat merepresentasikan 10¹² ps, tetapi format 1 ps tidak
+ meningkatkan resolusi sampling clock 5 ns. Penjumlahan latency harus memakai intermediate
+ cukup lebar, rollover modulo 10¹², carry detik dan modulo 60 yang benar.
+
+ 229 bit metadata dipadatkan menjadi 256 bit dengan 27 bit padding dalam delapan kata awal.
+ Snapshot seluruh set mencegah campuran antar-word, namun snapshot dari domain lain masih
+ memerlukan transfer bus koheren. Timestamp statis boleh dipakai untuk demo format dengan
+ label stimulus, bukan data pengukuran fisik.
+
+
+
+
+SDA OISL • Kelompok A • Rev A.2 • Baseline 31 Oct 2026 / 12:55                                                           16
+ KELOMPOK A / 17 • PENGEMBANGAN WAKTU
+
+ Kontrak opsional 1PPS dan TWTT
+ Antarmuka yang perlu disepakati sebelum coding
+
+ [USULAN DESAIN] Sumber clock kontinu → timekeeper lokal; PPS → capture/event logic;
+ epoch/status dari GNSS atau host → pembaruan waktu yang koheren. Timekeeper menyediakan
+ detik, subdetik, valid/quality dan status holdover. Scheduler menerima permintaan MGMT,
+ bukan clock PPS sebagai clock RTL.
+
+ Tentukan perilaku saat boot, reference unlocked, PPS hilang, PPS kembali, epoch berubah, serta
+ reset sebagian domain. Pilih kebijakan step atau slew bersama ETRI. Jangan reset counter pada
+ setiap PPS tanpa menilai monotonicity dan timestamp frame yang sedang aktif.
+
+ Pisahkan permintaan MGMT 1 Hz dari waktu aktual transmisi: scheduler dapat sibuk.
+ Permintaan harus diantrikan atau digabung sesuai kebijakan eksplisit, sementara timestamp
+ harus mengacu pada peristiwa yang didefinisikan. Uji batas detik saat backlog dan retransmisi.
+
+ Model TWTT pada S7, dengan asumsi yang jelas
+
+ [ASUMSI] A mengirim pada T1, B menerima T2, B membalas T3, A menerima T4. Jam memiliki
+ laju yang sama selama pertukaran, offset konstan, propagation dua arah simetris, dan latency
+ lokal sudah dikalibrasi.
+
+ [HASIL HITUNGAN] τ = ((T4 − T1) − (T3 − T2))/2; R = cτ.
+ Offset jam B relatif A: θ = ((T2 − T1) − (T4 − T3))/2.
+
+ [INTERPRETASI] Rumus tidak otomatis memberi akurasi pikodetik. Jika delay arah maju dan
+ balik berbeda, hasil range mencerminkan rata-ratanya dan estimasi offset mengandung
+ setengah asimetri. Clock skew, pergerakan, timestamp quantization, latency transceiver dan
+ ketidakpastian titik capture harus dimodelkan sebelum klaim ranging.
+
+ Untuk pengembangan awal, verifikasi hitungan/snapshot/rollover dengan waktu sintetis. Tahap
+ berikutnya capture PPS di board dan karakterisasi jitter. Ranging serta sinkronisasi
+ antar-terminal baru dinilai setelah timestamp TX/RX terkalibrasi. PNT/orbit dan pemasangan
+ OCXO tetap menunggu keputusan scope ETRI.
+
+ Pembahasan ini mengoreksi dan membatasi model dalam S7; tidak menambahkan klaim performa komponen eksternal
+ atau hasil eksperimen baru.
+
+
+
+
+SDA OISL • Kelompok A • Rev A.2 • Baseline 31 Oct 2026 / 12:55                                             17
+ KELOMPOK A / 18 • EKSEKUSI & SERAH TERIMA
+
+ Rencana kerja agent dan kriteria selesai
+
+   Urutan / owner                     Deliverable & acceptance
+
+
+   1. Agent full stack                Bekukan baseline 12:55 dan manifest. Petakan ID tetap, modul aktif, parameter
+                                      dan kontrak antarmuka; jangan menggunakan nomor D tanpa laporan asal.
+
+
+   2. Agent full stack                Implementasikan perbaikan demo terarah. D02: tiap paket tetap terpisah dan
+                                      byte benar. D03: seed/header cocok tanpa pelanggaran valid/ready. CDC: domain
+                                      jelas, queue/overflow/reset teruji.
+
+
+   3. Williams + developer            Putuskan cakupan MGMT ARQ untuk rilis. Dokumentasikan konsekuensi jika
+                                      hanya ARQ DATA yang dilaporkan. Jangan menyatakan SDA ARQ lengkap selama
+                                      celah tersebut terbuka.
+
+
+   4. Auditor / QA                    Jalankan reproduksi dan regresi pada ZIP baru. Periksa data-in/data-out, semua
+                                      kontrol akhir paket dan skenario adversarial. Laporkan bukti lulus secara
+                                      terbatas.
+
+
+   5. Tim hardware                    Setelah file dan tools tersedia: xsim, IP model, synthesis, CDC/timing, bitstream,
+                                      loopback dan PC-ke-PC. Catat semua tahap yang belum dijalankan.
+
+
+   6. Williams + ETRI                 Sepakati RTT/window/memori dan kebutuhan timestamp eksternal. DDR4, 1PPS,
+                                      GNSS/OCXO dan TWTT menjadi tahap terpisah dengan acceptance sendiri.
+
+
+
+ Instruksi tambahan siap diberikan ke agent
+
+ “Anda adalah agent full stack FPGA proyek SDA OISL 10G-to-10G. Gunakan Kelompok A Rev A.2
+ beserta source ZIP terbaru. Implementasikan perbaikan yang berlandaskan bukti, pertahankan
+ regresi FEC, dan audit ulang setiap perubahan interface. Gunakan S6/S7 sebagai diskusi historis
+ dengan koreksi pada halaman 14–17, bukan instruksi untuk menambah DDR4 atau OCXO
+ otomatis. Jangan mengklaim simulasi, timing atau hasil hardware yang belum Anda jalankan.”
+
+ Paket rilis minimum: ZIP source, manifest hash, changelog per ID, daftar file/port berubah,
+ command reproducible, parameter TB, expected/actual, log dan batas pengujian. Jika revisi
+ mengubah clock, buffer atau scheduler, jelaskan dampaknya pada latency, throughput,
+ timeout, resource dan kompatibilitas.
+
+ Lampiran tambahan PDF: S6_Diskusi_ARQ_28Oct.pdf dan S7_Diskusi_OCXO_28Oct.pdf, disimpan utuh untuk jejak
+ sumber. Halaman 14–17 merupakan penjelasan dan koreksi atas lampiran tersebut. Status audit tetap mengacu A1,
+ bukan klaim “100%” dalam percakapan lama.
+
+
+
+
+SDA OISL • Kelompok A • Rev A.2 • Baseline 31 Oct 2026 / 12:55                                                         18
+

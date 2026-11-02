@@ -1,0 +1,6 @@
+# New simulation only: exact tested top/profile required.
+foreach path {{/tb_reassembly_and_backend/clk} {/tb_reassembly_and_backend/rst_n} {/tb_reassembly_and_backend/reassembled_eth_tdata} {/tb_reassembly_and_backend/s_axis_fso_tdata} {/tb_reassembly_and_backend/reassembled_pkt_bytes} {/tb_reassembly_and_backend/reassembled_pkt_cnt} {/tb_reassembly_and_backend/w} {/tb_reassembly_and_backend/eth_out_words} {/tb_reassembly_and_backend/xgmii_pkt_words} {/tb_reassembly_and_backend/pc2_xgmii_txc} {/tb_reassembly_and_backend/pc2_xgmii_txd} {/tb_reassembly_and_backend/in_xgmii_frame} {/tb_reassembly_and_backend/s_axis_fso_tvalid} {/tb_reassembly_and_backend/s_axis_fso_tlast} {/tb_reassembly_and_backend/s_axis_fso_tready} {/tb_reassembly_and_backend/reassembled_eth_tvalid} {/tb_reassembly_and_backend/reassembled_eth_tlast} {/tb_reassembly_and_backend/captured_last_eth_fcs}} {
+ if {![llength [get_objects -quiet $path]]} {error "Unresolved waveform object: $path. Wrong top/profile; do not ignore."}
+ log_wave [get_objects $path]
+}
+open_wave_config {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/Testing Run/New Testing Run Final/tb_reassembly_and_backend__tb_reassembly_and_backend__historical.wcfg}

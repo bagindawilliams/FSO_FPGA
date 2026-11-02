@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/audit/20261101_module16_idle_v2/build/focused_20261101_184302_067679_tb_idle_MGMT_verified_v2.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tb_idle_MGMT_verified_v2" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+   </zoom_setting>
+   <column_width_setting>
+   </column_width_setting>
+   <WVObjectSize size="17" />
+   <wvobject type="group" fp_name="group1">
+      <obj_property name="label">System Clock / Control</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/tb_idle_MGMT_verified_v2/clk">
+         <obj_property name="ElementShortName">clk</obj_property>
+         <obj_property name="ObjectShortName">clk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_idle_MGMT_verified_v2/rst_n">
+         <obj_property name="ElementShortName">rst_n</obj_property>
+         <obj_property name="ObjectShortName">rst_n</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group4">
+      <obj_property name="label">System Control</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_idle_MGMT_verified_v2/payload_mux_sel">
+         <obj_property name="ElementShortName">payload_mux_sel[1:0]</obj_property>
+         <obj_property name="ObjectShortName">payload_mux_sel[1:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group6">
+      <obj_property name="label">RAW IDLE Data</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_idle_MGMT_verified_v2/u_idle_capsule/word_cnt">
+         <obj_property name="ElementShortName">word_cnt[8:0]</obj_property>
+         <obj_property name="ObjectShortName">word_cnt[8:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group8">
+      <obj_property name="label">IDLE with CRC 32 to FIFO</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_idle_MGMT_verified_v2/u_idle_capsule/crc_tdata">
+         <obj_property name="ElementShortName">crc_tdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">crc_tdata[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_idle_MGMT_verified_v2/idle_crc_cnt">
+         <obj_property name="ElementShortName">idle_crc_cnt[15:0]</obj_property>
+         <obj_property name="ObjectShortName">idle_crc_cnt[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group11">
+      <obj_property name="label">IDLE Output FIFO to MUX</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_idle_MGMT_verified_v2/idle_tdata">
+         <obj_property name="ElementShortName">idle_tdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">idle_tdata[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group13">
+      <obj_property name="label">MUX Arbi</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_idle_MGMT_verified_v2/m_axis_fso_tdata">
+         <obj_property name="ElementShortName">m_axis_fso_tdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">m_axis_fso_tdata[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group15">
+      <obj_property name="label">RAW MGMT Data</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_idle_MGMT_verified_v2/u_mgmt_capsule/word_cnt">
+         <obj_property name="ElementShortName">word_cnt[8:0]</obj_property>
+         <obj_property name="ObjectShortName">word_cnt[8:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_idle_MGMT_verified_v2/u_mgmt_capsule/mgmt_trigger_1hz">
+         <obj_property name="ElementShortName">mgmt_trigger_1hz</obj_property>
+         <obj_property name="ObjectShortName">mgmt_trigger_1hz</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group18">
+      <obj_property name="label">MGMT with CRC 32 to FIFO</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_idle_MGMT_verified_v2/u_mgmt_capsule/crc_tdata">
+         <obj_property name="ElementShortName">crc_tdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">crc_tdata[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_idle_MGMT_verified_v2/mgmt_crc_cnt">
+         <obj_property name="ElementShortName">mgmt_crc_cnt[15:0]</obj_property>
+         <obj_property name="ObjectShortName">mgmt_crc_cnt[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group21">
+      <obj_property name="label">MGMT Output FIFO to MUX</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_idle_MGMT_verified_v2/mgmt_tdata">
+         <obj_property name="ElementShortName">mgmt_tdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">mgmt_tdata[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group23">
+      <obj_property name="label">Process and State</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_idle_MGMT_verified_v2/frame_id">
+         <obj_property name="ElementShortName">frame_id[3:0]</obj_property>
+         <obj_property name="ObjectShortName">frame_id[3:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_idle_MGMT_verified_v2/seed_wr">
+         <obj_property name="ElementShortName">seed_wr[31:0]</obj_property>
+         <obj_property name="ObjectShortName">seed_wr[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_idle_MGMT_verified_v2/seed_rd">
+         <obj_property name="ElementShortName">seed_rd[31:0]</obj_property>
+         <obj_property name="ObjectShortName">seed_rd[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_idle_MGMT_verified_v2/ii">
+         <obj_property name="ElementShortName">ii[31:0]</obj_property>
+         <obj_property name="ObjectShortName">ii[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_idle_MGMT_verified_v2/mi">
+         <obj_property name="ElementShortName">mi[31:0]</obj_property>
+         <obj_property name="ObjectShortName">mi[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_idle_MGMT_verified_v2/ref_lfsr">
+         <obj_property name="ElementShortName">ref_lfsr[24:0]</obj_property>
+         <obj_property name="ObjectShortName">ref_lfsr[24:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_idle_MGMT_verified_v2/ref_word">
+         <obj_property name="ElementShortName">ref_word[31:0]</obj_property>
+         <obj_property name="ObjectShortName">ref_word[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_idle_MGMT_verified_v2/rx_phy_ts_sec">
+         <obj_property name="ElementShortName">rx_phy_ts_sec[5:0]</obj_property>
+         <obj_property name="ObjectShortName">rx_phy_ts_sec[5:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_idle_MGMT_verified_v2/rx_phy_ts_picosec">
+         <obj_property name="ElementShortName">rx_phy_ts_picosec[39:0]</obj_property>
+         <obj_property name="ObjectShortName">rx_phy_ts_picosec[39:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_idle_MGMT_verified_v2/tx_phy_ts_sec">
+         <obj_property name="ElementShortName">tx_phy_ts_sec[5:0]</obj_property>
+         <obj_property name="ObjectShortName">tx_phy_ts_sec[5:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_idle_MGMT_verified_v2/tx_phy_ts_picosec">
+         <obj_property name="ElementShortName">tx_phy_ts_picosec[39:0]</obj_property>
+         <obj_property name="ObjectShortName">tx_phy_ts_picosec[39:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_idle_MGMT_verified_v2/range_meters">
+         <obj_property name="ElementShortName">range_meters[63:0]</obj_property>
+         <obj_property name="ObjectShortName">range_meters[63:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_idle_MGMT_verified_v2/range_ts_sec">
+         <obj_property name="ElementShortName">range_ts_sec[31:0]</obj_property>
+         <obj_property name="ObjectShortName">range_ts_sec[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_idle_MGMT_verified_v2/range_ts_picosec">
+         <obj_property name="ElementShortName">range_ts_picosec[39:0]</obj_property>
+         <obj_property name="ObjectShortName">range_ts_picosec[39:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_idle_MGMT_verified_v2/frame_type_str">
+         <obj_property name="ElementShortName">frame_type_str[31:0]</obj_property>
+         <obj_property name="ObjectShortName">frame_type_str[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group39">
+      <obj_property name="label">Measurement / Checker</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_idle_MGMT_verified_v2/idle_frames_checked">
+         <obj_property name="ElementShortName">idle_frames_checked[31:0]</obj_property>
+         <obj_property name="ObjectShortName">idle_frames_checked[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_idle_MGMT_verified_v2/mgmt_frames_checked">
+         <obj_property name="ElementShortName">mgmt_frames_checked[31:0]</obj_property>
+         <obj_property name="ObjectShortName">mgmt_frames_checked[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group42">
+      <obj_property name="label">IDLE Path</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_idle_MGMT_verified_v2/idle_crc">
+         <obj_property name="ElementShortName">idle_crc[31:0]</obj_property>
+         <obj_property name="ObjectShortName">idle_crc[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_idle_MGMT_verified_v2/idle_stalled">
+         <obj_property name="ElementShortName">idle_stalled</obj_property>
+         <obj_property name="ObjectShortName">idle_stalled</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_idle_MGMT_verified_v2/idle_held">
+         <obj_property name="ElementShortName">idle_held[32:0]</obj_property>
+         <obj_property name="ObjectShortName">idle_held[32:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group46">
+      <obj_property name="label">MGMT Path</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_idle_MGMT_verified_v2/mgmt_crc">
+         <obj_property name="ElementShortName">mgmt_crc[31:0]</obj_property>
+         <obj_property name="ObjectShortName">mgmt_crc[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_idle_MGMT_verified_v2/expected_mgmt">
+         <obj_property name="ElementShortName">expected_mgmt[255:0]</obj_property>
+         <obj_property name="ObjectShortName">expected_mgmt[255:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_idle_MGMT_verified_v2/mgmt_stalled">
+         <obj_property name="ElementShortName">mgmt_stalled</obj_property>
+         <obj_property name="ObjectShortName">mgmt_stalled</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_idle_MGMT_verified_v2/mgmt_held">
+         <obj_property name="ElementShortName">mgmt_held[32:0]</obj_property>
+         <obj_property name="ObjectShortName">mgmt_held[32:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_idle_MGMT_verified_v2/mgmt_trigger_1hz">
+         <obj_property name="ElementShortName">mgmt_trigger_1hz</obj_property>
+         <obj_property name="ObjectShortName">mgmt_trigger_1hz</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group52">
+      <obj_property name="label">Payload Path</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="group" fp_name="group53">
+      <obj_property name="label">Data Input</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_idle_MGMT_verified_v2/txfn_in">
+         <obj_property name="ElementShortName">txfn_in[15:0]</obj_property>
+         <obj_property name="ObjectShortName">txfn_in[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group55">
+      <obj_property name="label">Data Output</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_idle_MGMT_verified_v2/out_byte_cnt">
+         <obj_property name="ElementShortName">out_byte_cnt[15:0]</obj_property>
+         <obj_property name="ObjectShortName">out_byte_cnt[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group57">
+      <obj_property name="label">Functional handshake / recorded controls</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/tb_idle_MGMT_verified_v2/ts_valid">
+         <obj_property name="ElementShortName">ts_valid</obj_property>
+         <obj_property name="ObjectShortName">ts_valid</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_idle_MGMT_verified_v2/idle_tvalid">
+         <obj_property name="ElementShortName">idle_tvalid</obj_property>
+         <obj_property name="ObjectShortName">idle_tvalid</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_idle_MGMT_verified_v2/idle_tlast">
+         <obj_property name="ElementShortName">idle_tlast</obj_property>
+         <obj_property name="ObjectShortName">idle_tlast</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_idle_MGMT_verified_v2/idle_tready">
+         <obj_property name="ElementShortName">idle_tready</obj_property>
+         <obj_property name="ObjectShortName">idle_tready</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_idle_MGMT_verified_v2/mgmt_tvalid">
+         <obj_property name="ElementShortName">mgmt_tvalid</obj_property>
+         <obj_property name="ObjectShortName">mgmt_tvalid</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_idle_MGMT_verified_v2/mgmt_tlast">
+         <obj_property name="ElementShortName">mgmt_tlast</obj_property>
+         <obj_property name="ObjectShortName">mgmt_tlast</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_idle_MGMT_verified_v2/mgmt_tready">
+         <obj_property name="ElementShortName">mgmt_tready</obj_property>
+         <obj_property name="ObjectShortName">mgmt_tready</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_idle_MGMT_verified_v2/m_axis_fso_tvalid">
+         <obj_property name="ElementShortName">m_axis_fso_tvalid</obj_property>
+         <obj_property name="ObjectShortName">m_axis_fso_tvalid</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_idle_MGMT_verified_v2/m_axis_fso_tlast">
+         <obj_property name="ElementShortName">m_axis_fso_tlast</obj_property>
+         <obj_property name="ObjectShortName">m_axis_fso_tlast</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_idle_MGMT_verified_v2/m_axis_fso_tready">
+         <obj_property name="ElementShortName">m_axis_fso_tready</obj_property>
+         <obj_property name="ObjectShortName">m_axis_fso_tready</obj_property>
+      </wvobject>
+   </wvobject>
+</wave_config>

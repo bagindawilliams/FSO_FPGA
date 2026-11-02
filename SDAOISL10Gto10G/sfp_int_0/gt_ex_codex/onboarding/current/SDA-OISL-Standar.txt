@@ -1,0 +1,1903 @@
+Space Development Agency
+Optical Intersatellite Link (OISL) Standard
+Version 2.1.2
+
+
+
+
+ Developed by the
+ Space Development Agency
+ Office of the Under Secretary of Defense,
+ Research and Engineering (USD(R&E))
+ 3030 Defense Pentagon
+ Washington, D.C. 20301
+
+ Email: OSD.SDA.Outreach@mail.mil
+
+
+ Publication Date:       3 January, 2022
+ Document ID:            SDA-9100-0001-03
+
+
+
+
+ DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+Optical Intersatellite Standard Version 2.1.2                     Space Development Agency
+Document ID: SDA-9100-0001-03
+
+
+
+
+Prepared by:
+Michael Butterfield
+Optical Communications Lead, Space Development Agency
+Email: OSD.SDA.Outreach@mail.mil
+
+
+
+     DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                       Page 2 of 50
+Optical Intersatellite Standard Version 2.1.2                                Space Development Agency
+Document ID: SDA-9100-0001-03
+                                        Revision History
+        Date            Version                             Description of Change
+ June 5, 2020        NA            Draft as issued for Transport Layer T0 RFP HQ085020R0001
+ June 5, 2020        1.0           Editorial changes only
+ Feb 5, 2021         2.0           Final version
+ October 15, 2021    2.1           This version incorporates errors, omissions, and clarifying information in
+                                   support of Tranche 0.
+ November 24, 2021   2.1.1         DRAFT Patch update - Provided clarifying information and incorporated
+                                   fixes for errata
+ December 13, 2021   2.1.2         Updated Patch version based on comments received on DRAFT 2.1.1
+                                   patch
+
+
+
+
+     DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                       Page 3 of 50
+Optical Intersatellite Standard Version 2.1.2                                                           Space Development Agency
+Document ID: SDA-9100-0001-03
+
+Table of Contents
+List of Figures.............................................................................................................................. vii
+1          Introduction .................................................................................................................. 8
+     1.1 Purpose and Scope .......................................................................................................... 8
+     1.2 Assumptions.................................................................................................................... 8
+     1.3 Nomenclature and Definitions ........................................................................................ 9
+                    Normative Text ................................................................................................. 9
+                    Definitions from the Open Systems Interconnection (OSI) Basic Reference
+                    Model ................................................................................................................ 9
+2          Standard Definition .................................................................................................... 10
+     2.1 Pointing, Acquisition, and Tracking ............................................................................. 10
+                    PAT Introduction ............................................................................................ 10
+                    Example Spiral Scan ....................................................................................... 10
+                    T0 Interoperable Pointing, Acquisition, and Tracking ................................... 11
+        2.1.3.1     State Machine.................................................................................................. 12
+           2.1.3.2         Configuration Parameters and Telemetry ....................................................... 15
+                   Acquisition Scheme ........................................................................................ 17
+      2.2 Latency.......................................................................................................................... 18
+      2.3 Re-Programming ........................................................................................................... 18
+      2.4 Effective Data Rate ....................................................................................................... 19
+      2.5 Physical Layer............................................................................................................... 19
+                   Channel Definition .......................................................................................... 19
+         2.5.1.1   Center Frequency Tolerance ........................................................................... 20
+           2.5.1.2         Laser Line-Width ............................................................................................ 20
+           2.5.1.3         In-Band and Spillover Emissions.................................................................... 20
+           2.5.1.4         Timing Jitter .................................................................................................... 20
+                 Transmit and Receive Wavelength Selection ................................................. 20
+                 Polarization ..................................................................................................... 20
+                 Power and Link Margin .................................................................................. 20
+      2.6 Modulation .................................................................................................................... 21
+                 Modulation ...................................................................................................... 21
+                 Tracking Tone ................................................................................................. 21
+                 Framing, Coding, Encapsulation..................................................................... 22
+         2.6.3.1 Framing Structure ........................................................................................... 22
+           2.6.3.2         Preamble Sequence ......................................................................................... 23
+           2.6.3.3         Header ............................................................................................................. 23
+           2.6.3.4         Payload............................................................................................................ 31
+           2.6.3.5         Special Frames ................................................................................................ 31
+           2.6.3.6         Error Control Coding ...................................................................................... 35
+           2.6.3.7         Ethernet Packet Encapsulation ........................................................................ 42
+3              Glossary ....................................................................................................................... 48
+
+       DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                                          Page 4 of 50
+Optical Intersatellite Standard Version 2.1.2                                                     Space Development Agency
+Document ID: SDA-9100-0001-03
+4         References ................................................................................................................... 50
+
+
+
+
+     DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                                    Page 5 of 50
+Optical Intersatellite Standard Version 2.1.2                                                   Space Development Agency
+Document ID: SDA-9100-0001-03
+
+List of Tables
+Table 2-1. State Machine Description .......................................................................................... 13
+Table 2-2. State Machine Configuration Parameters .................................................................... 15
+Table 2-3. State Machine Telemetry ............................................................................................. 16
+Table 2-4: Maximum Effective Data Rates for Frame Configurations ........................................ 19
+Table 2-5: Wavelength Channel Definition .................................................................................. 19
+Table 2-6: Minimum Irradiance .................................................................................................... 20
+Table 2-7: Required Margin at Range .......................................................................................... 21
+Table 2-8: Modem Frame Summary ............................................................................................. 23
+Table 2-9: Frame Header Fields ................................................................................................... 24
+Table 2-10: Mapping of Header Fields to Byte and Bit-locations in the Transmitted Header ..... 25
+Table 2-11: ARQ Parameters ........................................................................................................ 26
+Table 2-12: FCCH Logical Channels ........................................................................................... 27
+Table 2-13: FCCH Payloads ......................................................................................................... 28
+Table 2-14: MGMT/PNT Frame Payload Definition for Ranging Timestamps........................... 32
+Table 2-15: CRC Polynomials ...................................................................................................... 36
+Table 2-16: Shortened Reed-Solomon Code for Frame Header ................................................... 37
+Table 2-17: Scrambler Reset Definition ....................................................................................... 39
+Table 2-18: FSO Payload and Packet Headers ............................................................................. 44
+Table 2-19: Ethernet Frame Byte Ordering into FSO Logical Frame .......................................... 45
+
+
+
+
+       DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                                     Page 6 of 50
+Optical Intersatellite Standard Version 2.1.2                                                    Space Development Agency
+Document ID: SDA-9100-0001-03
+
+List of Figures
+Figure 2-1. Spiral Scan Pattern ..................................................................................................... 10
+Figure 2-2. T0 Interoperable PAT State Machine ........................................................................ 12
+Figure 2-3 PAT Geometric Reference .......................................................................................... 17
+Figure 2-4. PAT Notional OPSCON. ........................................................................................... 18
+Figure 2-5: AM Tone Tracking Modulation ................................................................................. 22
+Figure 2-6: Multiplexing Frame Types ......................................................................................... 34
+Figure 2-7: Payload Byte Ordering ............................................................................................... 35
+Figure 2-8: 𝑳𝑳-bit CRC Calculation Circuit ................................................................................... 36
+Figure 2-9: Header FEC Encoding ............................................................................................... 37
+Figure 2-10: Payload FEC Interleaving ........................................................................................ 38
+Figure 2-11: Bit Ordering of Reed-Solomon Encoded Bytes ....................................................... 38
+Figure 2-12: Application of the Scrambler .................................................................................. 40
+Figure 2-13: Differentially Encoding in LPC Encoder ................................................................ 41
+Figure 2-14: LPC Codeword ......................................................................................................... 41
+Figure 2-15: Frame Encoding Summary....................................................................................... 42
+Figure 2-16: Ethernet Encapsulation ............................................................................................ 42
+Figure 2-17: FSO Payload Frame Format ..................................................................................... 43
+
+
+
+
+       DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                                      Page 7 of 50
+1 Introduction
+The Optical Intersatellite Link (OISL) standard establishes the interoperability requirements for
+all Optical Links that wish to communicate with the Space Development Agency (SDA) Tranche
+0 system, including space-to-space and space-to-ground links.
+
+1.1 Purpose and Scope
+The purpose of this document is to define an interface specification for space-to-space and space-
+to-ground optical communications for SDA Tranche 0. The scope of this document is limited to
+the physical and data link layers of the optical communication links.
+
+1.2 Assumptions
+The development of this standard has focused on the optical communications requirements to be
+demonstrated in the SDA Tranche 0 (T0) constellation.
+The following items set this document’s scope:
+   1. Only spacecraft in Low Earth Orbit (LEO) are part of the T0 constellation.
+      Interoperability with spacecraft in other orbital regimes is not in scope.
+          a. Three Classes of Links have been assumed
+                   i. In-Plane
+                  ii. Cross-Plane
+                 iii. Space-to-Terrestrial
+   2. The later (T1+) constellation OISLs are not required to be backward compatible with the
+      T0 system. This document is applicable to the SDA T0 Constellation.
+   3. The optical link ranges in T0 will span from a nearest allowable distance to a maximum
+      of 6500 km.
+          a. No analysis of the implications of this interface specification has been performed
+              on links beyond 6500 km
+          b. The nearest allowable distance is the minimum safe operating distance, with
+              appropriate margin, for which the transmitter is capable of delivering a signal to
+              the remote receiver below its safe irradiance limit
+   4. The OISL terminals:
+          a. Operate in the Optical C-Band
+          b. Operate between 100 Mbps and 1 Gbps data rates with nominal operations at
+              312.5 Mbps
+          c. Employ direct detection optical receivers
+   5. While this document does not levy requirements on size, weight, power, and cost
+      (SWAP-C), the SDA T0 spacecraft and optical terminal SWAP-C and mission CONOPS
+      have influenced the range, data rate, and other assumptions and decisions contained
+      herein.
+
+
+
+
+ DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                      Page 8 of 50
+1.3 Nomenclature and Definitions
+        Normative Text
+The following conventions apply for the normative specifications in this Specification:
+   a.   the words ‘shall’ and ‘must’ imply a binding and verifiable specification
+   b.   the word ‘should’ implies an optional, but desirable, specification
+   c.   the word ‘may’ implies an optional specification
+   d.   the words ‘is’, ‘are’, and ‘will’ imply statements of fact
+
+     Definitions from the Open Systems Interconnection (OSI)
+Basic Reference Model
+This standard makes use of a number of terms from the OSI model as defined in [1]. The
+definitions of those terms in this standard conform to the definitions contained in [1].
+
+
+
+
+ DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                       Page 9 of 50
+2 Standard Definition
+2.1 Pointing, Acquisition, and Tracking
+       PAT Introduction
+Acquisition time shall be less than 100 seconds after bus offset calibration. Acquisition time should
+be less than 10 seconds after bus offset calibration. A transmitted amplitude modulation (AM)
+tracking tone shall be provided as defined in Section 2.6.2.
+The PAT spatial acquisition shall be referred to as a lead and follow strategy (referred to as master-
+slave in [2]).
+The PAT approach below provides the state machine and parameters for a common Pointing,
+Acquisition and Tracking approach for optical intersatellite links and optical communications
+terminals (OCTs), generally, employed by the Space Development Agency (SDA) T0 programs.
+The scope of this PAT approach is limited to Space-to-Space and Space-to-Ground optical
+connections. Space-to-Space optical connections between terminals produced by the same vendor
+may offer, in addition to the PAT approach defined herein, additional PAT modes selectable upon
+command by the ground.
+The details below clarify the framework described in Section 2.3 of [2] and provide details not
+otherwise provided in [2] necessary to ensure PAT interoperability between multiple vendors. This
+PAT approach employs a lead/follow strategy with time-constrained state changes and
+synchronized acquisition/re-acquisition attempt start times to ensure PAT interoperability under
+large uncertainty cone conditions.
+
+       Example Spiral Scan
+                                                          Tx Beam Traversing Spiral Acquisition Search Path
+                                                    5
+                                                                                     Spiral Path
+                                                    4                                Gaussian Beam Angle
+
+                                                    3
+
+                                                    2
+                           Y Search / TxBeamAngle
+
+
+
+
+                                                             CScan
+                                                    1
+
+                                                    0
+
+                                                    -1
+
+                                                    -2
+
+                                                    -3
+
+                                                    -4
+
+                                                    -5
+                                                     -5     -4   -3   -2   -1     0   1   2      3    4       5
+                                                                      X Search / TxBeamAngle
+
+
+                                                            Figure 2-1. Spiral Scan Pattern
+
+
+ DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                                                   Page 10 of 50
+Figure 2-1 is the baseline Constant Velocity Archimedes spiral scan approach and is the minimal
+amount of time necessary for a scan. The spiral scan approach may vary between T0 Optical
+Vendors, but different scan approaches can increase scan time.
+The time to spiral to the search radius 𝐶𝐶𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆ℎ is given by the following equation:
+                                                                                                       2
+                                                       𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆                  𝐶𝐶𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆ℎ
+                                                    𝑇𝑇𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆 =      𝜋𝜋𝜋𝜋𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆 �               �
+                                                                                       𝐶𝐶𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆
+The 𝐶𝐶𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆 parameter must be selected based on the minimum required receive flux 𝑃𝑃𝑅𝑅𝑅𝑅_𝑀𝑀𝑀𝑀𝑀𝑀 for the
+specific OCT. Simplistically, this is illustrated in the following link equation:
+  𝑃𝑃𝑇𝑇𝑇𝑇 − 𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵 − 𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐵𝐿𝐿𝑜𝑜𝑜𝑜𝑜𝑜 − 𝑀𝑀𝑀𝑀𝑀𝑀𝑀𝑀𝑀𝑀𝑀𝑀 − 𝑂𝑂𝑂𝑂𝑂𝑂𝑂𝑂𝑂𝑂𝑂𝑂𝑂𝑂𝑂𝑂𝑂𝑂𝑂𝑂𝑂𝑂 > 𝑃𝑃𝑅𝑅𝑅𝑅_𝑀𝑀𝑀𝑀𝑀𝑀
+The overlap loss term is related to the ratio of 𝐶𝐶𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆 to the transmit beam divergence 𝜃𝜃𝑇𝑇𝑇𝑇 . If 𝐶𝐶𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆 =
+ 𝜃𝜃𝑇𝑇𝑇𝑇 , then the OverlapLoss = 8.64 dB. If, on the other hand, 𝐶𝐶𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆 = 𝜃𝜃𝑇𝑇𝑇𝑇 /1.7 (which is the
+FWHM diameter), then the OverlapLoss = 3 dB, however, the spiral scan will take 1.72 = 2.9x
+longer.
+
+          T0 Interoperable Pointing, Acquisition, and Tracking
+Modeling the pointing, acquisition, and tracking (PAT) sequence as an event-driven finite-state-
+machine provides a common model for all T0 OISL Standard Terminals. The purpose of this model
+is to communicate the current status of the OCT’s PAT channel, provide a sequence of events in a
+geometric construct, and standardize the required parameters.
+
+
+
+
+ DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                                           Page 11 of 50
+2.1.3.1 State Machine
+
+
+
+
+                     Figure 2-2. T0 Interoperable PAT State Machine
+
+
+
+
+DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                Page 12 of 50
+                                             Table 2-1. State Machine Description
+ID Name                Description                                   Entry Criteria             Exit Criteria
+1 Standby              OCT waits for further commanding.                                        Command Received: Initiate
+                                                                                                Link OperationSetup
+
+
+2   Setup              After a new link command is received, the      Command Received:         OCT has slewed into position
+                       OCT is configured according to the link        Initiate Link Operation   and terminal has been
+                       parameters and the coarse pointer starts to                              configured ahead of 𝑡𝑡𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆
+                       move towards the target trajectory.                                      being reached
+
+                                                                                                Starting time 𝑡𝑡𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆 is reached
+                                                                                                Acquisition Phase 1A
+3   Acquisition        During acquisition phase 1A the lead OCT                                 Configuration Parameter Phase
+    Phase 1A           scans the starting cone of uncertainty.                                  1A duration reached (𝛿𝛿𝐴𝐴𝐴𝐴𝐴𝐴1𝐴𝐴 )
+                       The follow OCT detects hits and performs                                 Acquisition Phase 1B
+                       pointing adjustments, reducing the level of
+                       starting uncertainty.
+4   Acquisition        During acquisition phase 1B the follow                                    Configuration Parameter Phase
+    Phase 1B           OCT scans the remaining cone of                                          1B duration reached (𝛿𝛿𝐴𝐴𝐴𝐴𝐴𝐴1𝐵𝐵 )
+                       uncertainty.                                                             Acquisition Phase 2
+                       The lead OCT detects hits and performs
+                       pointing adjustments, reducing the level of
+                       starting uncertainty.
+5   Acquisition        During acquisition phase 2 either one or                                 Uncertainty reduced such, that
+    Phase 2            both of the two OCT scans the remaining                                  target is within FOV of the fine
+                       cone of uncertainty.                                                     acquisition sensor (if
+                       The OCT(s) detects hits and performs                                     applicable) Fine Acquisition
+                       pointing adjustments, further reducing the
+                       level of uncertainty.                                                    Timeout waiting for further hits
+                                                                                                 Prepare
+
+
+                  DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                                      Page 13 of 50
+6   Fine Acquisition   During fine acquisition both OCTs are                                           Stable tracking established,
+                       scanning the remaining cone of uncertainty                                      continuous receive signal 
+                       and both OCTs detect hits and perform                                           Communication.
+                       pointing adjustments to further reduce the
+                       level of uncertainty further.                                                   Timeout waiting to establish
+                                                                                                       tracking  Prepare
+7   Communication      Bidirectional data link is established                                          Command Received:
+                                                                                                       𝛿𝛿𝐿𝐿𝐿𝐿𝐿𝐿𝐿𝐿𝐿𝐿𝐿𝐿𝐿𝐿𝐿𝐿𝐿𝐿  Stop
+
+                                                                                                       Tracking signal lost  Fine
+                                                                                                       Acquisition
+
+
+8   Stop               The link is terminated by command or due                                        Laser and all mechanism
+                       to a failure condition. The OCT goes back to                                    stopped and goes back to
+                       standby                                                                         standby
+9   Prepare            Prepare for reestablishing the link          If Ω𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴 = 0, this   OCT has slewed into position
+                       Complete acquisition sequence is repeated    state is passed through            based on latest ephemeris
+                       using the configuration according to the                                        prediction and terminal
+                       latest Initiate Link Command with the next                                      configuration and then 𝑡𝑡𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆 is
+                       acquisition start time defined by:                                              reached
+
+                         𝑇𝑇𝑛𝑛𝑛𝑛𝑛𝑛𝑛𝑛𝑛𝑛𝑛𝑛𝑛𝑛𝑛𝑛𝑛𝑛𝑛𝑛𝑛𝑛𝑛𝑛𝑛𝑛𝑛𝑛𝑛𝑛𝑛𝑛𝑛𝑛𝑛𝑛𝑛𝑛𝑛𝑛
+                         = 𝑡𝑡𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆 + Ω𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴
+                                              𝑡𝑡 − 𝑡𝑡𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆 + 𝛿𝛿𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴
+                         ∙ 𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐 �                                                      �
+                                                                  Ω𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴
+
+                       where t is the current time.
+
+
+
+
+                DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                                                            Page 14 of 50
+2.1.3.2 Configuration Parameters and Telemetry
+                      Table 2-2. State Machine Configuration Parameters
+Parameter                 Parameter Shorthand      Range of      Parameter Definition
+                                                   Values
+Start Time                         𝑡𝑡𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆                  The absolute time at which
+                                                                 the PAT sequence begins
+Acquisition Type          Synchronous or                         Synchronous – Start at
+[Optional]                Asynchronous                           specified tSTART
+                                                                 Asynchronous – Start
+                                                                 immediately [Optional
+                                                                 behavior]
+Starting Uncertainty                 TUC           500-vendor This is the starting cone of
+Cone (𝜇𝜇𝜇𝜇𝜇𝜇𝜇𝜇)                                    FOV           uncertainty and is reported
+                                                                 as a circular cone radius.
+                                                                 This is the search cone.
+                                                                 Starting uncertainty may be
+                                                                 larger than the system FOV
+                                                                 which may require manual
+                                                                 intervention
+Phase 1A duration                  𝛿𝛿𝐴𝐴𝐴𝐴𝐴𝐴1𝐴𝐴     0-65535       Duration of first spiral
+(seconds)                                                        scanning phase (1A).
+                                                                 Nominally symmetric
+                                                                 across terminals, but
+                                                                 terminal shall act as
+                                                                 commanded.
+Phase 1B duration                  𝛿𝛿𝐴𝐴𝐴𝐴𝐴𝐴1𝐵𝐵     0-65535       Duration of second spiral
+(seconds)                                                        scanning phase (1B).
+                                                                 Nominally symmetric
+                                                                 across terminals, but
+                                                                 terminal shall act as
+                                                                 commanded.
+Lead or Follow                                     Lead or       Determines if the terminal
+                                                   Follow        shall act as Acquisition
+                                                                 Lead or Follow
+TX wavelength                                      A or B        TX wavelength selection
+TX Tracking tone                                   On or off     Determines if TX laser
+modulation                                                       amplitude modulation used
+Spiral-Velocity                                    0-1000        Spiral velocity compatible
+(urad/msec)                                                      with receiver bandwidth of
+                                                                 counter terminal. Set per-
+                                                                 vendor
+Spiral Separation (urad)                           0-1000        Spiral velocity compatible
+                                                                 with receiver bandwidth of
+
+
+DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                   Page 15 of 50
+                                                                     counter terminal. Set per-
+                                                                     vendor
+Phase 2 Maximum              𝛿𝛿𝑀𝑀𝑀𝑀𝑀𝑀𝑀𝑀ℎ𝑎𝑎𝑎𝑎𝑎𝑎2            0-255     Max duration in
+Duration (sec)                                                       Acquisition Phase 2
+                                                                     without establishing target
+                                                                     is within FOV of the fine
+                                                                     acquisition sensor (if
+                                                                     applicable)
+Fine Acquisition                𝛿𝛿𝑀𝑀𝑀𝑀𝑀𝑀𝑀𝑀𝑀𝑀𝑀𝑀𝑀𝑀           0-255     Max duration in Fine
+Maximum Duration                                                     Acquisition without
+(seconds)                                                            establishing stable tracking
+Acquisition Period            Ω𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴          0-65535   Periodicity of acquisition
+(seconds)                                                            restart times. This is a
+                                                                     parameter specified by the
+                                                                     ground.
+Acquisition Preparation   𝛿𝛿𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴   0-255     The amount of time
+Duration (seconds)                                                   required for the overall
+                                                                     system (comprised of both
+                                                                     OISL A and B) to be ready
+                                                                     for the next acquisition
+                                                                     (which is an exit criteria for
+                                                                     the “Prepare” state) is
+                                                                     𝛿𝛿𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴𝐴 . This is a
+                                                                     parameter set by the
+                                                                     ground.
+
+                          Table 2-3. State Machine Telemetry
+Parameter                  Parameter Shorthand Parameter Definition
+State                      S                      This is the current state of the top-level
+                                                  state machine.
+
+
+
+
+DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                      Page 16 of 50
+         Acquisition Scheme
+     Pointing      Acquisition 1a        Acquisition 1b             Acquisition 2   Fine Acquisition   Tracking
+
+
+
+
+    Starting
+    Point
+    Error
+
+
+
+
+      Starting
+      Point
+      Error
+
+
+
+
+     Pointing                                         Acquisition                                      Tracking
+
+                                    Figure 2-3 PAT Geometric Reference
+
+Figure 2-3 shows the T0 PAT geometric acquisition scheme. The Red arrows denote an active
+TX beam, the cone around the arrow depicts the size of the uncertainty cone (outer scan radius).
+Green arrows denote pointing adjustment and reduction of uncertainty cone.
+
+Figure 2-4 provides a notional timeline for each phase and notional uncertainty cone for Phase 1a
+entry criteria and the transition from Phase 2 to Fine acquisition. Time and uncertainty will be
+specific for each vendor pairing based on uncertainty determined on orbit after calibration. The
+leader is on the left column while the follower is on the right column.
+
+
+
+
+ DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                            Page 17 of 50
+                                   LEADER START              FOLLOWER START
+           READY
+                                      t = 𝐵𝐵0                    t = 𝐵𝐵0
+                                                                               COMMANDED
+                    𝐵𝐵𝑆𝑆𝑇𝑇𝑆𝑆𝑅𝑅𝑇𝑇
+                                                                                START TIME
+                                    VERY LARGE                 WIDE FIELD
+             1A
+                                       SCAN                    DETECTION       COMMANDED
+                                                                                MAXIMUM
+                   𝛿𝛿𝑆𝑆𝐶𝑄 1𝑆𝑆
+                                    WIDE FIELD                                   TIME 1A
+             1B                                                LARGE SCAN
+                                    DETECTION
+
+
+
+
+                                                                                                 TIME
+                                                                               COMMANDED
+                   𝛿𝛿𝑆𝑆𝐶𝑄 1𝐵𝐵                                                   MAXIMUM
+                                                               WIDE FIELD
+                                                                                 TIME 1B
+             2                                                 DETECTION
+                                   NARROW SCAN
+                    𝛿𝛿𝑆𝑆𝐶𝑄 2       NARROW FIELD              NARROW SCAN
+                                    DETECTION                                 EXIT TO TRACKING
+                                                             NARROW FIELD
+            FINE                                                                 ON SUCCESS
+                                                              DETECTION
+                                                                                   OR
+    𝛿𝛿𝑀𝑀𝑆𝑆𝑅𝑅𝑆𝑆𝐿𝐿𝑛𝑛𝐿𝐿 < 100𝐵𝐵                                                  TO PREPARE AT
+                                                                              MAXIMUM TIME
+           TRACK                     TRACKING                   TRACKING
+
+
+
+ Figure 2-4. PAT Notional OPSCON. Time progresses from top to bottom. The transition from
+  Acquisition 2 to Fine and Fine to Track is triggered by successful tracking. The definition of
+  success for tracking is implementation-dependent. In this diagram, the Leader is depicted as
+ having only a single field size. For this reason, the wide- and narrow-field scan are combined.
+
+2.2 Latency
+Latency is defined as the duration of time from arrival of the rising edge of the first bit at the
+receiver’s detector to egress of the complete Ethernet packet from the OISL terminal via the data
+interface. The T0 data interface is the connection from the OISL modem to the router and typically
+implemented as a 1 Gbps Ethernet link.
+For a given Ethernet packet, the latency is calculated as Egress Time-Ingress Time, where:
+   •    Ingress Time = earliest arrival time of any bit from the packet
+   •    Egress Time = time of egress completion of the entire Ethernet packet
+The following latency requirements apply to an Ethernet payload size up to a maximum
+transmission unit (MTU) of 1500 octets:
+   •    The receive (RX) modem latency shall be less than 15 ms
+   •    The receive (RX) modem latency should be less than 5 ms
+   •    The transmit (TX) modem latency shall be less than 15 ms
+   •    The transmit (TX) modem latency should be less than 5 ms
+
+2.3 Re-Programming
+Physical Framing (Section 2.6.3.1), Coding and Scrambling (Section 2.6.3.6 and Section 2.6.3.6.4)
+and Encapsulation (Section 2.6.3.7) shall be re-programmable on orbit. During reprogramming,
+the transmission of data may be interrupted.
+  DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                             Page 18 of 50
+2.4 Effective Data Rate
+The effective data rates for the primary OISL modem frame configurations are summarized in
+Table 2-4 as a function of the OISL baud rate. The last column of the table indicates the required
+support for each baud rate.
+              Table 2-4: Maximum Effective Data Rates for Frame Configurations
+  Baud Rate      Frame Duration         Effective Data   Frame Rate      Fast Control    Require
+   (Mbaud)       (microseconds)          Rate (Mbps)        (kHz)       Channel (Mbps)    ment
+    312.5             79.795               191.290         12.532            0.201        Shall be
+                                                                                         supported
+     625              39.898               382.579         25.064            0.401       Should be
+                                                                                         supported
+     1250             19.949               765.159         50.128            0.802       Should be
+                                                                                         supported
+     2500             9.974               1530.318        100.257            1.604        May be
+                                                                                         supported
+     5000             4.987               3060.635        200.513            3.208        May be
+                                                                                         supported
+    10000             2.494               6121.270        401.027            6.416        May be
+                                                                                         supported
+
+
+Frame duration and frame rate are a function of the frame size defined in Section 2.6.3.1. The
+effective data rates account for all systematic sources of overhead including preamble, header,
+CRC’s, FEC, and the LPC code. Note that overhead for Ethernet framing is dependent on the
+distribution of packet sizes and generally does not significantly impact the values in Table 2-4.
+The maximum data rates tabulated in Table 2-4 are best-case, excluding any retransmissions and
+assuming an absence of MGMT frames.
+
+2.5 Physical Layer
+       Channel Definition
+Each OISL shall provide an A and B channel operating at the carrier wavelengths as specified in
+Table 2-5. Center frequency for the channels is defined as 193.1+n×0.1 THz, consistent with ITU-
+T G.694.1 [3].
+
+                              Table 2-5: Wavelength Channel Definition
+                  Channel                 Wavelength                Channel Number
+                      A                    1536.61 nm                   n = +20
+                      B                    1553.33 nm                   n = -1
+
+
+ DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                        Page 19 of 50
+2.5.1.1 Center Frequency Tolerance
+The transmitter center frequency shall be accurate to within a tolerance of ± 10 GHz.
+
+2.5.1.2 Laser Line-Width
+The modulated laser linewidth shall be less than 10 GHz, measured at full width at half-maximum
+(FWHM) over a time scale of 100 ms.
+
+2.5.1.3 In-Band and Spillover Emissions
+The laser shall transmit 95 percent of its energy within ± 20 GHz of its center frequency.
+
+2.5.1.4 Timing Jitter
+The Root Mean Square (RMS) pulse timing jitter shall be less than 10 percent of the slot width.
+
+       Transmit and Receive Wavelength Selection
+The transmit and receive wavelengths shall be switchable through software.
+
+       Polarization
+Transmitter and receiver pairs should limit polarization mismatch loss to 3 dB. This polarization
+mismatch loss shall be referenced to an ideal LHCP transmitter and ideal LHCP receiver.
+The polarization requirements for T0 are separated into Transmitter and Receiver requirements.
+Transmitter Requirements
+   • Transmitters should transmit signals compatible with LHCP receivers
+   • Transmitters should transmit LHCP signals
+Receiver Requirements
+   • Receivers should be compatible with LHCP signals
+The communications and PAT channel links shall meet the power and link budget requirements as
+defined in Section 2.5.4 after the permitted losses.
+
+       Power and Link Margin
+OISL links shall achieve the BER specified in Section 2.6.3.6 with a received irradiance
+summarized in Table 2-6, below, for each supported baud rate.
+                                 Table 2-6: Minimum Irradiance
+   Baud Rate (Mbaud)             Minimum Irradiance               Default Maximum Irradiance
+                                      𝜇𝜇𝜇𝜇/𝑚𝑚2                              𝜇𝜇𝜇𝜇/𝑚𝑚2
+         312.5                           30                                   300
+          625                            42                                   420
+          1250                           60                                   600
+
+
+ DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                      Page 20 of 50
+   Baud Rate (Mbaud)              Minimum Irradiance                Default Maximum Irradiance
+                                        𝜇𝜇𝜇𝜇/𝑚𝑚2                              𝜇𝜇𝜇𝜇/𝑚𝑚2
+          2500                             85                                    850
+
+          5000                            120                                   1200
+          10000                           170                                   1700
+
+
+
+OISL transmitters shall be capable of delivering a minimum irradiance at the receiver’s aperture
+of 30 𝜇𝜇𝜇𝜇/𝑚𝑚2 . Note that while specific OISL combinations may result in a reduction in the
+irradiance at the receiver’s aperture required to close the link, each transmitter shall be capable of
+delivering the specified minimum to ensure the ability to close the link with all receivers.
+The maximum irradiance provided by the transmitter shall not exceed the remote receiver’s safety
+threshold. The default maximum safety threshold irradiance is defined in Table 2-6. Each receiver
+shall be designed to not be damaged by the irradiance values listed.
+OISL links shall provide the BER specified in Section 2.6.3.6 with link margin and range as
+defined by Table 2-7.
+                               Table 2-7: Required Margin at Range
+          Link Description                      Range                        Required Margin
+ Space-to-space                     > 5000km and < = 6500 km         1 dB
+ Space-to-space                     Up to 5000 km                    3 dB
+
+ Space-to-ground                    Up to 2800 km                    3 dB
+
+
+2.6 Modulation
+       Modulation
+The data modulation shall be On-Off-Keying Non-Return-to-Zero (OOK-NRZ).
+OISLs shall implement a communications channel with a baud rate of 312.5 MHz which shall be
+frequency locked to the local bus 10 MHz reference clock. Additional baud rates of 625 MHz and
+1,250 MHz should be supported. Further communications channels with baud rates of 2,500MHz,
+5,000MHz, and 10,000MHz may be supported.
+Prior to application of the AM tracking tone, the data modulation shall have an Extinction Ratio
+greater than 9 dB.
+
+       Tracking Tone
+Each TX data sequence shall be further modulated with an AM Tracking Tone. The AM Tracking
+Tone’s modulation frequency shall be 40 kHz when the OISL is configured for transmitting
+wavelength A and shall be 50 kHz when the OISL is configured for transmitting wavelength B.
+
+ DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                       Page 21 of 50
+The nominal AM Tracking Tone Modulation Index (MI) should be 10%, where the MI is defined
+as:
+                                           (Pmax − Pmin)
+                                   MI =                                                    (1)
+                                          (Pmax + Pmin)
+
+as shown in Figure 2-5 below. The AM Tracking Tone:
+   •   Shall be either sinusoidal or a square wave
+   •   Shall have a modulation frequency accuracy of at least 500 PPM
+   •   The AM Tracking Tone shall be remotely controllable
+          o The tone shall be controllable (turned on and off) through remote ground
+              command
+          o The tone’s definition shall be controllable through remote ground command
+              including:
+                    Pmax
+                    Modulation Index
+                    Tone Frequency
+
+
+
+
+                          Figure 2-5: AM Tone Tracking Modulation
+
+       Framing, Coding, Encapsulation
+2.6.3.1 Framing Structure
+Transmitted frames used by the OISL modem shall adhere to the structure shown in Table 2-8. All
+transmitted frames in the OISL modem shall be constructed identically: a preamble sequence
+concatenated with a fixed-length header followed by a fixed-length payload carrying information
+bits.
+
+ DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                     Page 22 of 50
+After framing and coding, the constituent bits shall be serialized and encoded with line product
+code (LPC), of rate R=16/24, which actively manages the disparity between the transmitted
+number of logical ones and zeros.
+                              Table 2-8: Modem Frame Summary
+            Field          Number of           Number of LPC        Total Number of          Comments
+                             bits               Code Words                bits
+  Preamble                     72                    N/A                   72            Preamble:
+                                                                                         7 2 ’ 77AD5B584364
+                                                                                         1E2E26.
+                                                                                         The MSB (72nd)
+                                                                                         bit is transmitted
+                                                                                         first followed in
+                                                                                         order down to the
+                                                                                         LSB (1st)
+  Header                      256               256/16 = 16               384            See Section 2.6.3.3
+  Payload                    16320            16320/16 = 1020            24480           See Section 2.6.3.4
+
+
+Transmission of modem frames shall be synchronous with no pauses between frames and no
+pauses between any of the bits comprising the frame components in Table 2-8. From the values in
+Table 2-8, the total frame size shall be 72+384+24480=24936 bits.
+
+2.6.3.2 Preamble Sequence
+Every frame shall begin with a Preamble Sequence (PS), which is used by the receiving modem
+for frame synchronization. The preamble sequence shall be identical for all OISL modem frames
+and shall take the value shown in Table 2-8.
+
+2.6.3.3 Header
+A modem header shall be present in every modem frame immediately following the preamble
+sequence. The OISL modem frame header shall have these characteristics:
+   •   Modem headers shall be a fixed size (i.e., number of coded bits) for all configurations
+   •   Modem headers shall be protected by a Forward Error Correction (FEC) scheme with a
+       fixed code rate (Section 2.6.3.6.2)
+   •   The payload of the modem header shall be protected by a CRC-16 (Section 2.6.3.6.1.).
+   •   The modem header shall implement the signaling required for the modem features
+       described in the sections below (Table 2-9).
+
+
+
+
+ DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                     Page 23 of 50
+2.6.3.3.1 Header Fields
+The frame Header fields are listed in Table 2-9. Exactly one Header shall be present in every
+modem frame.
+                                 Table 2-9: Frame Header Fields
+   Function               Field             Bits                         Description
+     ARQ            TXFN                    16          Sequence number of this (outgoing) TX frame
+                    RXFN                    16          Sequence number of ACK
+                    ACK                     1           ACK (1) or NAK (0) for RXFN
+                    ACK-valid               1           ACK field is only valid if ACK-valid=1
+     MAC            FRAME_TYPE              2           00: IDLE
+                                                        01: DATA
+                                                        10: MGMT
+                                                        11: reserved
+    pseudo-         TX_TS                   40          TX time-stamp (frame egress)
+     range
+                    TOD_SECONDS             6           number of seconds in time-of-day epoch : 0-
+                                                        59
+                    TS-applies              3           TX_ TS applies to current frame (0),
+                                                        preceding frames (1-7)
+     Fast           FCCH_OPCODE             4           time-multiplexed control signaling
+    Control
+    Channel
+                    FCCH_PL                 16          Payload contents depends on FCCH_TYPE
+    reserved                                7           header size divisible by 16
+     CRC            CRC-16                  16          See Section 2.6.3.6.1.
+     Total                                  128
+
+The mapping of the fields in Table 2-9 to physical locations in the modem frame is shown in
+Table 2-10. Here, the column headers indicate the bit number of the byte (MSB: 𝑏𝑏7 , LSB: 𝑏𝑏0 )
+and the row labels indicate the byte number in the header Reed-Solomon codeword. The value 1
+shall be assigned to all bits indicated as reserved. A CRC-16 shall be attached to the end of the
+header with the bits entering the CRC circuit in natural order (byte 𝑑𝑑0 to byte 𝑑𝑑13 , MSB first on
+each byte) and attached to the header in natural order (bytes 𝑑𝑑14 and 𝑑𝑑15 ) as illustrated in Table
+2-10.
+
+
+
+
+ DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                       Page 24 of 50
+Table 2-10: Mapping of Header Fields to Byte and Bit-locations in the Transmitted Header
+            b7             b6               b5                b4                b3               b2              b1              b0
+  d0       TXFN[7]       TXFN[6]           TXFN[5]           TXFN[4]           TXFN[3]          TXFN[2]          TXFN[1]        TXFN[0]
+  d1      TXFN[15]      TXFN[14]          TXFN[13]          TXFN[12]          TXFN[11]         TXFN[10]          TXFN[9]        TXFN[8]
+  d2       RXFN[7]       RXFN[6]           RXFN[5]           RXFN[4]           RXFN[3]          RXFN[2]          RXFN[1]        RXFN[0]
+  d3      RXFN[15]      RXFN[14]          RXFN[13]          RXFN[12]          RXFN[11]         RXFN[10]          RXFN[9]        RXFN[8]
+  d4          1             1                 1                 1                ACK           ACK-valid     FRAME_TYPE[1]  FRAME_TYPE[0]
+  d5      TX_TS[7]       TX_TS[6]         TX_TS[5]           TX_TS[4]          TX_TS[3]        TX_TS[2]          TX_TS[1]       TX_TS[0]
+  d6      TX_TS[15]     TX_TS[14]         TX_TS[13]         TX_TS[12]         TX_TS[11]        TX_TS[10]         TX_TS[9]       TX_TS[8]
+  d7      TX_TS[23]     TX_TS[22]         TX_TS[21]         TX_TS[20]         TX_TS[19]        TX_TS[18]        TX_TS[17]      TX_TS[16]
+  d8      TX_TS[31]     TX_TS[30]         TX_TS[29]         TX_TS[28]         TX_TS[27]        TX_TS[26]        TX_TS[25]      TX_TS[24]
+  d9      TX_TS[39]     TX_TS[38]         TX_TS[37]         TX_TS[36]         TX_TS[35]        TX_TS[34]        TX_TS[33]      TX_TS[32]
+  d10         1             1         TOD_SECONDS[5]    TOD_SECONDS[4]    TOD_SECONDS[3]   TOD_SECONDS[2]   TOD_SECONDS[1] TOD_SECONDS[0]
+  d11         1       TS-applies[2]     TS-applies[1]     TS-applies[0]   FCCH_OPCODE[3]   FCCH_OPCODE[2]   FCCH_OPCODE[1] FCCH_OPCODE[0]
+  d12    FCCH_PL[7]    FCCH_PL[6]        FCCH_PL[5]        FCCH_PL[4]        FCCH_PL[3]       FCCH_PL[2]       FCCH_PL[1]     FCCH_PL[0]
+  d13   FCCH_PL[15]   FCCH_PL[14]       FCCH_PL[13]       FCCH_PL[12]       FCCH_PL[11]      FCCH_PL[10]       FCCH_PL[9]     FCCH_PL[8]
+  d14    CRC-16[15]    CRC-16[14]        CRC-16[13]        CRC-16[12]        CRC-16[11]       CRC-16[10]        CRC-16[9]      CRC-16[8]
+  d15     CRC-16[7]     CRC-16[6]         CRC-16[5]         CRC-16[4]         CRC-16[3]        CRC-16[2]        CRC-16[1]      CRC-16[0]
+
+
+
+
+2.6.3.3.2 Frame Sequence Numbers
+The TX frame sequence number (TXFN, Table 2-9) shall be incremented on every transmitted
+frame in link session without regard to the FRAME_TYPE. The RX frame sequence number
+(RXFN) is valid only if pared with an ACK. If ACK valid is zero, then RXFN shall be set to zero.
+
+2.6.3.3.3 Automatic Repeat Request (ARQ)
+Header fields supporting implementation of the Automatic Repeat Request modem feature are
+grouped as the “ARQ” fields in Table 2-9. The ARQ configuration parameters shall remain static
+for the duration of a session. The ARQ configuration shall only be changed prior to the onset of
+acquisition. ARQ operation shall be commanded from the ground. ARQ is expected to be used
+for Space-to-Ground links and may be used for other links.
+Only DATA and MGMT frames are be subject to ARQ. IDLE frames shall not be subject to ARQ.
+The receive terminal is only required to ACK frames received correctly. Successful reception of
+a frame is defined as the payload CRC-32 passing. Terminals shall treat frames for which an ACK
+is not explicitly received as NAK’d.
+The automatic repeat request scheme shall be configured with the set of parameters in Table
+2-11. When operating with ARQ “on,” the receive terminal shall support these configurable
+ARQ parameters.
+
+
+
+
+ DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                                  Page 25 of 50
+                                  Table 2-11: ARQ Parameters
+           Parameter                 Valid Range     Number                 Description
+                                                      of bits
+ ARQ_HOLDOFF_NFRAMES                0,16,32,...4080         8      Window size of ARQ shall
+                                                                   be from 0 to (2^8)-1. The
+                                    N=16 *(0...28-1)               maximum value is 16 times
+                                                                   28-1=4080.
+
+                                                                   The value of
+                                                                   ARQ_HOLDOFF_NFRAM
+                                                                   ES determines the hold off
+                                                                   time:
+
+                                                                   e.g. 256 × 80 𝜇𝜇𝜇𝜇 = 20 ms
+                                                                   ARQ HOLDOFF TIME for
+                                                                   312.5 Mbps.
+
+                                                                   Window size and hold-off
+                                                                   time are not set
+                                                                   independently.
+ ARQ_MAX_RETX                             0-5               3      Maximum number of
+                                                                   retransmission attempts.
+
+
+For ARQ_HOLDOFF_NFRAMES, the range of values is the range required by the interface and
+does not represent the range of values required to be implemented.
+ARQ shall be disabled by setting the number of re-transmission attempts to zero.
+The ACK field in the Frame Header (Table 2-9) shall be ignored unless ACK-valid is set to one.
+When ACK-valid is one, the ACK shall apply to the frame with sequence number RXFN.
+The implementation shall buffer received frames such that, after the maximum number of
+retransmission attempts has been exhausted or all frames have been ACK’d, correctly received
+FSO frames shall be released to the Ethernet reassembly block (Section 2.6.3.7.7) in order. FSO
+frames for which an ACK was never received shall be dropped. This scheme produces in-order
+delivery of Ethernet packets to the space vehicle for all values of ARQ (including settings where
+ARQ is disabled).
+
+2.6.3.3.4 Timestamps
+The TX PHY shall apply a timestamp in the header of every modem frame (TX_TS field,
+TOD_SECONDS, Table 2-9). The implementation shall reference the applied timestamp to the
+egress point of the rising edge of the first bit of the modem frame (exiting the aperture). The TS-
+applies header bit indicates if the TS applies to current frame (0) or preceding frames (1-7).
+
+
+ DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                      Page 26 of 50
+2.6.3.3.5 Fast Control Channel (FCCH)
+The OISL modem frame shall provide an embedded fast control channel (FCCH). The FCCH is a
+low- rate channel with reserved bandwidth for robust, low-latency transport of short messages
+between OISL terminals. The FCCH enjoys the benefit of both error detection (via the Header
+CRC) and error correction (via the Header FEC) by virtue of residing in the frame Header. No
+ARQ is provided for the FCCH channel.
+The FCCH physical channel shall be time-multiplexed:
+   •   FCCH_OPCODE (4 bits): opcode which determines the format of the FCCH payload
+   •   FCCH_PL (16 bits): payload bits
+A single FCCH shall be transmitted and received in every frame and can be valid for every
+FRAME_TYPE (Table 2-9 and Section 2.6.3.5).
+The higher layers of the modem divide the capacity of the FCCH physical channel into multiple
+logical channels through time-multiplexing. The effective average data rate of these logical
+channels is a function of the payload FEC, baud rate, and the frequency of which the logical
+channel is scheduled by the modem higher layers. The FCCH logical channels are defined in
+Table 2-12. If no data is waiting for transport, the FCCH opcode 1111 shall be specified. In this
+case the FCCH payload bits shall be all logical ones. Payload values for Reserved opcodes shall
+be all logical zeros.
+                               Table 2-12: FCCH Logical Channels
+     Description                 FCCH _TYPE                     Opcode            Message Rate
+                                                                 (4 bits)
+    Link Quality      LAPC_CRC_ERROR_REPORT                      0000                  1 Hz
+    Reports             LAPC_RSSI_FAST                           0001                100 Hz
+                        LAPC_RSSI_SLOW                           0010                  1 Hz
+                        LAPC_SYNC_REPORT                         0011                  1 Hz
+                      LAPC_FEC_CORRECTED_ER                      0110                  1 Hz
+                      ROR_REPORT
+    OISL                OISL_SENSITIVITY                         0100                  1 Hz
+    Reports
+                        OISL_CAPABILITIES                        0101                  1 Hz
+    Reserved            RESERVED                              0111-1110
+    Not Present         N/A                                      1111
+
+
+The payload for each FCCH message shall be 16 bits. Payloads for each of the FCCH_TYPES
+are defined in Table 2-13.
+
+
+
+
+ DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                      Page 27 of 50
+                            Table 2-13: FCCH Payloads
+FCCH_TYPE              Field                 Bi Bit          Description
+                                             ts   Positi
+                                                  ons
+LAPC_CRC_ERROR_       LAPC_RPT_CRC_ER          16    15-0   Number of frame CRC
+REPORT                ROR                                   errors in the last second.
+ (Opcode = 0000)
+                                                            Note: Where a CRC error
+                                                            bit is defined as an error
+                                                            in either the header or
+                                                            payload CRC
+LAPC_RSSI_FAST        LAPC_RPT_RSSI_FA         14    15-2   Received Signal Power at
+ (Opcode = 0001)      ST                                    aperture
+                                                            LSB = 75 nW/m² The
+                                                            reported value shall only
+                                                            cover the last 10 ms and
+                                                            shall not be integrated
+                                                            over a longer time period.
+                      LAPC_RPT_FS_FAST         2     1-0    Frame sync status, last 10
+                                                            msec.
+                                                            00:      not      locked
+                                                            (experienced one or more
+                                                            sync losses during the
+                                                            period)
+                                                            01: locked     (for   full
+                                                            period)
+                                                            10: reserved
+                                                            11: reserved
+LAPC_RSSI_SLOW        LAPC_RPT_RSSI_ME         8     15-8   Received     power    at
+ (Opcode = 0010)      AN                                    aperture mean
+                                                            (average, trailing 1 sec
+                                                            from 1 PPS, step size =
+                                                            -0.25086 dBm/m2)
+                      LAPC_RPT_RSSI_SD         8     7-0    Received Power at
+                      EV                                    aperture standard
+                                                            deviation
+                                                            (average, trailing 1 sec
+                                                            from 1 PPS, step size =
+                                                            -0.25086 dBm/m2)
+
+
+
+DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                               Page 28 of 50
+                           Table 2-13: FCCH Payloads
+LAPC_SYNC_REPOR       LAPC_RPT_FS_LOSS         14    15-2   Number of times frame
+T                                                           sync lost
+ (Opcode = 0011)                                            (trailing 1 sec from 1
+                                                            PPS)
+                      LAPC_RPT_FS_STAT         2     1-0    Frame sync status (at 1
+                      E                                     sec sample time)
+                                                            00:      not      locked
+                                                            (experienced one or more
+                                                            sync losses during the
+                                                            period)
+                                                            01: locked     (for      full
+                                                            period)
+                                                            10-11: reserved; reserved
+                                                            values shall be set to all
+                                                            zeros.
+OISL_SENSITIVITY      OISL_PMIN                8     15-8   Required optical power
+ (Opcode = 0100)                                            at aperture
+                                                            (step size = -0.25086
+                                                            dBm/m2)
+                      OISL_PMAX                8     7-0    Maximum RX optical
+                                                            power at aperture
+                                                            permitted (step size =
+                                                            -0.25086 dBm/m2)
+OISL_CAPABILITIES     MAJOR_VERSION            5    15-11   The SDA Standard
+ (Opcode 0101)        MINOR_VERSION            5     10-6   Version is specified as
+                                                            three integers separated
+                      PATCH_VERSION            6     5-0    by periods in the format
+                                                            MAJOR_VERSION.MI
+                                                            NOR_VERSION.PATC
+                                                            H_VERSION. For
+                                                            example:
+
+                                                            SDA Standard revision
+                                                            (here 2.1.2):
+                                                            Major=00010;
+                                                            Minor=00001;
+                                                            Patch=00010
+
+
+
+
+DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                               Page 29 of 50
+                                  Table 2-13: FCCH Payloads
+ LAPC_FEC_CORREC           LAPC_RPT_FEC_ER                16        15-0       Number of frames that
+ TED_ERROR_REPOR           RORS_CORRECTED                                      require FEC correction
+ T                                                                             per second.
+ (Opcode = 0110)
+                                                                               Note: Frames where an
+                                                                               FEC correction is
+                                                                               performed in either the
+                                                                               header or payload
+
+To ensure standardization of implementation for LAPC_RSSI_SLOW, the equations are shown
+below. The statistical measurement shall be performed on linear power readings In.
+
+                                                               1
+                             LAPC_RPT_RSSI_MEAN =                 ∙ � 𝐼𝐼𝑛𝑛
+                                                               𝑁𝑁
+                                                                     𝑁𝑁
+
+
+                                           1
+            LAPC_RPT_RSSI_SDEV = �            ∙ �(𝐼𝐼𝑛𝑛 − 𝐿𝐿𝐿𝐿𝐿𝐿𝐿𝐿_𝑅𝑅𝑅𝑅𝑅𝑅_𝑅𝑅𝑅𝑅𝑅𝑅𝑅𝑅_𝑀𝑀𝑀𝑀𝑀𝑀𝑀𝑀) 2
+                                           𝑁𝑁
+                                                 𝑁𝑁
+
+
+The LAPC_RSSI_SLOW power figures inside the FCCH shall represent the received power at
+aperture expressed in logarithmic scale with a LSB of -0.25086 dBm/m2. This is expressed by the
+following formula using the LSB x:
+
+                                                                             𝑑𝑑𝐵𝐵𝐵𝐵
+                      𝐿𝐿𝐿𝐿𝐿𝐿𝐿𝐿_𝑅𝑅𝑅𝑅𝑅𝑅_𝑅𝑅𝑅𝑅𝑅𝑅𝑅𝑅_𝑀𝑀𝑀𝑀𝑀𝑀𝑀𝑀 = (𝑥𝑥 ∗ −0.25086)
+                                                                              𝑚𝑚2
+                                                                             𝑑𝑑𝑑𝑑𝑑𝑑
+                      𝐿𝐿𝐿𝐿𝐿𝐿𝐿𝐿_𝑅𝑅𝑅𝑅𝑅𝑅_𝑅𝑅𝑅𝑅𝑅𝑅𝑅𝑅_𝑆𝑆𝑆𝑆𝑆𝑆𝑆𝑆 = (𝑥𝑥 ∗ −0.25086)
+                                                                              𝑚𝑚2
+Example: The mean value of 1mW (0 dBm) and 0.01mW (-20 dBm) is 0.505 mW = -2.97 dBm
+and not (0 dBm + -20dBm)/2 = -10 dBm
+The frequency at which the FCCH messages are sent is application dependent subject to these
+requirements:
+   •   LAPC_RSSI_FAST_REPORT shall be sent at rate at least 100 Hz.
+   •   LAPC_CRC_ERROR_REPORT, LAPC_RSSS _REPORT, and LAPC_SYNC_REPORT
+   •   LAPC_FEC_ERROR REPORT is a recommended, but optional report. If utilized, it will
+       be sent at rate of at least 1 Hz
+OISL_SENSITIVITY shall be sent at 1 Hz and is used by the receiving terminal to control transmit
+optical power based on LAPC_RSSI_REPORT messages.
+The OISL_CAPABILITIES is for future use for autonomous OISL Link configuration.
+The OISL implementation shall be designed to tolerate loss of any FCCH messages.
+ DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                       Page 30 of 50
+2.6.3.4 Payload
+2.6.3.4.1 Data Bytes
+All modem frames shall carry a payload of 239×8-4=1908 application data bytes with 8 bits per
+byte. The source of data bytes for DATA frames (FRAME_TYPE=01, Table 2-9) shall be
+encapsulated Ethernet traffic.
+
+2.6.3.4.2 CRC-32
+All modem frames shall protect the integrity of the payload information bits with an attached 32-
+bit CRC (Section 2.6.3.6.1).
+
+2.6.3.4.3 Parity Bytes
+The OISL modem features payload FEC. The payload FEC shall be implemented as detailed in
+Section 2.6.3.6.3 and shall adhere to [2] Section 4.1.4. The number of parity bytes is (255-239)
+× 8=128.
+
+2.6.3.5 Special Frames
+The field frame Header shall contain a FRAME_TYPE field. The FRAME_TYPE field of the
+frame Header (Table 2-9) shall signal the type of modem frame. This section defines the frame
+types and their intended usage on the optical interface. Features signaled through the frame header
+are available in all frame types.
+
+2.6.3.5.1 IDLE Frames
+By design the modem always transmits frames with no gap between adjacent frames. In the case
+that data is not available for transmission the modem shall insert consecutive IDLE frames into
+the transmitted stream until other types of traffic frames become available. There shall not be a
+gap between frames under any circumstance.
+
+           Header Construction
+Modem IDLE frames shall be signaled in the frame header by field FRAME_TYPE=00 (Table
+2-9). Modem IDLE frame headers shall be otherwise identical to normal data frame headers with
+the exception that the TXFN field in an IDLE frame header is always equal to the master TXFN
+counter.
+
+           Payload Construction
+Modem IDLE frames shall be subject to the same payload FEC and shall be protected by the same
+CRC-32 as the data frames.
+The information payload in IDLE frames shall be constructed as a pseudo-random binary sequence
+(PRBS) using the same generator as the frame scrambler (Section 2.6.3.6.4) except with its initial
+seed equal to the value of the frame header TXFN field (Table 2-9) plus one.
+The size of the IDLE information payload shall be the same as for data frames.
+
+ DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                      Page 31 of 50
+The bits from the pseudo-random binary sequence shall be written into the modem frame in the
+(common) order described in Section 2.6.3.5.3.2 and illustrated in Figure 2-7.
+
+2.6.3.5.2 MGMT/PNT Frames
+The MGMT frame type is provided for management frames. These frames shall be used for inter-
+OISL communications.
+MGMT frames shall be sent at 1Hz, each holding 1 time-stamp measurement set.
+
+          Header Construction
+Modem MGMT frames shall be signaled in the frame header by field FRAME_TYPE=10 (Table
+2-9).
+
+          Payload Construction
+Modem MGMT frames shall be subject to the same payload FEC and are protected by the same
+CRC-32 as the data frames. The size of the MGMT information payload shall be the same as for
+data frames.
+The bytes comprising the MGMT frame payload shall be written into the modem frame in the
+(common) order described in Section 2.6.3.5.3.2 and illustrated in Figure 2-7.
+
+          Payload Frame Definition
+The MGMT/PNT Frames are used to communicate OISL frame timestamps and calculated range
+and range timestamp between the OISLs. Table 2-14 defines the MGMT/PNT payload.
+         Table 2-14: MGMT/PNT Frame Payload Definition for Ranging Timestamps.
+            Field            Bits    Bit Positions               Description
+ RX_PHY_Timestamp_sec           6                  0-5       RX PHY timestamp for frame
+                                                             receipt
+                                                             Seconds of the whole GPS
+                                                             minute (0 Hour, January 6,
+                                                             1980)
+ RX_PHY_Timestamp_picosec        40                6-45      RX PHY timestamp for frame
+                                                             receipt
+                                                             Picoseconds of the whole
+                                                             second
+ TX_PHY_Timestamp_sec               6             46-51      TX PHY timestamp for the
+                                                             same frame associated with
+                                                             the RX PHY Timestamp
+                                                             Seconds of the whole GPS
+                                                             minute (0 Hour, January 6,
+                                                             1980)
+
+
+ DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                        Page 32 of 50
+             Field                Bits        Bit Positions               Description
+ TX_PHY_Timestamp_picosec           40            52-91          TX PHY timestamp for the
+                                                                 same frame associated with
+                                                                 the RX PHY Timestamp
+                                                                 Picoseconds of the whole
+                                                                 second
+ Range_Meters                       64            92-155         Computed and provided TX
+                                                                 OISL aperture to RX OISL
+                                                                 aperture range in meters, IEEE
+                                                                 754 double precision floating
+                                                                 point format. This field must
+                                                                 be populated.
+
+                                                                 Calculation of this field is
+                                                                 optional - If not calculated,
+                                                                 this field shall be set to 0
+                                                                 (zero).
+ Range_TimeStamp_sec                32           156-187         Computed range timestamp:
+                                                                 whole seconds of GPS time
+                                                                 from epoch 0hour, Jan 6,
+                                                                 1980.
+
+                                                                 Calculation of this field is
+                                                                 optional - If not calculated,
+                                                                 this field shall be set to 0
+                                                                 (zero).
+ Range_TimeStamp_picosec            40           188-227         Computed range timestamp:
+                                                                 picoseconds of the whole
+                                                                 second of GPS time
+
+                                                                 Calculation of this field is
+                                                                 optional - If not calculated,
+                                                                 this field shall be set to 0
+                                                                 (zero).
+ Timestamp_Valid                    1              228           1 = range estimate is valid; 0 =
+                                                                 range estimate is not valid.
+
+
+Note: The average value of the first and last timestamp used for the range calculation shall be
+associated to the range measurement and reflected as Range_TimeStamp.
+
+
+
+ DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                        Page 33 of 50
+2.6.3.5.3 DATA/IDLE/MGMT Frame Handling
+            Multiplexing
+The modem shall multiplex the modem frame types (FRAME_TYPE, Table 2-9) for transmission
+as illustrated in Figure 2-6.
+
+
+                       Ethernet
+                        Frames              1912
+                                            Bytes
+ Ethernet       Ethernet
+                                  Framer            FIFO
+ Packets         IP Core
+                                            1912
+                                            Bytes
+                      IDLE Payload                                       Payload               TX
+  TXFN                                              FIFO
+                       Generation                                          FEC                PHY
+                                            1912
+                                            Bytes
+ MGMT
+                                                    FIFO
+ Payload
+
+
+
+                                                           FRAME_TYPE
+                              Figure 2-6: Multiplexing Frame Types
+
+Ethernet traffic shall be encapsulated (Section 2.6.3.7) and carried solely in DATA frames
+(FRAME_TYPE=01, per Table 2-9). If neither a DATA frame nor a MGMT frame
+(FRAME_TYPE=10) is ready for transmission, the modem shall continuously transmit IDLE
+frames (FRAME_TYPE=00). Arbitration between DATA and MGMT frames for transmission
+shall be implementation dependent. The offered traffic load of MGMT frames should be sparse,
+on the order of 0 -10 Hz, depending on the application’s PNT configuration (Section 2.6.3.7.8).
+
+            Byte Ordering and CRC-32 computation
+Payload data shall be written into the modem frame in the logical order shown in Figure 2-7 for
+all values of FRAME_TYPE (Table 2-9). The mapping from logical order (Figure 2-7) to physical
+order (Figure 2-10) shall be identical for all payload types and is described in Section 2.6.3.6.3.
+The payload CRC-32 shall be computed with bytes entering the CRC-32 circuit in this order
+(Figure 2-7): word 0: bits[7:0], bits[15:8], bits [23:16], then bits[24:31], followed by the same
+ordering for word 1, counting naturally through the bytes comprising the payload up through the
+end of word 476. The bits of each byte shall enter the CRC computer in a manner that’s equivalent
+to the bit-serial reference implementation of the CRC-32 (Figure 2-8) with bytes entering MSB
+first and LSB last.
+The computed checksum shall be written into the frame (logical order, Figure 2-7) with the 32 bits
+exiting the CRC reference circuit written naturally into word 477 starting at bit 31 down to bit 0.
+
+
+ DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                           Page 34 of 50
+                                Bit 31                    Bit 0
+
+
+                       word 0            payload word 0           Always begin writing the payload at word 0
+                       word 1            payload word 1
+                                         Payload word 2
+
+
+
+  One FSO Frame
+   (1912 bytes)
+
+
+
+                                         payload word N
+                                          pad to zero             Unused space (if any) padded to zero
+
+                     word 477               CRC-32                CRC covering the full FSO Frame
+
+                                  Figure 2-7: Payload Byte Ordering
+
+
+After staging, the 1912 bytes shall be subject to payload FEC encoding and interleaving (Section
+2.6.3.6.3). Note that for IDLE frames the number of zero-pad bytes shall be zero. The number of
+zero-value pad bytes for MGMT will depend on the application’s definition of the MGMT frame
+payload format. The MGMT frame payload shall never exceed 1908 bytes.
+
+2.6.3.6 Error Control Coding
+The bit error rate (BER) requirements are as follows:
+   •   OISLs shall achieve a decoded BER after FEC of 10-6
+   •   OISLs should achieve a decoded BER after FEC of 10-9
+These error rates are to be achieved through OISL modem frames with forward error control
+coding:
+   •   Information bits shall be protected by CRC’s (Section 2.6.3.6.1., header: 16 bits, payload:
+       32 bits)
+   •   Fixed-rate (shortened) Reed-Solomon code shall be used for the frame Header (Section
+       2.6.3.6.2)
+   •   Fixed-rate Reed-Solomon code shall be used for the frame Payload (Section 2.6.3.6.3)
+
+
+
+
+ DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                          Page 35 of 50
+2.6.3.6.1 CRC
+Two CRC’s are required to generate the modem frame: a CRC-16 protects the frame header bits
+while a CRC-32 protects the payload bits. A functional description of a generic 𝐿𝐿-bit CRC encoder
+circuit is shown in Figure 2-8. The circuit consists of an 𝐿𝐿-bit register (𝐿𝐿 = 16 for CRC-16 and 𝐿𝐿 =
+32 for CRC-32). The connection polynomials (i.e., values 𝑔𝑔𝑘𝑘) are defined in Table 2-15 for each of
+the two CRC’s required to create the modem frame.
+Calculation of the CRC for a block of 𝑘𝑘 payload bits shall be performed as follows:
+   •   Initialize the 𝐿𝐿-bit encoder register state to zero at the start of each new CRC calculation
+   •   Clock in the 𝑘𝑘 payload bits with switches 𝑆𝑆1 and 𝑆𝑆2 both in the down position
+   •   After the last payload bit has been loaded the encoder register contains the 𝐿𝐿-bit CRC
+       value. It can be clocked-out with switches 𝑆𝑆1 and 𝑆𝑆2 in the up position.
+
+
+
+
+                             Figure 2-8: 𝑳𝑳-bit CRC Calculation Circuit
+
+                                    Table 2-15: CRC Polynomials
+    Location       Length                     Polynomial                         Source
+  Frame            16 bits                                                          1
+                               𝑔𝑔(𝑥𝑥) = 𝑥𝑥16 + 𝑥𝑥12 + 𝑥𝑥5 + 1
+  Header
+  Frame            32 bits     𝑔𝑔(𝑥𝑥) = 𝑥𝑥32 + 𝑥𝑥26 + 𝑥𝑥23 + 𝑥𝑥22 + 𝑥𝑥16            1
+  Payload                                            + 𝑥𝑥12 + 𝑥𝑥11 + 𝑥𝑥10
+                                                    + 𝑥𝑥8 + 𝑥𝑥7 + 𝑥𝑥5 + 𝑥𝑥4
+                                                    + 𝑥𝑥2 + 𝑥𝑥 + 1
+
+
+2.6.3.6.2 Header FEC
+The modem header payload shall be encoded by a shortened Reed-Solomon code. The shortened
+Reed-Solomon code shall be constructed by zero-valued virtual fill based on the same RS(255,
+239) code as used for the payload FEC described in Section 2.6.3.6.3.
+The header RS code parameters are provided in Table 2-16.
+
+ DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                           Page 36 of 50
+                 Table 2-16: Shortened Reed-Solomon Code for Frame Header
+             Parameter      Value (bytes)                      Comments
+                 N               255                   Number of codeword bytes
+                 K               239           Number of data bytes (including vfill bytes)
+                vfill            223             Number of zero-valued virtual fill bytes
+
+
+Virtual fill bytes shall be padded at the beginning of the Reed-Solomon codeword but shall not be
+transmitted. After shortening, the header is effectively encoded by an RS(32,16) code. The
+encoding process for the frame header is presented in Figure 2-9.
+
+
+
+
+                               Figure 2-9: Header FEC Encoding
+
+2.6.3.6.3 Payload FEC and Interleaving
+The OISL payload FEC shall be adapted from the Reed-Solomon code specified in [4].
+The Reed-Solomon (RS) encoding of the payload FEC shall follow the recommendations in [4]
+with these specifications:
+   •   In the event that the payload has fewer than 1908 bytes to transmit, the higher layer shall
+       pad the data block with zeros to fill the entire 1908 bytes
+   •   A CRC-32 check value shall be appended to the block of 1908 source bytes prior to
+       encoding
+   •   The payload RS FEC shall encode blocks of 239×8=1912 bytes of source data across 8
+       RS(255,239) codewords
+   •   The RS code shall be 8 bits per RS symbol ([4], Section 4.3.1) with an encoded block
+       size (per codeword) of 255 symbols
+   •   The number of parity digits shall be 16, producing an RS(255,239) code, corresponding
+       to        in ([4], Section 4.3.2)
+   •   The Galois Field generator polynomial shall be 𝐹𝐹(𝑥𝑥) = 𝑥𝑥 8 + 𝑥𝑥 7 + 𝑥𝑥 2 + 𝑥𝑥 + 1
+   •   The RS code generator polynomial shall be 𝑔𝑔(𝑥𝑥) = ∏127+𝐸𝐸
+                                                              𝑗𝑗=128−𝐸𝐸 (𝑥𝑥 − 𝛼𝛼
+                                                                                 11𝑗𝑗
+                                                                                      )
+   •   The RS codewords shall be in systematic form with data symbols preceding parity
+       symbols
+   •   The RS codewords shall be defined on the conventional (powers of α) basis. This is a
+       departure from ([4], Section 4.3.9) which specifies the Berlekamp Dual basis
+
+
+ DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                       Page 37 of 50
+The interleaving depth for the payload FEC shall be 8 RS(255,239) codewords, as illustrated
+notionally in Figure 2-10. This diagram, abstracted from ([4], Section 4.2), illustrates notionally
+how source bytes are encoded.
+   •   Source bytes are written in column-major order, spreading contiguous input bytes across
+       all 8 Reed-Solomon codewords
+   •   Source bytes are written in systematic form with the block of data bytes followed by a
+       block of parity bytes
+   •   After encoding, bytes are transmitted in the same order as they entered the encoder
+       (column major, per Figure 2-10) with the block of data bytes followed sequentially by the
+       block of parity bytes
+             Data Bytes Written                                     Parity Bytes Written
+               Column-Major                                           Column-Major
+
+
+                     d0 d1                                             d238 p0 p1          p15
+              cw0
+              cw1
+              cw2
+              cw3
+              cw4                                                         C
+                                                                          R
+              cw5                                                         C
+              cw6                                                         -
+                                                                          3
+              cw7                                                         2
+                    8 bits                                                    8 bits
+                                  Figure 2-10: Payload FEC Interleaving
+
+The transmit order of each 8-bit Reed-Solomon encoded interleaved symbol (an 8-bit byte) is
+shown in Figure 2-11.
+
+                         First bit Transmitted                     Last bit Transmitted
+
+
+
+                                   α7 α6         α5   α4 α3   α2     α1       α0
+
+
+
+
+                              Bit 7                           Bit 0
+                             (MSB)                            (LSB)
+                    Figure 2-11: Bit Ordering of Reed-Solomon Encoded Bytes
+ DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                            Page 38 of 50
+These following adaptations are made from the payload FEC framing as specified by [2]:
+   •   The SDA OISL shall only implement the “LIA Framing” section of the [2], meaning that
+       all incoming payloads to the FEC are fixed sized. Therefore, the 8 bytes allocated by [2],
+       for the LIAU superframe headers are subsumed into the payload section of the FEC
+       encoder. This increased the “data” section in Figure 2-10 from 238 to 239 bytes and
+       conforms to a standard Reed-Solomon codeword as defined in ( [2] Section 4).
+   •   All OISL modem frames carry a 15264 information bit payload per frame which is
+       protected by a CRC-32. The inclusion of the CRC-32 in Figure 2-10 is an extension of
+       the CCSDS framing specification.
+The SysChanDat* bit of the LPC(25,16) code (as described in CCSDS 141.11-O-1, Section
+3.3.2.3.4) is not used in this standard. Here, we use the same LPC code as the referenced CCSDS
+standard except without the SysChanDat* bit, producing an LPC(24,16) code. The LPC code is
+applied synchronously during frame generation (see Figure 2-15) beginning with the first bit of
+the header and continuing through the last bit of the payload. The LPC code is not applied to the
+preamble.
+   •   The OISLs may be synchronized by simple cross-correlation with the frame preamble.
+
+2.6.3.6.4 Scrambling and Line Product Code
+The scrambler and Line Product Code (LPC) shall be implemented and shall be adopted from [2].
+The scrambler follows ( [2] Section 3.3.2.3.3.1) with details of its initial seed provided in Section
+2.6.3.6.5 of this Standard.
+   •   The scrambler shall reset to a fixed value (Table 2-17) at the start of every modem
+       header.
+   •   The scrambler shall advance naturally after scrambling the header to also scramble the
+       payload bits.
+   •   The preamble bits shall not be scrambled.
+
+2.6.3.6.5 Scrambler Reset State
+The scrambler shall initialize the PRBS generator stages with the value defined in Table 2-17. The
+25-bit value for the scrambler initial state in the table shall be read (hex) as 0x0000007.
+                              Table 2-17: Scrambler Reset Definition
+                        X[24:0]                        Remarks
+                       X[0:1]=1                   Initialization Pattern
+                        X[2]=1
+                       X[24:3]=0
+
+
+2.6.3.6.6 Scrambler Initialization
+After a system reset, the PRBS generator shall start with the initialization pattern as defined in
+Table 2-17. The scrambler shall be reset to the value in Table 2-17 at the start of every modem
+frame.
+
+ DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                       Page 39 of 50
+2.6.3.6.7 Scrambler Parallel Implementation Overview and Bit Ordering
+The scrambler defined in [2] refers to the bit-serial implementation of the scrambler. The
+implementer may use a bit-serial representation or unroll it in a parallel implementation. Bit- and
+byte-ordering are defined using the bit-serial reference implementation of the standard to avoid
+ambiguity.
+The scrambler is applied to all data bytes from both the Header and Payload Reed-Solomon
+encoders prior to LPC encoding. Only the 72-bit preamble sequence is not scrambled. The
+scrambler shall be applied as illustrated in Figure 2-12. For each pair of bytes entering the
+scrambler, the bits shall enter the scrambler in the order byte 0 (MSB) to byte 1 (LSB) as illustrated
+in the figure. Bytes shall enter the scrambler in natural order from the encoded header followed
+by the encoded payload.
+                                                                 u0,0          b7         s0
+                                                                 u0,1          b6         s1
+                                                                 u0,2          b5         s2
+            First bit into LPC          Last bit into LPC        u0,3          b4         s3
+                 (byte 0)                   (byte 0)             u1,0          b3         s4
+                                                                 u1,1          b2         s5
+         Byte 0    b7 b6 b5 b4 b3 b2 b1 b0                       u1,2          b1         s6
+         Byte 1    B7 B6 B5 B4 B3 B2 B1 B0
+                                                                 u1,3
+                                                                 u2,0   =      b0
+                                                                               B7
+                                                                                          s7
+                                                                                          s8
+                                                                 u2,1          B6         s9
+                                                                 u2,2          B5         s10
+            First bit into LPC          Last bit into LPC        u2,3          B4         s11
+                 (byte 1)                   (byte 1)             u3,0          B3         s12
+                                                                 u3,1          B2         s13
+                                                                 u3,2          B1         s14
+                                                                 u3,3          B0         s15
+
+                                 Figure 2-12: Application of the Scrambler
+The ingress bits are scrambled as the exclusive or of the bits produced by the scrambler PRBS in
+natural order. Per Figure 2-12, the scrambler PRBS shall be constructed with the polynomial from
+( [2] Section 3.3.2.3.3) where, after initialization to the state from Table 2-17 at the start of every
+header, the bits 𝑠𝑠𝑘𝑘 represent the natural (in-order) outputs from the scrambler PRBS, advancing
+without reset of its state while the totality of the header and payload bytes are scrambled.
+
+2.6.3.6.8 Line Product Code
+The LPC(24,16) code and running disparity manager is adopted from ( [2] Section 3.3.2.3.4) with
+optional SysChanDat* bit punctured.
+   •   The LPC(24,16) code is applied synchronously with frame generation (see Figure 2-15).
+   •   The frame preamble has zero disparity (by design) and is not subject to the LPC code.
+
+
+
+ DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                           Page 40 of 50
+    •    The frame header is synchronous to the frame preamble with the header size exactly a
+         multiple of 24 bits, meaning that the header exactly fits in an integer number of LPC code
+         blocks.
+    •    The frame payload (information bits, CRC, and parity bits) is synchronous to the frame
+         header and is also dimensioned to produce an integer number of LPC codewords.
+
+The ingress bits to the LPC encoder shall be first scrambled (Section 2.6.3.6.6). After scrambling,
+the bits shall be differentially encoded as illustrated in Figure 2-13 where the notation for the
+differentially encoded bits has been adapted from ([2] Section 3.3.2.3.4.4).
+
+      u0,0                                    e0,0                                 u2,0                              e2,0
+      u0,1                                    e0,1                                 u2,1                              e2,1
+      u0,2                                    e0,2                                 u2,2                              e2,2
+      u0,3                                    e0,3                                 u2,3                              e2,3
+      u1,0                                    e1,0                                 u3,0                              e3,0
+      u1,1                                    e1,1                                 u3,1                              e3,1
+      u1,2                                    e1,2                                 u3,2                              e3,2
+      u1,3                                    e1,3                                 u3,3                              e3,3
+                            Figure 2-13: Differentially Encoding in LPC Encoder
+After differentially encoding, horizontal and parity bits are computed (per [2] Sections
+3.3.2.3.4.4.2 and 3.3.2.3.4.4.3, respectively). Active disparity management shall be applied ([2]
+Section 3.3.2.3.4.5). The LPC-encoded bits are represented as shown in Figure 2-14.
+
+                                                  e0,0 e0,1 e0,2 e0,3 ph0
+                                                  e1,0 e1,1 e1,2 e1,3 ph1
+                                                  e2,0 e2,1 e2,2 e2,3 ph2
+                                                  e3,0 e3,1 e3,2 e3,3 ph3
+                                                  pv0 pv1 pv2 pv3
+                                             Figure 2-14: LPC Codeword
+
+
+The transmission order of the LPC-encoded bits, after active disparity management, shall be:
+{𝑒𝑒0,0 , 𝑒𝑒0,1 , 𝑒𝑒0,2 , 𝑒𝑒0,3 , 𝑒𝑒1,0 , 𝑒𝑒1,1 , 𝑒𝑒1,2 , 𝑒𝑒1,3 , 𝑒𝑒2,0 , 𝑒𝑒2,1 , 𝑒𝑒2,2 , 𝑒𝑒2,3 , 𝑒𝑒3,0 , 𝑒𝑒3,1 , 𝑒𝑒3,2 , 𝑒𝑒3,3 ,
+                                      𝑝𝑝ℎ0 , 𝑝𝑝ℎ1 , 𝑝𝑝ℎ2 , 𝑝𝑝ℎ3 , 𝑝𝑝𝑣𝑣0 , 𝑝𝑝𝑣𝑣1 , 𝑝𝑝𝑣𝑣2 , 𝑝𝑝𝑣𝑣3 }
+with bit 𝑒𝑒0,0 entering the channel first and bit 𝑝𝑝𝑣𝑣3 transmitted last of the LPC codeword.
+
+
+
+ DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                                   Page 41 of 50
+2.6.3.6.9 Frame Generation Summary
+Construction of the OISL frame and its integration with the line product code is summarized in
+Figure 2-15.
+
+
+    Preamble
+     (72 bits)
+                                                  Shortened
+                                               RS(255,239) code
+
+   Header Data                                                                                    TX
+    (14 bytes)                                                                                   Optics
+                                  RS(32,16)
+                   CRC-16
+                                                                   Scrambler        LPC(24,16)
+  Payload Data
+  (1908 bytes)                   RS(255,239)
+                                                     Interleaver         Synchronous with
+                                     x8                                  Frame Generation
+                   CRC-32
+
+
+                             Figure 2-15: Frame Encoding Summary
+
+2.6.3.7 Ethernet Packet Encapsulation
+2.6.3.7.1 Overview of Ethernet Packet Encapsulation
+The OISL data plane encapsulates Ethernet packets as Free Space Optical (FSO) frames for
+transport across the optical link. The processing steps are illustrated functionally in Figure 2-16.
+
+
+
+
+                              Figure 2-16: Ethernet Encapsulation
+This scheme permits the OISL to carry virtually any form of Ethernet traffic transparently between
+a pair of optical terminals. The presence of the OISL is largely transparent to the endpoints.
+
+2.6.3.7.2 Ethernet Packet Handling
+On ingress to the modem, the Ethernet frame shall be extracted from every Ethernet packet by
+stripping the Preamble and the Start Frame Delimiter (SFD) from the packet. The Ethernet frames
+shall be queued to the Packing and Segmentation block for encapsulation as FSO frames.
+
+ DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                        Page 42 of 50
+On egress from the modem, the TX Ethernet PHY shall construct Ethernet packets from the
+received (reconstructed) Ethernet frames by pre-pending for each frame the Ethernet
+Preamble,Start Frame Delimiter (SFD), and appending an appropriate Interpacket Gap (IPG). The
+reconstructed Ethernet packet shall be emitted by the Ethernet PHY.
+
+2.6.3.7.3 Packing and Segmentation
+The Packing and Segmentation operation (Figure 2-16) shall perform the following functions in
+the TX PHY of the optical terminal:
+   •   Segments large Ethernet frames into one or more FSO frames (as needed)
+   •   Packs small Ethernet frames into FSO frames
+The implementation of the Packing and Segmentation operation shall preserve the ingress order
+of Ethernet packets.
+
+2.6.3.7.4      FSO Frame Payload Format
+This section defines how the output of the Packing and Segmentation operation is formatted in the
+payload section of an FSO DATA Frame. The structure is illustrated logically in Figure 2-17. The
+bytes shall be written into the payload FEC physical frame in the byte order specified in Figure
+2-10. The bytes shall be consecutive, per word in Figure 2-17, with the lower 8 bits (0 to 7)
+denoting the first byte, followed by the next grouping of bytes up to the upper set of 8 bits (24 to
+31) denoting the fourth byte. The numbering of bytes for the purpose of defining their ordering
+entering the payload FEC shall count up naturally for each 32-bit word in Figure 2-17.
+                                 Bit 31                        Bit 0
+
+
+                        word 0            FSO Payload Header           One Payload Header per FSO Frame
+                        word 1        FSO Packet Header -1             Encapsulated
+                                                                         Ethernet
+                                      FSO Packet Payload -1               Frame
+
+
+                                                                                           One or more FSO
+                                                                                            Packet Headers
+   One FSO Frame                      FSO Packet Header - N
+                                                                                            per FSO Frame
+    (1912 bytes)                                                       Encapsulated
+                                                                         Ethernet
+                                     FSO Packet Payload - N              Frame(s)
+
+
+
+                                             pad to zero               Unused space (if any) padded to zero
+
+                      word 477                 CRC-32                  CRC covering the full FSO Frame
+
+                            Figure 2-17: FSO Payload Frame Format
+
+The FSO Payload and FSO Frame headers split Ethernet frame payloads across multiple frames,
+enabling efficient packing of Ethernet frames into FSO frames.
+
+ DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                             Page 43 of 50
+There shall not be any zero-pad space except at the end of the FSO frame as illustrated in Figure
+2-17.
+Note that the CRC-32 described in Figure 2-17 is the same CRC-32 previously described in Figure
+2-10 and is repeated here for clarity.
+
+2.6.3.7.5 FSO Payload and Packet Headers
+Every FSO frame shall start with an FSO Payload Header. There shall be exactly one FSO Payload
+Header (32 bits) per FSO frame. The contents of the FSO frame and packet headers shall follow
+the definition presented in Table 2-18.
+                         Table 2-18: FSO Payload and Packet Headers
+                                                       Field     bit numbers   #bits
+                                                       0xAB         31:24       8
+                       FSO Payload Header (32 bits)   seq_num       23:14       10
+                                                       Length       13:0        14
+                                                      0xCDEF        31:16       16
+                        FSO Packet Header (32 bits)   reserved      15:14       2
+                                                       Length       13:0        14
+
+
+
+
+ DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                       Page 44 of 50
+FSO Payload Header:
+The FSO Payload Header shall be constructed as an 8-bit magic number (0xAB) followed by a 10-
+bit sequence number and a 14-bit length field. Sequence numbers shall increment sequentially for
+every DATA frame and wrap naturally around zero. The sequence number referenced in Table
+2-18 is unrelated to the modem’s ARQ signaling in Table 2-9.
+The system shall be capable of splitting an encapsulated Ethernet frame payload across multiple
+FSO frames. The FSO Payload Header length field shall have a non-zero value only when an
+Ethernet frame is segmented across the preceding and current FSO DATA frames, signaling the
+length of the preceding encapsulated packet remaining. Otherwise, the length field shall be zero.
+FSO Packet Header:
+The FSO packet header (Table 2-18) shall signal encapsulation of an Ethernet frame. The header
+shall be constructed as a 16-bit magic number (0xCDEF) followed by two reserved bits (0b00) and
+a 14-bit length field. The length field shall signal the number of payload bytes to follow where the
+length field excludes the length of the FSO packet header regardless of whether the Ethernet frame
+is segmented into the following FSO frame.
+
+2.6.3.7.6 Ethernet Byte Ordering, Padding, and CRC
+FSO packet headers shall be aligned to a 32-bit boundary. If the encapsulated Ethernet frame length
+is not a multiple of 4 bytes, the implementation shall pad the remaining unused space in the FSO
+frame with zeros.
+Ethernet frame payload bytes shall be written into the FSO frame (Figure 2-17) in natural
+(ascending) order with the first ingress byte of the Ethernet frame written into the first word after
+the FSO Packet header starting at byte 0 (bit positions [7:0]), incrementing up through byte 3 (bit
+positions [31-24]), then incrementing to the next word in the FSO frame. Unused bytes in the FSO
+frame shall be padded with zeros.
+An example of the byte ordering for the encapsulation of a hypothetical Ethernet frame of length
+𝑛𝑛 bytes is illustrated in Table 2-19. The Payload Header (Table 2-18) is written into FSO frame
+word 0. In this example, suppose that there is no Ethernet frame continued from a preceding FSO
+frame. Then a Packet Header is written into FSO frame word 1. This marks the start of the
+encapsulated Ethernet frame bytes. The bytes of the Ethernet frame (ETH_Byte_0, …,
+ETH_Byte_n) are written sequentially in the natural (ascending) byte order in which they were
+received starting in the first FSO word following the Packet Header until either the entire Ethernet
+frame is written or the available space in the FSO frame is consumed.
+                Table 2-19: Ethernet Frame Byte Ordering into FSO Logical Frame
+  FSO word number    contents                  31-24        23-16             15-8             7-0
+       word 0        Payload Header                 AB[31:24], seq_num[23:14], length[13:0]
+       word 1        Packet Header                 CDEF[31:18], reserved [17:16], length[13:0]
+       word 2        Ethernet bytes       ETH_Byte_3    ETH_Byte_2      ETH_Byte_1       ETH_Byte_0
+                                                                       …
+       word M                             Zero_Pad      Zero_Pad        ETH_Byte_n-1 ETH_Byte_n-2
+
+
+
+ DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                       Page 45 of 50
+The implementation shall be capable of emitting FSO frames with partially packed
+Ethernet frames. In the case that the Ethernet frame is segmented, the Ethernet bytes are continued
+into the immediately following FSO DATA frame with the appropriate signaling in the FSO
+Payload header as previously described (Section 2.6.3.7.5).
+Every FSO frame shall end with a 32-bit CRC as illustrated in Figure 2-10. In all cases, the CRC
+shall cover the entire frame, including any portions of the frame padded with zeros.
+
+2.6.3.7.7 Reassembly of Ethernet Frames
+The implementation’s optical RX PHY shall reconstruct the sequence of ingress Ethernet packets
+from the (packed) FSO frames received from the far-end terminal. The frames shall be transmitted
+on its egress Ethernet in the same order and with the same packet sizes as received by the Ethernet
+RX PHY on its ingress Ethernet.
+The Reassembly process (the Reassembly Block in Figure 2-16) shall implement the following:
+   •   If an FSO frame is received with a sequence number skip, any Ethernet packet whose
+       payload was not complete shall be discarded. The received FSO frame with the skipped
+       sequence number shall be retained only if the length field of its FSO frame header is zero.
+       Any FSO packet headers following the end of the first partial packet in the FSO frame are
+       valid.
+   •   Any FSO frame whose magic number in its FSO Frame Header (Table 2-18) is incorrect
+       shall be discarded entirely.
+   •   Any FSO Packet Header within any FSO frame (Table 2-18) whose magic number is
+       incorrect shall be discarded.
+   •   Any FSO Packet Header whose length field is inconsistent shall be discarded.
+
+2.6.3.7.8 Ranging and Position, Navigation, and Timing (PNT)
+           Time Stamping
+The TX PHY shall timestamp each FSO frame consistent with the technique described in Section
+2.6.3.3.4. The timestamp shall reference the rising edge of the first bit of the optical frame. The
+timestamp shall be accurate to within 10 nanoseconds relative to the local bus 10 MHz reference
+clock.
+The RX PHY shall record a timestamp and sequence number of the incoming frame at a frequency
+of at least 1 Hz. The rate of time stamp recording should be remotely controllable and reportable.
+The implementation shall reference the recorded timestamp to the ingress time of the rising edge
+of the first bit of the modem frame. The implementation shall compensate timestamps (as required)
+for systematic time delays due to propagation paths outside the over-the-air connection between a
+pair of terminals. The means for calibrating path delays and compensating timestamps shall be
+implementation dependent.
+
+           Ranging Data: Two-way Frame Timestamps and Range
+The receiving OISL shall, at a frequency of at least one hertz but no greater than the rate specified
+in Section 2.6.3.7.8.1, provide timestamp data back to the transmitting OISL. This data shall be
+
+ DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                       Page 46 of 50
+sent in a MGMT frame as described in Table 2-9. The Timestamp Frequency should be
+commanded by the requesting OISL and, when commanded, shall be communicated as a positive
+number corresponding to the Timestamp Frequency.
+The payload of a ranging response frame shall contain the following data:
+   •   The egress timestamp of the frame which was measured on receipt
+   •   The ingress timestamp of the measured frame
+
+The payload of a ranging response frame should contain the following data:
+   •   Time-tagged ranging measurements accurate to < 3 meters
+In addition to these data, the egress timestamp of the management frame shall be collected by the
+terminal receiving the management frame. As outlined in Table 2-9, this timestamp shall occur
+either in the MGMT frame or in the subsequent frame as indicated by the timestamp location flag.
+The space segment should provide the above time-tagged ranging measurements to <10 ns relative
+to the SV clock to the ground, to the onboard processing (e.g. BMC3), and to the bus to be provided
+to TT&C subscribers. See [5] for time and frequency terms including range.
+
+
+
+
+ DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                      Page 47 of 50
+3 Glossary
+Baud Rate
+Baud time is defined as the signaling time required to transmit a single coded frame bit and shall
+include all sources of overhead including line code, preamble, header, cyclic redundancy checks
+(CRCs) and forward error correction (FEC). Baud rate, expressed in Hz, is the inverse of baud
+time.
+Data and Symbol Rates
+Data and symbol rates are expressed as bits-per-second (bps) and symbols-per-second (baud). Bps
+is defined as 1 bit/second. Similarly, baud is defined as 1 symbol/sec. SI-prefixes for these rates
+are expressed in base-10 and not in base-2. For example, 100 Mbps represents 100 x 10^6 bps or
+10^8 bps.
+Bit Numbering Convention
+The convention used to identify each bit in an N-bit field will conform to Section 1.6.3 in [6].
+Field of View (FOV)
+The field of view is the solid angle that represents the instantaneous viewing angle of the sensor.
+Multiple FOVs may be defined for a sensor and shall be specified in-line sufficiently to indicate
+the applicable geometry. For example, the system may have different FOVs for the
+communications, acquisition, and tracking channels. These three FOVs may be specified as the
+Communications Channel FOV, Acquisition FOV, and Tracking FOV.
+Field of Regard (FOR)
+The field of regard is the total the solid angle defined by the allowable motion of the sensor
+combined with the field of view. The FOR shall, by default, refer to the terminal’s FOR.
+Solid Angle
+The angles defining the sensor, including, FOV and FOR, shall be expressed as a solid angle,
+typically specified in steradians, square degrees, or square radians.
+Alternatively, and perhaps more commonly, the solid angle of the sensor may be expressed in
+degrees, which shall be taken to be mean, by default, the solid angle defined by equal apex angles
+of a pyramid’s intersection with a sphere, which defines a spherical cap on a unit sphere. This
+represents a square sensor’s projection onto a sphere. Deviations of this pyramidal definition are
+permitted, the most common being a conical approximation, however such deviations shall be
+explicitly annotated.
+Extinction Ratio
+Extinction ratio is the ratio of two optical power levels of a signal generated by an optical source.
+Polarization Extinction Ratio (PER)
+Ratio of optical powers for perpendicular polarizations.
+Irradiance
+
+
+ DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                       Page 48 of 50
+Irradiance is the radiant flux received by a surface per unit area. The SI unit for irradiance is the
+watt per square meter (W/m2).
+Radiance
+Radiance is the radiant flux transmitted, emitted, or received by a given surface per unit solid
+angle. The SI unit for radiance is the watt per square meter per (W/m2/per steradian).
+Line Product Code (LPC)
+Line Product Code is coding technique to the optical transmitter will remain within the safe
+operating envelope of the optical amplifier by minimizing the difference between the number of
+transmitted ones and zeros, called disparity. The Line Product Code may also be used to produce
+a tracking tone.
+Part Per Million (PPM)
+A measurement used to quantify deviation from nominal value.
+Amplitude Modulation (AM)
+Amplitude modulation (AM) is a modulation technique used in electronic communication. In
+amplitude modulation, the amplitude (signal strength) of the carrier wave is varied in proportion
+to that of the message signal.
+Modulation Index (MI)
+Modulation index is a measure based on the ratio of the modulation excursions of a signal to the
+level of the unmodulated carrier.
+Coded Bit-Error Rate
+The number of bit errors per unit time prior to applying Forward Error Correction.
+Decoded Bit-Error Rate
+The number of bit errors per unit time after applying Forward Error Correction.
+Packet Error Rate
+The ratio of number of Ethernet packets received in error to total number of transmitted Ethernet
+packets.
+Pseudo-Random Binary Sequence
+A pseudorandom binary sequence (PRBS) is a binary sequence that, while generated with a
+deterministic algorithm, is difficult to predict and exhibits statistical behavior similar to a truly
+random sequence.
+
+
+
+
+ DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                       Page 49 of 50
+4 References
+The following publications contain provisions that, through reference in this text, constitute
+provisions of this document. At the time of publication, the editions indicated were valid. All
+publications are subject to revision, and users of this document are encouraged to investigate the
+possibility of applying the most recent editions of the publications indicated below.
+
+[1] ISO, Information Technology—Open Systems Interconnection—Basic Reference Model: The
+    Basic Model. 2nd ed. International Standard, ISO/IEC 7498-1:1994., 1994: ISO, Geneva.
+[2] CCSDS, CCSDS Orange Book 141.11-O-1 Optical High Data Rate (HDR) Communication,
+    CCSDS, 2018.
+[3] ITU-T, ITU-T Recommendation G.694.1 Spectral grids for WDM applications: DWDM
+    frequency grid, 2020.
+[4] TM Synchronization and Channel Coding. Issue 3. Recommendation for Space Data System
+    Standards (Blue Book), CCSDS 131.0-B-3., Washington, D.C.: CCSDS, 2017.
+[5] ITU, ITU-T Recommendation TF.686-3 Glossary and definitions of time and frequency
+    terms., 2013.
+[6] CCSDS, CCSDS 133.0.P-1.1 SPACE PACKETPROTOCOL, 2019.
+
+
+
+
+ DISTRIBUTION STATEMENT A. Approved for public release: distribution unlimited.
+                                      Page 50 of 50
+

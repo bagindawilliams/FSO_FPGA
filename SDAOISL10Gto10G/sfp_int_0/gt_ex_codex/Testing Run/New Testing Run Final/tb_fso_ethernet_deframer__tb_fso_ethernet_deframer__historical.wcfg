@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/audit/20261101_module13/build/modules_20261101_180405_651227_tb_fso_ethernet_deframer.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tb_fso_ethernet_deframer" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+   </zoom_setting>
+   <column_width_setting>
+   </column_width_setting>
+   <WVObjectSize size="8" />
+   <wvobject type="group" fp_name="group29">
+      <obj_property name="label">System Clock / Control</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/tb_fso_ethernet_deframer/clk">
+         <obj_property name="ElementShortName">clk</obj_property>
+         <obj_property name="ObjectShortName">clk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_fso_ethernet_deframer/rst_n">
+         <obj_property name="ElementShortName">rst_n</obj_property>
+         <obj_property name="ObjectShortName">rst_n</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group32">
+      <obj_property name="label">Header Path</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/tb_fso_ethernet_deframer/hdr_crc_ok">
+         <obj_property name="ElementShortName">hdr_crc_ok</obj_property>
+         <obj_property name="ObjectShortName">hdr_crc_ok</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_fso_ethernet_deframer/s_axis_hdr_tdata">
+         <obj_property name="ElementShortName">s_axis_hdr_tdata[7:0]</obj_property>
+         <obj_property name="ObjectShortName">s_axis_hdr_tdata[7:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group35">
+      <obj_property name="label">Process and State</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_fso_ethernet_deframer/m_axis_fso_tdata">
+         <obj_property name="ElementShortName">m_axis_fso_tdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">m_axis_fso_tdata[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_fso_ethernet_deframer/s_axis_fso_tdata">
+         <obj_property name="ElementShortName">s_axis_fso_tdata[31:0]</obj_property>
+         <obj_property name="ObjectShortName">s_axis_fso_tdata[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_fso_ethernet_deframer/local_fb_ack">
+         <obj_property name="ElementShortName">local_fb_ack</obj_property>
+         <obj_property name="ObjectShortName">local_fb_ack</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_fso_ethernet_deframer/rx_fcch_op">
+         <obj_property name="ElementShortName">rx_fcch_op[3:0]</obj_property>
+         <obj_property name="ObjectShortName">rx_fcch_op[3:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_fso_ethernet_deframer/rx_fcch_pl">
+         <obj_property name="ElementShortName">rx_fcch_pl[15:0]</obj_property>
+         <obj_property name="ObjectShortName">rx_fcch_pl[15:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_fso_ethernet_deframer/rx_frame_type">
+         <obj_property name="ElementShortName">rx_frame_type[1:0]</obj_property>
+         <obj_property name="ObjectShortName">rx_frame_type[1:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_fso_ethernet_deframer/rx_tx_ts">
+         <obj_property name="ElementShortName">rx_tx_ts[39:0]</obj_property>
+         <obj_property name="ObjectShortName">rx_tx_ts[39:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group43">
+      <obj_property name="label">Data Output</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_fso_ethernet_deframer/local_fb_rxfn">
+         <obj_property name="ElementShortName">local_fb_rxfn[15:0]</obj_property>
+         <obj_property name="ObjectShortName">local_fb_rxfn[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_fso_ethernet_deframer/peer_rxfn_out">
+         <obj_property name="ElementShortName">peer_rxfn_out[15:0]</obj_property>
+         <obj_property name="ObjectShortName">peer_rxfn_out[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_fso_ethernet_deframer/peer_ack_out">
+         <obj_property name="ElementShortName">peer_ack_out</obj_property>
+         <obj_property name="ObjectShortName">peer_ack_out</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group47">
+      <obj_property name="label">Payload Path</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/tb_fso_ethernet_deframer/pld_crc_ok">
+         <obj_property name="ElementShortName">pld_crc_ok</obj_property>
+         <obj_property name="ObjectShortName">pld_crc_ok</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group49">
+      <obj_property name="label">Data Input</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_fso_ethernet_deframer/expected_txfn">
+         <obj_property name="ElementShortName">expected_txfn[15:0]</obj_property>
+         <obj_property name="ObjectShortName">expected_txfn[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_fso_ethernet_deframer/rx_txfn">
+         <obj_property name="ElementShortName">rx_txfn[15:0]</obj_property>
+         <obj_property name="ObjectShortName">rx_txfn[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_fso_ethernet_deframer/drained_data_frames">
+         <obj_property name="ElementShortName">drained_data_frames[31:0]</obj_property>
+         <obj_property name="ObjectShortName">drained_data_frames[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group53">
+      <obj_property name="label">MGMT Path</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_fso_ethernet_deframer/mgmt_lsb_vec">
+         <obj_property name="ElementShortName">mgmt_lsb_vec[255:0]</obj_property>
+         <obj_property name="ObjectShortName">mgmt_lsb_vec[255:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_fso_ethernet_deframer/mgmt_range_meters">
+         <obj_property name="ElementShortName">mgmt_range_meters[63:0]</obj_property>
+         <obj_property name="ObjectShortName">mgmt_range_meters[63:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group56">
+      <obj_property name="label">Functional handshake / recorded controls</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/tb_fso_ethernet_deframer/s_axis_hdr_tvalid">
+         <obj_property name="ElementShortName">s_axis_hdr_tvalid</obj_property>
+         <obj_property name="ObjectShortName">s_axis_hdr_tvalid</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_fso_ethernet_deframer/s_axis_fso_tvalid">
+         <obj_property name="ElementShortName">s_axis_fso_tvalid</obj_property>
+         <obj_property name="ObjectShortName">s_axis_fso_tvalid</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_fso_ethernet_deframer/m_axis_fso_tvalid">
+         <obj_property name="ElementShortName">m_axis_fso_tvalid</obj_property>
+         <obj_property name="ObjectShortName">m_axis_fso_tvalid</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_fso_ethernet_deframer/m_axis_fso_tlast">
+         <obj_property name="ElementShortName">m_axis_fso_tlast</obj_property>
+         <obj_property name="ObjectShortName">m_axis_fso_tlast</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_fso_ethernet_deframer/m_axis_fso_tready">
+         <obj_property name="ElementShortName">m_axis_fso_tready</obj_property>
+         <obj_property name="ObjectShortName">m_axis_fso_tready</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_fso_ethernet_deframer/local_fb_ack_valid">
+         <obj_property name="ElementShortName">local_fb_ack_valid</obj_property>
+         <obj_property name="ObjectShortName">local_fb_ack_valid</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_fso_ethernet_deframer/peer_ack_valid_out">
+         <obj_property name="ElementShortName">peer_ack_valid_out</obj_property>
+         <obj_property name="ObjectShortName">peer_ack_valid_out</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_fso_ethernet_deframer/mgmt_telemetry_valid">
+         <obj_property name="ElementShortName">mgmt_telemetry_valid</obj_property>
+         <obj_property name="ObjectShortName">mgmt_telemetry_valid</obj_property>
+      </wvobject>
+   </wvobject>
+</wave_config>

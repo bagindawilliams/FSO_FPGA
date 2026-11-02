@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="tb_FEC_RS_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tb_FEC_RS" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="1,515.150 ns"></ZoomStartTime>
+      <ZoomEndTime time="1,590.451 ns"></ZoomEndTime>
+      <Cursor1Time time="1,557.500 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="277"></NameColumnWidth>
+      <ValueColumnWidth column_width="91"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="4" />
+   <wvobject type="group" fp_name="group38">
+      <obj_property name="label">Clock Signal</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="logic" fp_name="/tb_FEC_RS/clk">
+         <obj_property name="ElementShortName">clk</obj_property>
+         <obj_property name="ObjectShortName">clk</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_FEC_RS/rst_n">
+         <obj_property name="ElementShortName">rst_n</obj_property>
+         <obj_property name="ObjectShortName">rst_n</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group39">
+      <obj_property name="label">Data from CDC</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="group" fp_name="group52">
+         <obj_property name="label">Header</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <wvobject type="logic" fp_name="/tb_FEC_RS/en_head">
+            <obj_property name="ElementShortName">en_head</obj_property>
+            <obj_property name="ObjectShortName">en_head</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/tb_FEC_RS/header_in">
+            <obj_property name="ElementShortName">header_in[7:0]</obj_property>
+            <obj_property name="ObjectShortName">header_in[7:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/tb_FEC_RS/in_header_byte_idx">
+            <obj_property name="ElementShortName">in_header_byte_idx[4:0]</obj_property>
+            <obj_property name="ObjectShortName">in_header_byte_idx[4:0]</obj_property>
+            <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/tb_FEC_RS/in_header_word_idx">
+            <obj_property name="ElementShortName">in_header_word_idx[2:0]</obj_property>
+            <obj_property name="ObjectShortName">in_header_word_idx[2:0]</obj_property>
+            <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject type="group" fp_name="group53">
+         <obj_property name="label">Payload</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <wvobject type="logic" fp_name="/tb_FEC_RS/en_load">
+            <obj_property name="ElementShortName">en_load</obj_property>
+            <obj_property name="ObjectShortName">en_load</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/tb_FEC_RS/payload_in">
+            <obj_property name="ElementShortName">payload_in[63:0]</obj_property>
+            <obj_property name="ObjectShortName">payload_in[63:0]</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/tb_FEC_RS/in_payload_word_idx">
+            <obj_property name="ElementShortName">in_payload_word_idx[8:0]</obj_property>
+            <obj_property name="ObjectShortName">in_payload_word_idx[8:0]</obj_property>
+            <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/tb_FEC_RS/in_payload_byte_idx">
+            <obj_property name="ElementShortName">in_payload_byte_idx[11:0]</obj_property>
+            <obj_property name="ObjectShortName">in_payload_byte_idx[11:0]</obj_property>
+            <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+         </wvobject>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group54">
+      <obj_property name="label">FEC Reed Solomon</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="group" fp_name="group55">
+         <obj_property name="label">Header</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <wvobject type="logic" fp_name="/tb_FEC_RS/rs_head_dv">
+            <obj_property name="ElementShortName">rs_head_dv</obj_property>
+            <obj_property name="ObjectShortName">rs_head_dv</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/tb_FEC_RS/rs_head_out">
+            <obj_property name="ElementShortName">rs_head_out[7:0]</obj_property>
+            <obj_property name="ObjectShortName">rs_head_out[7:0]</obj_property>
+            <obj_property name="Radix">HEXRADIX</obj_property>
+            <obj_property name="isExpanded"></obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/tb_FEC_RS/rs_head_out_byte_idx">
+            <obj_property name="ElementShortName">rs_head_out_byte_idx[5:0]</obj_property>
+            <obj_property name="ObjectShortName">rs_head_out_byte_idx[5:0]</obj_property>
+            <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/tb_FEC_RS/rs_head_out_word_idx">
+            <obj_property name="ElementShortName">rs_head_out_word_idx[2:0]</obj_property>
+            <obj_property name="ObjectShortName">rs_head_out_word_idx[2:0]</obj_property>
+            <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject type="group" fp_name="group56">
+         <obj_property name="label">Payload</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <wvobject type="logic" fp_name="/tb_FEC_RS/rs_load_dv">
+            <obj_property name="ElementShortName">rs_load_dv</obj_property>
+            <obj_property name="ObjectShortName">rs_load_dv</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/tb_FEC_RS/rs_load_out">
+            <obj_property name="ElementShortName">rs_load_out[63:0]</obj_property>
+            <obj_property name="ObjectShortName">rs_load_out[63:0]</obj_property>
+            <obj_property name="Radix">HEXRADIX</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/tb_FEC_RS/rs_load_out_word_idx">
+            <obj_property name="ElementShortName">rs_load_out_word_idx[8:0]</obj_property>
+            <obj_property name="ObjectShortName">rs_load_out_word_idx[8:0]</obj_property>
+            <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/tb_FEC_RS/rs_load_out_byte_idx">
+            <obj_property name="ElementShortName">rs_load_out_byte_idx[11:0]</obj_property>
+            <obj_property name="ObjectShortName">rs_load_out_byte_idx[11:0]</obj_property>
+            <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+         </wvobject>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group57">
+      <obj_property name="label">Multiplexer</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="array" fp_name="/tb_FEC_RS/cycle_cnt">
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="ElementShortName">cycle_cnt[15:0]</obj_property>
+         <obj_property name="ObjectShortName">cycle_cnt[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+         <obj_property name="label">Mux_data_Out[63:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_FEC_RS/mux_dv">
+         <obj_property name="ElementShortName">mux_dv</obj_property>
+         <obj_property name="ObjectShortName">mux_dv</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_FEC_RS/mux_frame_type_str">
+         <obj_property name="ElementShortName">mux_frame_type_str[31:0]</obj_property>
+         <obj_property name="ObjectShortName">mux_frame_type_str[31:0]</obj_property>
+         <obj_property name="Radix">ASCIIRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_FEC_RS/frame_id">
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="ElementShortName">frame_id[3:0]</obj_property>
+         <obj_property name="ObjectShortName">frame_id[3:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+         <obj_property name="label">TX Frame Number</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_FEC_RS/mux_data_out">
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="ElementShortName">mux_data_out[63:0]</obj_property>
+         <obj_property name="ObjectShortName">mux_data_out[63:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+         <obj_property name="label">Combiner[63:0]</obj_property>
+      </wvobject>
+      <wvobject type="group" fp_name="group442">
+         <obj_property name="label">Combiner[63:0]</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <wvobject type="group" fp_name="group443">
+            <obj_property name="label">50-64</obj_property>
+            <obj_property name="DisplayName">label</obj_property>
+            <obj_property name="isExpanded"></obj_property>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[63]">
+               <obj_property name="ElementShortName">[63]</obj_property>
+               <obj_property name="ObjectShortName">[63]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[62]">
+               <obj_property name="ElementShortName">[62]</obj_property>
+               <obj_property name="ObjectShortName">[62]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[61]">
+               <obj_property name="ElementShortName">[61]</obj_property>
+               <obj_property name="ObjectShortName">[61]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[60]">
+               <obj_property name="ElementShortName">[60]</obj_property>
+               <obj_property name="ObjectShortName">[60]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[59]">
+               <obj_property name="ElementShortName">[59]</obj_property>
+               <obj_property name="ObjectShortName">[59]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[58]">
+               <obj_property name="ElementShortName">[58]</obj_property>
+               <obj_property name="ObjectShortName">[58]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[57]">
+               <obj_property name="ElementShortName">[57]</obj_property>
+               <obj_property name="ObjectShortName">[57]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[56]">
+               <obj_property name="ElementShortName">[56]</obj_property>
+               <obj_property name="ObjectShortName">[56]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[55]">
+               <obj_property name="ElementShortName">[55]</obj_property>
+               <obj_property name="ObjectShortName">[55]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[54]">
+               <obj_property name="ElementShortName">[54]</obj_property>
+               <obj_property name="ObjectShortName">[54]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[53]">
+               <obj_property name="ElementShortName">[53]</obj_property>
+               <obj_property name="ObjectShortName">[53]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[52]">
+               <obj_property name="ElementShortName">[52]</obj_property>
+               <obj_property name="ObjectShortName">[52]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[51]">
+               <obj_property name="ElementShortName">[51]</obj_property>
+               <obj_property name="ObjectShortName">[51]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[50]">
+               <obj_property name="ElementShortName">[50]</obj_property>
+               <obj_property name="ObjectShortName">[50]</obj_property>
+            </wvobject>
+         </wvobject>
+         <wvobject type="group" fp_name="group458">
+            <obj_property name="label">0-49</obj_property>
+            <obj_property name="DisplayName">label</obj_property>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[50]">
+               <obj_property name="ElementShortName">[50]</obj_property>
+               <obj_property name="ObjectShortName">[50]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[49]">
+               <obj_property name="ElementShortName">[49]</obj_property>
+               <obj_property name="ObjectShortName">[49]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[48]">
+               <obj_property name="ElementShortName">[48]</obj_property>
+               <obj_property name="ObjectShortName">[48]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[47]">
+               <obj_property name="ElementShortName">[47]</obj_property>
+               <obj_property name="ObjectShortName">[47]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[46]">
+               <obj_property name="ElementShortName">[46]</obj_property>
+               <obj_property name="ObjectShortName">[46]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[45]">
+               <obj_property name="ElementShortName">[45]</obj_property>
+               <obj_property name="ObjectShortName">[45]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[44]">
+               <obj_property name="ElementShortName">[44]</obj_property>
+               <obj_property name="ObjectShortName">[44]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[43]">
+               <obj_property name="ElementShortName">[43]</obj_property>
+               <obj_property name="ObjectShortName">[43]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[42]">
+               <obj_property name="ElementShortName">[42]</obj_property>
+               <obj_property name="ObjectShortName">[42]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[41]">
+               <obj_property name="ElementShortName">[41]</obj_property>
+               <obj_property name="ObjectShortName">[41]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[40]">
+               <obj_property name="ElementShortName">[40]</obj_property>
+               <obj_property name="ObjectShortName">[40]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[39]">
+               <obj_property name="ElementShortName">[39]</obj_property>
+               <obj_property name="ObjectShortName">[39]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[38]">
+               <obj_property name="ElementShortName">[38]</obj_property>
+               <obj_property name="ObjectShortName">[38]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[37]">
+               <obj_property name="ElementShortName">[37]</obj_property>
+               <obj_property name="ObjectShortName">[37]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[36]">
+               <obj_property name="ElementShortName">[36]</obj_property>
+               <obj_property name="ObjectShortName">[36]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[35]">
+               <obj_property name="ElementShortName">[35]</obj_property>
+               <obj_property name="ObjectShortName">[35]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[34]">
+               <obj_property name="ElementShortName">[34]</obj_property>
+               <obj_property name="ObjectShortName">[34]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[33]">
+               <obj_property name="ElementShortName">[33]</obj_property>
+               <obj_property name="ObjectShortName">[33]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[32]">
+               <obj_property name="ElementShortName">[32]</obj_property>
+               <obj_property name="ObjectShortName">[32]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[31]">
+               <obj_property name="ElementShortName">[31]</obj_property>
+               <obj_property name="ObjectShortName">[31]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[30]">
+               <obj_property name="ElementShortName">[30]</obj_property>
+               <obj_property name="ObjectShortName">[30]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[29]">
+               <obj_property name="ElementShortName">[29]</obj_property>
+               <obj_property name="ObjectShortName">[29]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[28]">
+               <obj_property name="ElementShortName">[28]</obj_property>
+               <obj_property name="ObjectShortName">[28]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[27]">
+               <obj_property name="ElementShortName">[27]</obj_property>
+               <obj_property name="ObjectShortName">[27]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[26]">
+               <obj_property name="ElementShortName">[26]</obj_property>
+               <obj_property name="ObjectShortName">[26]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[25]">
+               <obj_property name="ElementShortName">[25]</obj_property>
+               <obj_property name="ObjectShortName">[25]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[24]">
+               <obj_property name="ElementShortName">[24]</obj_property>
+               <obj_property name="ObjectShortName">[24]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[23]">
+               <obj_property name="ElementShortName">[23]</obj_property>
+               <obj_property name="ObjectShortName">[23]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[22]">
+               <obj_property name="ElementShortName">[22]</obj_property>
+               <obj_property name="ObjectShortName">[22]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[21]">
+               <obj_property name="ElementShortName">[21]</obj_property>
+               <obj_property name="ObjectShortName">[21]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[20]">
+               <obj_property name="ElementShortName">[20]</obj_property>
+               <obj_property name="ObjectShortName">[20]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[19]">
+               <obj_property name="ElementShortName">[19]</obj_property>
+               <obj_property name="ObjectShortName">[19]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[18]">
+               <obj_property name="ElementShortName">[18]</obj_property>
+               <obj_property name="ObjectShortName">[18]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[17]">
+               <obj_property name="ElementShortName">[17]</obj_property>
+               <obj_property name="ObjectShortName">[17]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[16]">
+               <obj_property name="ElementShortName">[16]</obj_property>
+               <obj_property name="ObjectShortName">[16]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[15]">
+               <obj_property name="ElementShortName">[15]</obj_property>
+               <obj_property name="ObjectShortName">[15]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[14]">
+               <obj_property name="ElementShortName">[14]</obj_property>
+               <obj_property name="ObjectShortName">[14]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[13]">
+               <obj_property name="ElementShortName">[13]</obj_property>
+               <obj_property name="ObjectShortName">[13]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[12]">
+               <obj_property name="ElementShortName">[12]</obj_property>
+               <obj_property name="ObjectShortName">[12]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[11]">
+               <obj_property name="ElementShortName">[11]</obj_property>
+               <obj_property name="ObjectShortName">[11]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[10]">
+               <obj_property name="ElementShortName">[10]</obj_property>
+               <obj_property name="ObjectShortName">[10]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[9]">
+               <obj_property name="ElementShortName">[9]</obj_property>
+               <obj_property name="ObjectShortName">[9]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[8]">
+               <obj_property name="ElementShortName">[8]</obj_property>
+               <obj_property name="ObjectShortName">[8]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[7]">
+               <obj_property name="ElementShortName">[7]</obj_property>
+               <obj_property name="ObjectShortName">[7]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[6]">
+               <obj_property name="ElementShortName">[6]</obj_property>
+               <obj_property name="ObjectShortName">[6]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[5]">
+               <obj_property name="ElementShortName">[5]</obj_property>
+               <obj_property name="ObjectShortName">[5]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[4]">
+               <obj_property name="ElementShortName">[4]</obj_property>
+               <obj_property name="ObjectShortName">[4]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[3]">
+               <obj_property name="ElementShortName">[3]</obj_property>
+               <obj_property name="ObjectShortName">[3]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[2]">
+               <obj_property name="ElementShortName">[2]</obj_property>
+               <obj_property name="ObjectShortName">[2]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[1]">
+               <obj_property name="ElementShortName">[1]</obj_property>
+               <obj_property name="ObjectShortName">[1]</obj_property>
+            </wvobject>
+            <wvobject type="logic" fp_name="/tb_FEC_RS/mux_data_out[0]">
+               <obj_property name="ElementShortName">[0]</obj_property>
+               <obj_property name="ObjectShortName">[0]</obj_property>
+            </wvobject>
+         </wvobject>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_FEC_RS/mux_out_byte_idx">
+         <obj_property name="ElementShortName">mux_out_byte_idx[11:0]</obj_property>
+         <obj_property name="ObjectShortName">mux_out_byte_idx[11:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_FEC_RS/mux_out_word_idx">
+         <obj_property name="ElementShortName">mux_out_word_idx[8:0]</obj_property>
+         <obj_property name="ObjectShortName">mux_out_word_idx[8:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+</wave_config>

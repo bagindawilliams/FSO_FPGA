@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/audit/20261101_module15_extended/build/focused_20261101_183304_140560_tb_eth_tx_back_end_top_verified.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tb_eth_tx_back_end_top_verified" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+   </zoom_setting>
+   <column_width_setting>
+   </column_width_setting>
+   <WVObjectSize size="5" />
+   <wvobject type="group" fp_name="group1">
+      <obj_property name="label">Measurement / Checker</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_eth_tx_back_end_top_verified/iw">
+         <obj_property name="ElementShortName">iw[31:0]</obj_property>
+         <obj_property name="ObjectShortName">iw[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_eth_tx_back_end_top_verified/ow">
+         <obj_property name="ElementShortName">ow[31:0]</obj_property>
+         <obj_property name="ObjectShortName">ow[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_eth_tx_back_end_top_verified/packets">
+         <obj_property name="ElementShortName">packets[31:0]</obj_property>
+         <obj_property name="ObjectShortName">packets[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group5">
+      <obj_property name="label">Data Input</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_eth_tx_back_end_top_verified/data_in">
+         <obj_property name="ElementShortName">data_in[31:0]</obj_property>
+         <obj_property name="ObjectShortName">data_in[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_eth_tx_back_end_top_verified/in_byte_cnt">
+         <obj_property name="ElementShortName">in_byte_cnt[15:0]</obj_property>
+         <obj_property name="ObjectShortName">in_byte_cnt[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   <wvobject type="array" fp_name="/tb_eth_tx_back_end_top_verified/in_word_cnt">
+         <obj_property name="ElementShortName">in_word_cnt[15:0]</obj_property>
+         <obj_property name="ObjectShortName">in_word_cnt[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_eth_tx_back_end_top_verified/inside_packet">
+         <obj_property name="ElementShortName">inside_packet</obj_property>
+         <obj_property name="ObjectShortName">inside_packet</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property></wvobject>
+      </wvobject>
+   <wvobject type="group" fp_name="group7">
+      <obj_property name="label">System Clock / Control</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="group" fp_name="group9">
+      <obj_property name="label">Process and State</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_eth_tx_back_end_top_verified/i">
+         <obj_property name="ElementShortName">i[31:0]</obj_property>
+         <obj_property name="ObjectShortName">i[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   <wvobject type="logic" fp_name="/tb_eth_tx_back_end_top_verified/txn_unused">
+         <obj_property name="ElementShortName">txn_unused</obj_property>
+         <obj_property name="ObjectShortName">txn_unused</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property></wvobject>
+      <wvobject type="logic" fp_name="/tb_eth_tx_back_end_top_verified/txp_unused">
+         <obj_property name="ElementShortName">txp_unused</obj_property>
+         <obj_property name="ObjectShortName">txp_unused</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property></wvobject>
+      </wvobject>
+   <wvobject type="group" fp_name="group10">
+      <obj_property name="label">Data Output</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_eth_tx_back_end_top_verified/xgmii_byte_cnt">
+         <obj_property name="ElementShortName">xgmii_byte_cnt[15:0]</obj_property>
+         <obj_property name="ObjectShortName">xgmii_byte_cnt[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   <wvobject type="array" fp_name="/tb_eth_tx_back_end_top_verified/xgmii_word_cnt">
+         <obj_property name="ElementShortName">xgmii_word_cnt[15:0]</obj_property>
+         <obj_property name="ObjectShortName">xgmii_word_cnt[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_eth_tx_back_end_top_verified/raw_xgmii_idx">
+         <obj_property name="ElementShortName">raw_xgmii_idx[15:0]</obj_property>
+         <obj_property name="ObjectShortName">raw_xgmii_idx[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_eth_tx_back_end_top_verified/xgmii_active">
+         <obj_property name="ElementShortName">xgmii_active</obj_property>
+         <obj_property name="ObjectShortName">xgmii_active</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property></wvobject>
+      <wvobject type="array" fp_name="/tb_eth_tx_back_end_top_verified/xgmii_txc">
+         <obj_property name="ElementShortName">xgmii_txc[3:0]</obj_property>
+         <obj_property name="ObjectShortName">xgmii_txc[3:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_eth_tx_back_end_top_verified/xgmii_txd">
+         <obj_property name="ElementShortName">xgmii_txd[31:0]</obj_property>
+         <obj_property name="ObjectShortName">xgmii_txd[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      </wvobject>
+</wave_config>

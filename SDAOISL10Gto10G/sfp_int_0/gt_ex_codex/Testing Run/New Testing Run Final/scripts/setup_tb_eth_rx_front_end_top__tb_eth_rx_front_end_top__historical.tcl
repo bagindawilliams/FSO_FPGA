@@ -1,0 +1,6 @@
+# New simulation only: exact tested top/profile required.
+foreach path {{/tb_eth_rx_front_end_top/clk} {/tb_eth_rx_front_end_top/rst_n} {/tb_eth_rx_front_end_top/gen_tdata} {/tb_eth_rx_front_end_top/gen_tkeep} {/tb_eth_rx_front_end_top/target_frame_size} {/tb_eth_rx_front_end_top/trigger} {/tb_eth_rx_front_end_top/xgmii_txc} {/tb_eth_rx_front_end_top/xgmii_txd} {/tb_eth_rx_front_end_top/u_front_end_dut/parsed_tdata} {/tb_eth_rx_front_end_top/fso_data_out} {/tb_eth_rx_front_end_top/payload_cycle_cnt} {/tb_eth_rx_front_end_top/completed_seg_cnt} {/tb_eth_rx_front_end_top/fcs_verified_cnt} {/tb_eth_rx_front_end_top/gen_tvalid} {/tb_eth_rx_front_end_top/gen_tlast} {/tb_eth_rx_front_end_top/gen_tready} {/tb_eth_rx_front_end_top/fso_valid} {/tb_eth_rx_front_end_top/fso_last} {/tb_eth_rx_front_end_top/fso_ready} {/tb_eth_rx_front_end_top/seg_valid_bytes}} {
+ if {![llength [get_objects -quiet $path]]} {error "Unresolved waveform object: $path. Wrong top/profile; do not ignore."}
+ log_wave [get_objects $path]
+}
+open_wave_config {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/Testing Run/New Testing Run Final/tb_eth_rx_front_end_top__tb_eth_rx_front_end_top__historical.wcfg}
