@@ -21,6 +21,15 @@ Revision History:
        56 bits of LPC Word 1 at [55:0] (cdc_data = 128'h77AD5B58_43641E2E_26AAAABB_BBCCCCDD).
     2. Verified that every frame emits exactly 194 full 16-Byte words (cdc_keep = 16'hFFFF)
        plus a 195th flush word of 13 Bytes (cdc_keep = 16'h1FFF) = 3,117 Bytes (24,936 bits).
+  - Rev 2.1 (2026-11-02 18:56 KST) : [Waveform Tracker Alignment for ETRI Presentation]
+    1. Aligned 'track_lpc_bytes' to terminate cleanly at 3,108 Bytes upon the final 
+       96-bit LPC codeword (96'h9999_8888_7777_6666_0103_E0E0) and return to 0 
+       immediately when 'lpc_valid' deasserts.
+    2. Aligned 'gearbox_out_byte_cnt' to terminate cleanly at 3,117 Bytes at the end 
+       of the 13-Byte flush cycle (cdc_keep == 16'h1FFF) and return to 0 when 
+       'cdc_valid' deasserts.
+    3. Extended 'frame_type_str' active window across 'cdc_valid' so the frame label 
+       remains aligned through the 3,117th output byte.
 ===========================================================================
 */
 
@@ -118,13 +127,16 @@ module tb_mux_gearbox();
         lpc_data  = 96'd0;
         frame_type_str = "WAIT";
 
-        if (tb_state == ST_STREAM) begin
-            lpc_valid = 1'b1;
-            
+        // [Rev 2.1] Keep frame_type_str active until the 3117th byte (16'h1FFF) finishes exiting
+        if ((tb_state == ST_STREAM) || cdc_valid) begin
             if      (frame_id == 1) frame_type_str = "DAT1";
             else if (frame_id == 2) frame_type_str = "DAT2";
             else if (frame_id == 3) frame_type_str = "IDLE";
             else                    frame_type_str = "MGMT";
+        end
+
+        if (tb_state == ST_STREAM) begin
+            lpc_valid = 1'b1;
 
             // Simulated LPC Structure with identifiable words
             if      (cycle_cnt == 1)   lpc_data = {64'hAAAA_BBBB_CCCC_DDDD, 16'd1, 16'hE0E0};
@@ -145,14 +157,14 @@ module tb_mux_gearbox();
         else global_clk_cnt <= global_clk_cnt + 1'b1;
     end
 
-    // NEW: LPC Byte Counter (Tracks 12 Bytes up to 3108 Bytes)
+    // NEW: LPC Byte Counter (Tracks 12 Bytes up to 3108 Bytes, resets to 0 when lpc_valid == 0)
     reg [11:0] r_lpc_byte_cnt;
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) r_lpc_byte_cnt <= 12'd0;
         else if (lpc_valid) r_lpc_byte_cnt <= r_lpc_byte_cnt + 12'd12;
-        else if (tb_state == ST_GAP && cycle_cnt == 10) r_lpc_byte_cnt <= 12'd0;
+        else r_lpc_byte_cnt <= 12'd0;
     end
-    wire [11:0] track_lpc_bytes = lpc_valid ? (r_lpc_byte_cnt + 12'd12) : r_lpc_byte_cnt;
+    wire [11:0] track_lpc_bytes = lpc_valid ? (r_lpc_byte_cnt + 12'd12) : 12'd0;
 
     // EXISTING: MUX 3117 Byte Tracker & [Rev 2.0] Table 2-8 Preamble MSB-First Verifier
     reg [11:0] r_out_byte_cnt;
@@ -177,9 +189,10 @@ module tb_mux_gearbox();
                 if (cdc_keep == 16'hFFFF) begin
                     r_out_byte_cnt <= r_out_byte_cnt + 12'd16;
                 end else if (cdc_keep == 16'h1FFF) begin
-                    r_out_byte_cnt <= r_out_byte_cnt + 12'd13;
                     if ((r_out_byte_cnt + 12'd13) == 12'd3117)
                         frame_3117b_pass_cnt <= frame_3117b_pass_cnt + 1;
+                    // [Rev 2.1] Reset accumulator immediately after the 3117th byte (16'h1FFF)
+                    r_out_byte_cnt <= 12'd0;
                 end
             end 
             else if (tb_state == ST_GAP && cycle_cnt == 10) begin
@@ -188,9 +201,10 @@ module tb_mux_gearbox();
         end
     end
 
+    // [Rev 2.1] Displays active cumulative byte count up to 3117 at the end of 16'h1FFF, then returns to 0
     wire [11:0] gearbox_out_byte_cnt = cdc_valid ? 
         (cdc_keep == 16'hFFFF ? (r_out_byte_cnt + 12'd16) : (r_out_byte_cnt + 12'd13)) 
-        : r_out_byte_cnt;
+        : 12'd0;
 
     // =======================================================
     // 6. SIMULATION LOGGING

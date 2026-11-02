@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex (CODEX)/audit/20261101_module15_cdc4_v2/build/focused_20261101_183257_168665_tb_cdc4_logic_gth_verified_v2.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tb_cdc4_logic_gth_verified_v2" />
+            <top_module name="vcomponents" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+   </zoom_setting>
+   <column_width_setting>
+   </column_width_setting>
+   <WVObjectSize size="8" />
+   <wvobject type="group" fp_name="group1">
+      <obj_property name="label">System Clock / Control</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/tb_cdc4_logic_gth_verified_v2/clk_logic">
+         <obj_property name="ElementShortName">clk_logic</obj_property>
+         <obj_property name="ObjectShortName">clk_logic</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_cdc4_logic_gth_verified_v2/clk_gth">
+         <obj_property name="ElementShortName">clk_gth</obj_property>
+         <obj_property name="ObjectShortName">clk_gth</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_cdc4_logic_gth_verified_v2/rst_n">
+         <obj_property name="ElementShortName">rst_n</obj_property>
+         <obj_property name="ObjectShortName">rst_n</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group5">
+      <obj_property name="label">Measurement / Checker</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_cdc4_logic_gth_verified_v2/hi">
+         <obj_property name="ElementShortName">hi[31:0]</obj_property>
+         <obj_property name="ObjectShortName">hi[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_cdc4_logic_gth_verified_v2/ho">
+         <obj_property name="ElementShortName">ho[31:0]</obj_property>
+         <obj_property name="ObjectShortName">ho[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_cdc4_logic_gth_verified_v2/pi">
+         <obj_property name="ElementShortName">pi[31:0]</obj_property>
+         <obj_property name="ObjectShortName">pi[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_cdc4_logic_gth_verified_v2/po">
+         <obj_property name="ElementShortName">po[31:0]</obj_property>
+         <obj_property name="ObjectShortName">po[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group10">
+      <obj_property name="label">Data Input</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_cdc4_logic_gth_verified_v2/cdc4_TXFN">
+         <obj_property name="ElementShortName">cdc4_TXFN[15:0]</obj_property>
+         <obj_property name="ObjectShortName">cdc4_TXFN[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_cdc4_logic_gth_verified_v2/txfn_low">
+         <obj_property name="ElementShortName">txfn_low[7:0]</obj_property>
+         <obj_property name="ObjectShortName">txfn_low[7:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group13">
+      <obj_property name="label">MGMT Path</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_cdc4_logic_gth_verified_v2/cdc4_MGMT_RANGE">
+         <obj_property name="ElementShortName">cdc4_MGMT_RANGE[63:0]</obj_property>
+         <obj_property name="ObjectShortName">cdc4_MGMT_RANGE[63:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_cdc4_logic_gth_verified_v2/mgmt_captured">
+         <obj_property name="ElementShortName">mgmt_captured[255:0]</obj_property>
+         <obj_property name="ObjectShortName">mgmt_captured[255:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_cdc4_logic_gth_verified_v2/mgmt_vec">
+         <obj_property name="ElementShortName">mgmt_vec[255:0]</obj_property>
+         <obj_property name="ObjectShortName">mgmt_vec[255:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group17">
+      <obj_property name="label">Process and State</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_cdc4_logic_gth_verified_v2/cdc4_frame_id">
+         <obj_property name="ElementShortName">cdc4_frame_id[31:0]</obj_property>
+         <obj_property name="ObjectShortName">cdc4_frame_id[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_cdc4_logic_gth_verified_v2/c">
+         <obj_property name="ElementShortName">c[31:0]</obj_property>
+         <obj_property name="ObjectShortName">c[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_cdc4_logic_gth_verified_v2/cdc4_ASCII_TAG">
+         <obj_property name="ElementShortName">cdc4_ASCII_TAG[95:0]</obj_property>
+         <obj_property name="ObjectShortName">cdc4_ASCII_TAG[95:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_cdc4_logic_gth_verified_v2/cdc4_ETH_FCS">
+         <obj_property name="ElementShortName">cdc4_ETH_FCS[31:0]</obj_property>
+         <obj_property name="ObjectShortName">cdc4_ETH_FCS[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_cdc4_logic_gth_verified_v2/cdc4_FRAME_TYPE">
+         <obj_property name="ElementShortName">cdc4_FRAME_TYPE[1:0]</obj_property>
+         <obj_property name="ObjectShortName">cdc4_FRAME_TYPE[1:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_cdc4_logic_gth_verified_v2/f">
+         <obj_property name="ElementShortName">f[31:0]</obj_property>
+         <obj_property name="ObjectShortName">f[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group24">
+      <obj_property name="label">Header Path</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_cdc4_logic_gth_verified_v2/cdc4_HDR_CRC16">
+         <obj_property name="ElementShortName">cdc4_HDR_CRC16[15:0]</obj_property>
+         <obj_property name="ObjectShortName">cdc4_HDR_CRC16[15:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_cdc4_logic_gth_verified_v2/header_in">
+         <obj_property name="ElementShortName">header_in[7:0]</obj_property>
+         <obj_property name="ObjectShortName">header_in[7:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_cdc4_logic_gth_verified_v2/header_out">
+         <obj_property name="ElementShortName">header_out[7:0]</obj_property>
+         <obj_property name="ObjectShortName">header_out[7:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_cdc4_logic_gth_verified_v2/out_hdr_byte_cnt">
+         <obj_property name="ElementShortName">out_hdr_byte_cnt[4:0]</obj_property>
+         <obj_property name="ObjectShortName">out_hdr_byte_cnt[4:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_cdc4_logic_gth_verified_v2/hdr_cnt">
+         <obj_property name="ElementShortName">hdr_cnt[31:0]</obj_property>
+         <obj_property name="ObjectShortName">hdr_cnt[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_cdc4_logic_gth_verified_v2/cdc4_FSO_PKT_HDR">
+         <obj_property name="ElementShortName">cdc4_FSO_PKT_HDR[31:0]</obj_property>
+         <obj_property name="ObjectShortName">cdc4_FSO_PKT_HDR[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_cdc4_logic_gth_verified_v2/cdc4_FSO_PLD_HDR">
+         <obj_property name="ElementShortName">cdc4_FSO_PLD_HDR[31:0]</obj_property>
+         <obj_property name="ObjectShortName">cdc4_FSO_PLD_HDR[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group32">
+      <obj_property name="label">Payload Path</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="array" fp_name="/tb_cdc4_logic_gth_verified_v2/cdc4_PLD_CRC32">
+         <obj_property name="ElementShortName">cdc4_PLD_CRC32[31:0]</obj_property>
+         <obj_property name="ObjectShortName">cdc4_PLD_CRC32[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_cdc4_logic_gth_verified_v2/payload_in">
+         <obj_property name="ElementShortName">payload_in[63:0]</obj_property>
+         <obj_property name="ObjectShortName">payload_in[63:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_cdc4_logic_gth_verified_v2/payload_out">
+         <obj_property name="ElementShortName">payload_out[31:0]</obj_property>
+         <obj_property name="ObjectShortName">payload_out[31:0]</obj_property>
+         <obj_property name="Radix">HEXRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_cdc4_logic_gth_verified_v2/out_pld_total_bytes">
+         <obj_property name="ElementShortName">out_pld_total_bytes[15:0]</obj_property>
+         <obj_property name="ObjectShortName">out_pld_total_bytes[15:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_cdc4_logic_gth_verified_v2/out_pld_word_cnt">
+         <obj_property name="ElementShortName">out_pld_word_cnt[8:0]</obj_property>
+         <obj_property name="ObjectShortName">out_pld_word_cnt[8:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/tb_cdc4_logic_gth_verified_v2/pld_cnt">
+         <obj_property name="ElementShortName">pld_cnt[31:0]</obj_property>
+         <obj_property name="ObjectShortName">pld_cnt[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="group" fp_name="group39">
+      <obj_property name="label">Functional handshake / recorded controls</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject type="logic" fp_name="/tb_cdc4_logic_gth_verified_v2/header_dv">
+         <obj_property name="ElementShortName">header_dv</obj_property>
+         <obj_property name="ObjectShortName">header_dv</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/tb_cdc4_logic_gth_verified_v2/payload_dv">
+         <obj_property name="ElementShortName">payload_dv</obj_property>
+         <obj_property name="ObjectShortName">payload_dv</obj_property>
+      </wvobject>
+   </wvobject>
+</wave_config>
