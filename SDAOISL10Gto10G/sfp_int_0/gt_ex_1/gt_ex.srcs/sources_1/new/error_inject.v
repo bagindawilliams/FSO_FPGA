@@ -22,6 +22,30 @@
 //   - SIM_MODE = 1: XORs 48 payload words per frame using 'error.mem' while 
 //     protecting the first 15 words (60B = 9B Preamble + 48B Header LPC + 3B).
 //   - SIM_MODE = 0: Clean bypass for physical testing with Manual VOA /t49G/51.
+// Revision 0.03 (2026-11-02 KST) - Frame-Relative Per-Byte Modulo-3117 Addressing (FEC28-INJECT-01):
+//   - Upgraded zone evaluation from word-aligned FSM states to per-byte modulo-3117 
+//     lane addressing across all 4 MSB-first byte lanes (including 32-bit words 
+//     that straddle the 3117-Byte frame boundary).
+//   - Preserves the original 'error.mem' file and 3-zone structure per 3117-Byte frame:
+//     * Zone 1 (Bytes 1..60)     : Protected Preamble + Header LPC + first 3B.
+//     * Zone 2 (Bytes 61..252)   : XORs all 48 mask words (192 bytes) from 'error.mem'.
+//     * Zone 3 (Bytes 253..3117) : Clean pass-through payload tail.
+//   - Holds 'frame_byte_acc' across valid-low ('en_d0 == 0') cycles so inter-word 
+//     pauses never reset or shift the frame byte coordinate.
+// Revision 0.04 (2026-11-05 KST) - Simulation Monitor Hold & Lane Telemetry Documentation:
+//   - Updated the simulation monitor ('frame_byte_cnt', 'out_clk_cnt', 'frame_out_id',
+//     and 'corrupted_word_cnt') to hold its state when 'en_d0' / 'en_d1' is low,
+//     staying 100% synchronized with 'frame_byte_acc' across valid-low gaps.
+//   - Documented 'applied_position', 'applied_address', and 'applied_zone' for exact
+//     per-lane injection observability, and clarified that 'corrupted_word_cnt' counts
+//     32-bit bus words with a non-zero XOR mask (not RS codeword symbol errors).
+// Revision 0.05 (2026-11-05 KST) - Multi-Lane Frame-Start Reset for corrupted_word_cnt:
+//   - Because 3117 mod 4 = 1, frame byte 1 rotates across the 4 MSB-first byte lanes
+//     on consecutive frames (Frame 1: lane 0 [47:36], Frame 2: lane 1 [35:24],
+//     Frame 3: lane 2 [23:12], Frame 4: lane 3 [11:0]).
+//   - Updated 'corrupted_word_cnt' reset condition ('frame_start_on_any_lane') to
+//     detect byte position 12'd1 on any of the four lanes so 'corrupted_word_cnt'
+//     resets cleanly at the start of every frame without accumulating across frames.
 //////////////////////////////////////////////////////////////////////////////////
 
 module error_inject #(
@@ -38,112 +62,110 @@ module error_inject #(
     output  [31:0]      data_out    // 32-bit stream to gth64b66b_tx
 );
 
-reg     [31:0]      error   [0:max_error];
-reg     [15:0]      con_error   = 16'd0;
-reg     [15:0]      con_pad     = 16'd0;
+reg [31:0] error [0:max_error];
+initial $readmemh("error.mem", error);
 
-initial
-    $readmemh("error.mem", error);
+parameter IDLE  = 4'b0001;
+parameter ERROR = 4'b0010;
+parameter PAD   = 4'b0100;
+parameter END   = 4'b1000;
 
-parameter   IDLE        = 4'b0001;
-parameter   ERROR       = 4'b0010;
-parameter   PAD         = 4'b0100;
-parameter   END         = 4'b1000;
+reg  [31:0] data_d0;
+reg  [31:0] error_out;
+reg         en_d0;
+reg         en_d1;
+reg  [11:0] frame_byte_acc;
+wire [15:0] frame_word_idx = frame_byte_acc / 4;
+wire        frame_wrap_now = en_d0 && (frame_byte_acc >= 12'd3113);
 
-reg     [3:0]   state;
-reg     [3:0]   next_state;
+reg  [31:0] active_err_mask;
+reg  [31:0] applied_mask;
+reg  [3:0]  state;
+wire [3:0]  next_state = state; // Retained for waveform compatibility
+reg  [15:0] con_error;
+reg  [15:0] con_pad;
 
-reg     [31:0]      data_d0;
-reg     [31:0]      error_out;
+// Per-lane diagnostic registers (4 MSB-first byte lanes packed per 32-bit word):
+// - applied_position[47:0] : Four 12-bit frame byte positions (1..3117) for lanes 0..3.
+// - applied_address[63:0]  : Four 16-bit error.mem word addresses (0..47, or FFFF when unmasked).
+// - applied_zone[7:0]      : Four 2-bit zone IDs (1 = Protected 1..60, 2 = XOR Mask 61..252, 3 = Pass 253..3117).
+reg  [47:0] lane_position;
+reg  [63:0] lane_mask_address;
+reg  [7:0]  lane_zone;
+reg  [47:0] applied_position;
+reg  [63:0] applied_address;
+reg  [7:0]  applied_zone;
 
-reg                 en_d0;
-reg                 en_d1;
-reg     [11:0]      frame_byte_acc;
-reg     [15:0]      frame_word_idx;
-wire                frame_wrap_now = en_d0 && (frame_byte_acc + 12'd4 >= 12'd3117);
+integer lane_i, byte_pos, mask_offset;
 
-wire    [31:0]      active_err_mask = ((SIM_MODE == 1) && (state == ERROR)) ? error[con_error] : 32'd0;
-reg     [31:0]      applied_mask;
+always @* begin
+    active_err_mask   = 32'd0;
+    lane_position     = 48'd0;
+    lane_mask_address = 64'hffff_ffff_ffff_ffff;
+    lane_zone         = 8'd0;
+    byte_pos          = 0;
+    mask_offset       = 0;
+    con_error         = 16'd0;
+    con_pad           = 16'd0;
+    state             = IDLE;
 
-always @(posedge clk or negedge rst_n)
-begin
-    if (~rst_n)
-        state   <= IDLE;
-    else
-        state   <= next_state;
-end
+    if (frame_byte_acc >= safe_words * 4 && frame_byte_acc < safe_words * 4 + (max_error + 1) * 4) begin
+        state     = ERROR;
+        con_error = (frame_byte_acc - safe_words * 4) / 4;
+    end else if (frame_byte_acc >= safe_words * 4 + (max_error + 1) * 4) begin
+        state     = PAD;
+        con_pad   = (frame_byte_acc - safe_words * 4 - (max_error + 1) * 4) / 4;
+    end
 
-always @(posedge clk or negedge rst_n)
-begin
-    if (~rst_n) begin
-        frame_byte_acc <= 12'd0;
-        frame_word_idx <= 16'd0;
-    end else if (en_d0) begin
-        if (frame_byte_acc + 12'd4 >= 12'd3117) begin
-            frame_byte_acc <= (frame_byte_acc + 12'd4) - 12'd3117;
-            frame_word_idx <= 16'd0;
+    for (lane_i = 0; lane_i < 4; lane_i = lane_i + 1) begin
+        byte_pos = frame_byte_acc + lane_i;
+        if (byte_pos >= 3117)
+            byte_pos = byte_pos - 3117;
+
+        lane_position[47 - 12 * lane_i -: 12] = byte_pos + 1;
+
+        if (byte_pos < safe_words * 4) begin
+            lane_zone[7 - 2 * lane_i -: 2] = 2'd1;
+        end else if (byte_pos < safe_words * 4 + (max_error + 1) * 4) begin
+            lane_zone[7 - 2 * lane_i -: 2]            = 2'd2;
+            mask_offset                               = byte_pos - safe_words * 4;
+            lane_mask_address[63 - 16 * lane_i -: 16] = mask_offset / 4;
+            if (SIM_MODE == 1)
+                active_err_mask[31 - 8 * lane_i -: 8] = error[mask_offset / 4][31 - 8 * (mask_offset % 4) -: 8];
         end else begin
-            frame_byte_acc <= frame_byte_acc + 12'd4;
-            frame_word_idx <= frame_word_idx + 16'd1;
+            lane_zone[7 - 2 * lane_i -: 2] = 2'd3;
         end
-    end else begin
-        frame_byte_acc <= 12'd0;
-        frame_word_idx <= 16'd0;
     end
 end
 
-always @(posedge clk or negedge rst_n)
-begin
-    if (~rst_n)
-        con_error   <= 16'd0;
-    else if (state == ERROR)
-        con_error   <= con_error + 1'b1;
-    else
-        con_error   <= 16'd0;
+always @(posedge clk or negedge rst_n) begin
+    if (!rst_n)
+        frame_byte_acc <= 12'd0;
+    else if (en_d0) begin
+        if (frame_wrap_now)
+            frame_byte_acc <= frame_byte_acc + 12'd4 - 12'd3117;
+        else
+            frame_byte_acc <= frame_byte_acc + 12'd4;
+    end
 end
 
-always @(posedge clk or negedge rst_n)
-begin
-    if (~rst_n)
-        con_pad   <= 16'd0;
-    else if (state == PAD && !frame_wrap_now)
-        con_pad   <= con_pad + 1'b1;
-    else
-        con_pad   <= 16'd0;
+always @(posedge clk or negedge rst_n) begin
+    if (!rst_n) begin
+        applied_position <= 48'd0;
+        applied_address  <= 64'hffff_ffff_ffff_ffff;
+        applied_zone     <= 8'd0;
+    end else if (en_d0) begin
+        applied_position <= lane_position;
+        applied_address  <= lane_mask_address;
+        applied_zone     <= lane_zone;
+    end else begin
+        applied_position <= 48'd0;
+        applied_address  <= 64'hffff_ffff_ffff_ffff;
+        applied_zone     <= 8'd0;
+    end
 end
 
-always @(*)
-begin
-    case(state)
-        IDLE:           begin
-                            if (en_d0 && (frame_word_idx == safe_words - 1))
-                                next_state  <= ERROR;
-                            else
-                                next_state  <= IDLE;
-                        end
-        ERROR:          begin
-                            if (!en_d0)
-                                next_state  <= IDLE;
-                            else if (con_error < max_error)
-                                next_state  <= ERROR;
-                            else
-                                next_state  <= PAD;
-                        end
-        PAD:            begin
-                            if (!en_d0)
-                                next_state  <= END;
-                            else if (frame_wrap_now)
-                                next_state  <= IDLE;
-                            else
-                                next_state  <= PAD;
-                        end
-        END:            next_state  <= IDLE;
-        default:        next_state  <= IDLE;
-    endcase
-end
-
-always @(posedge clk or negedge rst_n)
-begin
+always @(posedge clk or negedge rst_n) begin
     if (~rst_n) begin
         data_d0 <= 32'b0;
         en_d0   <= 1'b0;
@@ -155,8 +177,7 @@ begin
     end
 end
 
-always @(posedge clk or negedge rst_n)
-begin
+always @(posedge clk or negedge rst_n) begin
     if (~rst_n) begin
         error_out    <= 32'b0;
         applied_mask <= 32'b0;
@@ -173,6 +194,13 @@ assign  flag        = en_d1;
 assign  data_out    = (flag) ? error_out : 32'b0;
 
 // synthesis translate_off
+// Auxiliary simulation monitor:
+// - The #0.8 sub-cycle stepping below is a visual unpacking of the 4 bytes inside each
+//   32-bit word period (not a separate hardware byte interface).
+// - 'corrupted_word_cnt' counts 32-bit bus words in the current frame that had a non-zero
+//   XOR mask applied (not the number of Reed-Solomon codeword symbol errors).
+// - Detects frame byte 1 across all 4 byte lanes ('frame_start_on_any_lane') so
+//   'corrupted_word_cnt' resets at the start of Frame 1, 2, 3, and 4 alike.
 reg  [7:0]  byte_out;
 reg  [11:0] frame_byte_cnt;
 reg  [15:0] out_clk_cnt;
@@ -180,16 +208,19 @@ reg  [31:0] frame_out_id;
 reg  [31:0] cur_word;
 reg  [15:0] corrupted_word_cnt;
 
+wire frame_start_on_any_lane = (applied_position[47:36] == 12'd1) ||
+                               (applied_position[35:24] == 12'd1) ||
+                               (applied_position[23:12] == 12'd1) ||
+                               (applied_position[11:0]  == 12'd1);
+
 always @(posedge clk or negedge rst_n) begin
     if (~rst_n)
         corrupted_word_cnt <= 16'd0;
     else if (en_d1) begin
-        if (frame_byte_cnt == 12'd1 && out_clk_cnt == 16'd1)
+        if (frame_start_on_any_lane)
             corrupted_word_cnt <= (applied_mask != 32'd0) ? 16'd1 : 16'd0;
         else if (applied_mask != 32'd0)
             corrupted_word_cnt <= corrupted_word_cnt + 16'd1;
-    end else begin
-        corrupted_word_cnt <= 16'd0;
     end
 end
 
@@ -231,10 +262,8 @@ always @(posedge clk) begin
             #0.8 step_single_byte(cur_word[15:8],  1'b0);
             #0.8 step_single_byte(cur_word[7:0],   1'b0);
         end else begin
-            byte_out       <= 8'd0;
-            frame_byte_cnt <= 12'd0;
-            out_clk_cnt    <= 16'd0;
-            frame_out_id   <= 32'd0;
+            // Hold frame_byte_cnt, out_clk_cnt, and frame_out_id across valid-low gaps
+            byte_out <= 8'd0;
         end
     end
 end

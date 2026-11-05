@@ -15,6 +15,10 @@ Revision History:
     bit-reversed first 32-bit word of the official SDA OISL Preamble 
     (bit_rev32(32'h77AD_5B58) = 32'h1ADA_B5EE) in addition to the legacy marker 
     (bit_rev32(32'h5555_5555) = 32'hAAAA_AAAA).
+  - Rev 2.1 (2026-11-01 15:49 KST) : [Audit Fix OISL-GTH-002 - Unified Synchronous Gearbox TX Datapath]
+    Removed the simulation-only 312.5 MHz resampler so both simulation and hardware
+    synthesis drive 'gth_userdata_tx_mux' directly from the gearbox-paced 'gt_txdata_in'
+    stream produced by gth64b66b_tx.v in the tx0_clk domain.
 ===========================================================================
 */
 
@@ -120,87 +124,9 @@ module fso_gth_core_wrapper (
     wire gtwiz_reset_rx_done_int;
     wire [31:0] gth_userdata_tx_mux;
 
-    // synthesis translate_off
-    reg        sim_clk_312_5 = 1'b0;
-    always #1.6 sim_clk_312_5 = ~sim_clk_312_5;
-
-    reg [31:0] core_elast_mem [0:255];
-    reg [7:0]  core_wr_ptr = 8'd0;
-    reg        core_capture_en = 1'b0;
-    reg [11:0] core_byte_acc = 12'd0;
-
-    always @(posedge sim_clk_312_5 or negedge sys_rst_n) begin
-        if (!sys_rst_n) begin
-            core_wr_ptr     <= 8'd0;
-            core_capture_en <= 1'b0;
-            core_byte_acc   <= 12'd0;
-        end else if (gtwiz_reset_tx_done_int) begin
-            if (!core_capture_en) begin
-                // [Rev 2.0 - 2026-10-27 04:19 KST] Start capturing on first bit-reversed Preamble word:
-                // 32'h1ADA_B5EE = bit_rev32(32'h77AD_5B58) [SDA OISL Table 2-8] or 32'hAAAA_AAAA [Legacy]
-                if ((gt_txdata_in == 32'h1ADA_B5EE) || (gt_txdata_in == 32'hAAAA_AAAA)) begin
-                    core_capture_en             <= 1'b1;
-                    core_elast_mem[core_wr_ptr] <= gt_txdata_in;
-                    core_wr_ptr                 <= core_wr_ptr + 8'd1;
-                    core_byte_acc               <= 12'd4;
-                end
-            end else begin
-                if ((core_byte_acc == 12'd0) && (gt_txdata_in == 32'h0000_0000)) begin
-                    core_capture_en <= 1'b0;
-                    core_byte_acc   <= 12'd0;
-                end else begin
-                    core_elast_mem[core_wr_ptr] <= gt_txdata_in;
-                    core_wr_ptr                 <= core_wr_ptr + 8'd1;
-                    if (core_byte_acc + 12'd4 >= 12'd3117)
-                        core_byte_acc <= (core_byte_acc + 12'd4) - 12'd3117;
-                    else
-                        core_byte_acc <= core_byte_acc + 12'd4;
-                end
-            end
-        end
-    end
-
-    reg [7:0]  core_rd_ptr = 8'd0;
-    reg        core_draining = 1'b0;
-    reg [31:0] sim_userdata_tx = 32'd0;
-    wire [7:0] core_buf_level = core_wr_ptr - core_rd_ptr;
-
-    always @(posedge tx0_clk or negedge sys_rst_n) begin
-        if (!sys_rst_n) begin
-            core_rd_ptr     <= 8'd0;
-            core_draining   <= 1'b0;
-            sim_userdata_tx <= 32'd0;
-        end else if (!gtwiz_reset_tx_done_int) begin
-            core_rd_ptr     <= 8'd0;
-            core_draining   <= 1'b0;
-            sim_userdata_tx <= 32'd0;
-        end else if (gt_txsequence_in != 7'd32) begin
-            if (!core_draining) begin
-                if (core_buf_level >= 8'd4) begin
-                    core_draining   <= 1'b1;
-                    sim_userdata_tx <= core_elast_mem[core_rd_ptr];
-                    core_rd_ptr     <= core_rd_ptr + 8'd1;
-                end else begin
-                    sim_userdata_tx <= 32'd0;
-                end
-            end else begin
-                if (core_rd_ptr != core_wr_ptr) begin
-                    sim_userdata_tx <= core_elast_mem[core_rd_ptr];
-                    core_rd_ptr     <= core_rd_ptr + 8'd1;
-                end else begin
-                    core_draining   <= 1'b0;
-                    sim_userdata_tx <= 32'd0;
-                end
-            end
-        end
-    end
-    // synthesis translate_on
-
-    assign gth_userdata_tx_mux = gt_txdata_in
-    // synthesis translate_off
-                                 ^ gt_txdata_in ^ sim_userdata_tx
-    // synthesis translate_on
-                                 ;
+    // [Rev 2.1 - OISL-GTH-002] Simulation and synthesis use the same synchronous
+    // gearbox inputs directly from gth64b66b_tx.v without secondary resampling.
+    assign gth_userdata_tx_mux = gt_txdata_in;
 
     // =======================================================
     // 4. INSTANTIATION OF GTH IP CORE (gth_fso_64b66b.xci)

@@ -1,0 +1,7 @@
+Running: xsim.dir/tb_SDAOISL10Gto10G_top_behav/xsimk -simmode gui -wdb tb_SDAOISL10Gto10G_top_behav.wdb -simrunnum 0 -socket 47431
+Design successfully loaded
+Design Loading Memory Usage: 274308 KB (Peak: 274308 KB)
+Design Loading CPU Usage: 730 ms
+Simulation completed
+Simulation Memory Usage: 365504 KB (Peak: 413576 KB)
+Simulation CPU Usage: 26100 ms

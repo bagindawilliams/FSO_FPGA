@@ -15,6 +15,15 @@ Description  : 32-bit IEEE 802.3ae XGMII Receive Frame Delimiter Parser.
                - Standardized port interface (clk, rst_n, xgmii_rxd, xgmii_rxc,
                  m_axis_tdata, m_axis_tvalid, m_axis_tlast) to match 
                  eth_rx_front_end_top.v without port mismatch errors.
+- Rev 2.3 (2026-10-29 12:39 KST) : [Audit Fix F04 - Partial Terminal Word Preservation]
+    Preserved 100% of original ports and lookahead architecture. When Terminate (/T/)
+    occurs in lane 1, 2, or 3 (xgmii_rxc != 4'b0000 && xgmii_rxc[0] == 1'b0), the 1..3
+    valid Ethernet data bytes preceding /T/ are now flushed on the next cycle with 
+    m_axis_tlast = 1'b1 instead of being discarded.
+- Rev 2.5 (2026-10-29 16:42 KST) : [Audit Fix R12 - Exact Valid Byte Count Sideband]
+    Added 'm_axis_tkeep_bytes [2:0]' output (1..4 valid bytes per beat) so downstream 
+    eth_preamble_remover and packaging_and_segmentation track exact byte lengths for 
+    non-multiple-of-4 Ethernet packets (e.g., 65B, 66B, 67B, 1518B, 1901B).
 ===========================================================================
 */
 
@@ -22,84 +31,88 @@ module xgmii_rx_parser (
     input  wire        clk,
     input  wire        rst_n,
 
-    // Raw 32-bit XGMII Input from 10G PCS/PMA or Simulation Encoder
+    // Physical / Loopback 32-bit XGMII Input
     input  wire [31:0] xgmii_rxd,
     input  wire [3:0]  xgmii_rxc,
 
-    // AXI-Stream Output (Includes 8-Byte Preamble/SFD starting with 0x555555FB)
+    // Framed AXI-Stream Output (Includes 8B Ethernet Preamble)
     output reg  [31:0] m_axis_tdata,
     output reg         m_axis_tvalid,
-    output reg         m_axis_tlast
+    output reg         m_axis_tlast,
+    output reg  [2:0]  m_axis_tkeep_bytes // [Rev 2.5] 1..4 valid bytes in current word
 );
 
-    localparam S_IDLE = 1'b0;
-    localparam S_DATA = 1'b1;
+    reg        in_frame;
+    reg [31:0] prev_data;
+    reg        flush_tail_pending;
+    reg [31:0] tail_data_reg;
+    reg [2:0]  tail_bytes_reg;
 
-    reg state;
+    wire is_start_word    = (xgmii_rxc == 4'b0001) && (xgmii_rxd[7:0] == 8'hFB);
+    wire is_data_word     = (xgmii_rxc == 4'b0000);
+    wire has_partial_tail = in_frame && (xgmii_rxc != 4'b0000) && (xgmii_rxc[0] == 1'b0);
 
-    // Detect Start (/S/ = 0xFB in Lane 0 with control bit rxc[0] == 1)
-    wire is_start_lane0 = (xgmii_rxc[0] == 1'b1) && (xgmii_rxd[7:0] == 8'hFB);
+    // Count valid data lanes (where xgmii_rxc[k] == 0) before /T/
+    wire [2:0] partial_lane_cnt = (!xgmii_rxc[0]) + (!xgmii_rxc[1]) + (!xgmii_rxc[2]) + (!xgmii_rxc[3]);
 
-    // Detect Terminate (/T/ = 0xFD in any lane with corresponding control bit == 1)
-    wire is_term_lane0  = (xgmii_rxc[0] == 1'b1) && (xgmii_rxd[7:0]   == 8'hFD);
-    wire is_term_lane1  = (xgmii_rxc[1] == 1'b1) && (xgmii_rxd[15:8]  == 8'hFD);
-    wire is_term_lane2  = (xgmii_rxc[2] == 1'b1) && (xgmii_rxd[23:16] == 8'hFD);
-    wire is_term_lane3  = (xgmii_rxc[3] == 1'b1) && (xgmii_rxd[31:24] == 8'hFD);
-    wire is_terminate   = is_term_lane0 | is_term_lane1 | is_term_lane2 | is_term_lane3;
-
-    // 1-Cycle lookahead pipeline register so m_axis_tlast asserts on the final
-    // valid Ethernet FCS word right before a Lane-0 Terminate word (0x070707FD)
-    reg [31:0] rxd_d1;
-    reg        valid_d1;
+    wire [31:0] masked_tail_word = {
+        xgmii_rxc[3] ? 8'h00 : xgmii_rxd[31:24],
+        xgmii_rxc[2] ? 8'h00 : xgmii_rxd[23:16],
+        xgmii_rxc[1] ? 8'h00 : xgmii_rxd[15:8],
+        xgmii_rxc[0] ? 8'h00 : xgmii_rxd[7:0]
+    };
 
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
-            state         <= S_IDLE;
-            rxd_d1        <= 32'd0;
-            valid_d1      <= 1'b0;
-            m_axis_tdata  <= 32'd0;
-            m_axis_tvalid <= 1'b0;
-            m_axis_tlast  <= 1'b0;
+            in_frame           <= 1'b0;
+            prev_data          <= 32'd0;
+            flush_tail_pending <= 1'b0;
+            tail_data_reg      <= 32'd0;
+            tail_bytes_reg     <= 3'd4;
+            m_axis_tdata       <= 32'd0;
+            m_axis_tvalid      <= 1'b0;
+            m_axis_tlast       <= 1'b0;
+            m_axis_tkeep_bytes <= 3'd4;
         end else begin
-            case (state)
-                S_IDLE: begin
-                    m_axis_tvalid <= 1'b0;
-                    m_axis_tlast  <= 1'b0;
-                    if (is_start_lane0) begin
-                        // Replace 0xFB with 0x55 so downstream preamble remover sees clean 0x55
-                        rxd_d1   <= {xgmii_rxd[31:8], 8'h55};
-                        valid_d1 <= 1'b1;
-                        state    <= S_DATA;
-                    end else begin
-                        valid_d1 <= 1'b0;
-                    end
-                end
+            m_axis_tvalid      <= 1'b0;
+            m_axis_tlast       <= 1'b0;
+            m_axis_tkeep_bytes <= 3'd4;
 
-                S_DATA: begin
-                    if (is_terminate) begin
-                        // Current cycle contains /T/ (0xFD): flush buffered word with tlast = 1
-                        m_axis_tdata  <= rxd_d1;
-                        m_axis_tvalid <= valid_d1;
-                        m_axis_tlast  <= 1'b1;
-                        valid_d1      <= 1'b0;
-                        state         <= S_IDLE;
-                    end else if (xgmii_rxc == 4'b0000) begin
-                        // Normal data word: output previous buffered word and latch current word
-                        m_axis_tdata  <= rxd_d1;
-                        m_axis_tvalid <= valid_d1;
-                        m_axis_tlast  <= 1'b0;
-                        rxd_d1        <= xgmii_rxd;
-                        valid_d1      <= 1'b1;
+            if (flush_tail_pending) begin
+                m_axis_tdata       <= tail_data_reg;
+                m_axis_tvalid      <= 1'b1;
+                m_axis_tlast       <= 1'b1;
+                m_axis_tkeep_bytes <= tail_bytes_reg;
+                flush_tail_pending <= 1'b0;
+            end
+
+            if (!in_frame) begin
+                if (is_start_word) begin
+                    in_frame  <= 1'b1;
+                    prev_data <= {xgmii_rxd[31:8], 8'h55};
+                end
+            end else begin
+                if (is_data_word) begin
+                    m_axis_tdata       <= prev_data;
+                    m_axis_tvalid      <= 1'b1;
+                    m_axis_tlast       <= 1'b0;
+                    m_axis_tkeep_bytes <= 3'd4;
+                    prev_data          <= xgmii_rxd;
+                end else begin
+                    in_frame           <= 1'b0;
+                    m_axis_tdata       <= prev_data;
+                    m_axis_tvalid      <= 1'b1;
+                    m_axis_tkeep_bytes <= 3'd4;
+                    if (has_partial_tail) begin
+                        m_axis_tlast       <= 1'b0;
+                        flush_tail_pending <= 1'b1;
+                        tail_data_reg      <= masked_tail_word;
+                        tail_bytes_reg     <= partial_lane_cnt;
                     end else begin
-                        // Unexpected control character: terminate frame safely
-                        m_axis_tdata  <= rxd_d1;
-                        m_axis_tvalid <= valid_d1;
-                        m_axis_tlast  <= 1'b1;
-                        valid_d1      <= 1'b0;
-                        state         <= S_IDLE;
+                        m_axis_tlast       <= 1'b1;
                     end
                 end
-            endcase
+            end
         end
     end
 

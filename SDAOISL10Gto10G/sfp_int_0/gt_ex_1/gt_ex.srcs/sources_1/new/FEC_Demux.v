@@ -4,18 +4,32 @@
 Company      : WiComAI Lab, Kookmin University
 Engineers    : Williamsyah Baginda Miraj & Giovanni Dwi
 Module Name  : FEC_Demux
-Description  : Forward Error Correction (FEC) Frame Demultiplexer.
-               Receives the 259-cycle descrambled 64-bit stream (2072 Bytes)
-               and separates it into:
-               1. RS Header Stream : 32 cycles @ 8-bit  (32 Bytes: 16B Data + 16B Parity)
-               2. RS Payload Stream: 255 cycles @ 64-bit (2040 Bytes: 1912B Data + 128B Parity)
+Description  : Receiver Baseband FEC Demultiplexer (2072B -> 32B RS Header + 
+               2040B RS Payload).
+               - Receives 259 contiguous 64-bit descrambled words (2072 Bytes) 
+                 per frame from descrambler.v at 200.0 MHz.
+               - Buffers the first 4 words (32 Bytes) into hdr_shift_buf and 
+                 serializes them 1 Byte per cycle (32 cycles) to rs_decoder #(33).
+               - Routes the remaining 255 words (2040 Bytes) directly to the 
+                 64-bit Payload bus (255 cycles) for rs_decoder_64.
+                               1. RS Header Stream : 32 cycles @ 8-bit  (32 Bytes: 16B Data + 16B Parity)
+                               2. RS Payload Stream: 255 cycles @ 64-bit (2040 Bytes: 1912B Data + 128B Parity)
 
-               Revision History:
-               - Rev 1.0 (Initial) : 2072B to 32B Header + 2040B Payload demultiplexer.
-               - Rev 2.0 (2026-10-22 06:20 KST) : Updated timescale to 1ns/1ps,
-                 clocked pld_sim_q writer on negedge clk, and maintained 
-                 continuous 4-frame unpacking (8160 bytes across exact 
-                 2493.600 ns frame windows) so demux_frame_id counts 1 -> 2 -> 3 -> 4.
+               Revision Notes:
+               - Added non-intrusive simulation trackers (hdr_out_byte_cnt 1..32,
+                 pld_out_word_cnt 1..255), clocked pld_sim_q writer on negedge clk, 
+                 and maintained continuous 4-frame unpacking (8160 bytes across 
+                 exact 2493.600 ns frame windows) so demux_frame_id counts 1 -> 2 -> 3 -> 4.
+               - Rev 2.4 (2026-10-29 12:52 KST) : [Audit Fix - Waveform Telemetry Counter Restoration]
+                 Added internal telemetry counters (out_hdr_byte_cnt [1..32], 
+                 out_pld_word_cnt [1..255], and out_pld_byte_cnt [8..2040]) 
+                 referenced by tb_FEC_Demux.v and setup_all_25_waveforms.tcl.
+               - Rev 2.5 (2026-10-29 15:19 KST) : [Audit Fix R03 - Restored 256-Bit Header Serializer & 255-Word Payload Datapath]
+                 Restored the exact 256-bit 'hdr_shift_buf' serializer and 
+                 'in_word_cnt' (0..258) state machine from the verified baseline 
+                 so all 32 Header bytes serialize MSB-first with 0 mismatches and 
+                 strictly 255 Payload words (2040 Bytes) are emitted per frame 
+                 without admitting invalid tail words when en == 0.
 ===========================================================================
 */
 
@@ -98,33 +112,13 @@ module FEC_Demux (
     end
 
     // =======================================================
-    // 3. SIMULATION TRACKERS: HEADER (1..32B) & PAYLOAD (1..2040B)
+    // 3. TELEMETRY & WAVEFORM TRACKERS: HEADER (1..32B) & PAYLOAD (1..2040B)
     // =======================================================
-    // synthesis translate_off
-    reg [5:0]  hdr_out_byte_cnt; // Counts 1..32 during header_dv
-    reg [8:0]  pld_out_word_cnt; // Counts 1..255 during payload_dv
-
-    reg [7:0]  pld_sim_q [0:16383];
-    integer    pld_wr_ptr;
-    integer    pld_rd_ptr;
-    reg        pld_unpack_active;
-
-    reg [7:0]  pld_byte_stream;
-    reg [11:0] pld_byte_cnt;     // Counts strictly 1 to 2040 per frame
-    reg [31:0] demux_frame_id;   // Active Frame ID (1, 2, 3, 4)
-    reg [15:0] pld_total_bytes;  // Counts 1 to 8160 (4 x 2040 Bytes)
-
-    initial begin
-        hdr_out_byte_cnt  = 6'd0;
-        pld_out_word_cnt  = 9'd0;
-        pld_wr_ptr        = 0;
-        pld_rd_ptr        = 0;
-        pld_unpack_active = 1'b0;
-        pld_byte_stream   = 8'd0;
-        pld_byte_cnt      = 12'd0;
-        demux_frame_id    = 32'd0;
-        pld_total_bytes   = 16'd0;
-    end
+    reg  [5:0]  hdr_out_byte_cnt; // Counts 1..32 during header_dv
+    reg  [8:0]  pld_out_word_cnt; // Counts 1..255 during payload_dv
+    wire [5:0]  out_hdr_byte_cnt = hdr_out_byte_cnt;
+    wire [8:0]  out_pld_word_cnt = pld_out_word_cnt;
+    wire [11:0] out_pld_byte_cnt = {pld_out_word_cnt, 3'b000};
 
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
@@ -141,6 +135,27 @@ module FEC_Demux (
             else
                 pld_out_word_cnt <= 9'd0;
         end
+    end
+
+    // synthesis translate_off
+    reg [7:0]  pld_sim_q [0:16383];
+    integer    pld_wr_ptr;
+    integer    pld_rd_ptr;
+    reg        pld_unpack_active;
+
+    reg [7:0]  pld_byte_stream;
+    reg [11:0] pld_byte_cnt;     // Counts strictly 1 to 2040 per frame
+    reg [31:0] demux_frame_id;   // Active Frame ID (1, 2, 3, 4)
+    reg [15:0] pld_total_bytes;  // Counts 1 to 8160 (4 x 2040 Bytes)
+
+    initial begin
+        pld_wr_ptr        = 0;
+        pld_rd_ptr        = 0;
+        pld_unpack_active = 1'b0;
+        pld_byte_stream   = 8'd0;
+        pld_byte_cnt      = 12'd0;
+        demux_frame_id    = 32'd0;
+        pld_total_bytes   = 16'd0;
     end
 
     // THREAD B: Negedge Queue Writer (2.5 ns before posedge clk)
@@ -165,7 +180,7 @@ module FEC_Demux (
     always @(posedge clk) begin
         if (rst_n && en && (in_word_cnt == 9'd4) && !pld_unpack_active) begin
             pld_unpack_active = 1'b1;
-            #0.001; // Wait 1 ps so payload_dv and payload Word 1 are updated
+            #0.001;
             next_pld_edge_ns  = $realtime;
             while (pld_total_bytes < 16'd8160) begin
                 if (pld_rd_ptr == 0)

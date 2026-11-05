@@ -1,4 +1,4 @@
-`timescale 1ns / 100ps
+`timescale 1ns / 1ps
 /*
 ===========================================================================
 Company      : WiComAI Lab, Kookmin University / ETRI Daejeon
@@ -6,10 +6,11 @@ Engineers    : Irzal Zaini & Williamsyah Baginda Miraj
 Module Name  : syndrome_unit
 Description  : Reed-Solomon Syndrome Computation Unit over GF(2^8).
                Evaluates the incoming codeword at 16 consecutive roots 
-               (alpha^0 to alpha^15) over a 256-cycle evaluation window.
-               For shortened RS(32,16) headers, the 223 trailing zero cycles 
-               automatically shift the codeword roots to align with the 
-               Chien search starting position (alpha^-254).
+               (alpha^(11*j) for j = 120..135) over a 256-cycle evaluation window.
+               For shortened RS(32,16) headers, the 224 trailing zero cycles 
+               (and 1 trailing zero cycle for RS(255,239)) automatically 
+               shift the codeword roots to align with the Chien search 
+               starting position (alpha^-254).
 
 Revision History:
   - Rev 1.0 (Initial) : Syndrome computation for roots alpha^0..alpha^15 over 0x11D.
@@ -20,6 +21,13 @@ Revision History:
       j=124 (alpha^89)=8'h84, j=125 (alpha^100)=8'h06, j=126 (alpha^111)=8'he0, j=127 (alpha^122)=8'h8a,
       j=128 (alpha^133)=8'h9c, j=129 (alpha^144)=8'h88, j=130 (alpha^155)=8'h41, j=131 (alpha^166)=8'h73,
       j=132 (alpha^177)=8'h35, j=133 (alpha^188)=8'h0b, j=134 (alpha^199)=8'h0a, j=135 (alpha^210)=8'ha7.
+  - Rev 2.3 (2026-10-29 12:39 KST) : [Audit Fix F10 - Enable Gating Against Invalid Tail Bytes]
+    Gated data_in_d0 with 'en' so invalid non-zero bytes after 'en' deasserts are forced to 0.
+  - Rev 2.5 (2026-10-29 15:19 KST) : [Audit Fix R17 - Restored 256-Cycle Pre-Shift & Syndrome Bus Order]
+    Restored the original 256-cycle ACTIVE root shift (else if (state == ACTIVE) Q[i] <= D[i])
+    and original syndrome bus ordering (syndrome[127:0] = {Q[15], Q[14], ..., Q[0]}) required 
+    by euclid_proc, chien_search, and forney_math, while keeping 'data_in_d0 <= en ? data_in : 8'b0'
+    so both F10 (tail poisoning immunity) and R17 (shortened/full RS pre-shift alignment) hold.
 ===========================================================================
 */
 
@@ -84,11 +92,12 @@ module syndrome_unit #(
         endcase
     end
 
+    // [Rev 2.3/2.5 - Fix F10] Gate input with 'en' so invalid tail bytes (e.g. 0xA5) become 8'b0
     always @(posedge clk or negedge rst_n) begin
         if (~rst_n)
             data_in_d0 <= 8'b0;
         else
-            data_in_d0 <= data_in;
+            data_in_d0 <= en ? data_in : 8'b0;
     end
 
     integer i;
@@ -97,6 +106,7 @@ module syndrome_unit #(
             for (i = 0; i < 16; i = i + 1)
                 Q[i] <= 8'b0;
         end else if (state == ACTIVE) begin
+            // [Rev 2.5 - Fix R17] Run full 256-cycle Horner shift (with data_in_d0 = 0 when en == 0)
             for (i = 0; i < 16; i = i + 1)
                 Q[i] <= D[i];
         end else begin

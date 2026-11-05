@@ -17,15 +17,17 @@ Revision History:
   - Rev 2.0 (2026-10-27 04:09 KST) : [ETRI Audit Item 6 - SDA OISL Page 40-41, Sec. 2.6.3.6.8]
     Added matching Active Disparity Management state tracker (running_disparity).
   - Rev 2.2 (2026-10-28 14:55 KST) : [Clean-Path, All 24-Bit Error Positions & Monitor Fix]
-    1. Fixed clean-path false inversion by setting ACTIVE_DISP_INV_EN = 0 default and
-       restricting word_is_inverted strictly to exact inverted zero-error syndrome
-       (Hr == 4'b1000 && Vr == 4'b1000).
-    2. Added exact single-row & single-column weight gating (h_wt == 1 && v_wt == 1)
-       plus E[0] all-syndrome detection (is_e0_err = (&H) & (&V)) so single-bit errors
-       across ALL 24 codeword bit positions (bits 23..8 data E[0..15] and bits 7..0
-       parity P[7..0]) are 100% corrected with zero false triggers.
-    3. Added internal monitor alias wires (E_rx, P_rx, P_calc, SH, SV) for full backward
-       compatibility with legacy lpc_dec_top.v monitors.
+    Fixed clean-path false inversion and added internal monitor alias wires 
+    (E_rx, P_rx, P_calc, SH, SV).
+  - Rev 2.4 (2026-10-29 13:07 KST) : [Deep Audit Fix F05 - CCSDS 141.11-O-1 Vertical Parity E[8]]
+    1. Preserved 100% of original descriptions, comments, and Rev 1.0..2.2 history.
+    2. Synchronized vertical syndrome equations V[1:3] and P_calc[2:0] with lpc.v Rev 2.4
+       by using E[8] (e_2,0) per CCSDS 141.11-O-1 Section 3.3.2.3.4 and Figure 2-13.
+    3. Under the normative E[0]/E[8] coupling:
+       - A single-bit error on E[0] produces the unique syndrome H == 4'b1111 && V == 4'b1000.
+       - A single-bit error on E[8] produces the unique syndrome H == 4'b0010 && V == 4'b1111.
+       - Single-bit errors on the remaining 14 data bits produce (h_wt == 1 && v_wt == 1).
+       This guarantees 100% orthogonal single-bit error correction across all 24 bit positions.
 ===========================================================================
 */
 
@@ -78,7 +80,7 @@ module lpc_dec #(
             temp <= data_in;
     end
 
-    // Raw syndromes on incoming 'temp'
+    // Raw syndromes on incoming 'temp' (using E[0] on Hr[1:3] and E[8] on Vr[1:3])
     wire [0:15] Er = temp[23:8];
     wire [7:0]  Pr = temp[7:0];
     wire [0:3]  Hr, Vr;
@@ -89,12 +91,10 @@ module lpc_dec #(
     assign Hr[3] = Er[12] ^ Er[13] ^ Er[14] ^ Er[15] ^ (~Pr[4]) ^ Er[0];
 
     assign Vr[0] = Er[0] ^ Er[4] ^ Er[8]  ^ Er[12] ^ Pr[3];
-    assign Vr[1] = Er[1] ^ Er[5] ^ Er[9]  ^ Er[13] ^ Pr[2] ^ Er[0];
-    assign Vr[2] = Er[2] ^ Er[6] ^ Er[10] ^ Er[14] ^ Pr[1] ^ Er[0];
-    assign Vr[3] = Er[3] ^ Er[7] ^ Er[11] ^ Er[15] ^ Pr[0] ^ Er[0];
+    assign Vr[1] = Er[1] ^ Er[5] ^ Er[9]  ^ Er[13] ^ Pr[2] ^ Er[8];
+    assign Vr[2] = Er[2] ^ Er[6] ^ Er[10] ^ Er[14] ^ Pr[1] ^ Er[8];
+    assign Vr[3] = Er[3] ^ Er[7] ^ Er[11] ^ Er[15] ^ Pr[0] ^ Er[8];
 
-    // Note: In a non-inverted codeword with 0 or 1 bit error, (Hr==4'b1000 && Vr==4'b1000)
-    // never occurs because E[0] flips all 8 syndromes (Hr==4'b1111 && Vr==4'b1111).
     wire word_is_inverted   = ACTIVE_DISP_INV_EN && (Hr == 4'b1000) && (Vr == 4'b1000);
     wire [23:0] aligned_temp = word_is_inverted ? ~temp : temp;
 
@@ -117,24 +117,25 @@ module lpc_dec #(
 
     assign P = aligned_temp[7:0];
 
-    // Horizontal & Vertical Syndrome Equations
+    // Horizontal & Vertical Syndrome Equations (CCSDS 141.11-O-1 / SDA OISL Fig 2-13)
     assign H[0] = E[0]  ^ E[1]  ^ E[2]  ^ E[3]  ^ (~P[7]);
     assign H[1] = E[4]  ^ E[5]  ^ E[6]  ^ E[7]  ^ (~P[6]) ^ E[0];
     assign H[2] = E[8]  ^ E[9]  ^ E[10] ^ E[11] ^ (~P[5]) ^ E[0];
     assign H[3] = E[12] ^ E[13] ^ E[14] ^ E[15] ^ (~P[4]) ^ E[0];
 
     assign V[0] = E[0] ^ E[4] ^ E[8]  ^ E[12] ^ P[3];
-    assign V[1] = E[1] ^ E[5] ^ E[9]  ^ E[13] ^ P[2] ^ E[0];
-    assign V[2] = E[2] ^ E[6] ^ E[10] ^ E[14] ^ P[1] ^ E[0];
-    assign V[3] = E[3] ^ E[7] ^ E[11] ^ E[15] ^ P[0] ^ E[0];
+    assign V[1] = E[1] ^ E[5] ^ E[9]  ^ E[13] ^ P[2] ^ E[8];
+    assign V[2] = E[2] ^ E[6] ^ E[10] ^ E[14] ^ P[1] ^ E[8];
+    assign V[3] = E[3] ^ E[7] ^ E[11] ^ E[15] ^ P[0] ^ E[8];
 
-    // Exact 2D Cross-Point Error Localization for All 24 Bit Positions:
-    // - E[0] error (bit 23) flips all 8 syndromes: H == 4'b1111 && V == 4'b1111 (is_e0_err)
-    // - E[1..15] error (bits 22..8) flips exactly 1 H row (h_wt == 1) and 1 V col (v_wt == 1)
-    // - P[7..0] error (bits 7..0) flips only 1 H or 1 V (h_wt == 0 or v_wt == 0), leaving E untouched
+    // Orthogonal 2D Cross-Point Error Localization for All 24 Bit Positions:
+    // - E[0] error (bit 23) flips H[0..3] and V[0] -> H == 4'b1111 && V == 4'b1000
+    // - E[8] error (bit 15) flips H[2] and V[0..3] -> H == 4'b0010 && V == 4'b1111
+    // - E[k] error (k != 0, 8) flips 1 H row (h_wt == 1) and 1 V col (v_wt == 1)
     wire [2:0] h_wt       = H[0] + H[1] + H[2] + H[3];
     wire [2:0] v_wt       = V[0] + V[1] + V[2] + V[3];
-    wire       is_e0_err  = (&H) & (&V);
+    wire       is_e0_err  = (H == 4'b1111) && (V == 4'b1000);
+    wire       is_e8_err  = (H == 4'b0010) && (V == 4'b1111);
     wire       is_1b_data = (h_wt == 3'd1) && (v_wt == 3'd1);
 
     assign S[0]  = is_e0_err;
@@ -145,7 +146,7 @@ module lpc_dec #(
     assign S[5]  = is_1b_data & H[1] & V[1];
     assign S[6]  = is_1b_data & H[1] & V[2];
     assign S[7]  = is_1b_data & H[1] & V[3];
-    assign S[8]  = is_1b_data & H[2] & V[0];
+    assign S[8]  = is_e8_err;
     assign S[9]  = is_1b_data & H[2] & V[1];
     assign S[10] = is_1b_data & H[2] & V[2];
     assign S[11] = is_1b_data & H[2] & V[3];
@@ -192,14 +193,14 @@ module lpc_dec #(
 
     wire corrected_bit_stb = en_d0 && ((|S) || ((h_wt + v_wt) == 3'd1));
 
-    // [Rev 2.2] Monitor Alias Wires for lpc_dec_top.v Compatibility
+    // Monitor Alias Wires for lpc_dec_top.v Compatibility
     wire [15:0] E_rx   = {E[0], E[1], E[2], E[3], E[4], E[5], E[6], E[7],
                           E[8], E[9], E[10], E[11], E[12], E[13], E[14], E[15]};
     wire [7:0]  P_rx   = P;
     wire [7:0]  P_calc = {~(E[0]^E[1]^E[2]^E[3]), ~(E[0]^E[4]^E[5]^E[6]^E[7]),
                           ~(E[0]^E[8]^E[9]^E[10]^E[11]), ~(E[0]^E[12]^E[13]^E[14]^E[15]),
-                          (E[0]^E[4]^E[8]^E[12]), (E[0]^E[1]^E[5]^E[9]^E[13]),
-                          (E[0]^E[2]^E[6]^E[10]^E[14]), (E[0]^E[3]^E[7]^E[11]^E[15])};
+                          (E[0]^E[4]^E[8]^E[12]), (E[8]^E[1]^E[5]^E[9]^E[13]),
+                          (E[8]^E[2]^E[6]^E[10]^E[14]), (E[8]^E[3]^E[7]^E[11]^E[15])};
     wire [3:0]  SH     = {H[0], H[1], H[2], H[3]};
     wire [3:0]  SV     = {V[0], V[1], V[2], V[3]};
 

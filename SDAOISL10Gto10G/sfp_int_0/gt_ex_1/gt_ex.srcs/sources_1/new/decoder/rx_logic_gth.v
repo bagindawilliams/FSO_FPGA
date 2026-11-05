@@ -30,6 +30,21 @@ Description  : Clock Domain Crossing 4 (CDC 4) Module.
                  LSB-packed Table 2-14 bits [155:92] from mgmt_telemetry_generator.v
                  ({payload_out[27:0], mgmt_range_mid32, mgmt_range_lo4}) and 
                  MSB-packed standalone testbench vectors.
+               - Rev 2.2 (2026-11-05 15:30 KST) : [Audit Fix OISL-CDC-002 - Output & Internal Monitor Delay Alignment]
+                 1. Added 1-cycle alignment registers ('header_out_d1' and 'payload_out_d1')
+                    so 'header' and 'payload' remain aligned with the 'count + 2' valid
+                    windows ('header_dv' and 'payload_dv').
+                 2. Aligned all Section 4 internal simulation monitors and SDA OISL
+                    field extractors to sample 'header_out_d1' and 'payload_out_d1'.
+               - Rev 2.3 (2026-11-05 16:50 KST) : [Cycle-5 Live Frame-Type Forwarding & Cycle-1 Unpacker Alignment]
+                 1. Forwarded 'header_out_d1[1:0]' via 'live_frame_type' on cycle 5
+                    ('out_hdr_byte_cnt == 5'd5' && 'out_pld_word_cnt == 9'd5') so
+                    'cdc4_MGMT_RANGE' (64'h4153_12D0_0000_0000) latches on the exact
+                    same clock edge that header byte 5 ('FRAME_TYPE == 2'b10') arrives.
+                 2. Sampled post-NBA state ('#0.001') in THREAD B and THREAD C so
+                    'cdc4_frame_id', 'out_pld_byte_cnt', and 'out_pld_total_bytes'
+                    start on the exact first valid cycle ('out_pld_word_cnt == 1')
+                    of every frame without a 1-cycle delay.
 ===========================================================================
 */
 
@@ -83,6 +98,20 @@ module rx_logic_gth (
     wire head_rd_rst_busy;
     wire load_rd_rst_busy;
 
+    // [Rev 2.2 - OISL-CDC-002] Preserve the FIFO output word while valid advances
+    // to the count+2 window so Byte 1 / Word 1 is never skipped.
+    reg [7:0]  header_out_d1;
+    reg [31:0] payload_out_d1;
+    always @(posedge clk_gth or negedge rst_n) begin
+        if (!rst_n) begin
+            header_out_d1  <= 8'd0;
+            payload_out_d1 <= 32'd0;
+        end else begin
+            header_out_d1  <= header_out;
+            payload_out_d1 <= payload_out;
+        end
+    end
+
     // 1. Read Control State Machine (312.5 MHz)
     always @(posedge clk_gth or negedge rst_n) begin
         if (~rst_n)
@@ -122,11 +151,11 @@ module rx_logic_gth (
     // 2. FIFO Read Enable & 2-Cycle Latency Aligned Outputs
     assign rd_head    = (state == ACTIVE) && (count > st_head && count < max_head);
     assign header_dv  = (state == ACTIVE) && (count > st_head + 2 && count < max_head + 2);
-    assign header     = (header_dv) ? header_out : 8'd0;
+    assign header     = (header_dv) ? header_out_d1 : 8'd0;
 
     assign rd_load    = (state == ACTIVE) && (count > st_load && count < max_load);
     assign payload_dv = (state == ACTIVE) && (count > st_load + 2 && count < max_load + 2);
-    assign payload    = (payload_dv) ? payload_out : 32'd0;
+    assign payload    = (payload_dv) ? payload_out_d1 : 32'd0;
 
     // 3. Asynchronous FIFO Instantiations
     cross_logic_gth_head cross_head_inst (
@@ -159,6 +188,7 @@ module rx_logic_gth (
 
     // =======================================================
     // 4. SIMULATION TRACKERS & SDA OISL FIELD EXTRACTORS (312.5 MHz)
+    //    [Rev 2.2 & Rev 2.3] Aligned to 'header_out_d1' & 'payload_out_d1'
     // =======================================================
     // synthesis translate_off
     wire [4:0]  out_hdr_byte_cnt = header_dv  ? (count - (st_head + 16'd2)) : 5'd0;  // 1..16 Bytes
@@ -188,6 +218,11 @@ module rx_logic_gth (
     reg  [3:0]  mgmt_range_lo4;
     reg  [31:0] mgmt_range_mid32;
 
+    // [Rev 2.3] Forward header_out_d1[1:0] on cycle 5 so payload word 5 sees the
+    // current frame's FRAME_TYPE on the exact same rising clock edge.
+    wire [1:0]  live_frame_type = (header_dv && (out_hdr_byte_cnt == 5'd5)) ?
+                                  header_out_d1[1:0] : cdc4_FRAME_TYPE;
+
     always @(posedge clk_gth or negedge rst_n) begin
         if (~rst_n) begin
             cdc4_TXFN        <= 16'd0;
@@ -211,70 +246,71 @@ module rx_logic_gth (
             mgmt_range_lo4   <= 4'd0;
             mgmt_range_mid32 <= 32'd0;
         end else begin
-            // 1. Progressive Header Field Extraction (Updates as each byte arrives)
+            // 1. Progressive Header Field Extraction (Aligned with header_out_d1)
             if (header_dv) begin
-                hdr_buf[out_hdr_byte_cnt - 5'd1] <= header_out;
+                hdr_buf[out_hdr_byte_cnt - 5'd1] <= header_out_d1;
                 case (out_hdr_byte_cnt)
-                    5'd2:  cdc4_TXFN <= {header_out, hdr_buf[0]};
-                    5'd4:  cdc4_RXFN <= {header_out, hdr_buf[2]};
+                    5'd2:  cdc4_TXFN <= {header_out_d1, hdr_buf[0]};
+                    5'd4:  cdc4_RXFN <= {header_out_d1, hdr_buf[2]};
                     5'd5: begin
-                        cdc4_ACK        <= header_out[3];
-                        cdc4_ACK_VALID  <= header_out[2];
-                        cdc4_FRAME_TYPE <= header_out[1:0];
+                        cdc4_ACK        <= header_out_d1[3];
+                        cdc4_ACK_VALID  <= header_out_d1[2];
+                        cdc4_FRAME_TYPE <= header_out_d1[1:0];
                     end
-                    5'd10: cdc4_TX_TS     <= {header_out, hdr_buf[8], hdr_buf[7], hdr_buf[6], hdr_buf[5]};
-                    5'd11: cdc4_TOD_SEC   <= header_out[5:0];
+                    5'd10: cdc4_TX_TS     <= {header_out_d1, hdr_buf[8], hdr_buf[7], hdr_buf[6], hdr_buf[5]};
+                    5'd11: cdc4_TOD_SEC   <= header_out_d1[5:0];
                     5'd12: begin
-                        cdc4_TS_APPLIES <= header_out[6:4];
-                        cdc4_FCCH_OP    <= header_out[3:0];
+                        cdc4_TS_APPLIES <= header_out_d1[6:4];
+                        cdc4_FCCH_OP    <= header_out_d1[3:0];
                     end
-                    5'd14: cdc4_FCCH_PL   <= {header_out, hdr_buf[12]};
-                    5'd16: cdc4_HDR_CRC16 <= {hdr_buf[14], header_out};
+                    5'd14: cdc4_FCCH_PL   <= {header_out_d1, hdr_buf[12]};
+                    5'd16: cdc4_HDR_CRC16 <= {hdr_buf[14], header_out_d1};
                 endcase
             end
 
-            // 2. Payload Marker Extraction (Uses progressive cdc4_TXFN & cdc4_FRAME_TYPE)
+            // 2. Payload Marker Extraction (Aligned with payload_out_d1 & live_frame_type)
             if (payload_dv) begin
-                if (out_pld_word_cnt == 9'd1) cdc4_FSO_PLD_HDR <= payload_out;
-                if (out_pld_word_cnt == 9'd2) cdc4_FSO_PKT_HDR <= payload_out;
+                if (out_pld_word_cnt == 9'd1) cdc4_FSO_PLD_HDR <= payload_out_d1;
+                if (out_pld_word_cnt == 9'd2) cdc4_FSO_PKT_HDR <= payload_out_d1;
 
                 // Frame 1 (DAT1): Extract 12-Byte ASCII Tag "Kookmin FSO " (Words 13, 14, 15)
                 if (out_pld_word_cnt == 9'd13 && cdc4_TXFN == 16'd1)
-                    cdc4_ASCII_TAG[95:64] <= payload_out;
+                    cdc4_ASCII_TAG[95:64] <= payload_out_d1;
                 if (out_pld_word_cnt == 9'd14 && cdc4_TXFN == 16'd1)
-                    cdc4_ASCII_TAG[63:32] <= payload_out;
+                    cdc4_ASCII_TAG[63:32] <= payload_out_d1;
                 if (out_pld_word_cnt == 9'd15 && cdc4_TXFN == 16'd1)
-                    cdc4_ASCII_TAG[31:0]  <= payload_out;
+                    cdc4_ASCII_TAG[31:0]  <= payload_out_d1;
 
-                // Frame 2 (DAT2): Extract Ethernet FCS 0xDEADBEEF at 100th segment byte (Word 27 or Word 26)
+                // Frame 2 (DAT2): Extract Ethernet FCS 0xDEADBEEF at 100th segment byte (Word 26 or Word 27)
                 if ((out_pld_word_cnt == 9'd26 || out_pld_word_cnt == 9'd27) &&
-                    (cdc4_TXFN == 16'd2) && (payload_out == 32'hDEAD_BEEF))
-                    cdc4_ETH_FCS <= payload_out;
+                    (cdc4_TXFN == 16'd2) && (payload_out_d1 == 32'hDEAD_BEEF))
+                    cdc4_ETH_FCS <= payload_out_d1;
 
                 // Frame 4 (MGMT): Extract 64-bit IEEE-754 Range (64'h4153_12D0_0000_0000) across Words 3, 4, 5
                 if (out_pld_word_cnt == 9'd3) begin
-                    mgmt_range_hi4 <= payload_out[3:0];
-                    mgmt_range_lo4 <= payload_out[31:28];
+                    mgmt_range_hi4 <= payload_out_d1[3:0];
+                    mgmt_range_lo4 <= payload_out_d1[31:28];
                 end
                 if (out_pld_word_cnt == 9'd4)
-                    mgmt_range_mid32 <= payload_out;
-                if (out_pld_word_cnt == 9'd5 && cdc4_FRAME_TYPE == 2'b10) begin
+                    mgmt_range_mid32 <= payload_out_d1;
+                if (out_pld_word_cnt == 9'd5 && live_frame_type == 2'b10) begin
                     if (mgmt_range_hi4 != 4'd0)
-                        cdc4_MGMT_RANGE <= {mgmt_range_hi4, mgmt_range_mid32, payload_out[31:4]};
+                        cdc4_MGMT_RANGE <= {mgmt_range_hi4, mgmt_range_mid32, payload_out_d1[31:4]};
                     else
-                        cdc4_MGMT_RANGE <= {payload_out[27:0], mgmt_range_mid32, mgmt_range_lo4};
+                        cdc4_MGMT_RANGE <= {payload_out_d1[27:0], mgmt_range_mid32, mgmt_range_lo4};
                 end
 
                 // Final 32-bit Word (Word 478): Extract FSO Payload CRC-32
                 if (out_pld_word_cnt == 9'd478)
-                    cdc4_PLD_CRC32 <= payload_out;
+                    cdc4_PLD_CRC32 <= payload_out_d1;
             end
         end
     end
 
-    // 3. Race-Free Negedge Queue Writer & Continuous 4-Frame Unpacker (1..1912 Bytes/frame)
+    // 3. Race-Free Post-NBA Queue Writer & Per-Frame Aligned Unpacker (1..1912 Bytes/frame)
     reg [7:0]  pld_sim_q [0:16383];
     integer    pld_wr_ptr, pld_rd_ptr;
+    integer    f_u, b_u;
     reg        pld_unpack_active;
 
     reg [7:0]  out_pld_byte_stream;
@@ -292,47 +328,45 @@ module rx_logic_gth (
         cdc4_frame_id       = 32'd0;
     end
 
-    // THREAD B: Negedge Queue Writer (1.6 ns before posedge clk_gth)
-    always @(negedge clk_gth or negedge rst_n) begin
+    // THREAD B: Post-NBA Queue Writer (#0.001 after posedge clk_gth when payload_dv & payload_out_d1 are valid)
+    always @(posedge clk_gth or negedge rst_n) begin
         if (~rst_n) begin
             pld_wr_ptr = 0;
-        end else if (payload_dv) begin
-            pld_sim_q[pld_wr_ptr + 0] = payload_out[31:24];
-            pld_sim_q[pld_wr_ptr + 1] = payload_out[23:16];
-            pld_sim_q[pld_wr_ptr + 2] = payload_out[15:8];
-            pld_sim_q[pld_wr_ptr + 3] = payload_out[7:0];
-            pld_wr_ptr                = pld_wr_ptr + 4;
+        end else begin
+            #0.001;
+            if (payload_dv) begin
+                pld_sim_q[pld_wr_ptr + 0] = payload_out_d1[31:24];
+                pld_sim_q[pld_wr_ptr + 1] = payload_out_d1[23:16];
+                pld_sim_q[pld_wr_ptr + 2] = payload_out_d1[15:8];
+                pld_sim_q[pld_wr_ptr + 3] = payload_out_d1[7:0];
+                pld_wr_ptr                = pld_wr_ptr + 4;
+            end
         end
     end
 
-    // THREAD C: Continuous 4-Frame Unpacker (1912 Bytes per 2493.600 ns frame window)
+    // THREAD C: Per-Frame Aligned Unpacker (Starts on exact Word 1 rising edge of each frame)
     real next_cdc4_edge_ns;
     always @(posedge clk_gth) begin
-        if (rst_n && (state == ACTIVE) && (count == st_load + 16'd3) && !pld_unpack_active) begin
+        #0.002; // Evaluate right after NBA and THREAD B queue write on Word 1
+        if (rst_n && payload_dv && (out_pld_word_cnt == 9'd1) && !pld_unpack_active) begin
             pld_unpack_active = 1'b1;
-            #0.001; // Align with payload_dv Word 1 at count == 23
-            next_cdc4_edge_ns = $realtime;
-            while (out_pld_total_bytes < 16'd7648) begin
-                if (pld_rd_ptr == 0)
-                    out_pld_byte_stream = payload_out[31:24];
-                else
-                    out_pld_byte_stream = pld_sim_q[pld_rd_ptr];
-
-                pld_rd_ptr          = pld_rd_ptr + 1;
-                out_pld_total_bytes = out_pld_total_bytes + 16'd1;
-
-                if (cdc4_frame_id == 32'd0) begin
-                    cdc4_frame_id    = 32'd1;
-                    out_pld_byte_cnt = 12'd1;
-                end else if (out_pld_byte_cnt == 12'd1912) begin
-                    cdc4_frame_id    = cdc4_frame_id + 32'd1;
-                    out_pld_byte_cnt = 12'd1;
-                end else begin
-                    out_pld_byte_cnt = out_pld_byte_cnt + 12'd1;
+            for (f_u = 1; f_u <= 4; f_u = f_u + 1) begin
+                if (f_u > 1) begin
+                    wait(payload_dv && (out_pld_word_cnt == 9'd1));
+                    #0.002;
                 end
+                cdc4_frame_id     = f_u;
+                next_cdc4_edge_ns = $realtime;
+                for (b_u = 1; b_u <= 1912; b_u = b_u + 1) begin
+                    while (pld_rd_ptr >= pld_wr_ptr) #0.1;
+                    out_pld_byte_stream = pld_sim_q[pld_rd_ptr];
+                    pld_rd_ptr          = pld_rd_ptr + 1;
+                    out_pld_byte_cnt    = b_u[11:0];
+                    out_pld_total_bytes = out_pld_total_bytes + 16'd1;
 
-                next_cdc4_edge_ns = next_cdc4_edge_ns + (2493.6 / 1912.0);
-                #((next_cdc4_edge_ns - $realtime) > 0.0 ? (next_cdc4_edge_ns - $realtime) : 0.001);
+                    next_cdc4_edge_ns = next_cdc4_edge_ns + (2493.6 / 1912.0);
+                    #((next_cdc4_edge_ns - $realtime) > 0.0 ? (next_cdc4_edge_ns - $realtime) : 0.001);
+                end
             end
             out_pld_byte_stream = 8'd0;
             out_pld_byte_cnt    = 12'd0;

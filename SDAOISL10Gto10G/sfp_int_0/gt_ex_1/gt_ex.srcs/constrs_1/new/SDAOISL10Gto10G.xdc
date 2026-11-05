@@ -5,6 +5,14 @@
 # Target Board : ALINX AXKU062 (AMD Xilinx Kintex UltraScale xcku060-ffva1156-2-i)
 # Description  : Physical Pin, GTH Quad X1Y2 Co-Location, CDC Timing, and 
 #                3 Stage-Dedicated ChipScope ILA Cores (TX, GTH, RX)
+#
+# Revision History:
+#   - Rev 1.0 (Initial) : Physical constraints and 3 stage-dedicated ILA cores.
+#   - Rev 2.7 (2026-10-30 02:53 KST) : [Audit Fix N15 - Exact Differential Clock Pins]
+#     1. Aligned 200 MHz differential system oscillator pins with ALINX AXKU062 
+#        User Manual Section 2.3 (Page 16): sys_clk_p = Pin AK17, sys_clk_n = Pin AK16
+#        (Bank 45, DIFF_HSTL_I_18) with explicit 5.000 ns period create_clock.
+#     2. Added explicit GTH reference clock N-side pin assignment (fso_refclk_n = Pin T5).
 #==============================================================================
 
 # -----------------------------------------------------------------------------
@@ -17,15 +25,19 @@ set_property BITSTREAM.GENERAL.COMPRESS TRUE [current_design]
 set_property BITSTREAM.CONFIG.UNUSEDPIN PULLUP [current_design]
 
 # -----------------------------------------------------------------------------
-# 2. SYSTEM DIFFERENTIAL CLOCK (200 MHz Oscillator -> Pin AK17 / AL17)
+# 2. SYSTEM DIFFERENTIAL CLOCK (200 MHz Oscillator -> Pin AK17 / AK16, Bank 45)
 # -----------------------------------------------------------------------------
 set_property PACKAGE_PIN AK17 [get_ports sys_clk_p]
+set_property PACKAGE_PIN AK16 [get_ports sys_clk_n]
 set_property IOSTANDARD DIFF_HSTL_I_18 [get_ports sys_clk_p]
+set_property IOSTANDARD DIFF_HSTL_I_18 [get_ports sys_clk_n]
+create_clock -name clk_sys_200m -period 5.000 [get_ports sys_clk_p]
 
 # -----------------------------------------------------------------------------
 # 3. GTH REFERENCE CLOCK & QUAD X1Y2 CO-LOCATION (156.25 MHz -> Pin T6 / T5)
 # -----------------------------------------------------------------------------
 set_property PACKAGE_PIN T6 [get_ports fso_refclk_p]
+set_property PACKAGE_PIN T5 [get_ports fso_refclk_n]
 create_clock -name clk_fso_refclk_p -period 6.400 [get_ports fso_refclk_p]
 
 set_property LOC GTHE3_COMMON_X1Y2 [get_cells {u_fso_gth_core/u_gth_fso_64b66b/inst/gen_gtwizard_gthe3_top.gth_fso_64b66b_gtwizard_gthe3_inst/gen_gtwizard_gthe3.gen_common.gen_common_container[3].gen_enabled_common.gthe3_common_wrapper_inst/common_inst/gthe3_common_gen.GTHE3_COMMON_PRIM_INST}]

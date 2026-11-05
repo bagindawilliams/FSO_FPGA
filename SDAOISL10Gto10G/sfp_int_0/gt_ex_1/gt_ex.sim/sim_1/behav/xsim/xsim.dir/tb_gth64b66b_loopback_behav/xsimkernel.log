@@ -1,0 +1,7 @@
+Running: xsim.dir/tb_gth64b66b_loopback_behav/xsimk -simmode gui -wdb tb_gth64b66b_loopback_behav.wdb -simrunnum 0 -socket 34469
+Design successfully loaded
+Design Loading Memory Usage: 260784 KB (Peak: 261744 KB)
+Design Loading CPU Usage: 700 ms
+Simulation completed
+Simulation Memory Usage: 350408 KB (Peak: 400052 KB)
+Simulation CPU Usage: 4020 ms

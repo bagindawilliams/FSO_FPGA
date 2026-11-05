@@ -30,6 +30,16 @@ Description  : Clock Domain Crossing 1 (CDC 1) Subsystem.
                   long-term average frame period of:
                     (18 * 2495.0 ns + 7 * 2490.0 ns) / 25 = 2493.600 ns
                   matching the 3117-Byte @ 10 Gbps optical frame rate with zero drift.
+               7. [Rev 2.2 - 2026-11-01 15:49 KST - Audit Fix OISL-CDC-002 & OISL-RESET-001]:
+                  - Added 1-cycle output alignment registers ('header_out_d1' and 
+                    'payload_out_d1') in the clk_logic domain so the FIFO read 
+                    response remains aligned with the 'count + 2' valid window 
+                    ('header_dv' and 'payload_dv') while raw 'dout' advances.
+                  - Added Gray-coded completed-frame counters ('hdr_gray' -> 'hdr_gray_s2' 
+                    for 16-byte headers and 'pld_gray' -> 'pld_gray_s2' for 478-word 
+                    payloads) to ensure a full frame is committed in both FIFOs 
+                    ('complete_frame_available') before starting a fixed FEC read burst, 
+                    and decoupled header acceptance ('accept_head') from payload backpressure.
 ===========================================================================
 */
 
@@ -98,10 +108,103 @@ module x_gth_logic(
     wire    load_wr_rst_busy;
     wire    load_rd_rst_busy;
 
+    // [Rev 2.2 - OISL-CDC-002] Preserve the vendor FIFO response for 1 cycle 
+    // while valid advances to the count+2 slot (raw dout already advances to the next word).
+    reg [7:0]  header_out_d1;
+    reg [63:0] payload_out_d1;
+    always @(posedge clk_logic or negedge rst_n) begin
+        if (!rst_n) begin
+            header_out_d1  <= 8'd0;
+            payload_out_d1 <= 64'd0;
+        end else begin
+            header_out_d1  <= header_out;
+            payload_out_d1 <= payload_out;
+        end
+    end
+
     // =======================================================
-    // 1. BACKPRESSURE LOGIC (Write Domain)
+    // 1. BACKPRESSURE & COMPLETED-FRAME GRAY TRACKING (Write Domain)
     // =======================================================
     assign cdc_ready = ~(head_full | load_full | head_wr_rst_busy | load_wr_rst_busy);
+
+    // [Rev 2.2 - OISL-RESET-001] Fixed FEC read bursts require a complete input frame
+    // committed in both Header (16 bytes) and Payload (478 words) FIFOs before starting.
+    localparam integer HDR_INPUT_WORDS = max_head - st_head - 1;       // 16 Header bytes
+    localparam integer PLD_INPUT_WORDS = 2 * (max_load - st_load - 1); // 478 Payload words (32-bit)
+
+    reg [15:0] hdr_words      = 16'd0;
+    reg [15:0] pld_words      = 16'd0;
+    reg [15:0] hdr_committed  = 16'd0;
+    reg [15:0] pld_committed  = 16'd0;
+    reg [15:0] hdr_gray       = 16'd0;
+    reg [15:0] pld_gray       = 16'd0;
+
+    (* ASYNC_REG = "TRUE" *) reg [15:0] hdr_gray_s1 = 16'd0, hdr_gray_s2 = 16'd0;
+    (* ASYNC_REG = "TRUE" *) reg [15:0] pld_gray_s1 = 16'd0, pld_gray_s2 = 16'd0;
+    reg [15:0] frames_started = 16'd0;
+
+    function [15:0] gray_to_bin(input [15:0] g);
+        integer i;
+        begin
+            gray_to_bin[15] = g[15];
+            for (i = 14; i >= 0; i = i - 1)
+                gray_to_bin[i] = gray_to_bin[i + 1] ^ g[i];
+        end
+    endfunction
+
+    wire complete_frame_available = (gray_to_bin(hdr_gray_s2) != frames_started) &&
+                                    (gray_to_bin(pld_gray_s2) != frames_started);
+
+    // Header is a valid-only burst; accept header bytes whenever header FIFO is ready.
+    wire accept_head = en_head && !head_full && !head_wr_rst_busy;
+    wire accept_load = en_load && cdc_ready;
+
+    always @(posedge clk_gth or negedge rst_n) begin
+        if (!rst_n) begin
+            hdr_words     <= 16'd0;
+            pld_words     <= 16'd0;
+            hdr_committed <= 16'd0;
+            pld_committed <= 16'd0;
+            hdr_gray      <= 16'd0;
+            pld_gray      <= 16'd0;
+        end else begin
+            if (accept_head) begin
+                if (hdr_words == HDR_INPUT_WORDS - 1) begin
+                    hdr_words     <= 16'd0;
+                    hdr_committed <= hdr_committed + 16'd1;
+                    hdr_gray      <= ((hdr_committed + 16'd1) >> 1) ^ (hdr_committed + 16'd1);
+                end else begin
+                    hdr_words     <= hdr_words + 16'd1;
+                end
+            end
+            if (accept_load) begin
+                if (pld_words == PLD_INPUT_WORDS - 1) begin
+                    pld_words     <= 16'd0;
+                    pld_committed <= pld_committed + 16'd1;
+                    pld_gray      <= ((pld_committed + 16'd1) >> 1) ^ (pld_committed + 16'd1);
+                end else begin
+                    pld_words     <= pld_words + 16'd1;
+                end
+            end
+        end
+    end
+
+    always @(posedge clk_logic or negedge rst_n) begin
+        if (!rst_n) begin
+            hdr_gray_s1    <= 16'd0;
+            hdr_gray_s2    <= 16'd0;
+            pld_gray_s1    <= 16'd0;
+            pld_gray_s2    <= 16'd0;
+            frames_started <= 16'd0;
+        end else begin
+            hdr_gray_s1 <= hdr_gray;
+            hdr_gray_s2 <= hdr_gray_s1;
+            pld_gray_s1 <= pld_gray;
+            pld_gray_s2 <= pld_gray_s1;
+            if (state == IDLE && next_state == ACTIVE)
+                frames_started <= frames_started + 16'd1;
+        end
+    end
 
     // =======================================================
     // 2. FINITE STATE MACHINE (Read Domain - clk_logic)
@@ -135,7 +238,7 @@ module x_gth_logic(
     always @(*) begin
         case(state)
             IDLE: begin
-                if (~head_empty && ~load_empty && ~head_rd_rst_busy && ~load_rd_rst_busy)
+                if (complete_frame_available && ~head_empty && ~load_empty && ~head_rd_rst_busy && ~load_rd_rst_busy)
                     next_state <= ACTIVE;
                 else
                     next_state <= IDLE;
@@ -161,11 +264,11 @@ module x_gth_logic(
     // =======================================================
     assign  rd_head     = (state == ACTIVE) && (count > st_head && count < max_head);
     assign  header_dv   = (state == ACTIVE) && (count > st_head + 2 && count < max_head + 2);
-    assign  header      = (header_dv) ? header_out : 8'b0;
+    assign  header      = (header_dv) ? header_out_d1 : 8'b0;
 
     assign  rd_load     = (state == ACTIVE) && (count > st_load && count < max_load);
     assign  payload_dv  = (state == ACTIVE) && (count > st_load + 2 && count < max_load + 2);
-    assign  payload     = (payload_dv) ? payload_out : 64'b0;
+    assign  payload     = (payload_dv) ? payload_out_d1 : 64'b0;
 
     // =======================================================
     // 4. IP CORE INSTANTIATIONS (Xilinx FIFO Generator)
@@ -173,7 +276,7 @@ module x_gth_logic(
     cross_gth_logic_head cross_head_inst (
         .srst           (~rst_n),
         .wr_clk         (clk_gth),
-        .wr_en          (en_head),
+        .wr_en          (accept_head),
         .din            (header_in),
         .rd_clk         (clk_logic),
         .rd_en          (rd_head),
@@ -187,7 +290,7 @@ module x_gth_logic(
     cross_gth_logic_load cross_load_inst (
         .srst           (~rst_n),
         .wr_clk         (clk_gth),
-        .wr_en          (en_load),
+        .wr_en          (accept_load),
         .din            (payload_in),
         .rd_clk         (clk_logic),
         .rd_en          (rd_load),

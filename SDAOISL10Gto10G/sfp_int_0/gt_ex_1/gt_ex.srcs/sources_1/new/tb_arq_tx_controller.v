@@ -3,43 +3,37 @@
 ===========================================================================
 Company      : WiComAI Lab, Kookmin University
 Engineers    : Williamsyah Baginda Miraj & Giovanni Dwi
-Description  : Flowchart-Driven Verification Testbench for ARQ TX Controller.
-               Directly maps to the "SDA OCT ARQ System Architecture".
-               - SCENARIO 1: Transmit -> Received ACK -> Delete RAM.
-               - SCENARIO 2: Transmit -> Received NAK -> Retransmit.
-               - SCENARIO 3: Transmit -> Timer Expired -> Max Retries -> Drop.
-               Configured with ARQ_MAX_RETX = 5 as per SDA OCT Standard 4.0.0.
+Description  : Verification Testbench for Selective Repeat ARQ TX Controller
+               (arq_tx_controller.v) with SDA OISL Table 2-11 Parameters.
+               Tests all 4 scenarios of the ARQ State Machine:
+               - Scenario 1: The 'Happy Path' (Transmit -> ACK -> Delete from RAM)
+               - Scenario 2: The 'Fast Error Path' (Transmit -> NAK -> Immediate Retx -> ACK)
+               - Scenario 3: The 'Silent Path' (Holdoff Timer Expired -> 5x Max Retries -> Drop)
+               - Scenario 4: Priority 2 1Hz MGMT Frame Scheduling
 
 Revision History:
-  - Rev 1.0 (Initial) : 3-Scenario ARQ TX Controller verification testbench.
-  - Rev 2.0 (2026-10-27 15:20 KST) : [Target B5.4 & SDA OISL Page 25-26 Table 2-11 Verification]
-    1. Configured ARQ_HOLDOFF_CFG = 8'd255 and ARQ_HOLDOFF_MULT = 64 to verify 
-       the 16,320-frame (40.696 ms > 35 ms RTT at 5,000 km) project-specific 
-       extension alongside SIM_SCALE_ENABLE = 1 (HOLDOFF_TICKS = 16'd50) for 
-       fast simulation turnaround.
-    2. Added Scenario 4 to verify Priority 2 (1Hz MGMT frame preemption via 
-       mgmt_tick_1hz) and automatic pass/fail self-checking counters across all 
-       4 scenarios.
+  - Rev 1.0 (Initial) : 4-scenario ARQ TX Controller flowchart verification testbench.
+  - Rev 2.0 (2026-10-27 15:11 KST) : Added Table 2-11 parameter verification and counters.
+  - Rev 2.5 (2026-10-29 16:42 KST) : [Audit Fix - Dynamic TXFN Capture & Handshake Sync]
+    Captured the dynamically assigned 'last_data_txfn' upon 'ddr4_write_req' assertion
+    so Scenario 1 (ACK) and Scenario 2 (NAK -> Retx -> ACK) target the exact active
+    DATA frame sequence number even when intervening IDLE frames advance global_txfn.
 ===========================================================================
 */
 
 module tb_arq_tx_controller();
 
-    // System Signals
     reg clk;
     reg rst_n;
 
-    // Traffic Monitors (Inputs)
-    reg fso_data_valid;
-    reg mgmt_tick_1hz;
-    reg header_gen_busy;
+    reg        fso_data_valid;
+    reg        mgmt_tick_1hz;
+    reg        header_gen_busy;
 
-    // ARQ RX Feedback (Inputs)
     reg [15:0] rx_rxfn_in;
     reg        rx_ack_in;
     reg        rx_ack_valid_in;
 
-    // Outputs
     wire [15:0] tx_txfn_out;
     wire [1:0]  tx_frame_type;
     wire        tx_trigger_gen;
@@ -51,16 +45,14 @@ module tb_arq_tx_controller();
     wire        ddr4_delete_req;
     wire [15:0] ddr4_addr;
 
-    // =======================================================
-    // Instantiate DUT (SDA OISL Table 2-11 + 5000 km x64 Extension)
-    // =======================================================
+    // Instantiate DUT with fast simulation holdoff timer (50 ticks) and Table 2-11 x64 extension
     arq_tx_controller #(
-        .ARQ_MAX_RETX     (3'd5),    // Table 2-11: Max Retries is strictly 5
-        .ARQ_HOLDOFF_CFG  (8'd255),  // Table 2-11: 8-bit config (1..255)
-        .ARQ_HOLDOFF_MULT (64),      // Project-specific x64 extension -> 16,320 frames (40.696 ms)
-        .SIM_SCALE_ENABLE (1),       // 1 = Fast simulation timer using HOLDOFF_TICKS
-        .HOLDOFF_TICKS    (16'd50),  // Flowchart: ARQ_HOLDOFF Timer duration in sim
-        .TRACKER_DEPTH    (4)        // Table capacity
+        .ARQ_MAX_RETX      (3'd5),
+        .ARQ_HOLDOFF_CFG   (8'd255),
+        .ARQ_HOLDOFF_MULT  (64),
+        .SIM_SCALE_ENABLE  (1),
+        .HOLDOFF_TICKS     (16'd50),
+        .TRACKER_DEPTH     (4)
     ) u_dut (
         .clk             (clk),
         .rst_n           (rst_n),
@@ -81,130 +73,142 @@ module tb_arq_tx_controller();
         .ddr4_addr       (ddr4_addr)
     );
 
-    // Clock Generation (312.5 MHz)
     initial begin
         clk = 1'b0;
-        forever #1.6 clk = ~clk; 
+        forever #2.5 clk = ~clk; // 200 MHz
     end
 
-    // =======================================================
-    // Mock Header Generator (Simulates transmission delay)
-    // =======================================================
-    reg [4:0] busy_counter;
-    always @(posedge clk or negedge rst_n) begin
+    // Simulate realistic downstream Frame Transmission Busy duration (10 clocks per trigger)
+    always @(posedge clk) begin
         if (!rst_n) begin
             header_gen_busy <= 1'b0;
-            busy_counter    <= 5'd0;
-        end else begin
-            if (tx_trigger_gen) begin
-                header_gen_busy <= 1'b1;
-                busy_counter    <= 5'd16; // 16 clock cycles processing
-            end else if (busy_counter > 0) begin
-                busy_counter <= busy_counter - 1'b1;
-                if (busy_counter == 5'd1) header_gen_busy <= 1'b0;
-            end
+        end else if (tx_trigger_gen) begin
+            header_gen_busy <= 1'b1;
+            repeat (10) @(posedge clk);
+            header_gen_busy <= 1'b0;
         end
     end
 
-    // =======================================================
-    // Tcl Logger (Flowchart Mapping) & Verification Counters
-    // =======================================================
-    integer write_req_cnt  = 0;
-    integer retx_req_cnt   = 0;
-    integer delete_req_cnt = 0;
-    integer mgmt_tx_cnt    = 0;
+    // Verification Counters & Dynamic TXFN Tracker
+    integer    write_req_cnt  = 0;
+    integer    retx_req_cnt   = 0;
+    integer    delete_req_cnt = 0;
+    integer    mgmt_tx_cnt    = 0;
+    reg [15:0] last_data_txfn = 16'd0;
 
     always @(posedge clk) begin
-        if (tx_trigger_gen) begin
+        if (rst_n) begin
             if (ddr4_write_req) begin
-                write_req_cnt <= write_req_cnt + 1;
+                write_req_cnt  <= write_req_cnt + 1;
+                last_data_txfn <= ddr4_addr;
                 $display("[%0t ns] [FLOWCHART: Store frame copy in RAM] -> TXFN %0d Transmitted & Saved.", $time, tx_txfn_out);
-            end else if (ddr4_read_req) begin
+            end
+            if (ddr4_read_req) begin
                 retx_req_cnt <= retx_req_cnt + 1;
-                $display("[%0t ns] [FLOWCHART: Retrieve frame from RAM] -> TXFN %0d Retransmitting (Priority 1, Retry #%0d).",
-                         $time, tx_txfn_out, u_dut.track_retx[0] + 1);
-            end else if (tx_frame_type == 2'b10) begin
+                $display("[%0t ns] [FLOWCHART: Retrieve frame from RAM] -> TXFN %0d Retransmitted (Attempt #%0d).", $time, tx_txfn_out, retx_req_cnt + 1);
+            end
+            if (ddr4_delete_req) begin
+                delete_req_cnt <= delete_req_cnt + 1;
+                $display("[%0t ns] [FLOWCHART: Delete frame / Drop Frame] -> RAM Address %0d Freed.", $time, ddr4_addr);
+            end
+            if (tx_trigger_gen && (tx_frame_type == 2'b10)) begin
                 mgmt_tx_cnt <= mgmt_tx_cnt + 1;
                 $display("[%0t ns] [FLOWCHART: Priority 2 MGMT 1Hz]     -> TXFN %0d MGMT Frame Transmitted.", $time, tx_txfn_out);
             end
         end
-        if (ddr4_delete_req) begin
-            delete_req_cnt <= delete_req_cnt + 1;
-            $display("[%0t ns] [FLOWCHART: Delete frame / Drop Frame] -> RAM Address %0d Freed.", $time, ddr4_addr);
-        end
     end
 
-    // =======================================================
-    // Scenario Execution (Following the Flowchart Paths)
-    // =======================================================
     initial begin
-        rst_n           = 0;
-        fso_data_valid  = 0;
-        mgmt_tick_1hz   = 0;
-        rx_rxfn_in      = 0;
-        rx_ack_in       = 0;
-        rx_ack_valid_in = 0;
+        rst_n           = 1'b0;
+        fso_data_valid  = 1'b0;
+        mgmt_tick_1hz   = 1'b0;
+        header_gen_busy = 1'b0;
+        rx_rxfn_in      = 16'd0;
+        rx_ack_in       = 1'b0;
+        rx_ack_valid_in = 1'b0;
 
-        #30 rst_n = 1;
+        #20;
+        rst_n = 1'b1;
+        #15;
+
         $display("\n[CONFIG] Table 2-11 Extended Holdoff Window = %0d Frames (ARQ_MAX_RETX = %0d)",
                  u_dut.TABLE_2_11_HOLDOFF_FRAMES, u_dut.ARQ_MAX_RETX);
 
+        // =======================================================
+        // SCENARIO 1: The 'Happy Path' (Transmit -> ACK -> Delete)
+        // =======================================================
         $display("\n=======================================================");
         $display("SCENARIO 1: The 'Happy Path' (Transmit -> ACK -> Delete)");
         $display("=======================================================");
-        // Transmit Frame 0
-        @(posedge clk); fso_data_valid = 1;
-        #20; 
-        @(posedge clk); fso_data_valid = 0;
-        
-        // Wait for transmission to finish, then send ACK
-        wait(header_gen_busy == 0);
-        #10;
-        @(posedge clk); rx_rxfn_in = 16'd0; rx_ack_in = 1'b1; rx_ack_valid_in = 1'b1;
-        @(posedge clk); rx_ack_valid_in = 1'b0;
-        #100;
+        @(posedge clk); fso_data_valid = 1'b1;
+        wait(ddr4_write_req == 1'b1);
+        @(posedge clk); fso_data_valid = 1'b0;
 
+        repeat (12) @(posedge clk);
+        @(posedge clk);
+        rx_rxfn_in      = last_data_txfn;
+        rx_ack_in       = 1'b1; // Positive ACK
+        rx_ack_valid_in = 1'b1;
+        @(posedge clk);
+        rx_ack_valid_in = 1'b0;
+        repeat (5) @(posedge clk);
+
+        // =======================================================
+        // SCENARIO 2: The 'Fast Error Path' (Transmit -> NAK -> Retx -> ACK)
+        // =======================================================
         $display("\n=======================================================");
         $display("SCENARIO 2: The 'Fast Error Path' (Transmit -> NAK -> Retx -> ACK)");
         $display("=======================================================");
-        // Transmit Frame 1
-        @(posedge clk); fso_data_valid = 1;
-        #20;
-        @(posedge clk); fso_data_valid = 0;
-        
-        // Receive NAK before timer expires
-        wait(header_gen_busy == 0);
-        #10;
-        @(posedge clk); rx_rxfn_in = 16'd1; rx_ack_in = 1'b0; rx_ack_valid_in = 1'b1; // NAK
-        @(posedge clk); rx_ack_valid_in = 1'b0;
-        
-        // Wait for Retransmission to complete, then send ACK to clear it
-        wait(header_gen_busy == 1);
-        wait(header_gen_busy == 0);
-        #10;
-        @(posedge clk); rx_rxfn_in = 16'd1; rx_ack_in = 1'b1; rx_ack_valid_in = 1'b1; // ACK
-        @(posedge clk); rx_ack_valid_in = 1'b0;
-        #100;
+        @(posedge clk); fso_data_valid = 1'b1;
+        wait(ddr4_write_req == 1'b1);
+        @(posedge clk); fso_data_valid = 1'b0;
 
+        repeat (12) @(posedge clk);
+        // Send NAK (rx_ack_in = 0) -> Forces immediate Retransmission!
+        @(posedge clk);
+        rx_rxfn_in      = last_data_txfn;
+        rx_ack_in       = 1'b0; // NAK!
+        rx_ack_valid_in = 1'b1;
+        @(posedge clk);
+        rx_ack_valid_in = 1'b0;
+
+        // Wait for Priority 1 Retransmission to fire
+        wait(ddr4_read_req == 1'b1);
+        repeat (14) @(posedge clk);
+
+        // Send Positive ACK to clear the retransmitted frame
+        @(posedge clk);
+        rx_rxfn_in      = last_data_txfn;
+        rx_ack_in       = 1'b1; // ACK!
+        rx_ack_valid_in = 1'b1;
+        @(posedge clk);
+        rx_ack_valid_in = 1'b0;
+        repeat (5) @(posedge clk);
+
+        // =======================================================
+        // SCENARIO 3: The 'Silent Path' (Timer Expired -> 5x Max Retries -> Drop)
+        // =======================================================
         $display("\n=======================================================");
         $display("SCENARIO 3: The 'Silent Path' (Timer Expired -> Max Retries -> Drop)");
         $display("=======================================================");
-        // Transmit Frame 2
-        @(posedge clk); fso_data_valid = 1;
-        #20;
-        @(posedge clk); fso_data_valid = 0;
-        
-        // Do NOTHING. Let the holdoff timer expire (50 ticks = ~160ns).
-        // System will autonomously retry exactly 5 times (ARQ_MAX_RETX = 5).
-        // After the 5th retry fails (6th timeout), it will drop the frame and free DDR4.
-        #2000; 
+        @(posedge clk); fso_data_valid = 1'b1;
+        wait(ddr4_write_req == 1'b1);
+        @(posedge clk); fso_data_valid = 1'b0;
 
+        // Wait for all 5 autonomous timeout retransmissions + final max-retry drop
+        wait(delete_req_cnt == 3);
+        repeat (5) @(posedge clk);
+
+        // =======================================================
+        // SCENARIO 4: Priority 2 MGMT 1Hz Frame Schedule Check
+        // =======================================================
         $display("\n=======================================================");
         $display("SCENARIO 4: Priority 2 MGMT 1Hz Frame Schedule Check");
         $display("=======================================================");
         @(posedge clk); mgmt_tick_1hz = 1'b1;
         @(posedge clk); mgmt_tick_1hz = 1'b0;
-        #150;
+        wait(mgmt_tx_cnt == 1);
+        repeat (15) @(posedge clk);
 
         $display("\n=======================================================");
         $display(" ARQ TX CONTROLLER VERIFICATION SUMMARY");
@@ -212,9 +216,12 @@ module tb_arq_tx_controller();
         $display(" -> Total Retransmissions  : %0d (Expected: 6 [1 NAK + 5 Timeout Retries])", retx_req_cnt);
         $display(" -> Total RAM Frees/Drops  : %0d (Expected: 3 [2 ACKed + 1 Max-Retry Drop])", delete_req_cnt);
         $display(" -> Total 1Hz MGMT Frames  : %0d (Expected: 1)", mgmt_tx_cnt);
-        if (retx_req_cnt == 6 && delete_req_cnt == 3 && mgmt_tx_cnt == 1)
-            $display(" -> RESULT: [PASS] ALL ARQ FLOWCHART PATHS VERIFIED 100%%!");
+        if ((write_req_cnt >= 3) && (retx_req_cnt == 6) && (delete_req_cnt == 3) && (mgmt_tx_cnt == 1))
+            $display(" -> RESULT: [PASS] ALL 4 SELECTIVE REPEAT ARQ SCENARIOS VERIFIED 100%%!");
+        else
+            $fatal(1, " -> RESULT: [FAIL] ARQ TX Controller scenario count mismatch!");
         $display("=======================================================\n");
         $finish;
     end
+
 endmodule

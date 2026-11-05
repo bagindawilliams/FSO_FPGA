@@ -4,10 +4,13 @@
 Company      : WiComAI Lab, Kookmin University
 Engineers    : Williamsyah Baginda Miraj & Giovanni Dwi
 Module Name  : rx_gth_logic
-Description  : Clock Domain Crossing 3 (CDC 3) Module.
-               Transfers the continuous 32-bit FSO frame stream from the 
-               312.5 MHz GTH RX domain to the 128-bit 200.0 MHz Baseband 
-               Decoder domain using cross_gth_logic.xci.
+Description  : Clock Domain Crossing 3 (CDC 3) Receiver Subsystem.
+               - Bridges the 312.5 MHz 32-bit GTH RX stream to the 200.0 MHz 
+                 128-bit Baseband FEC Core RX domain (demux_preamble_128.v) 
+                 via the cross_gth_logic asynchronous FIFO IP core.
+               - Uses a 25/64 fractional rate pacer in the 200.0 MHz domain so 
+                 the 128-bit readout matches the incoming 10.0 Gbps rate 
+                 (3.2 ns/word * 4 = 12.8 ns per 128-bit word = 2.56 clocks @ 200 MHz).
 
                Revision Notes:
                1. Added a 32-cycle read pre-buffer (ST_BUFFER) so the 200 MHz 
@@ -27,6 +30,20 @@ Description  : Clock Domain Crossing 3 (CDC 3) Module.
                   320.0 ns (400-byte / 25-word) LCM boundary. This completely 
                   eliminates the periodic 1-byte red 'X' glitches at bytes 
                   401, 801, 1201, etc.
+  - Rev 2.3 (2026-10-29 12:39 KST) : [Audit Fix F02 - Unlimited Continuous Read]
+    1. Preserved 100% of the original module structure, ports, and waveform trackers.
+    2. Removed '&& (rd_word_cnt < 11'd780)' from 'rd_en' and incremented 'rd_word_cnt'
+       strictly on accepted reads (if (rd_en)), eliminating the 3,248-cycle gap 
+       after 780 words during continuous multi-frame operation.
+  - Rev 2.4 (2026-11-05 15:30 KST) : [Audit Fix BASELINE26-CDC3-01 - Read Pipeline Alignment]
+    Aligned the 200 MHz read FSM (ST_IDLE -> ST_BUFFER -> ST_READ), registered
+    'fifo_out' into 'fifo_out_d1' aligned with 'flag = rd_en_d2', and guarded
+    simulation THREAD C so it never reads past 'sim_wr_ptr'.
+  - Rev 2.5 (2026-11-05 15:55 KST) : [Audit Section 1 Fix - Pure GTH Write Qualification Without Synthetic Flush]
+    Removed automatic zero-flush logic ('EOS_IDLE_CYCLES' and active 'tail_flushing')
+    from the FIFO write datapath so 'fifo_wr_en = en && !fifo_full && !wr_rst_busy'
+    and 'fifo_din = data_in' write strictly authentic GTH RX words when 'en' is high,
+    preserving byte alignment across arbitrary 'en == 0' pauses.
 ===========================================================================
 */
 
@@ -41,7 +58,9 @@ module rx_gth_logic (
 );
 
     // =======================================================
-    // 1. WRITE DOMAIN (312.5 MHz): AUTO TAIL-FLUSH FOR 32-TO-128 FIFO
+    // 1. WRITE DOMAIN (312.5 MHz): PURE VALID-QUALIFIED FIFO WRITE
+    //    [Rev 2.5 - Audit Sec. 1] Writes only authentic GTH data when 'en' is
+    //    active and FIFO is ready. Never synthesizes zero-flush writes on 'en == 0'.
     // =======================================================
     reg  [1:0]  wr_mod4_cnt;
     reg         tail_flushing;
@@ -53,20 +72,13 @@ module rx_gth_logic (
             wr_mod4_cnt   <= 2'd0;
             tail_flushing <= 1'b0;
         end else begin
-            if (en) begin
-                wr_mod4_cnt   <= wr_mod4_cnt + 2'd1;
-                tail_flushing <= 1'b0;
-            end else if (wr_mod4_cnt != 2'd0) begin
-                wr_mod4_cnt   <= wr_mod4_cnt + 2'd1;
-                tail_flushing <= 1'b1;
-            end else begin
-                tail_flushing <= 1'b0;
+            if (fifo_wr_en) begin
+                wr_mod4_cnt <= wr_mod4_cnt + 2'd1;
             end
+            // Retained for existing waveform compatibility; no synthetic flush.
+            tail_flushing <= 1'b0;
         end
     end
-
-    assign fifo_wr_en = en || (!en && (wr_mod4_cnt != 2'd0));
-    assign fifo_din   = en ? data_in : 32'd0;
 
     // =======================================================
     // 2. XILINX ASYMMETRIC FIFO (32-bit @ 312.5M -> 128-bit @ 200M)
@@ -77,6 +89,9 @@ module rx_gth_logic (
     wire         rd_rst_busy;
     wire [127:0] fifo_out;
     wire         rd_en;
+
+    assign fifo_wr_en = en && !fifo_full && !wr_rst_busy;
+    assign fifo_din   = data_in;
 
     cross_gth_logic cross_inst (
         .srst        (~rst_n),
@@ -140,10 +155,10 @@ module rx_gth_logic (
                     end else begin
                         empty_idle_cnt <= 5'd0;
                         if (rate_fire) begin
-                            rate_acc    <= next_rate_acc - 7'd64;
-                            rd_word_cnt <= rd_word_cnt + 11'd1;
+                            rate_acc <= next_rate_acc - 7'd64;
+                            if (rd_en) rd_word_cnt <= rd_word_cnt + 11'd1;
                         end else begin
-                            rate_acc    <= next_rate_acc;
+                            rate_acc <= next_rate_acc;
                         end
                     end
                 end
@@ -152,7 +167,7 @@ module rx_gth_logic (
         end
     end
 
-    assign rd_en = (rd_state == ST_READ) && (~fifo_empty) && (~rd_rst_busy) && rate_fire && (rd_word_cnt < 11'd780);
+    assign rd_en = (rd_state == ST_READ) && (~fifo_empty) && (~rd_rst_busy) && rate_fire;
 
     reg         rd_en_d1;
     reg         rd_en_d2;
@@ -164,8 +179,8 @@ module rx_gth_logic (
             rd_en_d2    <= 1'b0;
             fifo_out_d1 <= 128'd0;
         end else begin
-            rd_en_d1    <= rd_en;
-            rd_en_d2    <= rd_en_d1;
+            rd_en_d1 <= rd_en;
+            rd_en_d2 <= rd_en_d1;
             if (rd_en_d1)
                 fifo_out_d1 <= fifo_out;
         end
@@ -228,8 +243,6 @@ module rx_gth_logic (
     end
 
     // THREAD B: Negedge Writer Thread (Runs 2.5 ns BEFORE posedge clk_logic!)
-    // Guarantees sim_byte_q is ALWAYS populated 2.5 ns before THREAD C reads
-    // at the 320.0 ns (400-byte) LCM boundary, completely eliminating red 'X'!
     always @(negedge clk_logic or negedge rst_n) begin
         if (~rst_n) begin
             sim_wr_ptr = 0;
@@ -254,11 +267,12 @@ module rx_gth_logic (
         end
     end
 
-    // THREAD C: Dedicated 0.8 ns Sub-Cycle Byte Unpacker Thread
+    // THREAD C: Dedicated 0.8 ns Sub-Cycle Byte Unpacker Thread (Visual Monitor)
     always @(posedge clk_logic) begin
         if (rst_n && rd_en_d1 && !unpack_running) begin
             unpack_running = 1'b1;
             while (out_total_bytes < 16'd12468) begin
+                while (sim_rd_ptr >= sim_wr_ptr) @(negedge clk_logic);
                 byte_out        = sim_byte_q[sim_rd_ptr];
                 sim_rd_ptr      = sim_rd_ptr + 1;
                 out_total_bytes = out_total_bytes + 16'd1;

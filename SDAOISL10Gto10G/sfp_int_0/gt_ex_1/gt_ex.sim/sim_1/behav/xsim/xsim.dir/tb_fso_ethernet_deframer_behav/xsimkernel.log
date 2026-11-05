@@ -1,0 +1,4 @@
+Running: xsim.dir/tb_fso_ethernet_deframer_behav/xsimk -simmode gui -wdb tb_fso_ethernet_deframer_behav.wdb -simrunnum 0 -socket 47031
+Design successfully loaded
+Design Loading Memory Usage: 200868 KB (Peak: 200876 KB)
+Design Loading CPU Usage: 630 ms

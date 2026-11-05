@@ -23,6 +23,28 @@ Description  : Sub-Top Deframer Module.
                     latched on pld_check_done so u_frame_demultiplexer retains 
                     the draining frame's metadata across all 477 words even if 
                     the next frame's header arrives early.
+               - Rev 3.1 (2026-10-31 14:15 KST) : [Audit Fix OISL-MGMT-001 (D06) - Trusted-Header NAK, MGMT ACK/NAK & 64-Transaction Duplicate/Stale Window]
+                 1. [Fix OISL-MGMT-001 Trusted Header for Feedback]: Enforced that local ARQ
+                    feedback (ACK/NAK) and peer header ACK extraction are strictly gated by
+                    verified Header CRC-16 ('active_ing_hdr_ok' and 'hdr_crc_ok'). Corrupted
+                    headers with untrusted TXFN/RXFN never emit false NAKs or false peer ACKs.
+                 2. [Fix OISL-MGMT-001 Complete MGMT Feedback]: Guaranteed that verified MGMT
+                    frames ('active_ing_ftype == 2'b10' with 'active_ing_hdr_ok == 1'b1') emit
+                    ACK ('local_fb_ack = 1'b1') when 'pld_crc_ok == 1'b1' and NAK ('local_fb_ack = 1'b0')
+                    when 'pld_crc_ok == 1'b0', and advance 'non_data_seq_adv' when valid.
+                 3. [Fix OISL-MGMT-001 64-Entry MGMT History & Out-of-Window Stale Suppression]:
+                    Implemented a 64-transaction MGMT-only received TXFN history table
+                    ('mgmt_hist_txfn[0:63]', 'mgmt_hist_valid[0:63]') with modular 16-bit
+                    age bounding ('MAX_MGMT_AGE_FRAMES = 16'd24576') and automatic entry
+                    aging across 16-bit TXFN wrap-around. Retransmitted duplicate MGMT frames
+                    (such as A -> B -> A) re-emit ACK without re-delivering 'mgmt_telemetry_valid',
+                    and out-of-window stale MGMT frames ('seq_behind_dist > MAX_MGMT_AGE_FRAMES')
+                    are dropped and counted in 'mgmt_stale_drop_cnt'.
+                4. Routed the latched ingress header CRC validity ('active_ing_hdr_ok')
+                    directly to 'u_arq_rx_controller.hdr_crc_ok' so both 'hdr_check_done'
+                    and 'pld_check_done' evaluations inside 'u_arq_rx_controller' always
+                    observe the verified header CRC status across the entire 1912-Byte
+                    frame duration.
 ===========================================================================
 */
 
@@ -156,7 +178,7 @@ module deframer (
         .clk                (clk),
         .rst_n              (rst_n),
         .hdr_check_done     (hdr_check_done),
-        .hdr_crc_ok         (hdr_crc_ok),
+        .hdr_crc_ok         (active_ing_hdr_ok),
         .rx_txfn            (active_ing_txfn),
         .rx_rxfn            (rx_rxfn),
         .rx_ack             (rx_ack),

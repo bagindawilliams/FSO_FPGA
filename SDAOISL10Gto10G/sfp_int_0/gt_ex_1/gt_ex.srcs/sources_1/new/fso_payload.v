@@ -13,8 +13,9 @@ Description  : SDA OISL FSO Payload Encapsulation Engine.
                Internal Operations:
                1. Injects FSO Payload & Packet Headers (1900B -> 1908B).
                2. Computes and appends CRC-32 (1908B -> 1912B) via fso_crc_32.
-               3. Sniffs and stores the 1912B frame into ARQ_DDR4_WRAPPER.
-               4. Buffers the 1912B frame into fifo_data.
+               3. Buffers the 1912B frame into fifo_data.
+               4. Captures the accepted 1912B DATA frame exiting fifo_data into
+                  ARQ_DDR4_WRAPPER aligned with scheduler slot allocation.
                Outputs both the normal data stream and the ARQ retx stream.
 
 Revision History:
@@ -23,15 +24,24 @@ Revision History:
     Populated the 14-bit 'Length' fields in Table 2-18 and added strict Table 2-18 
     continuation formatting (no duplicate 0xCDEF header).
   - Rev 2.1 (2026-10-28 13:56 KST) : [Internal Audit Fix #5 - Dynamic Ingress Length & Zero-Data Safety]
-    1. Added 'seg_valid_bytes' metadata input from packaging_and_segmentation.v 
-       so that any Ethernet packet size (e.g., 64B Mini, 512B Standard, 1500B MTU, 
-       or 2000B Jumbo) is dynamically written into the FSO Packet Header (0xCDEF) 
-       and FSO Payload Header (0xAB) Length[13:0] fields.
-    2. Completely removed 's_axis_eth_tdata != 32'd0' from the continuation 
-       decision! Continuation is now determined strictly from the latched packet 
-       length metadata (latched_pkt_bytes > 14'd1900), ensuring that Ethernet 
-       payload words containing all zeros (32'h0000_0000) are preserved 100% as 
-       valid data.
+    1. Added 'seg_valid_bytes' metadata input from packaging_and_segmentation.v.
+    2. Completely removed 's_axis_eth_tdata != 32'd0' from the continuation decision.
+  - Rev 2.6 (2026-10-30 00:55 KST) : [Audit Fix N07 - 14-Bit Super-Jumbo Length & Multi-Segment Continuation]
+    Reconstructed 14-bit packet length and added multi-segment continuation tracking.
+  - Rev 2.8 (2026-10-30 11:30 KST) : [Audit Fix A01, A02 & A18]:
+    1. [Fix A18 & A01]: Widened 'seg_valid_bytes' input port to 14 bits ([13:0]).
+    2. [Fix A02]: Populated the Continuation Frame Payload Header (0xAB) Length[13:0]
+       field with the full remaining packet byte count ('cont_rem_bytes') per SDA OISL 
+       Section 2.6.3.7.5.
+  - Rev 2.9 (2026-10-30 18:05 KST) : [Audit Fix B03 - Full 1904-Byte Continuation Frame Alignment]
+    1. When 'in_continuation && (cont_rem_bytes > 14'd1900)', accepts all 476 data 
+       words (1,904 Bytes) from packaging_and_segmentation.v directly in S_DATA.
+    2. When 'in_continuation && (cont_rem_bytes <= 14'd1900)', appends the 476th 
+       zero-pad word via S_CONT_PAD after the 475th segmenter word.
+  - Rev 3.2 (2026-11-01 15:49 KST) : [Post-FIFO Retransmission Capture Alignment]
+    Moved the ARQ DDR4 wrapper ('u_arq_ddr4_wrapper') capture tap from pre-FIFO 
+    ('crc_t*') to post-FIFO ('m_axis_data_t*'), ensuring the stored retransmission 
+    frame is 100% aligned with the scheduler's 'ddr4_write_req' and 'ddr4_addr' slot.
 ===========================================================================
 */
 
@@ -44,13 +54,13 @@ module fso_payload #(
 
     // -------------------------------------------------------
     // Interface from XGMII Front-End (packaging_and_segmentation.v)
-    // Expected: 1900 Bytes + Dynamic Ingress Length Metadata
+    // Expected: 1900B (Initial) / 1904B (Full Continuation) + 14-Bit Length Metadata
     // -------------------------------------------------------
     input  wire [31:0] s_axis_eth_tdata,
     input  wire        s_axis_eth_tvalid,
     input  wire        s_axis_eth_tlast,
-    output reg         s_axis_eth_tready, // correction: change to reg
-    input  wire [10:0] seg_valid_bytes,   // [Rev 2.1] Dynamic packet/segment byte count from segmenter
+    output reg         s_axis_eth_tready,
+    input  wire [13:0] seg_valid_bytes,   // [Rev 2.8 - Fix A18] Full 14-bit packet/segment byte count
 
     // -------------------------------------------------------
     // ARQ Control Interfaces (from arq_tx_controller.v)
@@ -76,7 +86,7 @@ module fso_payload #(
 );
 
     // =======================================================
-    // 1. INJECTOR FSM: Append FSO Headers (1900B -> 1908B)
+    // 1. INJECTOR FSM: Append FSO Headers (1900B/1904B -> 1908B)
     // =======================================================
     localparam S_IDLE     = 3'd0,
                S_HDR1     = 3'd1,
@@ -90,9 +100,12 @@ module fso_payload #(
     reg [13:0] cont_rem_bytes;
     reg [13:0] latched_pkt_bytes;
 
-    // Resolve active ingress packet length (uses seg_valid_bytes if connected & > 0, else DEFAULT_ETH_PKT_BYTES)
-    wire        meta_valid        = (^seg_valid_bytes !== 1'bx) && (seg_valid_bytes != 11'd0);
-    wire [13:0] live_pkt_bytes    = meta_valid ? {3'd0, seg_valid_bytes} : DEFAULT_ETH_PKT_BYTES;
+    // Resolve active ingress packet length (handles both 14-bit direct and unconnected fallback)
+    wire        meta_low_valid  = (^seg_valid_bytes[10:0] !== 1'bx);
+    wire        meta_high_valid = (^seg_valid_bytes[13:11] !== 1'bx);
+    wire [13:0] live_pkt_bytes  = meta_low_valid ?
+                                  {meta_high_valid ? seg_valid_bytes[13:11] : 3'd0, seg_valid_bytes[10:0]} :
+                                  DEFAULT_ETH_PKT_BYTES;
 
     // Internal wires connecting Injector -> CRC
     reg  [31:0] inj_tdata;
@@ -100,8 +113,15 @@ module fso_payload #(
     reg         inj_tlast;
     wire        inj_tready;
 
+    // [Rev 2.8 - Fix A02] Per SDA OISL Section 2.6.3.7.5, Continuation Payload Header (0xAB)
+    // carries the total remaining byte length of the continued packet ('cont_rem_bytes').
     wire [13:0] pld_hdr_len_field = in_continuation ? cont_rem_bytes : 14'd0;
     wire [13:0] pkt_hdr_len_field = latched_pkt_bytes;
+
+    // [Rev 2.9 - Fix B03] When cont_rem_bytes > 1900, the segmenter provides 476 full data words
+    // (1904 Bytes), so S_CONT_PAD is NOT needed (1 Header word + 476 Data words = 477 words).
+    // S_CONT_PAD is only used when cont_rem_bytes <= 1900 (where the segmenter provides 475 words).
+    wire cont_needs_pad_word = CONT_NO_PKT_HDR_EN && in_continuation && (cont_rem_bytes <= 14'd1900);
 
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
@@ -113,24 +133,32 @@ module fso_payload #(
         end else begin
             state <= next_state;
 
-            // Latch exact ingress packet length at the start of the frame (S_IDLE -> S_HDR1)
-            if ((state == S_IDLE && s_axis_eth_tvalid) || (state == S_HDR1 && !in_continuation)) begin
-                latched_pkt_bytes <= live_pkt_bytes;
+            if ((state == S_IDLE || state == S_HDR1) && s_axis_eth_tvalid && !in_continuation) begin
+                latched_pkt_bytes <= (live_pkt_bytes != 14'd0) ? live_pkt_bytes : DEFAULT_ETH_PKT_BYTES;
             end
 
             if (state == S_DATA && s_axis_eth_tvalid && s_axis_eth_tready) begin
                 if (s_axis_eth_tlast) begin
-                    // [Rev 2.1] Continuation is determined purely from packet length metadata
-                    // (latched_pkt_bytes > 14'd1900), never from (s_axis_eth_tdata != 32'd0)!
-                    if (!in_continuation && (latched_pkt_bytes > 14'd1900)) begin
-                        in_continuation <= 1'b1;
-                        cont_rem_bytes  <= latched_pkt_bytes - 14'd1900;
+                    // [Rev 2.9 - Fix B03] Exact 1900B initial & 1904B continuation subtraction
+                    if (!in_continuation) begin
+                        if (latched_pkt_bytes > 14'd1900) begin
+                            in_continuation <= 1'b1;
+                            cont_rem_bytes  <= latched_pkt_bytes - 14'd1900;
+                        end else begin
+                            in_continuation <= 1'b0;
+                            cont_rem_bytes  <= 14'd0;
+                        end
                     end else begin
-                        in_continuation <= 1'b0;
-                        cont_rem_bytes  <= 14'd0;
+                        if (cont_rem_bytes > 14'd1904) begin
+                            in_continuation <= 1'b1;
+                            cont_rem_bytes  <= cont_rem_bytes - 14'd1904;
+                        end else begin
+                            in_continuation <= 1'b0;
+                            cont_rem_bytes  <= 14'd0;
+                        end
                     end
 
-                    if (!(CONT_NO_PKT_HDR_EN && in_continuation)) begin
+                    if (!cont_needs_pad_word) begin
                         seq_num <= seq_num + 10'd1;
                     end
                 end
@@ -153,7 +181,7 @@ module fso_payload #(
             end
             S_HDR1: begin
                 inj_tvalid = 1'b1;
-                // [Rev 2.0/2.1] Table 2-18 FSO Payload Header: {0xAB, seq_num[9:0], Length[13:0]}
+                // Table 2-18 FSO Payload Header: {0xAB, seq_num[9:0], Length[13:0]}
                 inj_tdata  = {8'hAB, seq_num, pld_hdr_len_field};
                 if (inj_tready) begin
                     if (CONT_NO_PKT_HDR_EN && in_continuation)
@@ -164,7 +192,7 @@ module fso_payload #(
             end
             S_HDR2: begin
                 inj_tvalid = 1'b1;
-                // [Rev 2.0/2.1] Table 2-18 FSO Packet Header: {0xCDEF, 2'b00, Length[13:0]}
+                // Table 2-18 FSO Packet Header: {0xCDEF, 2'b00, Length[13:0]}
                 inj_tdata  = {16'hCDEF, 2'b00, pkt_hdr_len_field};
                 if (inj_tready) next_state = S_DATA;
             end
@@ -173,8 +201,8 @@ module fso_payload #(
                 inj_tdata         = s_axis_eth_tdata;
                 s_axis_eth_tready = inj_tready;
 
-                if (CONT_NO_PKT_HDR_EN && in_continuation) begin
-                    // Suppress tlast on the 475th word so S_CONT_PAD appends the 476th word (1804th pad byte)
+                if (cont_needs_pad_word) begin
+                    // Suppress tlast on the 475th word so S_CONT_PAD appends the 476th trailing pad word
                     inj_tlast = 1'b0;
                     if (s_axis_eth_tvalid && inj_tready && s_axis_eth_tlast) begin
                         next_state = S_CONT_PAD;
@@ -187,7 +215,7 @@ module fso_payload #(
                 end
             end
             S_CONT_PAD: begin
-                // Appends the 451st zero-pad word (1804th zero-pad byte) so total frame = 477 words (1908 Bytes)
+                // Appends the 476th word (trailing zero-pad word for <=1900B continuation tail)
                 inj_tvalid = 1'b1;
                 inj_tdata  = 32'd0;
                 inj_tlast  = 1'b1;
@@ -238,7 +266,7 @@ module fso_payload #(
 
     // =======================================================
     // 4. ARQ DDR4 WRAPPER (Retransmit Path)
-    // Sniffs the output of CRC-32 silently.
+    // Captures accepted DATA output after FIFO, aligned with scheduler allocation.
     // =======================================================
     arq_ddr4_wrapper u_arq_ddr4_wrapper (
         .clk             (clk),
@@ -248,11 +276,11 @@ module fso_payload #(
         .ddr4_delete_req (ddr4_delete_req),
         .ddr4_addr       (ddr4_addr),
         
-        // Sniffing CRC Data
-        .s_axis_tdata    (crc_tdata),
-        .s_axis_tvalid   (crc_tvalid),
-        .s_axis_tlast    (crc_tlast),
-        .s_axis_tready   (crc_tready),
+        // Capture accepted DATA transmission, after FIFO; matches allocated slot.
+        .s_axis_tdata    (m_axis_data_tdata),
+        .s_axis_tvalid   (m_axis_data_tvalid),
+        .s_axis_tlast    (m_axis_data_tlast),
+        .s_axis_tready   (m_axis_data_tready),
         
         // Retransmit Output to MUX
         .m_axis_tdata    (m_axis_retx_tdata),

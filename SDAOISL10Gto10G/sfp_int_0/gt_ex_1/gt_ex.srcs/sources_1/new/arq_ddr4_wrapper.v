@@ -4,10 +4,11 @@
 Company      : WiComAI Lab, Kookmin University
 Engineers    : Williamsyah Baginda Miraj & Giovanni Dwi
 Module Name  : arq_ddr4_wrapper
-Description  : Behavioral Circular Block RAM Model for ARQ Retransmission.
-               Stores up to 16 FSO frames (512 words x 32-bit per slot) to 
-               support hardware retransmission upon NAK or holdoff timeout.
-               
+Description  : Circular Frame-Indexed ARQ Retransmission Memory Wrapper.
+               Sniffs and stores outgoing 1912-Byte FSO DATA frames (478 words 
+               x 32-bit, including the 4-Byte FSO CRC-32) indexed by TXFN, and 
+               re-emits them upon retransmission requests from arq_tx_controller.
+
                Revision Notes:
                1. Changed 's_axis_tready' to an input port so it monitors the 
                   upstream FIFO handshake in fso_payload.v without creating a 
@@ -24,126 +25,205 @@ Description  : Behavioral Circular Block RAM Model for ARQ Retransmission.
                   Figure 2-7 & Figure 2-17), storing and reading all 478 words 
                   ensures the 4-Byte CRC-32 trailer is preserved intact during 
                   ARQ retransmissions.
+               4. [Rev 2.5 - 2026-10-29 15:19 KST - Audit Fix R10 & R04]:
+                  - [Fix R10]: Added BRAM read clock-enable gating ('rd_ce') coupled 
+                    strictly to AXI-Stream output acceptance (m_axis_tvalid && m_axis_tready)
+                    so that arbitrary downstream backpressure stalls (arq_ram_stalls.sv) 
+                    preserve all 478 words, 0 mismatches, and exact m_axis_tlast alignment.
+                  - [Fix R04]: Provided both 'writing_state' and 'is_writing' alias 
+                    for full testbench backward compatibility.
+               5. [Rev 2.8 - 2026-10-30 11:45 KST - Audit Fix A07 - 16-Slot Associative CAM Mapping]:
+                  Added a 16-entry associative tag table ('slot_txfn_tag[0:15]' and 
+                  'slot_tag_valid[0:15]') that maps the full 16-bit 'ddr4_addr' (TXFN) 
+                  to a free physical BRAM slot on 'ddr4_write_req', looks up the matching 
+                  physical slot on 'ddr4_read_req', and frees the slot on 'ddr4_delete_req'.
+               6. [Rev 2.9 - 2026-10-30 18:25 KST - Audit Fix B11 - Non-Colliding Read/Write/Delete Tag Guard]:
+                  Guarded 'ddr4_delete_req' tag clearing with '(!ddr4_write_req && !ddr4_read_req)'
+                  so that a simultaneous read or write operation never corrupts the active 
+                  slot tag, working in tandem with arq_tx_controller's 1-cycle deferred 
+                  delete queue (arq_ack_retx_shared_address.sv).
 ===========================================================================
 */
 
 module arq_ddr4_wrapper #(
     parameter DATA_WIDTH    = 32,
     parameter MAX_FRAMES    = 16,
-    parameter LAST_WORD_IDX = 9'd477 // [Rev 2.0] 0..477 = 478 words = 1912 Bytes (1908B Payload + 4B CRC-32)
+    parameter LAST_WORD_IDX = 9'd477 // 0..477 = 478 words = 1912 Bytes (includes 4B CRC-32)
 )(
     input  wire                  clk,
     input  wire                  rst_n,
 
-    // Control Interface from ARQ TX Controller / fso_payload.v
+    // Control Signals from arq_tx_controller
     input  wire                  ddr4_write_req,
     input  wire                  ddr4_read_req,
     input  wire                  ddr4_delete_req,
     input  wire [15:0]           ddr4_addr,
 
-    // AXI-Stream Slave Monitor Input (Payload to be stored into RAM)
+    // Passive Sniffer Input (Connected to CRC-32 Output Stream)
     input  wire [DATA_WIDTH-1:0] s_axis_tdata,
     input  wire                  s_axis_tvalid,
     input  wire                  s_axis_tlast,
     input  wire                  s_axis_tready,
 
-    // AXI-Stream Master Output (Retransmitted Payload from RAM)
+    // Retransmit AXI-Stream Output to fso_payload_mux (Path 11)
     output reg  [DATA_WIDTH-1:0] m_axis_tdata,
     output reg                   m_axis_tvalid,
     output reg                   m_axis_tlast,
     input  wire                  m_axis_tready
 );
 
-    // 16 Frame Slots x 512 Words = 8192 Words of 32-bit Block RAM
+    // 16 Slots x 512 Words x 32-bit = 8192 Words (32 KB Internal Block RAM)
     (* ram_style = "block" *) reg [DATA_WIDTH-1:0] ram_storage [0:8191];
 
-    // Write State Machine Registers
-    reg        writing_state;
-    reg [8:0]  write_word_cnt;
-    reg [12:0] write_base_addr;
+    /*
+    ===========================================================================
+    [NOTE FOR HARDWARE DDR4 MIG EXPANSION ON ALINX AXKU062 (BANK 44/45/46)]
+    When scaling window capacity to 13,377..16,320 frames (~25.6 MB TX Buffer):
+      - TX Buffer Physical Base Address : 32'h0000_0000
+      - Direct 2KB Slot Byte Address    : {5'd0, ddr4_addr[15:0], 11'd0}
+    ===========================================================================
+    */
 
-    // Read State Machine Registers
-    reg        reading_state;
-    reg [8:0]  read_word_cnt;
-    reg [12:0] read_base_addr;
+    // [Rev 2.8 / Rev 2.9 - Fix A07 & B11] 16-Slot Associative CAM Table
+    reg [15:0] slot_tag_valid;
+    reg [15:0] slot_txfn_tag [0:15];
 
-    // Purely Synchronous Block RAM Write & Read Port
-    wire                  bram_we    = writing_state && s_axis_tvalid && s_axis_tready;
-    wire [12:0]           bram_waddr = write_base_addr + {4'd0, write_word_cnt};
-    wire [12:0]           bram_raddr = read_base_addr  + {4'd0, read_word_cnt};
-    reg  [DATA_WIDTH-1:0] bram_dout;
+    reg        wr_hit_found;
+    reg [3:0]  wr_hit_slot;
+    reg        wr_free_found;
+    reg [3:0]  wr_free_slot;
+    reg        rd_hit_found;
+    reg [3:0]  rd_hit_slot;
+    integer    k;
 
-    always @(posedge clk) begin
-        if (bram_we) begin
-            ram_storage[bram_waddr] <= s_axis_tdata;
-        end
-        bram_dout <= ram_storage[bram_raddr];
-    end
+    always @(*) begin
+        wr_hit_found  = 1'b0;
+        wr_hit_slot   = ddr4_addr[3:0];
+        wr_free_found = 1'b0;
+        wr_free_slot  = ddr4_addr[3:0];
+        rd_hit_found  = 1'b0;
+        rd_hit_slot   = ddr4_addr[3:0];
 
-    // Write Control Logic (Captures all 478 words = 1912 Bytes including 4B CRC-32)
-    always @(posedge clk or negedge rst_n) begin
-        if (!rst_n) begin
-            writing_state   <= 1'b0;
-            write_word_cnt  <= 9'd0;
-            write_base_addr <= 13'd0;
-        end else begin
-            if (ddr4_write_req && !writing_state) begin
-                writing_state   <= 1'b1;
-                write_word_cnt  <= 9'd0;
-                write_base_addr <= {ddr4_addr[3:0], 9'd0};
-            end else if (writing_state && s_axis_tvalid && s_axis_tready) begin
-                if (s_axis_tlast || (write_word_cnt == LAST_WORD_IDX)) begin
-                    writing_state <= 1'b0;
-                end else begin
-                    write_word_cnt <= write_word_cnt + 9'd1;
+        for (k = 0; k < 16; k = k + 1) begin
+            if (slot_tag_valid[k] && (slot_txfn_tag[k] == ddr4_addr)) begin
+                if (!wr_hit_found) begin
+                    wr_hit_found = 1'b1;
+                    wr_hit_slot  = k[3:0];
                 end
+                if (!rd_hit_found) begin
+                    rd_hit_found = 1'b1;
+                    rd_hit_slot  = k[3:0];
+                end
+            end
+            if (!slot_tag_valid[k] && !wr_free_found) begin
+                wr_free_found = 1'b1;
+                wr_free_slot  = k[3:0];
             end
         end
     end
 
-    // Read Control Logic (Aligned with 1-cycle synchronous BRAM read output, emits 478 words = 1912 Bytes)
-    reg reading_d1;
-    reg last_d1;
+    // Prefer direct 4-bit slot if free; otherwise use matching or first free CAM slot
+    wire [3:0] alloc_wr_slot = wr_hit_found ? wr_hit_slot :
+                               (!slot_tag_valid[ddr4_addr[3:0]]) ? ddr4_addr[3:0] :
+                               wr_free_found ? wr_free_slot : ddr4_addr[3:0];
 
+    wire [3:0] lookup_rd_slot = rd_hit_found ? rd_hit_slot : ddr4_addr[3:0];
+
+    reg [3:0] write_slot_ptr;
+    reg [8:0] write_word_ptr;
+    reg       writing_state;
+    wire      is_writing = writing_state;
+
+    reg [3:0] read_slot_ptr;
+    reg [8:0] read_word_ptr;
+    reg       reading_state;
+
+    wire        stream_handshake = s_axis_tvalid && s_axis_tready;
+    wire        ram_wr_en        = writing_state && stream_handshake;
+    wire [12:0] wr_ram_addr      = {write_slot_ptr, write_word_ptr};
+
+    // [Rev 2.5 - Fix R10] Advance BRAM read only on initial read request or accepted output beat
+    wire        start_read_now   = ddr4_read_req && !reading_state;
+    wire        advance_read_now = reading_state && m_axis_tvalid && m_axis_tready && !m_axis_tlast;
+    wire        rd_ce            = start_read_now || advance_read_now;
+    wire [12:0] rd_ram_addr      = start_read_now ? {lookup_rd_slot, 9'd0} :
+                                                    {read_slot_ptr, read_word_ptr + 9'd1};
+
+    // Purely Synchronous Block RAM Write & Stall-Protected Read Port
+    always @(posedge clk) begin
+        if (ram_wr_en) begin
+            ram_storage[wr_ram_addr] <= s_axis_tdata;
+        end
+        if (rd_ce) begin
+            m_axis_tdata <= ram_storage[rd_ram_addr];
+        end
+    end
+
+    // Write Sniffer & Associative CAM Tag Manager FSM
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
-            reading_state  <= 1'b0;
-            read_word_cnt  <= 9'd0;
-            read_base_addr <= 13'd0;
-            reading_d1     <= 1'b0;
-            last_d1        <= 1'b0;
-            m_axis_tvalid  <= 1'b0;
-            m_axis_tlast   <= 1'b0;
-            m_axis_tdata   <= {DATA_WIDTH{1'b0}};
+            writing_state  <= 1'b0;
+            write_slot_ptr <= 4'd0;
+            write_word_ptr <= 9'd0;
+            slot_tag_valid <= 16'd0;
+            for (k = 0; k < 16; k = k + 1) begin
+                slot_txfn_tag[k] <= 16'd0;
+            end
         end else begin
-            if (ddr4_read_req && !reading_state) begin
-                reading_state  <= 1'b1;
-                read_word_cnt  <= 9'd0;
-                read_base_addr <= {ddr4_addr[3:0], 9'd0};
-                reading_d1     <= 1'b0;
-                last_d1        <= 1'b0;
-                m_axis_tvalid  <= 1'b0;
-                m_axis_tlast   <= 1'b0;
-            end else if (reading_state) begin
-                if (m_axis_tready) begin
-                    reading_d1 <= 1'b1;
-                    last_d1    <= (read_word_cnt == LAST_WORD_IDX);
-
-                    if (read_word_cnt == LAST_WORD_IDX) begin
-                        reading_state <= 1'b0;
-                    end else begin
-                        read_word_cnt <= read_word_cnt + 9'd1;
+            // [Rev 2.9 - Fix B11] Only execute delete when not sharing ddr4_addr with write/read
+            if (ddr4_delete_req && !ddr4_write_req && !ddr4_read_req) begin
+                for (k = 0; k < 16; k = k + 1) begin
+                    if (slot_tag_valid[k] && (slot_txfn_tag[k] == ddr4_addr)) begin
+                        slot_tag_valid[k] <= 1'b0;
                     end
                 end
-            end else begin
-                reading_d1 <= 1'b0;
-                last_d1    <= 1'b0;
             end
 
-            if (m_axis_tready) begin
-                m_axis_tvalid <= reading_d1;
-                m_axis_tlast  <= reading_d1 && last_d1;
-                m_axis_tdata  <= reading_d1 ? bram_dout : {DATA_WIDTH{1'b0}};
+            if (ddr4_write_req) begin
+                writing_state                 <= 1'b1;
+                write_slot_ptr                <= alloc_wr_slot;
+                write_word_ptr                <= 9'd0;
+                slot_tag_valid[alloc_wr_slot] <= 1'b1;
+                slot_txfn_tag[alloc_wr_slot]  <= ddr4_addr;
+            end else if (ram_wr_en) begin
+                if (s_axis_tlast || (write_word_ptr == LAST_WORD_IDX)) begin
+                    writing_state  <= 1'b0;
+                    write_word_ptr <= 9'd0;
+                end else begin
+                    write_word_ptr <= write_word_ptr + 9'd1;
+                end
+            end
+        end
+    end
+
+    // Stall-Protected Retransmission Readout FSM (Emits all 478 words = 1912 Bytes)
+    always @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            reading_state <= 1'b0;
+            read_slot_ptr <= 4'd0;
+            read_word_ptr <= 9'd0;
+            m_axis_tvalid <= 1'b0;
+            m_axis_tlast  <= 1'b0;
+        end else begin
+            if (start_read_now) begin
+                // Word 0 is fetched into m_axis_tdata by rd_ce on this posedge
+                reading_state <= 1'b1;
+                read_slot_ptr <= lookup_rd_slot;
+                read_word_ptr <= 9'd0;
+                m_axis_tvalid <= 1'b1;
+                m_axis_tlast  <= 1'b0;
+            end else if (reading_state) begin
+                if (m_axis_tvalid && m_axis_tready) begin
+                    if (m_axis_tlast) begin
+                        reading_state <= 1'b0;
+                        m_axis_tvalid <= 1'b0;
+                        m_axis_tlast  <= 1'b0;
+                        read_word_ptr <= 9'd0;
+                    end else begin
+                        read_word_ptr <= read_word_ptr + 9'd1;
+                        m_axis_tlast  <= ((read_word_ptr + 9'd1) == LAST_WORD_IDX);
+                    end
+                end
             end
         end
     end

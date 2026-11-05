@@ -1,0 +1,7 @@
+Running: xsim.dir/tb_FEC_RS_behav/xsimk -simmode gui -wdb tb_FEC_RS_behav.wdb -simrunnum 0 -socket 55949
+Design successfully loaded
+Design Loading Memory Usage: 273912 KB (Peak: 273912 KB)
+Design Loading CPU Usage: 710 ms
+Simulation completed
+Simulation Memory Usage: 365004 KB (Peak: 413180 KB)
+Simulation CPU Usage: 6120 ms

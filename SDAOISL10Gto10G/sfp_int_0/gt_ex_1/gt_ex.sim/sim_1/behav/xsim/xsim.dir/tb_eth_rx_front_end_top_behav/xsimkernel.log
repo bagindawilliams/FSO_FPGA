@@ -1,0 +1,7 @@
+Running: xsim.dir/tb_eth_rx_front_end_top_behav/xsimk -simmode gui -wdb tb_eth_rx_front_end_top_behav.wdb -simrunnum 0 -socket 52459
+Design successfully loaded
+Design Loading Memory Usage: 200756 KB (Peak: 200764 KB)
+Design Loading CPU Usage: 610 ms
+Simulation completed
+Simulation Memory Usage: 282752 KB (Peak: 340024 KB)
+Simulation CPU Usage: 610 ms

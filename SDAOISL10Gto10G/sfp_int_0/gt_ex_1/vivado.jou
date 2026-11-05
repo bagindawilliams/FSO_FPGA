@@ -1,16 +1,741 @@
 #-----------------------------------------------------------
-# Vivado v2022.2 (64-bit)
-# SW Build 3671981 on Fri Oct 14 04:59:54 MDT 2022
-# IP Build 3669848 on Fri Oct 14 08:30:02 MDT 2022
-# Start of session at: Mon Aug  3 22:09:47 2026
-# Process ID: 192888
-# Current directory: /home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex
-# Command line: vivado
-# Log file: /home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/vivado.log
-# Journal file: /home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/vivado.jou
-# Running On: Williams, OS: Linux, CPU Frequency: 5300.000 MHz, CPU Physical cores: 16, Host memory: 67183 MB
+# Vivado v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 12:34:56 MST 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Tue Nov  3 20:38:21 2026
+# Process ID         : 3995990
+# Current directory  : /home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code
+# Command line       : vivado
+# Log file           : /home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/vivado.log
+# Journal file       : /home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/vivado.jou
+# Running On         : Williams
+# Platform           : Ubuntu
+# Operating System   : Ubuntu 22.04.5 LTS
+# Processor Detail   : 13th Gen Intel(R) Core(TM) i7-13700K
+# CPU Frequency      : 5300.000 MHz
+# CPU Physical cores : 16
+# CPU Logical cores  : 24
+# Host memory        : 67183 MB
+# Swap memory        : 63999 MB
+# Total Virtual      : 131182 MB
+# Available Virtual  : 91301 MB
 #-----------------------------------------------------------
 start_gui
-open_project {/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_0/gt_ex/gt_ex.xpr}
+open_project {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.xpr}
 update_compile_order -fileset sources_1
-save_project_as sfp_int_test {/home/williams/MYFPGA/FPGA Training Data Etri_fso/sfp_int/sfp_int_test} -force
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top tb_FEC_RS [current_fileset]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+update_compile_order -fileset sources_1
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top SDAOISL10Gto10G_top [current_fileset]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+update_compile_order -fileset sources_1
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top tb_FEC_RS [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+launch_simulation
+launch_simulation
+source tb_FEC_RS.tcl
+run all
+close_sim
+close [ open {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/eth_rx_segment_cdc.v} w ]
+add_files {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/eth_rx_segment_cdc.v}}
+update_compile_order -fileset sources_1
+close [ open {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/eth_packet_cdc.v} w ]
+add_files {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/eth_packet_cdc.v}}
+update_compile_order -fileset sources_1
+update_compile_order -fileset sources_1
+set_property is_enabled false [get_files  {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/tb_fso_gth_bridge_hotswap.v}}]
+set_property is_enabled false [get_files  {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/tb_demux_preamble_128.v}}]
+set_property is_enabled false [get_files  {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/imports/gt_example_checking_8b10b.v}}]
+set_property is_enabled false [get_files  {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/imports/gt_example_stimulus_8b10b.v}}]
+set_property is_enabled false [get_files  {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/fso_gth_bridge_hotswap.v}}]
+set_property is_enabled false [get_files  {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/tb_top.v}}]
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top tb_reassembly_and_backend [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+launch_simulation
+source tb_reassembly_and_backend.tcl
+run all
+close_sim
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top tb_eth_tx_back_end_top [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+launch_simulation
+source tb_eth_tx_back_end_top.tcl
+run all
+close_sim
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top tb_eth_rx_front_end_top [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+launch_simulation
+source tb_eth_rx_front_end_top.tcl
+run all
+close_sim
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top tb_eth_tx_back_end_top [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+launch_simulation
+source tb_eth_tx_back_end_top.tcl
+run all
+run all
+close_sim
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top tb_reassembly_and_backend [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+launch_simulation
+source tb_reassembly_and_backend.tcl
+run all
+run all
+relaunch_sim
+run all
+run all
+relaunch_sim
+current_wave_config {Untitled 6}
+add_wave {{/tb_reassembly_and_backend/clk}} {{/tb_reassembly_and_backend/rst_n}} {{/tb_reassembly_and_backend/s_axis_fso_tdata}} {{/tb_reassembly_and_backend/s_axis_fso_tvalid}} {{/tb_reassembly_and_backend/s_axis_fso_tlast}} {{/tb_reassembly_and_backend/s_axis_fso_tready}} {{/tb_reassembly_and_backend/reassembled_eth_tdata}} {{/tb_reassembly_and_backend/reassembled_eth_tvalid}} {{/tb_reassembly_and_backend/reassembled_eth_tlast}} {{/tb_reassembly_and_backend/reassembled_pkt_bytes}} {{/tb_reassembly_and_backend/reassembled_pkt_cnt}} {{/tb_reassembly_and_backend/pc2_xgmii_txd}} {{/tb_reassembly_and_backend/pc2_xgmii_txc}} {{/tb_reassembly_and_backend/sub_byte_step}} {{/tb_reassembly_and_backend/raw_fso_in_idx}} {{/tb_reassembly_and_backend/raw_eth_word_idx}} {{/tb_reassembly_and_backend/raw_xgmii_word_idx}} {{/tb_reassembly_and_backend/raw_xgmii_bytes}} {{/tb_reassembly_and_backend/fso_in_active}} {{/tb_reassembly_and_backend/xgmii_data_active}} {{/tb_reassembly_and_backend/xgmii_is_start}} {{/tb_reassembly_and_backend/xgmii_is_term}} {{/tb_reassembly_and_backend/xgmii_lane_bytes}} {{/tb_reassembly_and_backend/xgmii_sub_byte}} {{/tb_reassembly_and_backend/fso_in_clk_cnt}} {{/tb_reassembly_and_backend/fso_in_byte_clk_cnt}} {{/tb_reassembly_and_backend/fso_in_byte_1b_cnt}} {{/tb_reassembly_and_backend/eth_out_clk_cnt}} {{/tb_reassembly_and_backend/eth_out_byte_clk_cnt}} {{/tb_reassembly_and_backend/eth_out_byte_1b_cnt}} {{/tb_reassembly_and_backend/eth_out_words}} {{/tb_reassembly_and_backend/eth_out_bytes}} {{/tb_reassembly_and_backend/xgmii_clk_cnt}} {{/tb_reassembly_and_backend/xgmii_byte_clk_cnt}} {{/tb_reassembly_and_backend/xgmii_byte_1b_cnt}} {{/tb_reassembly_and_backend/xgmii_pkt_words}} {{/tb_reassembly_and_backend/xgmii_pkt_bytes}} {{/tb_reassembly_and_backend/pkt1_eth_words}} {{/tb_reassembly_and_backend/pkt2_eth_words}} {{/tb_reassembly_and_backend/pkt1_xgmii_words}} {{/tb_reassembly_and_backend/pkt2_xgmii_words}} {{/tb_reassembly_and_backend/pkt1_xgmii_bytes}} {{/tb_reassembly_and_backend/pkt2_xgmii_bytes}} {{/tb_reassembly_and_backend/xgmii_completed_pkts}} {{/tb_reassembly_and_backend/all_xgmii_data_ctrl_errors}} {{/tb_reassembly_and_backend/in_xgmii_frame}} {{/tb_reassembly_and_backend/captured_last_eth_fcs}} {{/tb_reassembly_and_backend/exp_xgmii_pair}} {{/tb_reassembly_and_backend/w}} 
+relaunch_sim
+run all
+run all
+close_sim
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top tb_eth_tx_back_end_top [current_fileset]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+update_compile_order -fileset sources_1
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top SDAOISL10Gto10G_top [current_fileset]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+update_compile_order -fileset sources_1
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top tb_eth_tx_back_end_top [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+launch_simulation
+source tb_eth_tx_back_end_top.tcl
+run all
+close_sim
+launch_simulation
+source tb_eth_tx_back_end_top.tcl
+run all
+relaunch_sim
+run all
+relaunch_sim
+run all
+relaunch_sim
+remove_wave [get_waves *]
+add_wave /tb_eth_tx_back_end_top/clk /tb_eth_tx_back_end_top/rst_n
+add_wave -radix hex /tb_eth_tx_back_end_top/en /tb_eth_tx_back_end_top/data_in
+add_wave -radix unsigned /tb_eth_tx_back_end_top/in_clk_cnt /tb_eth_tx_back_end_top/in_byte_clk_cnt /tb_eth_tx_back_end_top/in_byte_1b_cnt
+add_wave -radix hex /tb_eth_tx_back_end_top/xgmii_active /tb_eth_tx_back_end_top/xgmii_txc /tb_eth_tx_back_end_top/xgmii_txd
+add_wave -radix unsigned /tb_eth_tx_back_end_top/xgmii_clk_cnt /tb_eth_tx_back_end_top/xgmii_byte_clk_cnt /tb_eth_tx_back_end_top/xgmii_byte_1b_cnt
+add_wave -radix hex /tb_eth_tx_back_end_top/hw_bridge_m_ready /tb_eth_tx_back_end_top/hw_bridge_m_valid /tb_eth_tx_back_end_top/hw_bridge_m_last /tb_eth_tx_back_end_top/hw_bridge_xfer_valid /tb_eth_tx_back_end_top/hw_bridge_m_data
+add_wave -radix unsigned /tb_eth_tx_back_end_top/hw_bridge_clk_cnt /tb_eth_tx_back_end_top/hw_bridge_byte_clk_cnt /tb_eth_tx_back_end_top/hw_bridge_byte_1b_cnt /tb_eth_tx_back_end_top/hw_source_occ /tb_eth_tx_back_end_top/hw_dropped_pkts /tb_eth_tx_back_end_top/hw_overflow_words /tb_eth_tx_back_end_top/hw_underflow_cnt
+add_wave -radix hex /tb_eth_tx_back_end_top/hw_pack_valid /tb_eth_tx_back_end_top/hw_pack_data
+add_wave -radix unsigned /tb_eth_tx_back_end_top/hw_pack_clk_cnt /tb_eth_tx_back_end_top/hw_pack_byte_clk_cnt /tb_eth_tx_back_end_top/hw_pack_byte_1b_cnt
+add_wave -radix hex /tb_eth_tx_back_end_top/hw_xgmii_active /tb_eth_tx_back_end_top/hw_xgmii_txc /tb_eth_tx_back_end_top/hw_xgmii_txd
+add_wave -radix unsigned /tb_eth_tx_back_end_top/hw_xgmii_clk_cnt /tb_eth_tx_back_end_top/hw_xgmii_byte_clk_cnt /tb_eth_tx_back_end_top/hw_xgmii_byte_1b_cnt
+add_wave -radix unsigned /tb_eth_tx_back_end_top/sim_pkt_cnt /tb_eth_tx_back_end_top/sim_pkt1_words /tb_eth_tx_back_end_top/sim_pkt2_words /tb_eth_tx_back_end_top/sim_xgmii_err_cnt /tb_eth_tx_back_end_top/hw_pkt_cnt /tb_eth_tx_back_end_top/hw_pkt1_words /tb_eth_tx_back_end_top/hw_pkt2_words /tb_eth_tx_back_end_top/hw_xgmii_err_cnt /tb_eth_tx_back_end_top/measured_hw_gap
+run all
+close_sim
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top tb_eth_rx_front_end_top [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+launch_simulation
+source tb_eth_rx_front_end_top.tcl
+remove_wave [get_waves *]
+add_wave /tb_eth_rx_front_end_top/clk /tb_eth_rx_front_end_top/rst_n /tb_eth_rx_front_end_top/trigger
+add_wave -radix unsigned /tb_eth_rx_front_end_top/target_frame_size
+add_wave -radix hex /tb_eth_rx_front_end_top/gen_tvalid /tb_eth_rx_front_end_top/gen_tlast /tb_eth_rx_front_end_top/gen_tready /tb_eth_rx_front_end_top/gen_tdata
+add_wave -radix unsigned /tb_eth_rx_front_end_top/in_gen_clk_cnt /tb_eth_rx_front_end_top/in_gen_byte_clk_cnt /tb_eth_rx_front_end_top/in_gen_byte_1b_cnt
+add_wave -radix hex /tb_eth_rx_front_end_top/xgmii_txc /tb_eth_rx_front_end_top/xgmii_txd
+add_wave -radix unsigned /tb_eth_rx_front_end_top/xgmii_in_clk_cnt /tb_eth_rx_front_end_top/xgmii_in_byte_clk_cnt /tb_eth_rx_front_end_top/xgmii_in_byte_1b_cnt
+add_wave -radix hex /tb_eth_rx_front_end_top/fso_valid /tb_eth_rx_front_end_top/fso_last /tb_eth_rx_front_end_top/fso_ready /tb_eth_rx_front_end_top/fso_data_out
+add_wave -radix unsigned /tb_eth_rx_front_end_top/seg_valid_bytes /tb_eth_rx_front_end_top/seg_out_clk_cnt /tb_eth_rx_front_end_top/seg_out_byte_clk_cnt /tb_eth_rx_front_end_top/seg_out_byte_1b_cnt /tb_eth_rx_front_end_top/completed_seg_cnt /tb_eth_rx_front_end_top/kookmin_tag_ok_cnt /tb_eth_rx_front_end_top/fcs_verified_cnt /tb_eth_rx_front_end_top/data_mismatch_cnt /tb_eth_rx_front_end_top/padding_mismatch_cnt /tb_eth_rx_front_end_top/last_pos_error_cnt /tb_eth_rx_front_end_top/len_meta_error_cnt
+add_wave -radix hex /tb_eth_rx_front_end_top/captured_ascii_tag
+run all
+relaunch_sim
+relaunch_sim
+remove_wave [get_waves *]
+add_wave /tb_eth_rx_front_end_top/clk /tb_eth_rx_front_end_top/rst_n /tb_eth_rx_front_end_top/trigger
+add_wave -radix unsigned /tb_eth_rx_front_end_top/target_frame_size
+add_wave -radix hex /tb_eth_rx_front_end_top/gen_tvalid /tb_eth_rx_front_end_top/gen_tlast /tb_eth_rx_front_end_top/gen_tready /tb_eth_rx_front_end_top/gen_active_tdata
+add_wave -radix unsigned /tb_eth_rx_front_end_top/in_gen_clk_cnt /tb_eth_rx_front_end_top/in_gen_byte_clk_cnt /tb_eth_rx_front_end_top/in_gen_byte_1b_cnt
+add_wave -radix hex /tb_eth_rx_front_end_top/xgmii_txc /tb_eth_rx_front_end_top/xgmii_txd
+add_wave -radix unsigned /tb_eth_rx_front_end_top/xgmii_in_clk_cnt /tb_eth_rx_front_end_top/xgmii_in_byte_clk_cnt /tb_eth_rx_front_end_top/xgmii_in_byte_1b_cnt
+add_wave -radix hex /tb_eth_rx_front_end_top/fso_valid /tb_eth_rx_front_end_top/fso_last /tb_eth_rx_front_end_top/fso_ready /tb_eth_rx_front_end_top/fso_data_out
+add_wave -radix unsigned /tb_eth_rx_front_end_top/seg_valid_bytes_clean /tb_eth_rx_front_end_top/seg_out_clk_cnt /tb_eth_rx_front_end_top/seg_out_byte_clk_cnt /tb_eth_rx_front_end_top/seg_out_byte_1b_cnt /tb_eth_rx_front_end_top/completed_seg_cnt /tb_eth_rx_front_end_top/kookmin_tag_ok_cnt /tb_eth_rx_front_end_top/fcs_verified_cnt /tb_eth_rx_front_end_top/data_mismatch_cnt /tb_eth_rx_front_end_top/padding_mismatch_cnt /tb_eth_rx_front_end_top/last_pos_error_cnt /tb_eth_rx_front_end_top/len_meta_error_cnt
+add_wave -radix hex /tb_eth_rx_front_end_top/captured_ascii_tag
+run all
+relaunch_sim
+remove_wave [get_waves *]
+add_wave /tb_eth_rx_front_end_top/clk /tb_eth_rx_front_end_top/rst_n /tb_eth_rx_front_end_top/trigger
+add_wave -radix unsigned /tb_eth_rx_front_end_top/target_frame_size
+add_wave -radix hex /tb_eth_rx_front_end_top/gen_tvalid /tb_eth_rx_front_end_top/gen_tlast /tb_eth_rx_front_end_top/gen_tready /tb_eth_rx_front_end_top/gen_active_tdata
+add_wave -radix unsigned /tb_eth_rx_front_end_top/in_gen_clk_cnt /tb_eth_rx_front_end_top/in_gen_byte_clk_cnt /tb_eth_rx_front_end_top/in_gen_byte_1b_cnt
+add_wave -radix hex /tb_eth_rx_front_end_top/xgmii_txc /tb_eth_rx_front_end_top/xgmii_txd
+add_wave -radix unsigned /tb_eth_rx_front_end_top/xgmii_in_clk_cnt /tb_eth_rx_front_end_top/xgmii_in_byte_clk_cnt /tb_eth_rx_front_end_top/xgmii_in_byte_1b_cnt
+add_wave -radix hex /tb_eth_rx_front_end_top/fso_valid /tb_eth_rx_front_end_top/fso_last /tb_eth_rx_front_end_top/fso_ready /tb_eth_rx_front_end_top/fso_data_out
+add_wave -radix unsigned /tb_eth_rx_front_end_top/seg_valid_bytes_clean /tb_eth_rx_front_end_top/seg_out_clk_cnt /tb_eth_rx_front_end_top/seg_out_byte_clk_cnt /tb_eth_rx_front_end_top/seg_out_byte_1b_cnt /tb_eth_rx_front_end_top/completed_seg_cnt /tb_eth_rx_front_end_top/kookmin_tag_ok_cnt /tb_eth_rx_front_end_top/fcs_verified_cnt /tb_eth_rx_front_end_top/data_mismatch_cnt /tb_eth_rx_front_end_top/padding_mismatch_cnt /tb_eth_rx_front_end_top/last_pos_error_cnt /tb_eth_rx_front_end_top/len_meta_error_cnt
+add_wave -radix hex /tb_eth_rx_front_end_top/captured_ascii_tag
+run all
+close_sim
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top tb_fso_payload [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+launch_simulation
+source tb_fso_payload.tcl
+relaunch_sim
+remove_wave [get_waves *]
+add_wave /tb_fso_payload/clk /tb_fso_payload/rst_n /tb_fso_payload/trigger
+add_wave -radix unsigned /tb_fso_payload/target_frame_size /tb_fso_payload/frame_id
+add_wave -radix ascii /tb_fso_payload/frame_type_str
+add_wave -radix hex /tb_fso_payload/seg_tvalid /tb_fso_payload/seg_tlast /tb_fso_payload/seg_tready /tb_fso_payload/seg_tdata
+add_wave -radix unsigned /tb_fso_payload/seg_valid_bytes /tb_fso_payload/in_clk_cnt /tb_fso_payload/in_byte_clk_cnt /tb_fso_payload/in_byte_1b_cnt
+add_wave -radix hex /tb_fso_payload/fifo_data_tvalid /tb_fso_payload/fifo_data_tlast /tb_fso_payload/fifo_data_tready /tb_fso_payload/fifo_data_tdata
+add_wave -radix unsigned /tb_fso_payload/out_clk_cnt /tb_fso_payload/out_byte_clk_cnt /tb_fso_payload/out_byte_1b_cnt
+add_wave -radix hex /tb_fso_payload/ddr4_write_req /tb_fso_payload/ddr4_read_req /tb_fso_payload/ddr4_addr /tb_fso_payload/retx_data_tvalid /tb_fso_payload/retx_data_tlast /tb_fso_payload/retx_data_tready /tb_fso_payload/retx_data_tdata
+add_wave -radix unsigned /tb_fso_payload/retx_clk_cnt /tb_fso_payload/retx_byte_clk_cnt /tb_fso_payload/retx_byte_1b_cnt /tb_fso_payload/frame1_word_cnt /tb_fso_payload/frame2_word_cnt /tb_fso_payload/retx_word_cnt /tb_fso_payload/retx_mismatch_cnt
+add_wave -radix hex /tb_fso_payload/f1_pld_hdr /tb_fso_payload/f1_pkt_hdr /tb_fso_payload/f1_crc32 /tb_fso_payload/f2_pld_hdr /tb_fso_payload/f2_word25_fcs /tb_fso_payload/f2_crc32 /tb_fso_payload/retx_last_word_crc32
+run all
+relaunch_sim
+remove_wave [get_waves *]
+add_wave /tb_fso_payload/clk /tb_fso_payload/rst_n /tb_fso_payload/trigger
+add_wave -radix unsigned /tb_fso_payload/target_frame_size /tb_fso_payload/frame_id
+add_wave -radix ascii /tb_fso_payload/frame_type_str
+add_wave -radix hex /tb_fso_payload/seg_tvalid /tb_fso_payload/seg_tlast /tb_fso_payload/seg_tready /tb_fso_payload/seg_active_tdata
+add_wave -radix unsigned /tb_fso_payload/seg_valid_bytes_clean /tb_fso_payload/in_clk_cnt /tb_fso_payload/in_byte_clk_cnt /tb_fso_payload/in_byte_1b_cnt
+add_wave -radix hex /tb_fso_payload/fifo_data_tvalid /tb_fso_payload/fifo_data_tlast /tb_fso_payload/fifo_data_tready /tb_fso_payload/fifo_active_tdata
+add_wave -radix unsigned /tb_fso_payload/out_clk_cnt /tb_fso_payload/out_byte_clk_cnt /tb_fso_payload/out_byte_1b_cnt
+add_wave -radix hex /tb_fso_payload/ddr4_write_req /tb_fso_payload/ddr4_read_req /tb_fso_payload/ddr4_addr /tb_fso_payload/retx_data_tvalid /tb_fso_payload/retx_data_tlast /tb_fso_payload/retx_data_tready /tb_fso_payload/retx_active_tdata
+add_wave -radix unsigned /tb_fso_payload/retx_clk_cnt /tb_fso_payload/retx_byte_clk_cnt /tb_fso_payload/retx_byte_1b_cnt /tb_fso_payload/frame1_word_cnt /tb_fso_payload/frame2_word_cnt /tb_fso_payload/retx_word_cnt /tb_fso_payload/retx_mismatch_cnt
+add_wave -radix hex /tb_fso_payload/f1_pld_hdr /tb_fso_payload/f1_pkt_hdr /tb_fso_payload/f1_crc32 /tb_fso_payload/f2_pld_hdr /tb_fso_payload/f2_word25_fcs /tb_fso_payload/f2_crc32 /tb_fso_payload/retx_last_word_crc32
+run all
+relaunch_sim
+remove_wave [get_waves *]
+add_wave /tb_fso_payload/clk /tb_fso_payload/rst_n /tb_fso_payload/trigger
+add_wave -radix unsigned /tb_fso_payload/target_frame_size /tb_fso_payload/frame_id
+add_wave -radix ascii /tb_fso_payload/frame_type_str
+add_wave -radix hex /tb_fso_payload/seg_tvalid /tb_fso_payload/seg_tlast /tb_fso_payload/seg_tready /tb_fso_payload/seg_active_tdata
+add_wave -radix unsigned /tb_fso_payload/seg_valid_bytes_clean /tb_fso_payload/in_clk_cnt /tb_fso_payload/in_byte_clk_cnt /tb_fso_payload/in_byte_1b_cnt
+add_wave -radix hex /tb_fso_payload/fifo_data_tvalid /tb_fso_payload/fifo_data_tlast /tb_fso_payload/fifo_data_tready /tb_fso_payload/fifo_active_tdata
+add_wave -radix unsigned /tb_fso_payload/out_clk_cnt /tb_fso_payload/out_byte_clk_cnt /tb_fso_payload/out_byte_1b_cnt
+add_wave -radix hex /tb_fso_payload/ddr4_write_req /tb_fso_payload/ddr4_read_req /tb_fso_payload/ddr4_addr /tb_fso_payload/retx_data_tvalid /tb_fso_payload/retx_data_tlast /tb_fso_payload/retx_data_tready /tb_fso_payload/retx_active_tdata
+add_wave -radix unsigned /tb_fso_payload/retx_clk_cnt /tb_fso_payload/retx_byte_clk_cnt /tb_fso_payload/retx_byte_1b_cnt /tb_fso_payload/frame1_word_cnt /tb_fso_payload/frame2_word_cnt /tb_fso_payload/retx_word_cnt /tb_fso_payload/retx_mismatch_cnt
+add_wave -radix hex /tb_fso_payload/f1_pld_hdr /tb_fso_payload/f1_pkt_hdr /tb_fso_payload/f1_crc32 /tb_fso_payload/f2_pld_hdr /tb_fso_payload/f2_word25_fcs /tb_fso_payload/f2_crc32 /tb_fso_payload/retx_last_word_crc32
+run all
+close_sim
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top tb_idle_MGMT [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+launch_simulation
+source tb_idle_MGMT.tcl
+relaunch_sim
+remove_wave [get_waves *]
+add_wave /tb_idle_MGMT/clk /tb_idle_MGMT/rst_n /tb_idle_MGMT/mgmt_trigger_1hz
+add_wave -radix hex /tb_idle_MGMT/payload_mux_sel /tb_idle_MGMT/idle_start_valid /tb_idle_MGMT/idle_start_ready
+add_wave -radix unsigned /tb_idle_MGMT/txfn_in /tb_idle_MGMT/frame_id
+add_wave -radix ascii /tb_idle_MGMT/frame_type_str
+add_wave -radix hex /tb_idle_MGMT/idle_tvalid /tb_idle_MGMT/idle_tlast /tb_idle_MGMT/idle_tready /tb_idle_MGMT/idle_tdata
+add_wave -radix hex /tb_idle_MGMT/mgmt_tvalid /tb_idle_MGMT/mgmt_tlast /tb_idle_MGMT/mgmt_tready /tb_idle_MGMT/mgmt_tdata
+add_wave -radix hex /tb_idle_MGMT/m_axis_fso_tvalid /tb_idle_MGMT/m_axis_fso_tlast /tb_idle_MGMT/m_axis_fso_tready /tb_idle_MGMT/m_axis_fso_tdata
+add_wave -radix unsigned /tb_idle_MGMT/out_clk_cnt /tb_idle_MGMT/out_byte_clk_cnt /tb_idle_MGMT/out_byte_1b_cnt /tb_idle_MGMT/idle_frames_completed /tb_idle_MGMT/mgmt_frames_completed
+add_wave -radix hex /tb_idle_MGMT/idle_first_word_txfn0 /tb_idle_MGMT/idle_first_word_txfn1
+run all
+relaunch_sim
+remove_wave [get_waves *]
+add_wave /tb_idle_MGMT/clk /tb_idle_MGMT/rst_n /tb_idle_MGMT/mgmt_trigger_1hz
+add_wave -radix hex /tb_idle_MGMT/payload_mux_sel /tb_idle_MGMT/idle_start_valid /tb_idle_MGMT/idle_start_ready
+add_wave -radix unsigned /tb_idle_MGMT/txfn_in /tb_idle_MGMT/frame_id
+add_wave -radix ascii /tb_idle_MGMT/frame_type_str
+add_wave -radix hex /tb_idle_MGMT/idle_tvalid /tb_idle_MGMT/idle_tlast /tb_idle_MGMT/idle_tready /tb_idle_MGMT/idle_active_tdata
+add_wave -radix hex /tb_idle_MGMT/mgmt_tvalid /tb_idle_MGMT/mgmt_tlast /tb_idle_MGMT/mgmt_tready /tb_idle_MGMT/mgmt_active_tdata
+add_wave -radix hex /tb_idle_MGMT/m_axis_fso_tvalid /tb_idle_MGMT/m_axis_fso_tlast /tb_idle_MGMT/m_axis_fso_tready /tb_idle_MGMT/fso_active_tdata
+add_wave -radix unsigned /tb_idle_MGMT/out_clk_cnt /tb_idle_MGMT/out_byte_clk_cnt /tb_idle_MGMT/out_byte_1b_cnt /tb_idle_MGMT/idle_frames_completed /tb_idle_MGMT/mgmt_frames_completed /tb_idle_MGMT/frame_len_err_cnt
+add_wave -radix hex /tb_idle_MGMT/idle_first_word_txfn0 /tb_idle_MGMT/idle_first_word_txfn1
+run all
+run all
+relaunch_sim
+remove_wave [get_waves *]
+add_wave /tb_idle_MGMT/clk /tb_idle_MGMT/rst_n /tb_idle_MGMT/mgmt_trigger_1hz
+add_wave -radix hex /tb_idle_MGMT/payload_mux_sel /tb_idle_MGMT/idle_start_valid /tb_idle_MGMT/idle_start_ready
+add_wave -radix unsigned /tb_idle_MGMT/txfn_in /tb_idle_MGMT/frame_id
+add_wave -radix ascii /tb_idle_MGMT/frame_type_str
+add_wave -radix hex /tb_idle_MGMT/idle_tvalid /tb_idle_MGMT/idle_tlast /tb_idle_MGMT/idle_tready /tb_idle_MGMT/idle_active_tdata
+add_wave -radix hex /tb_idle_MGMT/mgmt_tvalid /tb_idle_MGMT/mgmt_tlast /tb_idle_MGMT/mgmt_tready /tb_idle_MGMT/mgmt_active_tdata
+add_wave -radix hex /tb_idle_MGMT/m_axis_fso_tvalid /tb_idle_MGMT/m_axis_fso_tlast /tb_idle_MGMT/m_axis_fso_tready /tb_idle_MGMT/fso_active_tdata
+add_wave -radix unsigned /tb_idle_MGMT/out_clk_cnt /tb_idle_MGMT/out_byte_clk_cnt /tb_idle_MGMT/out_byte_1b_cnt /tb_idle_MGMT/idle_frames_completed /tb_idle_MGMT/mgmt_frames_completed /tb_idle_MGMT/frame_len_err_cnt
+add_wave -radix hex /tb_idle_MGMT/idle_first_word_txfn0 /tb_idle_MGMT/idle_first_word_txfn1
+run all
+run all
+close_sim
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top tb_x_gth_logic [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+launch_simulation
+source tb_x_gth_logic.tcl
+relaunch_sim
+remove_wave [get_waves *]
+add_wave /tb_x_gth_logic/clk_gth /tb_x_gth_logic/clk_logic /tb_x_gth_logic/rst_n /tb_x_gth_logic/cdc_ready
+add_wave -radix unsigned /tb_x_gth_logic/current_frame_id
+add_wave -radix ascii /tb_x_gth_logic/mux_frame_type_str
+add_wave -radix hex /tb_x_gth_logic/en_head /tb_x_gth_logic/header_in
+add_wave -radix unsigned /tb_x_gth_logic/header_byte_index
+add_wave -radix hex /tb_x_gth_logic/en_load /tb_x_gth_logic/payload_in
+add_wave -radix unsigned /tb_x_gth_logic/payload_word_index
+add_wave -radix hex /tb_x_gth_logic/header_dv /tb_x_gth_logic/header_out
+add_wave -radix unsigned /tb_x_gth_logic/out_header_byte_idx /tb_x_gth_logic/verified_header_bytes /tb_x_gth_logic/hdr_mismatch_cnt /tb_x_gth_logic/hdr_crc16_tail_ok_cnt
+add_wave -radix hex /tb_x_gth_logic/payload_dv /tb_x_gth_logic/payload_out
+add_wave -radix unsigned /tb_x_gth_logic/out_payload_word_idx /tb_x_gth_logic/verified_payload_words /tb_x_gth_logic/pld_mismatch_cnt /tb_x_gth_logic/pld_crc32_tail_ok_cnt
+run all
+relaunch_sim
+remove_wave [get_waves *]
+add_wave /tb_x_gth_logic/clk_gth /tb_x_gth_logic/clk_logic /tb_x_gth_logic/rst_n /tb_x_gth_logic/cdc_ready
+add_wave -radix unsigned /tb_x_gth_logic/current_frame_id
+add_wave -radix ascii /tb_x_gth_logic/mux_frame_type_str
+add_wave -radix hex /tb_x_gth_logic/en_head /tb_x_gth_logic/header_in
+add_wave -radix unsigned /tb_x_gth_logic/header_byte_index
+add_wave -radix hex /tb_x_gth_logic/en_load /tb_x_gth_logic/payload_in
+add_wave -radix unsigned /tb_x_gth_logic/payload_word_index
+add_wave -radix unsigned /tb_x_gth_logic/out_frame_id
+add_wave -radix ascii /tb_x_gth_logic/out_frame_type_str
+add_wave -radix hex /tb_x_gth_logic/header_dv /tb_x_gth_logic/header_out
+add_wave -radix unsigned /tb_x_gth_logic/out_header_byte_idx /tb_x_gth_logic/verified_header_bytes /tb_x_gth_logic/hdr_mismatch_cnt /tb_x_gth_logic/hdr_crc16_tail_ok_cnt
+add_wave -radix hex /tb_x_gth_logic/payload_dv /tb_x_gth_logic/payload_out
+add_wave -radix unsigned /tb_x_gth_logic/out_payload_word_idx /tb_x_gth_logic/verified_payload_words /tb_x_gth_logic/pld_mismatch_cnt /tb_x_gth_logic/pld_crc32_tail_ok_cnt
+run all
+relaunch_sim
+remove_wave [get_waves *]
+add_wave /tb_x_gth_logic/clk_gth /tb_x_gth_logic/clk_logic /tb_x_gth_logic/rst_n /tb_x_gth_logic/cdc_ready
+add_wave -radix unsigned /tb_x_gth_logic/current_frame_id
+add_wave -radix ascii /tb_x_gth_logic/mux_frame_type_str
+add_wave -radix hex /tb_x_gth_logic/en_head /tb_x_gth_logic/header_in
+add_wave -radix unsigned /tb_x_gth_logic/header_byte_index
+add_wave -radix hex /tb_x_gth_logic/en_load /tb_x_gth_logic/payload_in
+add_wave -radix unsigned /tb_x_gth_logic/payload_word_index
+add_wave -radix unsigned /tb_x_gth_logic/out_frame_id
+add_wave -radix ascii /tb_x_gth_logic/out_frame_type_str
+add_wave -radix hex /tb_x_gth_logic/header_dv /tb_x_gth_logic/header_out
+add_wave -radix unsigned /tb_x_gth_logic/out_header_byte_idx /tb_x_gth_logic/verified_header_bytes /tb_x_gth_logic/hdr_mismatch_cnt /tb_x_gth_logic/hdr_crc16_tail_ok_cnt
+add_wave -radix hex /tb_x_gth_logic/payload_dv /tb_x_gth_logic/payload_out
+add_wave -radix unsigned /tb_x_gth_logic/out_payload_word_idx /tb_x_gth_logic/verified_payload_words /tb_x_gth_logic/pld_mismatch_cnt /tb_x_gth_logic/pld_crc32_tail_ok_cnt
+run all
+close_sim
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top tb_cdc_logic_gth [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+launch_simulation
+source tb_cdc_logic_gth.tcl
+relaunch_sim
+remove_wave [get_waves *]
+add_wave /tb_cdc_logic_gth/clk_logic /tb_cdc_logic_gth/clk_gth /tb_cdc_logic_gth/rst_n /tb_cdc_logic_gth/en
+add_wave -radix unsigned /tb_cdc_logic_gth/frame_id /tb_cdc_logic_gth/in_clk_cnt /tb_cdc_logic_gth/in_byte_cnt /tb_cdc_logic_gth/in_valid_byte_cnt
+add_wave -radix hex /tb_cdc_logic_gth/data_in_dv /tb_cdc_logic_gth/cdc_keep /tb_cdc_logic_gth/data_in
+add_wave -radix hex /tb_cdc_logic_gth/flag /tb_cdc_logic_gth/data_out /tb_cdc_logic_gth/byte_out /tb_cdc_logic_gth/captured_boundary_word780
+add_wave -radix unsigned /tb_cdc_logic_gth/frame_out_id /tb_cdc_logic_gth/out_clk_cnt /tb_cdc_logic_gth/frame_byte_cnt /tb_cdc_logic_gth/out_word_cnt /tb_cdc_logic_gth/out_byte_cnt /tb_cdc_logic_gth/data_mismatch_cnt
+add_wave /tb_cdc_logic_gth/time_start /tb_cdc_logic_gth/time_end /tb_cdc_logic_gth/OISL_Frame_Duration_us /tb_cdc_logic_gth/OISL_Effective_Data_Rate_Mbps /tb_cdc_logic_gth/OISL_Frame_Rate_kHz /tb_cdc_logic_gth/OISL_FCCH_Mbps
+run all
+relaunch_sim
+remove_wave [get_waves *]
+add_wave /tb_cdc_logic_gth/clk_logic /tb_cdc_logic_gth/clk_gth /tb_cdc_logic_gth/rst_n /tb_cdc_logic_gth/en
+add_wave -radix unsigned /tb_cdc_logic_gth/frame_id /tb_cdc_logic_gth/in_clk_cnt /tb_cdc_logic_gth/in_byte_cnt /tb_cdc_logic_gth/in_valid_byte_cnt
+add_wave -radix hex /tb_cdc_logic_gth/data_in_dv /tb_cdc_logic_gth/cdc_keep /tb_cdc_logic_gth/data_in
+add_wave -radix hex /tb_cdc_logic_gth/flag /tb_cdc_logic_gth/data_out /tb_cdc_logic_gth/byte_out /tb_cdc_logic_gth/captured_boundary_word780
+add_wave -radix unsigned /tb_cdc_logic_gth/frame_out_id /tb_cdc_logic_gth/out_clk_cnt /tb_cdc_logic_gth/frame_byte_cnt /tb_cdc_logic_gth/out_word_cnt /tb_cdc_logic_gth/out_byte_cnt /tb_cdc_logic_gth/data_mismatch_cnt
+add_wave /tb_cdc_logic_gth/time_start /tb_cdc_logic_gth/time_end /tb_cdc_logic_gth/OISL_Frame_Duration_us /tb_cdc_logic_gth/OISL_Effective_Data_Rate_Mbps /tb_cdc_logic_gth/OISL_Frame_Rate_kHz /tb_cdc_logic_gth/OISL_FCCH_Mbps
+run all
+close_sim
+update_compile_order -fileset sources_1
+update_compile_order -fileset sources_1
+launch_simulation
+source tb_cdc_logic_gth.tcl
+relaunch_sim
+remove_wave [get_waves *]
+add_wave /tb_cdc_logic_gth/clk_logic /tb_cdc_logic_gth/clk_gth /tb_cdc_logic_gth/rst_n /tb_cdc_logic_gth/en
+add_wave -radix unsigned /tb_cdc_logic_gth/frame_id /tb_cdc_logic_gth/in_clk_cnt /tb_cdc_logic_gth/in_byte_cnt /tb_cdc_logic_gth/in_valid_byte_cnt
+add_wave -radix hex /tb_cdc_logic_gth/data_in_dv /tb_cdc_logic_gth/cdc_keep /tb_cdc_logic_gth/data_in
+add_wave -radix hex /tb_cdc_logic_gth/flag /tb_cdc_logic_gth/data_out /tb_cdc_logic_gth/byte_out /tb_cdc_logic_gth/captured_boundary_word780
+add_wave -radix unsigned /tb_cdc_logic_gth/frame_out_id /tb_cdc_logic_gth/out_clk_cnt /tb_cdc_logic_gth/frame_byte_cnt /tb_cdc_logic_gth/out_word_cnt /tb_cdc_logic_gth/out_byte_cnt /tb_cdc_logic_gth/data_mismatch_cnt
+add_wave /tb_cdc_logic_gth/time_start /tb_cdc_logic_gth/time_end /tb_cdc_logic_gth/OISL_Frame_Duration_us /tb_cdc_logic_gth/OISL_Effective_Data_Rate_Mbps /tb_cdc_logic_gth/OISL_Frame_Rate_kHz /tb_cdc_logic_gth/OISL_FCCH_Mbps
+run all
+close_sim
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top tb_gth64b66b_loopback [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+launch_simulation
+source tb_gth64b66b_loopback.tcl
+relaunch_sim
+remove_wave [get_waves *]
+add_wave_divider "1. Input transport (Post-Injector)"
+add_wave /tb_gth64b66b_loopback/clk_312_5 /tb_gth64b66b_loopback/err_flag
+add_wave -radix hex /tb_gth64b66b_loopback/err_data /tb_gth64b66b_loopback/tx_byte_stream
+add_wave -radix unsigned /tb_gth64b66b_loopback/tx_frame_id /tb_gth64b66b_loopback/tx_clk_cnt /tb_gth64b66b_loopback/tx_byte_cnt /tb_gth64b66b_loopback/tx_target_words /tb_gth64b66b_loopback/tx_target_bytes
+add_wave_divider "2. GTH TX (Gearbox & Elastic FIFO)"
+add_wave /tb_gth64b66b_loopback/tx0_clk /tb_gth64b66b_loopback/gth_tx_ready /tb_gth64b66b_loopback/tx_accepted_read
+add_wave -radix unsigned /tb_gth64b66b_loopback/tx_fifo_occupancy /tb_gth64b66b_loopback/gt_txsequence
+add_wave -radix hex /tb_gth64b66b_loopback/gt_txheader /tb_gth64b66b_loopback/gt_txdata /tb_gth64b66b_loopback/tx_gb_word0_captured /tb_gth64b66b_loopback/tx_gb_word1_captured
+add_wave_divider "3. GTH RX (Block Lock, Slip & Output)"
+add_wave /tb_gth64b66b_loopback/rx0_clk /tb_gth64b66b_loopback/gth_rx_ready /tb_gth64b66b_loopback/rx_block_locked /tb_gth64b66b_loopback/gt_rxgearboxslip
+add_wave -radix hex /tb_gth64b66b_loopback/gt_rxdatavalid /tb_gth64b66b_loopback/gt_rxheadervalid /tb_gth64b66b_loopback/gt_rxheader /tb_gth64b66b_loopback/gt_rxdata
+add_wave /tb_gth64b66b_loopback/rx_down_dv
+add_wave -radix hex /tb_gth64b66b_loopback/rx_down_data /tb_gth64b66b_loopback/rx_byte_stream
+add_wave -radix unsigned /tb_gth64b66b_loopback/rx_frame_id /tb_gth64b66b_loopback/rx_clk_cnt /tb_gth64b66b_loopback/rx_byte_cnt
+add_wave_divider "4. Hasil pembanding (Scoreboard & Timing)"
+add_wave -radix unsigned /tb_gth64b66b_loopback/tx_target_bytes /tb_gth64b66b_loopback/rx_target_bytes /tb_gth64b66b_loopback/tx_target_words /tb_gth64b66b_loopback/rx_target_words /tb_gth64b66b_loopback/rx_mismatch_cnt /tb_gth64b66b_loopback/rx_zero_words_verified /tb_gth64b66b_loopback/tx_fifo_overflow_cnt /tb_gth64b66b_loopback/tx_fifo_underflow_cnt
+add_wave -radix hex /tb_gth64b66b_loopback/rx_first_word /tb_gth64b66b_loopback/rx_last_word
+add_wave /tb_gth64b66b_loopback/tx_first_word_ok /tb_gth64b66b_loopback/rx_first_word_ok /tb_gth64b66b_loopback/rx_last_word_ok /tb_gth64b66b_loopback/target_window_done /tb_gth64b66b_loopback/test_pass_status
+add_wave /tb_gth64b66b_loopback/GTH_312M5_Clock_MHz /tb_gth64b66b_loopback/GTH_312M5_Word_Period_ns /tb_gth64b66b_loopback/SDA_Frame_Duration_us /tb_gth64b66b_loopback/time_start /tb_gth64b66b_loopback/time_end
+run all
+wave zoom full
+relaunch_sim
+remove_wave [get_waves *]
+add_wave /tb_gth64b66b_loopback/clk_logic /tb_gth64b66b_loopback/clk_312_5 /tb_gth64b66b_loopback/tx0_clk /tb_gth64b66b_loopback/rx0_clk
+add_wave /tb_gth64b66b_loopback/sys_rst_n /tb_gth64b66b_loopback/gth_link_up /tb_gth64b66b_loopback/rx_block_locked
+add_wave -radix unsigned /tb_gth64b66b_loopback/frame_id /tb_gth64b66b_loopback/tx_frame_id /tb_gth64b66b_loopback/tx_clk_cnt /tb_gth64b66b_loopback/tx_byte_cnt /tb_gth64b66b_loopback/tx_word_cnt
+add_wave -radix hex /tb_gth64b66b_loopback/err_flag /tb_gth64b66b_loopback/err_data /tb_gth64b66b_loopback/tx_byte_stream
+add_wave -radix hex /tb_gth64b66b_loopback/gt_txdata /tb_gth64b66b_loopback/gt_txheader /tb_gth64b66b_loopback/gt_txsequence /tb_gth64b66b_loopback/tx_gb_word0_captured /tb_gth64b66b_loopback/tx_gb_word1_captured
+add_wave -radix hex /tb_gth64b66b_loopback/rx_down_dv /tb_gth64b66b_loopback/rx_down_data /tb_gth64b66b_loopback/rx_byte_stream
+add_wave -radix unsigned /tb_gth64b66b_loopback/rx_frame_id /tb_gth64b66b_loopback/rx_clk_cnt /tb_gth64b66b_loopback/rx_byte_cnt /tb_gth64b66b_loopback/rx_word_cnt /tb_gth64b66b_loopback/rx_zero_words_verified /tb_gth64b66b_loopback/rx_mismatch_cnt /tb_gth64b66b_loopback/rx_mid_burst_gap_cnt /tb_gth64b66b_loopback/timing_checked_frames
+add_wave /tb_gth64b66b_loopback/time_start /tb_gth64b66b_loopback/time_end /tb_gth64b66b_loopback/OISL_Frame_Duration_us /tb_gth64b66b_loopback/OISL_Effective_Data_Rate_Mbps /tb_gth64b66b_loopback/OISL_Frame_Rate_kHz /tb_gth64b66b_loopback/OISL_FCCH_Mbps
+run all
+relaunch_sim
+remove_wave [get_waves *]
+add_wave /tb_gth64b66b_loopback/clk_logic /tb_gth64b66b_loopback/clk_312_5 /tb_gth64b66b_loopback/tx0_clk /tb_gth64b66b_loopback/rx0_clk
+add_wave /tb_gth64b66b_loopback/sys_rst_n /tb_gth64b66b_loopback/gth_link_up /tb_gth64b66b_loopback/rx_block_locked
+add_wave -radix unsigned /tb_gth64b66b_loopback/frame_id /tb_gth64b66b_loopback/tx_frame_id /tb_gth64b66b_loopback/tx_clk_cnt /tb_gth64b66b_loopback/tx_byte_cnt /tb_gth64b66b_loopback/tx_word_cnt
+add_wave -radix hex /tb_gth64b66b_loopback/err_flag /tb_gth64b66b_loopback/err_data /tb_gth64b66b_loopback/tx_byte_stream
+add_wave -radix hex /tb_gth64b66b_loopback/gt_txdata /tb_gth64b66b_loopback/gt_txheader /tb_gth64b66b_loopback/gt_txsequence /tb_gth64b66b_loopback/tx_gb_word0_captured /tb_gth64b66b_loopback/tx_gb_word1_captured
+add_wave -radix hex /tb_gth64b66b_loopback/rx_down_dv /tb_gth64b66b_loopback/rx_down_data /tb_gth64b66b_loopback/rx_byte_stream
+add_wave -radix unsigned /tb_gth64b66b_loopback/rx_frame_id /tb_gth64b66b_loopback/rx_clk_cnt /tb_gth64b66b_loopback/rx_byte_cnt /tb_gth64b66b_loopback/rx_word_cnt /tb_gth64b66b_loopback/rx_zero_words_verified /tb_gth64b66b_loopback/rx_mismatch_cnt /tb_gth64b66b_loopback/rx_mid_burst_gap_cnt /tb_gth64b66b_loopback/timing_checked_frames
+add_wave /tb_gth64b66b_loopback/time_start /tb_gth64b66b_loopback/time_end /tb_gth64b66b_loopback/OISL_Frame_Duration_us /tb_gth64b66b_loopback/OISL_Effective_Data_Rate_Mbps /tb_gth64b66b_loopback/OISL_Frame_Rate_kHz /tb_gth64b66b_loopback/OISL_FCCH_Mbps
+run all
+relaunch_sim
+remove_wave [get_waves *]
+add_wave_divider "1. Input transport (Post-Injector 312.5 MHz)"
+add_wave /tb_gth64b66b_loopback/clk_312_5 /tb_gth64b66b_loopback/err_flag
+add_wave -radix hex /tb_gth64b66b_loopback/err_data /tb_gth64b66b_loopback/tx_byte_stream
+add_wave -radix unsigned /tb_gth64b66b_loopback/tx_frame_id /tb_gth64b66b_loopback/tx_clk_cnt /tb_gth64b66b_loopback/tx_byte_cnt /tb_gth64b66b_loopback/tx_target_words /tb_gth64b66b_loopback/tx_target_bytes
+add_wave_divider "2. GTH TX (Gearbox & Elastic FIFO 322.265 MHz)"
+add_wave /tb_gth64b66b_loopback/tx0_clk /tb_gth64b66b_loopback/gth_tx_ready /tb_gth64b66b_loopback/tx_accepted_read
+add_wave -radix unsigned /tb_gth64b66b_loopback/tx_fifo_occupancy /tb_gth64b66b_loopback/gt_txsequence
+add_wave -radix hex /tb_gth64b66b_loopback/gt_txheader /tb_gth64b66b_loopback/gt_txdata /tb_gth64b66b_loopback/tx_gb_word0_captured /tb_gth64b66b_loopback/tx_gb_word1_captured
+add_wave_divider "3. GTH RX (Block Lock, Slip & Output 312.5 MHz)"
+add_wave /tb_gth64b66b_loopback/rx0_clk /tb_gth64b66b_loopback/gth_rx_ready /tb_gth64b66b_loopback/rx_block_locked /tb_gth64b66b_loopback/gt_rxgearboxslip
+add_wave -radix hex /tb_gth64b66b_loopback/gt_rxdatavalid /tb_gth64b66b_loopback/gt_rxheadervalid /tb_gth64b66b_loopback/gt_rxheader /tb_gth64b66b_loopback/gt_rxdata
+add_wave /tb_gth64b66b_loopback/rx_down_dv
+add_wave -radix hex /tb_gth64b66b_loopback/rx_down_data /tb_gth64b66b_loopback/rx_byte_stream
+add_wave -radix unsigned /tb_gth64b66b_loopback/rx_frame_id /tb_gth64b66b_loopback/rx_clk_cnt /tb_gth64b66b_loopback/rx_byte_cnt
+add_wave_divider "4. Hasil pembanding (Scoreboard & Timing)"
+add_wave -radix unsigned /tb_gth64b66b_loopback/tx_target_bytes /tb_gth64b66b_loopback/rx_target_bytes /tb_gth64b66b_loopback/tx_target_words /tb_gth64b66b_loopback/rx_target_words /tb_gth64b66b_loopback/rx_mismatch_cnt /tb_gth64b66b_loopback/rx_mid_burst_gap_cnt /tb_gth64b66b_loopback/tx_fifo_overflow_cnt /tb_gth64b66b_loopback/tx_fifo_underflow_cnt /tb_gth64b66b_loopback/timing_checked_frames
+add_wave -radix hex /tb_gth64b66b_loopback/rx_first_word /tb_gth64b66b_loopback/rx_last_word
+add_wave /tb_gth64b66b_loopback/tx_first_word_ok /tb_gth64b66b_loopback/rx_first_word_ok /tb_gth64b66b_loopback/rx_last_word_ok /tb_gth64b66b_loopback/target_window_done /tb_gth64b66b_loopback/test_pass_status
+add_wave /tb_gth64b66b_loopback/GTH_312M5_Clock_MHz /tb_gth64b66b_loopback/GTH_312M5_Word_Period_ns /tb_gth64b66b_loopback/SDA_Frame_Duration_us /tb_gth64b66b_loopback/time_start /tb_gth64b66b_loopback/time_end
+run all
+wave zoom full
+relaunch_sim
+remove_wave [get_waves *]
+add_wave_divider "1. Input transport (Post-Injector on tx0_clk)"
+add_wave /tb_gth64b66b_loopback/gt_refclk_p /tb_gth64b66b_loopback/tx0_clk /tb_gth64b66b_loopback/err_flag
+add_wave -radix hex /tb_gth64b66b_loopback/err_data /tb_gth64b66b_loopback/tx_byte_stream
+add_wave -radix unsigned /tb_gth64b66b_loopback/tx_frame_id /tb_gth64b66b_loopback/tx_clk_cnt /tb_gth64b66b_loopback/tx_byte_cnt /tb_gth64b66b_loopback/tx_target_words /tb_gth64b66b_loopback/tx_target_bytes
+add_wave_divider "2. GTH TX (Gearbox & Elastic FIFO on tx0_clk)"
+add_wave /tb_gth64b66b_loopback/gth_tx_ready /tb_gth64b66b_loopback/tx_accepted_read
+add_wave -radix unsigned /tb_gth64b66b_loopback/tx_fifo_occupancy /tb_gth64b66b_loopback/gt_txsequence
+add_wave -radix hex /tb_gth64b66b_loopback/gt_txheader /tb_gth64b66b_loopback/gt_txdata /tb_gth64b66b_loopback/tx_gb_word0_captured /tb_gth64b66b_loopback/tx_gb_word1_captured
+add_wave_divider "3. GTH RX (Block Lock, Slip & Output on rx0_clk)"
+add_wave /tb_gth64b66b_loopback/rx0_clk /tb_gth64b66b_loopback/gth_rx_ready /tb_gth64b66b_loopback/rx_block_locked /tb_gth64b66b_loopback/gt_rxgearboxslip
+add_wave -radix hex /tb_gth64b66b_loopback/gt_rxdatavalid /tb_gth64b66b_loopback/gt_rxheadervalid /tb_gth64b66b_loopback/gt_rxheader /tb_gth64b66b_loopback/gt_rxdata
+add_wave /tb_gth64b66b_loopback/rx_down_dv
+add_wave -radix hex /tb_gth64b66b_loopback/rx_down_data /tb_gth64b66b_loopback/rx_byte_stream
+add_wave -radix unsigned /tb_gth64b66b_loopback/rx_frame_id /tb_gth64b66b_loopback/rx_clk_cnt /tb_gth64b66b_loopback/rx_byte_cnt
+add_wave_divider "4. Hasil pembanding & SDA OISL Table 2-4 Metrics"
+add_wave -radix unsigned /tb_gth64b66b_loopback/tx_target_bytes /tb_gth64b66b_loopback/rx_target_bytes /tb_gth64b66b_loopback/tx_target_words /tb_gth64b66b_loopback/rx_target_words /tb_gth64b66b_loopback/rx_zero_words_verified /tb_gth64b66b_loopback/rx_mismatch_cnt /tb_gth64b66b_loopback/rx_mid_burst_gap_cnt /tb_gth64b66b_loopback/tx_fifo_overflow_cnt /tb_gth64b66b_loopback/tx_fifo_underflow_cnt /tb_gth64b66b_loopback/timing_checked_frames
+add_wave -radix hex /tb_gth64b66b_loopback/rx_first_word /tb_gth64b66b_loopback/rx_last_word
+add_wave /tb_gth64b66b_loopback/tx_first_word_ok /tb_gth64b66b_loopback/tx_second_word_ok /tb_gth64b66b_loopback/rx_first_word_ok /tb_gth64b66b_loopback/rx_last_word_ok /tb_gth64b66b_loopback/target_window_done /tb_gth64b66b_loopback/test_pass_status
+add_wave /tb_gth64b66b_loopback/measured_refclk_mhz /tb_gth64b66b_loopback/GTH_312M5_Clock_MHz /tb_gth64b66b_loopback/GTH_312M5_Word_Period_ns /tb_gth64b66b_loopback/time_start /tb_gth64b66b_loopback/time_end /tb_gth64b66b_loopback/OISL_Frame_Duration_us /tb_gth64b66b_loopback/OISL_Effective_Data_Rate_Mbps /tb_gth64b66b_loopback/OISL_Frame_Rate_kHz /tb_gth64b66b_loopback/OISL_FCCH_Mbps
+run all
+wave zoom full
+relaunch_sim
+remove_wave [get_waves *]
+add_wave_divider "1. Input transport (Post-Injector on tx0_clk)"
+add_wave /tb_gth64b66b_loopback/gt_refclk_p /tb_gth64b66b_loopback/tx0_clk /tb_gth64b66b_loopback/err_flag
+add_wave -radix hex /tb_gth64b66b_loopback/err_data /tb_gth64b66b_loopback/tx_byte_stream
+add_wave -radix unsigned /tb_gth64b66b_loopback/tx_frame_id /tb_gth64b66b_loopback/tx_clk_cnt /tb_gth64b66b_loopback/tx_byte_cnt /tb_gth64b66b_loopback/tx_target_words /tb_gth64b66b_loopback/tx_target_bytes
+add_wave_divider "2. GTH TX (Gearbox & Elastic FIFO on tx0_clk)"
+add_wave /tb_gth64b66b_loopback/gth_tx_ready /tb_gth64b66b_loopback/tx_accepted_read
+add_wave -radix unsigned /tb_gth64b66b_loopback/tx_fifo_occupancy /tb_gth64b66b_loopback/gt_txsequence
+add_wave -radix hex /tb_gth64b66b_loopback/gt_txheader /tb_gth64b66b_loopback/gt_txdata /tb_gth64b66b_loopback/tx_gb_word0_captured /tb_gth64b66b_loopback/tx_gb_word1_captured
+add_wave_divider "3. GTH RX (Block Lock, Slip & Output on rx0_clk)"
+add_wave /tb_gth64b66b_loopback/rx0_clk /tb_gth64b66b_loopback/gth_rx_ready /tb_gth64b66b_loopback/rx_block_locked /tb_gth64b66b_loopback/gt_rxgearboxslip
+add_wave -radix hex /tb_gth64b66b_loopback/gt_rxdatavalid /tb_gth64b66b_loopback/gt_rxheadervalid /tb_gth64b66b_loopback/gt_rxheader /tb_gth64b66b_loopback/gt_rxdata
+add_wave /tb_gth64b66b_loopback/rx_down_dv
+add_wave -radix hex /tb_gth64b66b_loopback/rx_down_data /tb_gth64b66b_loopback/rx_byte_stream
+add_wave -radix unsigned /tb_gth64b66b_loopback/rx_frame_id /tb_gth64b66b_loopback/rx_clk_cnt /tb_gth64b66b_loopback/rx_byte_cnt
+add_wave_divider "4. Hasil pembanding & SDA OISL Table 2-4 Metrics"
+add_wave -radix unsigned /tb_gth64b66b_loopback/tx_target_bytes /tb_gth64b66b_loopback/rx_target_bytes /tb_gth64b66b_loopback/tx_target_words /tb_gth64b66b_loopback/rx_target_words /tb_gth64b66b_loopback/rx_zero_words_verified /tb_gth64b66b_loopback/rx_mismatch_cnt /tb_gth64b66b_loopback/rx_mid_burst_gap_cnt /tb_gth64b66b_loopback/tx_fifo_overflow_cnt /tb_gth64b66b_loopback/tx_fifo_underflow_cnt /tb_gth64b66b_loopback/timing_checked_frames
+add_wave -radix hex /tb_gth64b66b_loopback/rx_first_word /tb_gth64b66b_loopback/rx_last_word
+add_wave /tb_gth64b66b_loopback/tx_first_word_ok /tb_gth64b66b_loopback/tx_second_word_ok /tb_gth64b66b_loopback/rx_first_word_ok /tb_gth64b66b_loopback/rx_last_word_ok /tb_gth64b66b_loopback/target_window_done /tb_gth64b66b_loopback/test_pass_status
+add_wave /tb_gth64b66b_loopback/measured_refclk_mhz /tb_gth64b66b_loopback/GTH_312M5_Clock_MHz /tb_gth64b66b_loopback/GTH_312M5_Word_Period_ns /tb_gth64b66b_loopback/time_start /tb_gth64b66b_loopback/time_end /tb_gth64b66b_loopback/OISL_Frame_Duration_us /tb_gth64b66b_loopback/OISL_Effective_Data_Rate_Mbps /tb_gth64b66b_loopback/OISL_Frame_Rate_kHz /tb_gth64b66b_loopback/OISL_FCCH_Mbps
+run all
+wave zoom full
+relaunch_sim
+remove_wave [get_waves *]
+add_wave_divider "1. Input transport (Post-Injector on tx0_clk)"
+add_wave /tb_gth64b66b_loopback/gt_refclk_p /tb_gth64b66b_loopback/tx0_clk /tb_gth64b66b_loopback/err_flag
+add_wave -radix hex /tb_gth64b66b_loopback/err_data /tb_gth64b66b_loopback/tx_byte_stream
+add_wave -radix unsigned /tb_gth64b66b_loopback/tx_frame_id /tb_gth64b66b_loopback/tx_clk_cnt /tb_gth64b66b_loopback/tx_byte_cnt /tb_gth64b66b_loopback/tx_target_words /tb_gth64b66b_loopback/tx_target_bytes
+add_wave_divider "2. GTH TX (Gearbox & Elastic FIFO on tx0_clk)"
+add_wave /tb_gth64b66b_loopback/gth_tx_ready /tb_gth64b66b_loopback/tx_accepted_read
+add_wave -radix unsigned /tb_gth64b66b_loopback/tx_fifo_occupancy /tb_gth64b66b_loopback/gt_txsequence
+add_wave -radix hex /tb_gth64b66b_loopback/gt_txheader /tb_gth64b66b_loopback/gt_txdata /tb_gth64b66b_loopback/tx_gb_word0_captured /tb_gth64b66b_loopback/tx_gb_word1_captured
+add_wave_divider "3. GTH RX (Block Lock, Slip & Output on rx0_clk)"
+add_wave /tb_gth64b66b_loopback/rx0_clk /tb_gth64b66b_loopback/gth_rx_ready /tb_gth64b66b_loopback/rx_block_locked /tb_gth64b66b_loopback/gt_rxgearboxslip
+add_wave -radix hex /tb_gth64b66b_loopback/gt_rxdatavalid /tb_gth64b66b_loopback/gt_rxheadervalid /tb_gth64b66b_loopback/gt_rxheader /tb_gth64b66b_loopback/gt_rxdata
+add_wave /tb_gth64b66b_loopback/rx_down_dv
+add_wave -radix hex /tb_gth64b66b_loopback/rx_down_data /tb_gth64b66b_loopback/rx_byte_stream
+add_wave -radix unsigned /tb_gth64b66b_loopback/rx_frame_id /tb_gth64b66b_loopback/rx_clk_cnt /tb_gth64b66b_loopback/rx_byte_cnt
+add_wave_divider "4. Hasil pembanding & SDA OISL Table 2-4 Metrics"
+add_wave -radix unsigned /tb_gth64b66b_loopback/tx_target_bytes /tb_gth64b66b_loopback/rx_target_bytes /tb_gth64b66b_loopback/tx_target_words /tb_gth64b66b_loopback/rx_target_words /tb_gth64b66b_loopback/rx_zero_words_verified /tb_gth64b66b_loopback/rx_mismatch_cnt /tb_gth64b66b_loopback/rx_mid_burst_gap_cnt /tb_gth64b66b_loopback/tx_fifo_overflow_cnt /tb_gth64b66b_loopback/tx_fifo_underflow_cnt /tb_gth64b66b_loopback/timing_checked_frames
+add_wave -radix hex /tb_gth64b66b_loopback/rx_first_word /tb_gth64b66b_loopback/rx_last_word
+add_wave /tb_gth64b66b_loopback/tx_first_word_ok /tb_gth64b66b_loopback/tx_second_word_ok /tb_gth64b66b_loopback/rx_first_word_ok /tb_gth64b66b_loopback/rx_last_word_ok /tb_gth64b66b_loopback/target_window_done /tb_gth64b66b_loopback/test_pass_status
+add_wave /tb_gth64b66b_loopback/measured_refclk_mhz /tb_gth64b66b_loopback/GTH_312M5_Clock_MHz /tb_gth64b66b_loopback/GTH_312M5_Word_Period_ns /tb_gth64b66b_loopback/time_start /tb_gth64b66b_loopback/time_end /tb_gth64b66b_loopback/OISL_Frame_Duration_us /tb_gth64b66b_loopback/OISL_Effective_Data_Rate_Mbps /tb_gth64b66b_loopback/OISL_Frame_Rate_kHz /tb_gth64b66b_loopback/OISL_FCCH_Mbps
+run all
+wave zoom full
+close_sim
+set_property top tb_cdc3_rx_gth_logic [get_filesets sim_1]
+launch_simulation
+source tb_cdc3_rx_gth_logic.tcl
+relaunch_sim
+remove_wave [get_waves *]
+add_wave_divider "1. Data In from GTH RX (312.5 MHz: 3,117 Target + 3 Follow-On Words)"
+add_wave /tb_cdc3_rx_gth_logic/clk_gth /tb_cdc3_rx_gth_logic/rst_n /tb_cdc3_rx_gth_logic/gth_rx_dv
+add_wave -radix hex /tb_cdc3_rx_gth_logic/gth_rx_data /tb_cdc3_rx_gth_logic/in_byte_stream
+add_wave -radix unsigned /tb_cdc3_rx_gth_logic/in_frame_id /tb_cdc3_rx_gth_logic/in_clk_cnt /tb_cdc3_rx_gth_logic/in_byte_cnt /tb_cdc3_rx_gth_logic/in_target_words /tb_cdc3_rx_gth_logic/in_target_bytes /tb_cdc3_rx_gth_logic/in_follow_on_words /tb_cdc3_rx_gth_logic/in_follow_on_bytes /tb_cdc3_rx_gth_logic/in_total_stimulus_bytes
+add_wave_divider "2. Data Out from CDC 3 (200.0 MHz: 780 Words = 12,468 Target + 12 Follow-On Bytes)"
+add_wave /tb_cdc3_rx_gth_logic/clk_logic /tb_cdc3_rx_gth_logic/cdc3_flag_out
+add_wave -radix hex /tb_cdc3_rx_gth_logic/cdc3_data_out /tb_cdc3_rx_gth_logic/out_byte_stream
+add_wave -radix unsigned /tb_cdc3_rx_gth_logic/out_frame_id /tb_cdc3_rx_gth_logic/out_clk_cnt /tb_cdc3_rx_gth_logic/out_word128_cnt /tb_cdc3_rx_gth_logic/out_frame_byte_cnt /tb_cdc3_rx_gth_logic/out_total_bytes /tb_cdc3_rx_gth_logic/out_port_words128 /tb_cdc3_rx_gth_logic/out_port_target_bytes /tb_cdc3_rx_gth_logic/byte_mismatch_cnt /tb_cdc3_rx_gth_logic/follow_on_mismatch_cnt /tb_cdc3_rx_gth_logic/timing_checked_frames
+add_wave_divider "3. Actual Port Timestamps vs Visual Unpacker Schedule"
+add_wave /tb_cdc3_rx_gth_logic/port_first_word_ns /tb_cdc3_rx_gth_logic/port_last_word_ns /tb_cdc3_rx_gth_logic/port_transfer_span_us /tb_cdc3_rx_gth_logic/time_start /tb_cdc3_rx_gth_logic/time_end /tb_cdc3_rx_gth_logic/OISL_Frame_Duration_us /tb_cdc3_rx_gth_logic/OISL_Effective_Data_Rate_Mbps /tb_cdc3_rx_gth_logic/OISL_Frame_Rate_kHz /tb_cdc3_rx_gth_logic/OISL_FCCH_Mbps
+run all
+wave zoom full
+close_sim -force
+set_property top tb_demux_decoder [get_filesets sim_1]
+launch_simulation
+source tb_demux_decoder.tcl
+remove_wave [get_waves *]
+add_wave_divider "1. Input 128-Bit Stream from CDC 3 (200.0 MHz)"
+add_wave /tb_demux_decoder/clk /tb_demux_decoder/rst_n /tb_demux_decoder/cdc_valid_in
+add_wave -radix hex /tb_demux_decoder/cdc_data_in
+add_wave -radix unsigned /tb_demux_decoder/input_slot_index /tb_demux_decoder/input_frame_id /tb_demux_decoder/input_last_frame_id
+add_wave -radix ascii /tb_demux_decoder/input_frame_type /tb_demux_decoder/input_last_frame_type
+add_wave /tb_demux_decoder/input_crosses_boundary
+add_wave -radix unsigned /tb_demux_decoder/input_byte_first /tb_demux_decoder/input_byte_last /tb_demux_decoder/input_target_bytes /tb_demux_decoder/input_tail_bytes /tb_demux_decoder/input_accepted_bytes
+add_wave_divider "2. Extracted 72-Bit Preamble & Link Lock (Table 2-8)"
+add_wave /tb_demux_decoder/preamble_valid /tb_demux_decoder/link_locked
+add_wave -radix hex /tb_demux_decoder/preamble_extracted
+add_wave -radix unsigned /tb_demux_decoder/locked_frame_cnt /tb_demux_decoder/output_preamble_bytes
+add_wave_divider "3. Contiguous 96-Bit LPC Codeword Stream (259 Words/Frame)"
+add_wave /tb_demux_decoder/lpc_valid_out /tb_demux_decoder/output_frame_start /tb_demux_decoder/output_frame_end
+add_wave -radix hex /tb_demux_decoder/lpc_data_out
+add_wave -radix unsigned /tb_demux_decoder/output_frame_id
+add_wave -radix ascii /tb_demux_decoder/output_frame_type
+add_wave -radix unsigned /tb_demux_decoder/out_clk_cnt /tb_demux_decoder/output_byte_first /tb_demux_decoder/out_byte_cnt /tb_demux_decoder/output_accepted_beats /tb_demux_decoder/output_accepted_bytes /tb_demux_decoder/completed_frames /tb_demux_decoder/mismatch_count
+add_wave_divider "4. Actual Port Timestamps (ns)"
+add_wave /tb_demux_decoder/first_input_ns /tb_demux_decoder/last_input_ns /tb_demux_decoder/first_output_ns /tb_demux_decoder/last_output_ns /tb_demux_decoder/measured_preamble_interval_ns
+run all
+wave zoom full
+close_sim -force
+set_property top tb_cdc4_logic_gth [get_filesets sim_1]
+launch_simulation
+source tb_cdc4_logic_gth.tcl
+remove_wave [get_waves *]
+add_wave_divider "1. Write Domain Input (200.0 MHz from core_rx)"
+add_wave /tb_cdc4_logic_gth/clk_logic /tb_cdc4_logic_gth/rst_n /tb_cdc4_logic_gth/en_head /tb_cdc4_logic_gth/en_load
+add_wave -radix hex /tb_cdc4_logic_gth/header_in /tb_cdc4_logic_gth/payload_in
+add_wave -radix unsigned /tb_cdc4_logic_gth/wr_hdr_ptr /tb_cdc4_logic_gth/wr_pld_ptr
+add_wave_divider "2. Read Domain Output (312.5 MHz to Deframer)"
+add_wave /tb_cdc4_logic_gth/clk_gth /tb_cdc4_logic_gth/header_dv /tb_cdc4_logic_gth/payload_dv
+add_wave -radix hex /tb_cdc4_logic_gth/header_out /tb_cdc4_logic_gth/payload_out
+add_wave -radix unsigned /tb_cdc4_logic_gth/cdc4_frame_id
+add_wave -radix ascii /tb_cdc4_logic_gth/cdc4_frame_type_str
+add_wave -radix unsigned /tb_cdc4_logic_gth/out_hdr_byte_cnt /tb_cdc4_logic_gth/out_pld_word_cnt /tb_cdc4_logic_gth/out_pld_total_bytes /tb_cdc4_logic_gth/hdr_cnt /tb_cdc4_logic_gth/pld_cnt /tb_cdc4_logic_gth/hdr_mismatch_cnt /tb_cdc4_logic_gth/pld_mismatch_cnt
+add_wave_divider "3. Extracted SDA OISL Header & Payload Fields + Port Timestamps"
+add_wave -radix unsigned /tb_cdc4_logic_gth/cdc4_TXFN /tb_cdc4_logic_gth/cdc4_FRAME_TYPE
+add_wave -radix hex /tb_cdc4_logic_gth/cdc4_HDR_CRC16 /tb_cdc4_logic_gth/cdc4_FSO_PLD_HDR /tb_cdc4_logic_gth/cdc4_FSO_PKT_HDR
+add_wave -radix ascii /tb_cdc4_logic_gth/cdc4_ASCII_TAG
+add_wave -radix hex /tb_cdc4_logic_gth/cdc4_ETH_FCS /tb_cdc4_logic_gth/cdc4_MGMT_RANGE /tb_cdc4_logic_gth/cdc4_PLD_CRC32
+add_wave /tb_cdc4_logic_gth/hdr_port_first_ns /tb_cdc4_logic_gth/hdr_port_last_ns /tb_cdc4_logic_gth/pld_port_first_ns /tb_cdc4_logic_gth/pld_port_last_ns
+run all
+wave zoom full
+update_compile_order -fileset sources_1
+relaunch_sim
+run all
+wave zoom full
+update_compile_order -fileset sources_1
+close_sim
+close_sim -force
+launch_simulation
+source tb_cdc4_logic_gth.tcl
+close_sim -force
+set_property top tb_FEC_RS [get_filesets sim_1]
+launch_simulation
+source tb_FEC_RS.tcl
+remove_wave [get_waves *]
+add_wave_divider "1. Mode & Pre-CDC 1 Upstream Input (312.5 MHz)"
+add_wave -radix ascii /tb_FEC_RS/err_inj_mode_str /tb_FEC_RS/cdc1_in_frame_str
+add_wave /tb_FEC_RS/clk_gth /tb_FEC_RS/rst_n /tb_FEC_RS/cdc1_ready /tb_FEC_RS/cdc1_hdr_in_valid /tb_FEC_RS/cdc1_pld_in_valid
+add_wave -radix hex /tb_FEC_RS/cdc1_hdr_in_data /tb_FEC_RS/cdc1_pld_in_data
+add_wave -radix unsigned /tb_FEC_RS/cdc1_hdr_in_byte_cnt /tb_FEC_RS/cdc1_pld_in_byte_cnt /tb_FEC_RS/stg_cdc1_in_hdr_bytes /tb_FEC_RS/stg_cdc1_in_pld_words32
+add_wave_divider "2. CDC 1 Out -> core_tx -> MUX Gearbox 128 (200.0 MHz)"
+add_wave /tb_FEC_RS/clk /tb_FEC_RS/en_head /tb_FEC_RS/en_load /tb_FEC_RS/mux_dv /tb_FEC_RS/lpc_dv /tb_FEC_RS/gbx_dv
+add_wave -radix hex /tb_FEC_RS/header_in /tb_FEC_RS/payload_in /tb_FEC_RS/mux_data_out /tb_FEC_RS/lpc_data_out /tb_FEC_RS/gbx_data_out /tb_FEC_RS/gbx_keep_out
+add_wave -radix unsigned /tb_FEC_RS/stg_rs_mux_out_bytes /tb_FEC_RS/stg_lpc_out_bytes /tb_FEC_RS/stg_gbx_out_bytes /tb_FEC_RS/hdr_synd_pass_cnt /tb_FEC_RS/pld_synd_pass_cnt
+add_wave_divider "3. CDC 2 -> Error Injector -> GTH 64B/66B Loopback -> CDC 3"
+add_wave /tb_FEC_RS/cdc2_out_valid /tb_FEC_RS/err_inj_out_valid /tb_FEC_RS/rx_block_locked /tb_FEC_RS/gth_rx_valid /tb_FEC_RS/cdc3_out_valid
+add_wave -radix ascii /tb_FEC_RS/err_inj_zone_str
+add_wave -radix hex /tb_FEC_RS/cdc2_out_data /tb_FEC_RS/err_inj_xor_mask /tb_FEC_RS/err_inj_out_data /tb_FEC_RS/gth_rx_data /tb_FEC_RS/cdc3_out_data
+add_wave -radix unsigned /tb_FEC_RS/zone2_mask_positions_applied /tb_FEC_RS/inj_changed_words_cnt /tb_FEC_RS/inj_changed_bytes_cnt /tb_FEC_RS/inj_flipped_bits_cnt /tb_FEC_RS/stg_cdc3_target_bytes /tb_FEC_RS/stg_cdc3_follow_on_bytes /tb_FEC_RS/stg_cdc3_total_words128 /tb_FEC_RS/transport_target_mismatch_cnt
+add_wave_divider "4. core_rx (Demux 128 + LPC Dec + Descrambler + RS Decoders)"
+add_wave /tb_FEC_RS/rx_preamble_valid /tb_FEC_RS/rx_preamble_locked /tb_FEC_RS/rx_rs_hdr_in_valid /tb_FEC_RS/rx_rs_pld_in_valid /tb_FEC_RS/rx_rs_hdr_out_valid /tb_FEC_RS/rx_rs_pld_out_valid
+add_wave -radix hex /tb_FEC_RS/rx_preamble_extracted /tb_FEC_RS/rx_rs_hdr_out_data /tb_FEC_RS/rx_rs_pld_out_data
+add_wave -radix ascii /tb_FEC_RS/rs_lane_status_str
+add_wave -radix unsigned /tb_FEC_RS/rs_hdr_symbol_err_cnt /tb_FEC_RS/rs_lane0_symbol_err_cnt /tb_FEC_RS/rs_lane1_symbol_err_cnt /tb_FEC_RS/rs_lane2_symbol_err_cnt /tb_FEC_RS/rs_lane3_symbol_err_cnt /tb_FEC_RS/rs_lane4_symbol_err_cnt /tb_FEC_RS/rs_lane5_symbol_err_cnt /tb_FEC_RS/rs_lane6_symbol_err_cnt /tb_FEC_RS/rs_lane7_symbol_err_cnt
+add_wave_divider "5. CDC 4 Final Output & Scoreboard Verdict (312.5 MHz)"
+add_wave /tb_FEC_RS/cdc4_hdr_out_valid /tb_FEC_RS/cdc4_pld_out_valid
+add_wave -radix ascii /tb_FEC_RS/cdc4_out_frame_str
+add_wave -radix hex /tb_FEC_RS/cdc4_hdr_out_data /tb_FEC_RS/cdc4_pld_out_data
+add_wave -radix unsigned /tb_FEC_RS/stg_cdc4_target_hdr_bytes /tb_FEC_RS/stg_cdc4_target_pld_words /tb_FEC_RS/decoded_hdr_ok_cnt /tb_FEC_RS/decoded_pld_ok_cnt /tb_FEC_RS/total_hdr_info_mismatches /tb_FEC_RS/total_pld_info_mismatches /tb_FEC_RS/total_pld_byte_mismatches /tb_FEC_RS/within_t8_codewords_healed /tb_FEC_RS/within_t8_uncorrected_fails /tb_FEC_RS/exceeds_t8_codewords_cnt
+add_wave -radix ascii /tb_FEC_RS/cdc4_ASCII_TAG
+add_wave -radix hex /tb_FEC_RS/cdc4_ETH_FCS /tb_FEC_RS/cdc4_MGMT_RANGE
+run all
+wave zoom full
+relaunch_sim
+run all
+relaunch_sim
+run all
+relaunch_sim
+run all
+close_sim
+# Disabling source management mode.  This is to allow the top design properties to be set without GUI intervention.
+set_property source_mgmt_mode None [current_project]
+set_property top tb_fso_ethernet_deframer [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+# Re-enabling previously disabled source management mode.
+set_property source_mgmt_mode All [current_project]
+launch_simulation
+source tb_fso_ethernet_deframer.tcl
+close_sim -force
+set_property top tb_fso_ethernet_deframer [get_filesets sim_1]
+launch_simulation
+source tb_fso_ethernet_deframer.tcl
+remove_wave [get_waves *]
+add_wave_divider "1. Deframer Input Stream (312.5 MHz: 16B Header + 478W Payload)"
+add_wave /tb_fso_ethernet_deframer/clk /tb_fso_ethernet_deframer/rst_n /tb_fso_ethernet_deframer/s_axis_hdr_tvalid /tb_fso_ethernet_deframer/s_axis_fso_tvalid
+add_wave -radix hex /tb_fso_ethernet_deframer/s_axis_hdr_tdata /tb_fso_ethernet_deframer/s_axis_fso_tdata
+add_wave_divider "2. Event-Driven CRC Checks & 5 Local ARQ Feedback Events"
+add_wave /tb_fso_ethernet_deframer/hdr_check_done_evt /tb_fso_ethernet_deframer/hdr_crc_ok /tb_fso_ethernet_deframer/pld_check_done_evt /tb_fso_ethernet_deframer/pld_crc_ok /tb_fso_ethernet_deframer/local_fb_ack_valid /tb_fso_ethernet_deframer/local_fb_ack
+add_wave -radix unsigned /tb_fso_ethernet_deframer/rx_txfn /tb_fso_ethernet_deframer/rx_frame_type /tb_fso_ethernet_deframer/local_fb_rxfn /tb_fso_ethernet_deframer/expected_txfn /tb_fso_ethernet_deframer/hdr_crc_pass_cnt /tb_fso_ethernet_deframer/pld_crc_pass_cnt /tb_fso_ethernet_deframer/pld_crc_fail_cnt /tb_fso_ethernet_deframer/local_fb_total_cnt /tb_fso_ethernet_deframer/local_fb_data_cnt /tb_fso_ethernet_deframer/local_fb_mgmt_cnt /tb_fso_ethernet_deframer/local_fb_seq_err_cnt
+add_wave_divider "3. In-Order Payload Release (1,431 Words: TXFN 1 -> 2 -> 3) & MGMT Range"
+add_wave /tb_fso_ethernet_deframer/m_axis_fso_tvalid /tb_fso_ethernet_deframer/m_axis_fso_tready /tb_fso_ethernet_deframer/m_axis_fso_tlast /tb_fso_ethernet_deframer/mgmt_telemetry_valid
+add_wave -radix hex /tb_fso_ethernet_deframer/m_axis_fso_tdata /tb_fso_ethernet_deframer/mgmt_range_captured
+add_wave -radix unsigned /tb_fso_ethernet_deframer/words_drained_before_retx /tb_fso_ethernet_deframer/drained_data_frames /tb_fso_ethernet_deframer/drained_word_cnt /tb_fso_ethernet_deframer/drain_word_mismatch_cnt /tb_fso_ethernet_deframer/tlast_alignment_err_cnt
+run all
+wave zoom full
+close_sim -force
+set_property top tb_SDAOISL10Gto10G_top [get_filesets sim_1]
+launch_simulation
+source tb_SDAOISL10Gto10G_top.tcl
+remove_wave [get_waves *]
+add_wave_divider "1. Ingress Packet Gen & 14-Bit Segmentation (1900, 100, 1900, 100B)"
+add_wave /tb_SDAOISL10Gto10G_top/clk_tx /tb_SDAOISL10Gto10G_top/grp1_pc1_gen_valid /tb_SDAOISL10Gto10G_top/grp1_seg_valid /tb_SDAOISL10Gto10G_top/grp1_seg_last
+add_wave -radix hex /tb_SDAOISL10Gto10G_top/grp1_pc1_gen_data /tb_SDAOISL10Gto10G_top/grp1_seg_data
+add_wave -radix unsigned /tb_SDAOISL10Gto10G_top/grp1_seg_active_bytes /tb_SDAOISL10Gto10G_top/seg_completed_cnt /tb_SDAOISL10Gto10G_top/seg_size_mismatch_cnt
+add_wave_divider "2. TX FSO Framer, GTH Loopback & RX Pause Telemetry"
+add_wave -radix ascii /tb_SDAOISL10Gto10G_top/grp2_tx_frame_str
+add_wave /tb_SDAOISL10Gto10G_top/gth_link_up /tb_SDAOISL10Gto10G_top/rx_block_locked /tb_SDAOISL10Gto10G_top/rx_preamble_locked /tb_SDAOISL10Gto10G_top/grp5_rx_fso_valid
+add_wave -radix hex /tb_SDAOISL10Gto10G_top/grp5_rx_fso_data /tb_SDAOISL10Gto10G_top/grp6_rx_preamble_72b
+add_wave -radix unsigned /tb_SDAOISL10Gto10G_top/rx_fso_valid_words_total /tb_SDAOISL10Gto10G_top/rx_fso_valid_pause_events /tb_SDAOISL10Gto10G_top/rx_fso_valid_pause_cycles /tb_SDAOISL10Gto10G_top/lpc_completed_bursts /tb_SDAOISL10Gto10G_top/lpc_intra_burst_gap_cnt
+add_wave_divider "3. RX Deframer Event-Driven CRCs, IDLE & MGMT 5000km"
+add_wave -radix ascii /tb_SDAOISL10Gto10G_top/grp7_rx_frame_str
+add_wave /tb_SDAOISL10Gto10G_top/grp7_hdr_check_done /tb_SDAOISL10Gto10G_top/grp7_hdr_crc16_ok /tb_SDAOISL10Gto10G_top/grp7_pld_check_done /tb_SDAOISL10Gto10G_top/grp7_pld_crc32_ok /tb_SDAOISL10Gto10G_top/grp7_mgmt_valid
+add_wave -radix hex /tb_SDAOISL10Gto10G_top/mgmt_captured_range
+add_wave -radix unsigned /tb_SDAOISL10Gto10G_top/rx_hdr_crc_pass_cnt /tb_SDAOISL10Gto10G_top/rx_pld_crc_pass_cnt /tb_SDAOISL10Gto10G_top/tx_idle_frame_cnt /tb_SDAOISL10Gto10G_top/rx_idle_frame_cnt /tb_SDAOISL10Gto10G_top/mgmt_valid_event_cnt
+add_wave_divider "4. Reassembly (2x502W) & Post-Backend PC 2 XGMII Egress (2x2000B MAC)"
+add_wave /tb_SDAOISL10Gto10G_top/grp8_reasm_eth_valid /tb_SDAOISL10Gto10G_top/grp8_reasm_eth_last
+add_wave -radix hex /tb_SDAOISL10Gto10G_top/grp8_reasm_eth_data /tb_SDAOISL10Gto10G_top/pc2_xgmii_txd /tb_SDAOISL10Gto10G_top/pc2_xgmii_txc
+add_wave -radix unsigned /tb_SDAOISL10Gto10G_top/reasm_pkt_502_cnt /tb_SDAOISL10Gto10G_top/scb_matched_words /tb_SDAOISL10Gto10G_top/xgmii_pkt_completed_cnt /tb_SDAOISL10Gto10G_top/xgmii_mac_words_ok /tb_SDAOISL10Gto10G_top/xgmii_mac_word_errors /tb_SDAOISL10Gto10G_top/xgmii_ctrl_errors /tb_SDAOISL10Gto10G_top/xgmii_min_ipg_observed
+add_wave -radix ascii /tb_SDAOISL10Gto10G_top/xgmii_captured_ascii
+add_wave -radix hex /tb_SDAOISL10Gto10G_top/xgmii_captured_fcs
+run all
+wave zoom full
+relaunch_sim
+run all
+relaunch_sim
+run all
+close_sim -force
+set_property top tb_fso_ethernet_deframer [get_filesets sim_1]
+launch_simulation
+source tb_fso_ethernet_deframer.tcl
+remove_wave [get_waves *]
+add_wave_divider "1. Deframer Input Stream (312.5 MHz: 16B Header + 478W Payload)"
+add_wave /tb_fso_ethernet_deframer/clk /tb_fso_ethernet_deframer/rst_n /tb_fso_ethernet_deframer/s_axis_hdr_tvalid /tb_fso_ethernet_deframer/s_axis_fso_tvalid
+add_wave -radix hex /tb_fso_ethernet_deframer/s_axis_hdr_tdata /tb_fso_ethernet_deframer/s_axis_fso_tdata
+add_wave_divider "2. Event-Driven CRC Checks & 5 Local ARQ Feedback Events"
+add_wave /tb_fso_ethernet_deframer/hdr_check_done_evt /tb_fso_ethernet_deframer/hdr_crc_ok /tb_fso_ethernet_deframer/pld_check_done_evt /tb_fso_ethernet_deframer/pld_crc_ok /tb_fso_ethernet_deframer/local_fb_ack_valid /tb_fso_ethernet_deframer/local_fb_ack
+add_wave -radix unsigned /tb_fso_ethernet_deframer/rx_txfn /tb_fso_ethernet_deframer/rx_frame_type /tb_fso_ethernet_deframer/local_fb_rxfn /tb_fso_ethernet_deframer/expected_txfn /tb_fso_ethernet_deframer/hdr_crc_pass_cnt /tb_fso_ethernet_deframer/pld_crc_pass_cnt /tb_fso_ethernet_deframer/pld_crc_fail_cnt /tb_fso_ethernet_deframer/local_fb_total_cnt /tb_fso_ethernet_deframer/local_fb_data_cnt /tb_fso_ethernet_deframer/local_fb_mgmt_cnt /tb_fso_ethernet_deframer/local_fb_seq_err_cnt
+add_wave_divider "3. In-Order Payload Release (1,431 Words: TXFN 1 -> 2 -> 3) & MGMT Range"
+add_wave /tb_fso_ethernet_deframer/m_axis_fso_tvalid /tb_fso_ethernet_deframer/m_axis_fso_tready /tb_fso_ethernet_deframer/m_axis_fso_tlast /tb_fso_ethernet_deframer/mgmt_telemetry_valid
+add_wave -radix hex /tb_fso_ethernet_deframer/m_axis_fso_tdata /tb_fso_ethernet_deframer/mgmt_range_captured
+add_wave -radix unsigned /tb_fso_ethernet_deframer/words_drained_before_retx /tb_fso_ethernet_deframer/drained_data_frames /tb_fso_ethernet_deframer/drained_word_cnt /tb_fso_ethernet_deframer/drain_word_mismatch_cnt /tb_fso_ethernet_deframer/tlast_alignment_err_cnt
+run all
+wave zoom full
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 24
+wait_on_run impl_1

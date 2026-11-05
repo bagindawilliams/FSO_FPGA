@@ -21,13 +21,44 @@ Description  : Complete End-to-End SDA OISL 10G-to-10G Grand Top Module.
                   Vivado RTL Schematic (identical layout to image_1335e3.png).
                3. [Rev 2.2 - 2026-10-28 14:55 KST]: Connected 'seg_valid_bytes'
                   [10:0] wire between front_end_inst and sda_encoder_inst.
+               4. [Rev 2.4 - 2026-10-29 13:07 KST - Deep Audit Fix F06]:
+                  Connected 'clk_wiz_locked' from clk_wiz_0_inst to drive 'rst_n'
+                  cleanly after MMCM lock (instead of tying rst_n to constant 1'b1),
+                  and synchronized the closed-loop ARQ feedback signals from 
+                  rx0_clk to tx0_clk inside sda_encoder_inst.
+               5. [Rev 2.7 - 2026-10-30 02:53 KST - Audit Fix N05 & Normative FCCH Default]:
+                  - Connected dedicated 'peer_fb_rxfn', 'peer_fb_ack', and 
+                    'peer_fb_ack_valid' wires between sda_decoder_inst and 
+                    sda_encoder_inst alongside 'arq_fb_*' (local RX CRC feedback), 
+                    and exposed top-level parameter 'LOOPBACK_ARQ_DIRECT' (1 = 
+                    single-board optical loopback, 0 = two-terminal separate link).
+                  - Updated default static FCCH inputs to normative 'No Message' 
+                    values per SDA OISL Table 2-12 & Section 2.6.3.3.5 
+                    (fcch_opcode = 4'hF, fcch_pl = 16'hFFFF).
+               6. [Rev 2.8 - 2026-10-30 11:45 KST - Audit Fix A18]:
+                  Widened 'seg_valid_bytes' interconnect wire to 14 bits ([13:0]) 
+                  to match front_end_inst and sda_encoder_inst with zero port-width 
+                  padding/pruning warnings during top-level elaboration.
+               7. [Rev 3.2 - 2026-11-01 15:49 KST - Baseline C02 Timer & Feedback Clock Alignment]:
+                  Exposed configurable ARQ holdoff timer parameters (ARQ_SIM_SCALE_ENABLE,
+                  ARQ_HOLDOFF_CFG, ARQ_HOLDOFF_MULT, ARQ_MAX_RETX, ARQ_HOLDOFF_TICKS)
+                  without altering hardware defaults, and connected 'rx0_clk' to
+                  '.clk_feedback' on sda_encoder_inst for true RX-domain feedback capture.
 ===========================================================================
 */
 
 module SDAOISL10Gto10G_top #(
     // 1 = Simulation / Internal Packet Gen Mode
     // 0 = External SFP+ 10G Ethernet PHY Mode (PC 1 -> FPGA -> PC 2)
-    parameter SIM_MODE = 1 
+    parameter SIM_MODE             = 1,
+    // 1 = Single-FPGA Optical Loopback (uses local RX CRC feedback for TX tracker)
+    // 0 = Two-Terminal Full-Duplex Link (uses peer Header ACK for TX tracker)
+    parameter LOOPBACK_ARQ_DIRECT  = 1,
+    parameter ARQ_SIM_SCALE_ENABLE = (SIM_MODE != 0),
+    parameter [7:0]  ARQ_HOLDOFF_CFG   = 8'd255,
+    parameter integer ARQ_HOLDOFF_MULT = 16,
+    parameter [2:0]  ARQ_MAX_RETX      = 3'd5,
+    parameter [15:0] ARQ_HOLDOFF_TICKS = 16'd500
 )(
     input  wire        sys_clk_p,
     input  wire        sys_clk_n,
@@ -62,15 +93,17 @@ module SDAOISL10Gto10G_top #(
 
     assign tx_disable = 2'b00;
     assign fan        = 1'b0;
-    
-    wire rst_n     = 1'b1; 
-    wire eth_reset = ~rst_n;
 
     wire sys_clk;
     wire clk_100M;
     wire clk_logic;
+    wire clk_wiz_locked;
     wire tx0_clk;
     wire rx0_clk;
+
+    // [Rev 2.4 - Audit Fix F06] Derive active-low system reset from MMCM locked status
+    wire rst_n     = clk_wiz_locked; 
+    wire eth_reset = ~rst_n;
 
     IBUFGDS sys_clk_inst (
         .I  (sys_clk_p),
@@ -81,7 +114,7 @@ module SDAOISL10Gto10G_top #(
     clk_wiz_0 clk_wiz_0_inst (
         .clk_in1  (sys_clk),
         .reset    (1'b0),
-        .locked   (),
+        .locked   (clk_wiz_locked),
         .clk_out1 (clk_100M),
         .clk_out2 (clk_logic)
     );
@@ -143,7 +176,7 @@ module SDAOISL10Gto10G_top #(
     wire        seg_axis_tvalid;
     wire        seg_axis_tlast;
     wire        seg_axis_tready;
-    wire [10:0] seg_valid_bytes;
+    wire [13:0] seg_valid_bytes; // [Rev 2.8 - Fix A18] Full 14-bit packet/segment byte count
 
     eth_rx_front_end_top #(
         .RUN_MODE (SIM_MODE)
@@ -166,15 +199,27 @@ module SDAOISL10Gto10G_top #(
     );
 
     // =======================================================
-    // 3. SDA ENCODER (Connected to Closed-Loop ARQ Feedback)
+    // 3. SDA ENCODER (Connected to Dual-Channel Closed-Loop ARQ Feedback)
     // =======================================================
     wire [15:0] arq_fb_rxfn;
     wire        arq_fb_ack;
     wire        arq_fb_ack_valid;
 
+    // [Rev 2.7 - Fix N05] Dedicated Peer Header ACK Wires
+    wire [15:0] peer_fb_rxfn;
+    wire        peer_fb_ack;
+    wire        peer_fb_ack_valid;
+
     sda_encoder #(
-        .SIM_MODE            (SIM_MODE)
+        .SIM_MODE             (SIM_MODE),
+        .LOOPBACK_ARQ_DIRECT  (LOOPBACK_ARQ_DIRECT),
+        .ARQ_SIM_SCALE_ENABLE (ARQ_SIM_SCALE_ENABLE),
+        .ARQ_HOLDOFF_CFG      (ARQ_HOLDOFF_CFG),
+        .ARQ_HOLDOFF_MULT     (ARQ_HOLDOFF_MULT),
+        .ARQ_MAX_RETX         (ARQ_MAX_RETX),
+        .ARQ_HOLDOFF_TICKS    (ARQ_HOLDOFF_TICKS)
     ) sda_encoder_inst (
+        .clk_feedback        (rx0_clk),
         .clk_logic           (clk_logic), 
         .clk_gth             (tx0_clk),   
         .rst_n               (rst_n),
@@ -193,11 +238,14 @@ module SDAOISL10Gto10G_top #(
         .range_ts_picosec    (40'd0),
         .ts_valid            (1'b1),
         .tod_seconds_in      (6'd15), 
-        .fcch_opcode         (4'hA),    
-        .fcch_pl             (16'hF001),        
+        .fcch_opcode         (4'hF),      // [Rev 2.7] Normative Table 2-12 'No Message' (4'b1111)
+        .fcch_pl             (16'hFFFF),  // [Rev 2.7] Normative Sec. 2.6.3.3.5 All-Ones (16'hFFFF)
         .rx_rxfn_in          (arq_fb_rxfn),      
         .rx_ack_in           (arq_fb_ack),       
-        .rx_ack_valid_in     (arq_fb_ack_valid), 
+        .rx_ack_valid_in     (arq_fb_ack_valid),
+        .peer_rxfn_in        (peer_fb_rxfn),
+        .peer_ack_in         (peer_fb_ack),
+        .peer_ack_valid_in   (peer_fb_ack_valid),
         .tx_fso_data_out     (tx_fso_data_out),
         .tx_fso_valid_out    (tx_fso_valid_out),
         .eth_data_error_flag (eth_data_error_flag)
@@ -283,7 +331,9 @@ module SDAOISL10Gto10G_top #(
     wire        reassembled_eth_tvalid;
     wire        reassembled_eth_tlast;
 
-    sda_decoder sda_decoder_inst (
+    sda_decoder #(
+        .LOOPBACK_ARQ_DIRECT (LOOPBACK_ARQ_DIRECT)
+    ) sda_decoder_inst (
         .clk_gth            (rx0_clk),
         .clk_logic          (clk_logic),
         .rst_n              (rst_n),
@@ -295,6 +345,9 @@ module SDAOISL10Gto10G_top #(
         .arq_fb_rxfn        (arq_fb_rxfn),
         .arq_fb_ack         (arq_fb_ack),
         .arq_fb_ack_valid   (arq_fb_ack_valid),
+        .peer_fb_rxfn       (peer_fb_rxfn),
+        .peer_fb_ack        (peer_fb_ack),
+        .peer_fb_ack_valid  (peer_fb_ack_valid),
         .m_axis_hdr_tvalid  (rx_dec_hdr_tvalid),
         .m_axis_hdr_tdata   (rx_dec_hdr_tdata),
         .m_axis_fso_tvalid  (rx_dec_pld_tvalid),

@@ -27,6 +27,13 @@ Revision History:
     72'h77_AD_5B_58_43_64_1E_2E_26 verification alongside legacy marker 
     72'h55_55_55_55_55_55_55_55_D5 so both updated full-loopback and standalone 
     testbenches lock cleanly on Byte 1..9 of every 3117-Byte frame.
+  - Rev 2.1 (2026-11-05 15:30 KST) : [Audit Fix OISL-DEMUX-001 - Full 3,117-Byte Frame Pre-Buffer]
+    1. Updated ST_WAIT_FRAME threshold from 'total_avail_bytes >= 15'd1600' to
+       'total_avail_bytes >= 15'd3117' so an entire 3,117-byte frame (9B Preamble
+       + 3,108B LPC payload) is queued before starting each 259-cycle 'lpc_valid_out'
+       burst, preventing mid-burst underflow even if upstream valid pauses.
+    2. Guarded simulation THREAD C with 'while (lpc_rd_ptr >= lpc_wr_ptr)' so
+       frame-boundary byte unpacking never reads ahead of 'lpc_wr_ptr'.
 ===========================================================================
 */
 
@@ -138,9 +145,9 @@ module demux_preamble_128 (
                 ST_WAIT_FRAME: begin
                     lpc_word_idx <= 9'd0;
                     gap_cnt      <= 5'd0;
-                    // Wait until >= 1600 Bytes are buffered so all 259 LPC words 
-                    // (3108 Bytes) drain in a 100% gap-free burst
-                    if ((total_avail_bytes >= 15'd1600) && (buf_bytes >= 6'd9)) begin
+                    // [Rev 2.1 - OISL-DEMUX-001] Reserve a complete 3,117-byte frame
+                    // so an upstream pause cannot starve the fixed 259-word LPC burst.
+                    if ((total_avail_bytes >= 15'd3117) && (buf_bytes >= 6'd9)) begin
                         state <= ST_PREAMBLE;
                     end
                 end
@@ -259,6 +266,9 @@ module demux_preamble_128 (
             #0.001;
             next_lpc_edge_ns = $realtime;
             while (lpc_total_bytes < 16'd12432) begin
+                if (lpc_rd_ptr > 0) begin
+                    while (lpc_rd_ptr >= lpc_wr_ptr) @(negedge clk);
+                end
                 if (lpc_rd_ptr == 0)
                     lpc_byte_stream = lpc_data_out[95:88];
                 else

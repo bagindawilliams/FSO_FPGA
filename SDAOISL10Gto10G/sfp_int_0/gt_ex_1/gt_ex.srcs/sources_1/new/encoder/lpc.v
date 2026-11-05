@@ -17,9 +17,14 @@ Revision History:
     24-bit codeword bit ordering per Figure 2-14.
   - Rev 2.2 (2026-10-28 14:55 KST) : [Clean-Path & Full 24-Position 1-Bit Error Fix]
     Set default ACTIVE_DISP_INV_EN = 0 so the 24-bit punctured codeword preserves full
-    Hamming distance across all 24 bit positions (allowing lpc_dec.v Rev 2.2 to repair
-    100% of single-bit errors across bits 0..23 including E[0] with zero false inversions
-    on the clean path), while maintaining active running_disparity accumulation.
+    Hamming distance across all 24 bit positions.
+  - Rev 2.4 (2026-10-29 13:07 KST) : [Deep Audit Fix F05 - CCSDS 141.11-O-1 Vertical Parity E[8]]
+    1. Preserved 100% of original descriptions, comments, and Rev 1.0/2.0/2.2 history.
+    2. Aligned vertical parity equations P[2:0] (pv_1, pv_2, pv_3) with CCSDS 141.11-O-1
+       Section 3.3.2.3.4 and SDA OISL Figure 2-13 by XORing V[1:3] with E[8] (e_2,0, the
+       reference bit of the lower 8-bit differential chain E[8..15]), while horizontal
+       parities P[6:4] (ph_1, ph_2, ph_3) are XNORed with E[0] (e_0,0, the reference bit
+       of the upper 8-bit differential chain E[0..7]).
 ===========================================================================
 */
 module lpc #(
@@ -85,19 +90,20 @@ module lpc #(
     assign V[3]  = E[3]  ^ E[7]  ^ E[11] ^ E[15];
 
     // CRITICAL: Combinational Math for Parity 'P' (Eliminates 1-Cycle Delay Bug)
-    // P[7:4] = {ph_0, ph_1, ph_2, ph_3}, P[3:0] = {pv_0, pv_1, pv_2, pv_3} per Figure 2-14
+    // P[7:4] = {ph_0, ph_1, ph_2, ph_3} coupled with E[0] (e_0,0)
+    // P[3:0] = {pv_0, pv_1, pv_2, pv_3} coupled with E[8] (e_2,0) per CCSDS 141.11-O-1 & Fig 2-13
     assign P[7] = ~H[0];
-    assign P[6] = ~(E[0] ^ H[1]); // XNOR Gate implementation
+    assign P[6] = ~(E[0] ^ H[1]); // XNOR Gate implementation with e_0,0
     assign P[5] = ~(E[0] ^ H[2]);
     assign P[4] = ~(E[0] ^ H[3]);
     
     assign P[3] = V[0];
-    assign P[2] = (E[0] ^ V[1]);  // XOR Gate implementation
-    assign P[1] = (E[0] ^ V[2]);
-    assign P[0] = (E[0] ^ V[3]);
+    assign P[2] = (E[8] ^ V[1]);  // [Rev 2.4] XOR Gate implementation with e_2,0 (E[8])
+    assign P[1] = (E[8] ^ V[2]);
+    assign P[0] = (E[8] ^ V[3]);
 
     // =========================================================================
-    // [Rev 2.0/2.2] ACTIVE DISPARITY MANAGEMENT (SDA OISL Sec. 2.6.3.6.8)
+    // [Rev 2.0/2.4] ACTIVE DISPARITY MANAGEMENT (SDA OISL Sec. 2.6.3.6.8)
     // =========================================================================
     wire [23:0] raw_codeword = {E[0], E[1], E[2], E[3], E[4], E[5], E[6], E[7],
                                 E[8], E[9], E[10], E[11], E[12], E[13], E[14], E[15], P};

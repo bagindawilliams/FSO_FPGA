@@ -1,0 +1,27 @@
+/2025.2/2025.2/Vivado/bin/setupEnv.sh: line 236: [: /home/williams/MYFPGA/FPGA: binary operator expected
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/arq_rx_controller.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module arq_rx_controller
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/arq_rx_reorder_ddr4_wrapper.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module arq_rx_reorder_ddr4_wrapper
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/deframer.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module deframer
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/deframer_header.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module deframer_header
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/deframer_payload.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module deframer_payload
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/frame_demultiplexer.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module frame_demultiplexer
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/fso_crc_16_checker.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module fso_crc_16_checker
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/fso_crc_32_checker.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module fso_crc_32_checker
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/fso_ethernet_deframer.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module fso_ethernet_deframer
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/header_parser.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module header_parser
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/idle_discard.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module idle_discard
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/mgmt_extraction.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module mgmt_extraction
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/tb_fso_ethernet_deframer.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module tb_fso_ethernet_deframer

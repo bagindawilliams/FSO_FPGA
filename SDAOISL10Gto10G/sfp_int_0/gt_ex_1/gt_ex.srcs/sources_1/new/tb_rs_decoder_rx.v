@@ -29,6 +29,11 @@ Revision History:
     alpha_value.mem) and generator roots alpha^(11*j) (j = 120..135) across 
     TX rs_encoder and RX syndrome_unit, euclid_proc, chien_search, and 
     forney_math with multi-symbol error injection and Table 2-18 headers.
+  - Rev 2.8 (2026-10-30 11:30 KST) : [Audit Fix A10 - Explicit 64-Bit Integer Zero-Extension]
+    Replaced out-of-range 32-bit integer part-select 'f[63:0]' on word 239 with 
+    explicitly zero-extended '{32'd0, f[31:0]}' so simulators such as Icarus Verilog 
+    never inject 32 upper 'X' bits into the reference stimulus, and added strict 
+    $fatal assertion on any header/payload mismatch.
 ===========================================================================
 */
 
@@ -67,14 +72,14 @@ module tb_rs_decoder_rx();
     wire [63:0] dec_pld_out;
 
     // Hierarchical Probes
-    wire [11:0] repaired_hdr_bytes      = u_dut_rs_hdr_dec.repaired_symbol_cnt;
+    wire [11:0] repaired_hdr_bytes       = u_dut_rs_hdr_dec.repaired_symbol_cnt;
     wire [11:0] total_repaired_pld_bytes = u_dut_rs_pld_dec.total_repaired_pld_bytes;
-    wire [31:0] fso_payload_header      = u_dut_rs_pld_dec.fso_payload_header;
-    wire [31:0] fso_packet_header       = u_dut_rs_pld_dec.fso_packet_header;
-    wire [31:0] fso_crc32_out           = u_dut_rs_pld_dec.fso_crc32_out;
-    wire [7:0]  pld_byte_stream         = u_dut_rs_pld_dec.pld_byte_stream;
-    wire [11:0] pld_byte_cnt            = u_dut_rs_pld_dec.pld_byte_cnt;
-    wire [31:0] rs_frame_id             = u_dut_rs_pld_dec.rs_frame_id;
+    wire [31:0] fso_payload_header       = u_dut_rs_pld_dec.fso_payload_header;
+    wire [31:0] fso_packet_header        = u_dut_rs_pld_dec.fso_packet_header;
+    wire [31:0] fso_crc32_out            = u_dut_rs_pld_dec.fso_crc32_out;
+    wire [7:0]  pld_byte_stream          = u_dut_rs_pld_dec.pld_byte_stream;
+    wire [11:0] pld_byte_cnt             = u_dut_rs_pld_dec.pld_byte_cnt;
+    wire [31:0] rs_frame_id              = u_dut_rs_pld_dec.rs_frame_id;
 
     // 1. Golden Reference TX Encoders (GF 0x187, roots j=120..135)
     rs_encoder #(31) u_ref_rs_hdr_enc (
@@ -148,14 +153,14 @@ module tb_rs_decoder_rx();
                 pld_wr_p            = pld_wr_p + 1;
             end
             if (dec_hdr_dv) begin
-                if (dec_hdr_out == exp_hdr_q[hdr_rd_p])
+                if (dec_hdr_out === exp_hdr_q[hdr_rd_p])
                     hdr_ok_cnt = hdr_ok_cnt + 1;
                 else
                     hdr_err_cnt = hdr_err_cnt + 1;
                 hdr_rd_p = hdr_rd_p + 1;
             end
             if (dec_pld_dv) begin
-                if (dec_pld_out == exp_pld_q[pld_rd_p])
+                if (dec_pld_out === exp_pld_q[pld_rd_p])
                     pld_ok_cnt = pld_ok_cnt + 1;
                 else
                     pld_err_cnt = pld_err_cnt + 1;
@@ -195,8 +200,9 @@ module tb_rs_decoder_rx();
                 end
 
                 tx_pld_en <= 1'b1;
+                // [Rev 2.8 - Fix A10] Use explicit {32'd0, f[31:0]} to prevent out-of-bounds 'X' bits
                 if      (c == 1)   tx_pld_in <= (f == 2) ? 64'hAB00_4064_AAAA_0001 : 64'hAB00_0000_CDEF_07D0;
-                else if (c == 239) tx_pld_in <= 64'hDA7A_DA7A_C320_0000 + f[63:0];
+                else if (c == 239) tx_pld_in <= 64'hDA7A_DA7A_C320_0000 + {32'd0, f[31:0]};
                 else               tx_pld_in <= {32'h4B6F_6F6B, f[15:0], c[15:0]};
             end
 
@@ -221,6 +227,8 @@ module tb_rs_decoder_rx();
         $display(" -> Total Repaired Payload Symbols     : %0d", total_repaired_pld_bytes);
         if (hdr_ok_cnt == 64 && hdr_err_cnt == 0 && pld_ok_cnt == 956 && pld_err_cnt == 0)
             $display(" -> RESULT: [PASS] 100%% COMPLIANT WITH ETRI AUDIT ITEM 2 & ITEM 3!");
+        else
+            $fatal(1, " -> RESULT: [FAIL] Reed-Solomon Decoder mismatch detected!");
         $display("======================================================================\n");
         $finish;
     end

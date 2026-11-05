@@ -21,7 +21,7 @@ else
 fi
 export LD_LIBRARY_PATH
 
-HD_PWD='/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.runs/impl_1'
+HD_PWD='/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.runs/impl_1'
 cd "$HD_PWD"
 
 HD_LOG=runme.log

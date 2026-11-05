@@ -1,0 +1,7 @@
+Running: xsim.dir/tb_eth_tx_back_end_top_behav/xsimk -simmode gui -wdb tb_eth_tx_back_end_top_behav.wdb -simrunnum 0 -socket 43213
+Design successfully loaded
+Design Loading Memory Usage: 201164 KB (Peak: 201172 KB)
+Design Loading CPU Usage: 620 ms
+Simulation completed
+Simulation Memory Usage: 283396 KB (Peak: 340432 KB)
+Simulation CPU Usage: 640 ms

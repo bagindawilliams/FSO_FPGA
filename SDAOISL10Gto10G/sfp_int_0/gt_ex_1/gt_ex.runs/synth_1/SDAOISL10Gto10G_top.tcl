@@ -4,7 +4,7 @@
 
 set TIME_start [clock seconds] 
 namespace eval ::optrace {
-  variable script "/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.runs/synth_1/SDAOISL10Gto10G_top.tcl"
+  variable script "/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.runs/synth_1/SDAOISL10Gto10G_top.tcl"
   variable category "vivado_synth"
 }
 
@@ -64,151 +64,153 @@ set_param project.singleFileAddWarning.threshold 0
 set_param project.compositeFile.enableAutoGeneration 0
 set_param synth.vivado.isSynthRun true
 set_msg_config -source 4 -id {IP_Flow 19-2162} -severity warning -new_severity info
-set_property webtalk.parent_dir {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.cache/wt} [current_project]
-set_property parent.project_path {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.xpr} [current_project]
-set_property XPM_LIBRARIES {XPM_CDC XPM_MEMORY} [current_project]
+set_property webtalk.parent_dir {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.cache/wt} [current_project]
+set_property parent.project_path {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.xpr} [current_project]
+set_property XPM_LIBRARIES {XPM_CDC XPM_FIFO XPM_MEMORY} [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language Verilog [current_project]
-set_property ip_output_repo {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.cache/ip} [current_project]
+set_property ip_output_repo {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.cache/ip} [current_project]
 set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
 read_mem {
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/alpha_value.mem}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/sample.mem}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/decimal_value.mem}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/error.mem}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/rs_codec/alpha_value.mem}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/sample.mem}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/rs_codec/decimal_value.mem}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/error.mem}
 }
 read_verilog -library xil_defaultlib {
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/FEC_Demux.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/FEC_MUX.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/arq_ddr4_wrapper.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/arq_rx_controller.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/arq_rx_reorder_ddr4_wrapper.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/arq_tx_controller.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/autorun.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/chien_search.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/core_rx.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/core_tx.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/deframer.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/deframer_header.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/deframer_payload.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/demux_preamble_128.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/descrambler.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/error_inject.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/eth_axis_packet_gen.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/eth_mac_packing_tx.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/eth_preamble_gen.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/eth_preamble_remover.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/eth_rx_front_end_top.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/eth_tx_back_end_top.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/ethernet_frame_reassembly.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/ethernet_fso_framer.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/forney_math.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/frame_demultiplexer.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/fso_axis_fifo.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/fso_crc_16.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/fso_crc_16_checker.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/fso_crc_32.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/fso_crc_32_checker.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/fso_ethernet_deframer.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/fso_gth_core_wrapper.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/fso_header_top.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/fso_idle_generator.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/fso_payload.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/fso_payload_mux.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/fso_payload_top.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/gth64b66b_rx.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/gth64b66b_tx.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/header_generator.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/header_parser.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/idle_discard.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/inverter.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/lpc.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/lpc_dec.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/lpc_dec_top.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/lpc_top.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/mgmt_extraction.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/mgmt_telemetry_generator.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/multiplier.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/mux_eth_32.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/mux_gearbox_128.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/packaging_and_segmentation.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/preamble_gen.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/preamble_sda_decoder.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/rs_decoder.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/rs_decoder_64.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/rs_encoder.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/rs_encoder_64.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/rx_gth_logic.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/decoder/rx_logic_gth.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/scrambler.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/sda_decoder.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/sda_encoder.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/rs_codec/syndrome_unit.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/x_gth_logic.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/encoder/x_logic_gth.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/xgmii_rx_parser.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/xgmii_tx_encoder.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/xgmii_tx_formatter.v}
-  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/new/SDAOISL10Gto10G_top.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/FEC_Demux.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/FEC_MUX.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/arq_ddr4_wrapper.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/arq_rx_controller.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/arq_rx_reorder_ddr4_wrapper.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/arq_tx_controller.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/autorun.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/rs_codec/chien_search.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/decoder/core_rx.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/encoder/core_tx.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/deframer.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/deframer_header.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/deframer_payload.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/demux_preamble_128.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/descrambler.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/error_inject.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/eth_axis_packet_gen.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/eth_mac_packing_tx.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/eth_packet_cdc.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/eth_preamble_gen.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/eth_preamble_remover.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/eth_rx_front_end_top.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/eth_rx_segment_cdc.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/eth_tx_back_end_top.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/ethernet_frame_reassembly.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/ethernet_fso_framer.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/rs_codec/euclid_proc.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/rs_codec/forney_math.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/frame_demultiplexer.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/fso_axis_fifo.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/fso_crc_16.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/fso_crc_16_checker.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/fso_crc_32.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/fso_crc_32_checker.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/fso_ethernet_deframer.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/fso_gth_core_wrapper.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/fso_header_top.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/fso_idle_generator.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/fso_payload.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/fso_payload_mux.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/fso_payload_top.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/gth64b66b_rx.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/gth64b66b_tx.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/header_generator.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/header_parser.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/idle_discard.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/rs_codec/inverter.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/encoder/lpc.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/decoder/lpc_dec.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/decoder/lpc_dec_top.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/encoder/lpc_top.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/mgmt_extraction.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/mgmt_telemetry_generator.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/rs_codec/multiplier.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/mux_eth_32.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/mux_gearbox_128.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/packaging_and_segmentation.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/preamble_gen.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/preamble_sda_decoder.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/rs_codec/rs_decoder.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/decoder/rs_decoder_64.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/rs_codec/rs_encoder.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/encoder/rs_encoder_64.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/decoder/rx_gth_logic.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/decoder/rx_logic_gth.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/encoder/scrambler.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/sda_decoder.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/sda_encoder.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/rs_codec/syndrome_unit.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/encoder/x_gth_logic.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/encoder/x_logic_gth.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/xgmii_rx_parser.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/xgmii_tx_encoder.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/xgmii_tx_formatter.v}
+  {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/new/SDAOISL10Gto10G_top.v}
 }
-read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/ip/eth_10g_pcs_pma_tx_0/eth_10g_pcs_pma_tx_0.xci}}
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.gen/sources_1/ip/eth_10g_pcs_pma_tx_0/ip_0/synth/eth_10g_pcs_pma_tx_0_gt_ooc.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.gen/sources_1/ip/eth_10g_pcs_pma_tx_0/ip_0/synth/eth_10g_pcs_pma_tx_0_gt.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.gen/sources_1/ip/eth_10g_pcs_pma_tx_0/synth/eth_10g_pcs_pma_tx_0_ooc.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.gen/sources_1/ip/eth_10g_pcs_pma_tx_0/synth/eth_10g_pcs_pma_tx_0.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.gen/sources_1/ip/eth_10g_pcs_pma_tx_0/synth/eth_10g_pcs_pma_tx_0_clocks.xdc}}]
+read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/ip/eth_10g_pcs_pma_tx_0/eth_10g_pcs_pma_tx_0.xci}}
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.gen/sources_1/ip/eth_10g_pcs_pma_tx_0/ip_0/synth/eth_10g_pcs_pma_tx_0_gt_ooc.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.gen/sources_1/ip/eth_10g_pcs_pma_tx_0/ip_0/synth/eth_10g_pcs_pma_tx_0_gt.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.gen/sources_1/ip/eth_10g_pcs_pma_tx_0/synth/eth_10g_pcs_pma_tx_0_ooc.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.gen/sources_1/ip/eth_10g_pcs_pma_tx_0/synth/eth_10g_pcs_pma_tx_0.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.gen/sources_1/ip/eth_10g_pcs_pma_tx_0/synth/eth_10g_pcs_pma_tx_0_clocks.xdc}}]
 
-read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/ip/cross_logic_gth_load/cross_logic_gth_load.xci}}
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/cross_logic_gth_load/cross_logic_gth_load.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/cross_logic_gth_load/cross_logic_gth_load_clocks.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/cross_logic_gth_load/cross_logic_gth_load_ooc.xdc}}]
+read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/ip/cross_logic_gth_load/cross_logic_gth_load.xci}}
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/sda_codec_0.gen/sources_1/ip/cross_logic_gth_load/cross_logic_gth_load.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/sda_codec_0.gen/sources_1/ip/cross_logic_gth_load/cross_logic_gth_load_clocks.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/sda_codec_0.gen/sources_1/ip/cross_logic_gth_load/cross_logic_gth_load_ooc.xdc}}]
 
-read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head.xci}}
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head_clocks.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head_ooc.xdc}}]
+read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head.xci}}
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/sda_codec_0.gen/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/sda_codec_0.gen/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head_clocks.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/sda_codec_0.gen/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head_ooc.xdc}}]
 
-read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/ip/bram_rs/bram_rs.xci}}
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.gen/sources_1/ip/bram_rs/bram_rs_ooc.xdc}}]
+read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/ip/bram_rs/bram_rs.xci}}
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.gen/sources_1/ip/bram_rs/bram_rs_ooc.xdc}}]
 
-read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/ip/cross_gth_logic/cross_gth_logic.xci}}
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/cross_gth_logic/cross_gth_logic.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/cross_gth_logic/cross_gth_logic_clocks.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/cross_gth_logic/cross_gth_logic_ooc.xdc}}]
+read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/ip/cross_gth_logic/cross_gth_logic.xci}}
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/sda_codec_0.gen/sources_1/ip/cross_gth_logic/cross_gth_logic.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/sda_codec_0.gen/sources_1/ip/cross_gth_logic/cross_gth_logic_clocks.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/sda_codec_0.gen/sources_1/ip/cross_gth_logic/cross_gth_logic_ooc.xdc}}]
 
-read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/ip/gth_fso_64b66b/gth_fso_64b66b.xci}}
-set_property is_enabled false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.gen/sources_1/ip/gth_fso_64b66b/synth/gth_fso_64b66b.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.gen/sources_1/ip/gth_fso_64b66b/synth/gth_fso_64b66b_ooc.xdc}}]
+read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/ip/gth_fso_64b66b/gth_fso_64b66b.xci}}
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.gen/sources_1/ip/gth_fso_64b66b/synth/gth_fso_64b66b_ooc.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.gen/sources_1/ip/gth_fso_64b66b/synth/gth_fso_64b66b.xdc}}]
 
-read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/ip/cross_logic_gth/cross_logic_gth.xci}}
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/cross_logic_gth/cross_logic_gth.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/cross_logic_gth/cross_logic_gth_clocks.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/cross_logic_gth/cross_logic_gth_ooc.xdc}}]
+read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/ip/cross_logic_gth/cross_logic_gth.xci}}
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/sda_codec_0.gen/sources_1/ip/cross_logic_gth/cross_logic_gth.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/sda_codec_0.gen/sources_1/ip/cross_logic_gth/cross_logic_gth_clocks.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/sda_codec_0.gen/sources_1/ip/cross_logic_gth/cross_logic_gth_ooc.xdc}}]
 
-read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/ip/cross_gth_logic_load/cross_gth_logic_load.xci}}
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/cross_gth_logic_load/cross_gth_logic_load.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/cross_gth_logic_load/cross_gth_logic_load_clocks.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/cross_gth_logic_load/cross_gth_logic_load_ooc.xdc}}]
+read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/ip/cross_gth_logic_load/cross_gth_logic_load.xci}}
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/sda_codec_0.gen/sources_1/ip/cross_gth_logic_load/cross_gth_logic_load.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/sda_codec_0.gen/sources_1/ip/cross_gth_logic_load/cross_gth_logic_load_clocks.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/sda_codec_0.gen/sources_1/ip/cross_gth_logic_load/cross_gth_logic_load_ooc.xdc}}]
 
-read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/ip/cross_gth_logic_head/cross_gth_logic_head.xci}}
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/cross_gth_logic_head/cross_gth_logic_head.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/cross_gth_logic_head/cross_gth_logic_head_clocks.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/sda_codec_0.gen/sources_1/ip/cross_gth_logic_head/cross_gth_logic_head_ooc.xdc}}]
+read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/ip/cross_gth_logic_head/cross_gth_logic_head.xci}}
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/sda_codec_0.gen/sources_1/ip/cross_gth_logic_head/cross_gth_logic_head.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/sda_codec_0.gen/sources_1/ip/cross_gth_logic_head/cross_gth_logic_head_clocks.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/sda_codec_0.gen/sources_1/ip/cross_gth_logic_head/cross_gth_logic_head_ooc.xdc}}]
 
-read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/ip/eth_10g_pcs_pma_rx_0/eth_10g_pcs_pma_rx_0.xci}}
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.gen/sources_1/ip/eth_10g_pcs_pma_rx_0/ip_0/synth/eth_10g_pcs_pma_rx_0_gt_ooc.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.gen/sources_1/ip/eth_10g_pcs_pma_rx_0/ip_0/synth/eth_10g_pcs_pma_rx_0_gt.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.gen/sources_1/ip/eth_10g_pcs_pma_rx_0/synth/eth_10g_pcs_pma_rx_0_ooc.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.gen/sources_1/ip/eth_10g_pcs_pma_rx_0/synth/eth_10g_pcs_pma_rx_0.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.gen/sources_1/ip/eth_10g_pcs_pma_rx_0/synth/eth_10g_pcs_pma_rx_0_clocks.xdc}}]
+read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/ip/eth_10g_pcs_pma_rx_0/eth_10g_pcs_pma_rx_0.xci}}
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.gen/sources_1/ip/eth_10g_pcs_pma_rx_0/ip_0/synth/eth_10g_pcs_pma_rx_0_gt_ooc.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.gen/sources_1/ip/eth_10g_pcs_pma_rx_0/ip_0/synth/eth_10g_pcs_pma_rx_0_gt.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.gen/sources_1/ip/eth_10g_pcs_pma_rx_0/synth/eth_10g_pcs_pma_rx_0_ooc.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.gen/sources_1/ip/eth_10g_pcs_pma_rx_0/synth/eth_10g_pcs_pma_rx_0.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.gen/sources_1/ip/eth_10g_pcs_pma_rx_0/synth/eth_10g_pcs_pma_rx_0_clocks.xdc}}]
 
-read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci}}
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_board.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc}}]
-set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_ooc.xdc}}]
+read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci}}
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_board.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.gen/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc}}]
+set_property used_in_implementation false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_ooc.xdc}}]
 
 OPTRACE "Adding files" END { }
 # Mark all dcp files as not used in implementation to prevent them from being
@@ -219,14 +221,14 @@ OPTRACE "Adding files" END { }
 foreach dcp [get_files -quiet -all -filter file_type=="Design\ Checkpoint"] {
   set_property used_in_implementation false $dcp
 }
-read_xdc {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/constrs_1/new/SDAOISL10Gto10G.xdc}}
-set_property used_in_implementation false [get_files {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/constrs_1/new/SDAOISL10Gto10G.xdc}}]
+read_xdc {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/constrs_1/new/SDAOISL10Gto10G.xdc}}
+set_property used_in_implementation false [get_files {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/constrs_1/new/SDAOISL10Gto10G.xdc}}]
 
 read_xdc dont_touch.xdc
 set_property used_in_implementation false [get_files dont_touch.xdc]
 set_param ips.enableIPCacheLiteLoad 1
 
-read_checkpoint -auto_incremental -incremental {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/utils_1/imports/synth_1/top.dcp}
+read_checkpoint -auto_incremental -incremental {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/utils_1/imports/synth_1/top.dcp}
 close [open __synthesis_is_running__ w]
 
 OPTRACE "synth_design" START { }

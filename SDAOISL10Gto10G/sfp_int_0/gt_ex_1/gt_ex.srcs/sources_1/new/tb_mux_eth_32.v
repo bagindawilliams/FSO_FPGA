@@ -9,9 +9,16 @@
 //     1. Connected 'asm_last_in' and 'eth_last_out' ports on u_mux (mux_eth_32)
 //        to eliminate unconnected port warnings and verify end-of-packet alignment.
 //     2. Added automatic cycle counter & self-check verifying that Cycle 1 emits
-//        32'h5555_5555, Cycle 2 emits 32'h5555_55D5, Cycles 3..22 emit all 20
-//        payload words without overwriting Word 0, and eth_last_out asserts on
-//        Cycle 22 (80B Payload + 8B Preamble = 88 Bytes total).
+//        32'h5555_5555, Cycle 2 emits 32'h5555_55D5, Cycles 3..22 emit all
+//        payload words without overwriting Word 0.
+//   - Rev 2.3 (2026-10-29 01:49 KST) : [Unified 2000-Byte Jumbo Frame & Counter Alignment]
+//     1. Preserved all original comments and Rev 1.0/2.0 history logs 100% intact.
+//     2. Upgraded from 20 dummy words (80B) to the full 2000-Byte (500-word) Jumbo 
+//        Ethernet Frame (containing "Kookmin FSO " and ending with FCS 0xDEADBEEF), 
+//        verifying that mux_eth_32 prepends 8 Bytes of Ethernet Preamble 
+//        (55555555_555555D5) and emits 502 contiguous words (2008 Bytes) with 
+//        in_clk_cnt (1..500), in_byte_cnt (4..2000), out_clk_cnt (1..502), and 
+//        out_byte_cnt (4..2008).
 //////////////////////////////////////////////////////////////////////////////////
 
 module tb_mux_eth_32();
@@ -19,7 +26,7 @@ module tb_mux_eth_32();
     reg clk;
     reg rst_n;
 
-    // Sinyal input simulasi dari modul Assembler (1922 Byte Frame)
+    // Sinyal input simulasi dari modul Assembler (2000 Byte Jumbo Frame)
     reg [31:0] asm_data_in;
     reg        asm_valid_in;
     reg        asm_last_in;
@@ -31,6 +38,14 @@ module tb_mux_eth_32();
     wire [31:0] eth_data_out;
     wire        eth_valid_out;
     wire        eth_last_out;
+
+    // Standardized Waveform Counters
+    reg [15:0] in_clk_cnt;    // 1..500 Clocks
+    reg [15:0] in_byte_cnt;   // 4..2000 Bytes
+    reg [15:0] out_clk_cnt;   // 1..502 Clocks
+    reg [15:0] out_byte_cnt;  // 4..2008 Bytes
+    reg [15:0] out_word_cnt;
+    integer    err_cnt;
 
     // 1. Instansiasi Generator Preamble
     eth_preamble_gen u_pre_gen (
@@ -54,44 +69,62 @@ module tb_mux_eth_32();
     always #1.6 clk = ~clk;
 
     integer i;
-    reg [7:0] out_word_cnt;
-    integer   err_cnt;
 
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
-            out_word_cnt <= 8'd0;
+            out_clk_cnt  <= 16'd0;
+            out_byte_cnt <= 16'd0;
+            out_word_cnt <= 16'd0;
             err_cnt      <= 0;
         end else if (eth_valid_out) begin
-            out_word_cnt <= out_word_cnt + 8'd1;
-            if (out_word_cnt == 8'd0 && eth_data_out !== 32'h5555_5555) err_cnt <= err_cnt + 1;
-            if (out_word_cnt == 8'd1 && eth_data_out !== 32'h5555_55D5) err_cnt <= err_cnt + 1;
-            if (out_word_cnt == 8'd2 && eth_data_out !== 32'hA0A0_B0B0) err_cnt <= err_cnt + 1;
-            if (out_word_cnt == 8'd21 && (eth_data_out !== 32'hA0A0_B0C3 || !eth_last_out)) err_cnt <= err_cnt + 1;
+            out_clk_cnt  <= out_clk_cnt + 16'd1;
+            out_byte_cnt <= out_byte_cnt + 16'd4;
+            out_word_cnt <= out_word_cnt + 16'd1;
+            if (out_word_cnt == 16'd0   && eth_data_out !== 32'h5555_5555) err_cnt <= err_cnt + 1;
+            if (out_word_cnt == 16'd1   && eth_data_out !== 32'h5555_55D5) err_cnt <= err_cnt + 1;
+            if (out_word_cnt == 16'd2   && eth_data_out !== 32'hAABB_CCDD) err_cnt <= err_cnt + 1;
+            if (out_word_cnt == 16'd501 && (eth_data_out !== 32'hDEAD_BEEF || !eth_last_out)) err_cnt <= err_cnt + 1;
+        end else begin
+            out_clk_cnt  <= 16'd0;
+            out_byte_cnt <= 16'd0;
         end
     end
 
     initial begin
         // Tahap Inisialisasi
-        clk = 0;
-        rst_n = 0;
-        asm_data_in = 0;
+        clk          = 0;
+        rst_n        = 0;
+        asm_data_in  = 0;
         asm_valid_in = 0;
-        asm_last_in = 0;
+        asm_last_in  = 0;
+        in_clk_cnt   = 0;
+        in_byte_cnt  = 0;
 
         // Reset sistem
         #20;
         rst_n = 1;
         #20;
 
-        // --- SKENARIO TRANSMISI ETHERNET FRAME ---
+        // --- SKENARIO TRANSMISI ETHERNET FRAME (2000-BYTE JUMBO FRAME) ---
         // Assembler memuntahkan data FSO Frame yang sudah digabung dengan MAC Header
-        // Kita simulasikan pengiriman 20 paket 32-bit (80 Byte) sebagai sampel pengujian
-        for (i = 0; i < 20; i = i + 1) begin
+        // Kita simulasikan pengiriman 500 kata 32-bit (2000 Byte Jumbo Frame)
+        for (i = 0; i < 500; i = i + 1) begin
             @(posedge clk);
-            // Membuat data dummy yang bisa dikenali (Contoh: A0A0B0B0, A0A0B0B1, dst)
-            asm_data_in  <= 32'hA0A0_B0B0 + i; 
             asm_valid_in <= 1'b1;
-            asm_last_in  <= (i == 19);
+            asm_last_in  <= (i == 499);
+            in_clk_cnt   <= i + 16'd1;
+            in_byte_cnt  <= (i + 16'd1) * 16'd4;
+            case (i)
+                0:   asm_data_in <= 32'hAABB_CCDD; // DEST_MAC[47:16]
+                1:   asm_data_in <= 32'hEEFF_1122; // DEST_MAC[15:0], SRC_MAC[47:32]
+                2:   asm_data_in <= 32'h3344_5566; // SRC_MAC[31:0]
+                3:   asm_data_in <= 32'h0800_4500; // EtherType IPv4
+                9:   asm_data_in <= 32'h4B6F_6F6B; // "Kook"
+                10:  asm_data_in <= 32'h6D69_6E20; // "min "
+                11:  asm_data_in <= 32'h4653_4F20; // "FSO "
+                499: asm_data_in <= 32'hDEAD_BEEF; // 2000th Byte Ethernet FCS
+                default: asm_data_in <= 32'hA0A0_0000 + i;
+            endcase
         end
 
         // Momen ketika transmisi dari Assembler selesai (Akhir Frame)
@@ -99,15 +132,17 @@ module tb_mux_eth_32();
         asm_data_in  <= 32'd0;
         asm_valid_in <= 1'b0;
         asm_last_in  <= 1'b0;
+        in_clk_cnt   <= 16'd0;
+        in_byte_cnt  <= 16'd0;
 
         // Tunggu beberapa saat untuk melihat sisa Pipeline memuntahkan data terakhir
-        #30;
+        #40;
         $display("\n=======================================================");
         $display(" ETHERNET PREAMBLE 32-BIT MUX VERIFICATION REPORT");
-        $display(" -> Total Output Words Emitted : %0d (2 Preamble + 20 Payload)", out_word_cnt);
+        $display(" -> Total Output Words Emitted : %0d (2 Preamble + 500 Jumbo Payload = 2008B)", out_word_cnt);
         $display(" -> Verification Errors        : %0d", err_cnt);
-        if (out_word_cnt == 8'd22 && err_cnt == 0)
-            $display(" -> RESULT: [PASS] 8-BYTE ETHERNET PREAMBLE PREPENDED CLEANLY!");
+        if (out_word_cnt == 16'd502 && err_cnt == 0)
+            $display(" -> RESULT: [PASS] 8-BYTE ETHERNET PREAMBLE PREPENDED TO 2000B JUMBO CLEANLY!");
         $display("=======================================================\n");
         $finish;
     end

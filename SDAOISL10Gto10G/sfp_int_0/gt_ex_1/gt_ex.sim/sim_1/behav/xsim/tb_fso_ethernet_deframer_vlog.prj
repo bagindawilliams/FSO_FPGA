@@ -1,0 +1,21 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  --include "../../../../../../../../../../../../2025.2/2025.2/data/rsb/busdef" --include "../../../../imports" --include "../../../../gt_ex.ip_user_files/ipstatic" \
+"../../../../gt_ex.srcs/sources_1/new/arq_rx_controller.v" \
+"../../../../gt_ex.srcs/sources_1/new/arq_rx_reorder_ddr4_wrapper.v" \
+"../../../../gt_ex.srcs/sources_1/new/deframer.v" \
+"../../../../gt_ex.srcs/sources_1/new/deframer_header.v" \
+"../../../../gt_ex.srcs/sources_1/new/deframer_payload.v" \
+"../../../../gt_ex.srcs/sources_1/new/frame_demultiplexer.v" \
+"../../../../gt_ex.srcs/sources_1/new/fso_crc_16_checker.v" \
+"../../../../gt_ex.srcs/sources_1/new/fso_crc_32_checker.v" \
+"../../../../gt_ex.srcs/sources_1/new/fso_ethernet_deframer.v" \
+"../../../../gt_ex.srcs/sources_1/new/header_parser.v" \
+"../../../../gt_ex.srcs/sources_1/new/idle_discard.v" \
+"../../../../gt_ex.srcs/sources_1/new/mgmt_extraction.v" \
+"../../../../gt_ex.srcs/sources_1/new/tb_fso_ethernet_deframer.v" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort

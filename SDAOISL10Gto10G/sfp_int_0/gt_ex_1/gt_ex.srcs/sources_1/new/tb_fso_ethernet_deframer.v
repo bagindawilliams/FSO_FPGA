@@ -29,6 +29,25 @@ Revision History:
     1. Computed true zero-initialized Table 2-15 CRC-16 and CRC-32 on every frame.
     2. Used LSB-packed Table 2-14 telemetry vector (matching mgmt_telemetry_generator.v)
        to verify mgmt_extraction.v Rev 2.0.
+  - Rev 2.1 (2026-11-06 00:10 KST) : [Audit Priority 3 Closure - 1,431-Word Scoreboard, 5-Event Local Feedback & Event-Driven CRC Check]
+    1. Added a 1,431-word (3 x 477 words) expected payload scoreboard ('exp_drain_words')
+       sampled strictly on accepted transfers ('m_axis_fso_tvalid && m_axis_fso_tready'),
+       verifying exact in-order payload release (TXFN 1 -> TXFN 2 -> TXFN 3) with
+       0 word mismatches and confirming that zero words of TXFN 3 are released prior
+       to TXFN 2 retransmission ('words_drained_before_retx == 477').
+    2. Verified all 5 local feedback events on 'local_fb_ack_valid' in exact order:
+       ACK(1) [DATA] -> NAK(2) [DATA CRC Fail] -> ACK(3) [DATA Out-of-Order] ->
+       ACK(5) [MGMT] -> ACK(2) [DATA Retransmission], while tracking DATA (4) and
+       MGMT (1) feedback counts separately from peer feedback ('peer_ack_valid_out').
+    3. Sampled 'hdr_crc_ok' and 'pld_crc_ok' on 'u_dut.u_deframer.hdr_check_done' and
+       'u_dut.u_deframer.pld_check_done' events (6/6 Header CRC passes, 5/6 Payload
+       CRC passes, 1/6 intentional Payload CRC failure), and added a 200 us watchdog
+       timeout plus explicit 'else $fatal' failure assertions.
+  - Rev 2.2 (2026-11-06 00:40 KST) : [Audit Final Freeze Fix - Strict Case-Inequality TLAST Check]
+    Replaced boolean 'if (!m_axis_fso_tlast)' and 'if (m_axis_fso_tlast)' checks with
+    strict 4-state case-inequality comparisons ('m_axis_fso_tlast !== 1'b1' on word 476
+    and 'm_axis_fso_tlast !== 1'b0' on words 0..475) so X/Z values on 'm_axis_fso_tlast'
+    are unconditionally caught as alignment errors.
 ===========================================================================
 */
 
@@ -99,6 +118,12 @@ module tb_fso_ethernet_deframer();
         forever #1.6 clk = ~clk;
     end
 
+    // Watchdog Timeout Guard (200 us)
+    initial begin
+        #200000;
+        $fatal(1, "\n[WATCHDOG TIMEOUT] tb_fso_ethernet_deframer did not complete within 200 us!\n");
+    end
+
     // Zero-Initialized Table 2-15 CRC-16 (x^16 + x^12 + x^5 + 1)
     function [15:0] step_crc16(input [15:0] q, input [7:0] d);
         reg [15:0] nxt;
@@ -143,6 +168,16 @@ module tb_fso_ethernet_deframer();
         64'h4153_12D0_0000_0000, 40'd0, 6'd15,
         40'd16678204759, 6'd15
     };
+
+    // =========================================================================
+    // SCOREBOARD & EVENT-DRIVEN TELEMETRY STORAGE (Rev 2.2)
+    // - exp_drain_words[0:1430] stores the exact 3 x 477 = 1,431 32-bit words
+    //   in their required in-order release sequence:
+    //     * Words   0 ..  476 : TXFN = 1 (477 words)
+    //     * Words 477 ..  953 : TXFN = 2 (477 words)
+    //     * Words 954 .. 1430 : TXFN = 3 (477 words)
+    // =========================================================================
+    reg [31:0] exp_drain_words [0:1430];
 
     task send_fso_frame(
         input [15:0] txfn,
@@ -196,6 +231,11 @@ module tb_fso_ethernet_deframer();
                         if      (idx == 0) pw = (txfn == 16'd2) ? 32'hAB00_4064 : 32'hAB00_0000;
                         else if (idx == 1) pw = (txfn == 16'd2) ? 32'hAAAA_0001 : 32'hCDEF_07D0;
                         else               pw = {txfn, idx[15:0]};
+
+                        // Record expected in-order payload words for clean DATA frames (TXFN 1, 2, 3)
+                        if (!corrupt_pld_crc && (txfn >= 16'd1 && txfn <= 16'd3)) begin
+                            exp_drain_words[((txfn - 16'd1) * 477) + idx] = pw;
+                        end
                     end
                     crc32_acc = step_crc32(crc32_acc, pw);
                 end else begin
@@ -218,16 +258,125 @@ module tb_fso_ethernet_deframer();
         end
     endtask
 
-    integer drained_data_frames = 0;
+    // Event-Driven Scoreboard & Local/Peer Feedback Checkers
+    integer drained_data_frames       = 0;
+    integer drained_word_cnt          = 0;
+    integer drained_frame_word_idx    = 0;
+    integer drain_word_mismatch_cnt   = 0;
+    integer tlast_alignment_err_cnt   = 0;
+    integer words_drained_before_retx = 0;
+    integer frames_drained_before_retx= 0;
+
+    integer local_fb_total_cnt        = 0;
+    integer local_fb_data_cnt         = 0;
+    integer local_fb_mgmt_cnt         = 0;
+    integer local_fb_seq_err_cnt      = 0;
+    integer peer_fb_event_cnt         = 0;
+
+    integer hdr_crc_pass_cnt          = 0;
+    integer hdr_crc_fail_cnt          = 0;
+    integer pld_crc_pass_cnt          = 0;
+    integer pld_crc_fail_cnt          = 0;
+
+    integer mgmt_valid_cnt            = 0;
+    integer mgmt_range_mismatch_cnt   = 0;
+    reg [63:0] mgmt_range_captured    = 64'd0;
+
+    wire hdr_check_done_evt = u_dut.u_deframer.hdr_check_done;
+    wire pld_check_done_evt = u_dut.u_deframer.pld_check_done;
+
     always @(posedge clk) begin
-        if (local_fb_ack_valid) begin
-            $display(" [%0t] ARQ Feedback Generated -> RXFN=%0d | ACK=%0b (%s)",
-                     $time, local_fb_rxfn, local_fb_ack, local_fb_ack ? "ACK" : "NAK");
-        end
-        if (m_axis_fso_tvalid && m_axis_fso_tready && m_axis_fso_tlast) begin
-            drained_data_frames <= drained_data_frames + 1;
-            $display(" [%0t] In-Order DATA Frame #%0d Drained to Reassembly! (next expected_txfn=%0d)",
-                     $time, drained_data_frames + 1, expected_txfn);
+        if (!rst_n) begin
+            drained_data_frames     <= 0;
+            drained_word_cnt        <= 0;
+            drained_frame_word_idx  <= 0;
+            drain_word_mismatch_cnt <= 0;
+            tlast_alignment_err_cnt <= 0;
+            local_fb_total_cnt      <= 0;
+            local_fb_data_cnt       <= 0;
+            local_fb_mgmt_cnt       <= 0;
+            local_fb_seq_err_cnt    <= 0;
+            peer_fb_event_cnt       <= 0;
+            hdr_crc_pass_cnt        <= 0;
+            hdr_crc_fail_cnt        <= 0;
+            pld_crc_pass_cnt        <= 0;
+            pld_crc_fail_cnt        <= 0;
+            mgmt_valid_cnt          <= 0;
+            mgmt_range_mismatch_cnt <= 0;
+            mgmt_range_captured     <= 64'd0;
+        end else begin
+            // 1. Event-Driven Header CRC-16 & Payload CRC-32 Recording
+            if (hdr_check_done_evt) begin
+                if (hdr_crc_ok === 1'b1) hdr_crc_pass_cnt <= hdr_crc_pass_cnt + 1;
+                else                     hdr_crc_fail_cnt <= hdr_crc_fail_cnt + 1;
+            end
+            if (pld_check_done_evt) begin
+                if (pld_crc_ok === 1'b1) pld_crc_pass_cnt <= pld_crc_pass_cnt + 1;
+                else                     pld_crc_fail_cnt <= pld_crc_fail_cnt + 1;
+            end
+
+            // 2. Five-Event Local Feedback Verification
+            //    Sequence: 0:ACK(1)[DATA] -> 1:NAK(2)[DATA] -> 2:ACK(3)[DATA] -> 3:ACK(5)[MGMT] -> 4:ACK(2)[DATA]
+            if (local_fb_ack_valid) begin
+                $display(" [%0t] Local ARQ Feedback #%0d -> RXFN=%0d | ACK=%0b (%s)",
+                         $time, local_fb_total_cnt + 1, local_fb_rxfn, local_fb_ack,
+                         local_fb_ack ? "ACK" : "NAK");
+
+                case (local_fb_total_cnt)
+                    0: if (local_fb_rxfn !== 16'd1 || local_fb_ack !== 1'b1) local_fb_seq_err_cnt <= local_fb_seq_err_cnt + 1;
+                    1: if (local_fb_rxfn !== 16'd2 || local_fb_ack !== 1'b0) local_fb_seq_err_cnt <= local_fb_seq_err_cnt + 1;
+                    2: if (local_fb_rxfn !== 16'd3 || local_fb_ack !== 1'b1) local_fb_seq_err_cnt <= local_fb_seq_err_cnt + 1;
+                    3: if (local_fb_rxfn !== 16'd5 || local_fb_ack !== 1'b1) local_fb_seq_err_cnt <= local_fb_seq_err_cnt + 1;
+                    4: if (local_fb_rxfn !== 16'd2 || local_fb_ack !== 1'b1) local_fb_seq_err_cnt <= local_fb_seq_err_cnt + 1;
+                    default: local_fb_seq_err_cnt <= local_fb_seq_err_cnt + 1;
+                endcase
+
+                if (local_fb_rxfn == 16'd5)
+                    local_fb_mgmt_cnt <= local_fb_mgmt_cnt + 1;
+                else
+                    local_fb_data_cnt <= local_fb_data_cnt + 1;
+
+                local_fb_total_cnt <= local_fb_total_cnt + 1;
+            end
+
+            // Track peer feedback events separately (never mixed with local feedback)
+            if (peer_ack_valid_out) begin
+                peer_fb_event_cnt <= peer_fb_event_cnt + 1;
+            end
+
+            // 3. MGMT Telemetry Valid Event & Per-Event Value Verification
+            if (mgmt_telemetry_valid) begin
+                mgmt_valid_cnt      <= mgmt_valid_cnt + 1;
+                mgmt_range_captured <= mgmt_range_meters;
+                if ((^mgmt_range_meters === 1'bx) || (mgmt_range_meters !== 64'h4153_12D0_0000_0000))
+                    mgmt_range_mismatch_cnt <= mgmt_range_mismatch_cnt + 1;
+            end
+
+            // 4. Word-by-Word In-Order Payload Scoreboard (3 x 477 = 1,431 Words on valid && ready)
+            //    [Rev 2.2] Uses strict !== 1'b1 and !== 1'b0 on m_axis_fso_tlast to catch any X/Z
+            if (m_axis_fso_tvalid && m_axis_fso_tready) begin
+                if (drained_word_cnt >= 1431 || (^m_axis_fso_tdata === 1'bx) ||
+                    (m_axis_fso_tdata !== exp_drain_words[drained_word_cnt])) begin
+                    drain_word_mismatch_cnt <= drain_word_mismatch_cnt + 1;
+                    $display(" [SCOREBOARD ERROR] Word #%0d Mismatch at %0t: Exp=0x%08X, Got=0x%08X",
+                             drained_word_cnt, $time, exp_drain_words[drained_word_cnt], m_axis_fso_tdata);
+                end
+
+                if (drained_frame_word_idx == 476) begin
+                    if (m_axis_fso_tlast !== 1'b1)
+                        tlast_alignment_err_cnt <= tlast_alignment_err_cnt + 1;
+                    drained_frame_word_idx <= 0;
+                    drained_data_frames    <= drained_data_frames + 1;
+                    $display(" [%0t] In-Order DATA Frame #%0d Drained to Reassembly! (next expected_txfn=%0d)",
+                             $time, drained_data_frames + 1, expected_txfn);
+                end else begin
+                    if (m_axis_fso_tlast !== 1'b0)
+                        tlast_alignment_err_cnt <= tlast_alignment_err_cnt + 1;
+                    drained_frame_word_idx <= drained_frame_word_idx + 1;
+                end
+
+                drained_word_cnt <= drained_word_cnt + 1;
+            end
         end
     end
 
@@ -255,17 +404,53 @@ module tb_fso_ethernet_deframer();
         $display("\n--- STEP 4: Send TXFN=4 (IDLE) & TXFN=5 (MGMT 5000 km) ---");
         send_fso_frame(16'd4, 2'b00, 1'b0);
         send_fso_frame(16'd5, 2'b10, 1'b0);
+        repeat (100) @(posedge clk);
+
+        // Snapshot drained counts right before Step 5 retransmission of TXFN=2:
+        // Strictly 1 frame (477 words of TXFN=1) must have drained; TXFN=3 must remain held in RAM!
+        words_drained_before_retx  = drained_word_cnt;
+        frames_drained_before_retx = drained_data_frames;
 
         $display("\n--- STEP 5: Retransmit TXFN=2 (DATA, Clean) -> Expect In-Order Drain of TXFN=2 then TXFN=3! ---");
         send_fso_frame(16'd2, 2'b01, 1'b0);
         repeat (1200) @(posedge clk);
 
         $display("\n======================================================================");
-        $display(" FSO ETHERNET DEFRAMER & SELECTIVE REPEAT ARQ VERIFICATION REPORT");
-        $display(" -> In-Order DATA Frames Released : %0d / 3 (TXFN 1 -> TXFN 2 -> TXFN 3)", drained_data_frames);
-        $display(" -> Extracted MGMT Range (IEEE754): 0x%016X (Expected: 0x415312D000000000)", mgmt_range_meters);
-        if (drained_data_frames == 3 && mgmt_range_meters == 64'h4153_12D0_0000_0000)
-            $display(" -> RESULT: [PASS] ZERO-INIT CRC, SELECTIVE REPEAT ARQ & MGMT VERIFIED 100%%!");
+        $display(" FSO ETHERNET DEFRAMER & SELECTIVE REPEAT ARQ VERIFICATION REPORT (REV 2.2)");
+        $display(" -> Pre-Retransmission Hold Check : %0d / 477 Words (%0d / 1 Frame) Drained Before Step 5",
+                 words_drained_before_retx, frames_drained_before_retx);
+        $display(" -> In-Order DATA Frames Released : %0d / 3 Frames (TXFN 1 -> TXFN 2 -> TXFN 3)",
+                 drained_data_frames);
+        $display(" -> In-Order Payload Words Checked: %0d / 1431 Words (Word Mismatches: %0d, Strict TLAST Errors: %0d)",
+                 drained_word_cnt, drain_word_mismatch_cnt, tlast_alignment_err_cnt);
+        $display(" -> Event-Driven CRC Check Counts : HdrPass=%0d/6 (Fail:%0d) | PldPass=%0d/6 (Fail:%0d, Exp:1)",
+                 hdr_crc_pass_cnt, hdr_crc_fail_cnt, pld_crc_pass_cnt, pld_crc_fail_cnt);
+        $display(" -> Local ARQ Feedback Sequence   : %0d / 5 Events (DATA=%0d, MGMT=%0d, SeqErrors=%0d | PeerEvents=%0d)",
+                 local_fb_total_cnt, local_fb_data_cnt, local_fb_mgmt_cnt, local_fb_seq_err_cnt, peer_fb_event_cnt);
+        $display(" -> Extracted MGMT Range (IEEE754): 0x%016X (ValidPulses: %0d, RangeMismatches: %0d)",
+                 mgmt_range_captured, mgmt_valid_cnt, mgmt_range_mismatch_cnt);
+
+        if ((words_drained_before_retx  == 477)  &&
+            (frames_drained_before_retx == 1)    &&
+            (drained_data_frames        == 3)    &&
+            (drained_word_cnt           == 1431) &&
+            (drain_word_mismatch_cnt    == 0)    &&
+            (tlast_alignment_err_cnt    == 0)    &&
+            (hdr_crc_pass_cnt           == 6)    &&
+            (hdr_crc_fail_cnt           == 0)    &&
+            (pld_crc_pass_cnt           == 5)    &&
+            (pld_crc_fail_cnt           == 1)    &&
+            (local_fb_total_cnt         == 5)    &&
+            (local_fb_data_cnt          == 4)    &&
+            (local_fb_mgmt_cnt          == 1)    &&
+            (local_fb_seq_err_cnt       == 0)    &&
+            (mgmt_valid_cnt             == 1)    &&
+            (mgmt_range_mismatch_cnt    == 0)    &&
+            (mgmt_range_captured        == 64'h4153_12D0_0000_0000)) begin
+            $display(" -> RESULT: [PASS] All 1,431 in-order words (TXFN 1->2->3), strict 4-state TLAST checks, 5 local feedback events, event-driven CRCs, and MGMT telemetry verified with 0 mismatches!");
+        end else begin
+            $fatal(1, " -> RESULT: [FAIL] Deframer scoreboard, reorder hold, strict TLAST check, local feedback sequence, CRC event count, or MGMT check failed!");
+        end
         $display("======================================================================\n");
         $finish;
     end

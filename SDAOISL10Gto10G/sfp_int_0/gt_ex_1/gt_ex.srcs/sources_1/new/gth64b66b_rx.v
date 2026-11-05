@@ -32,10 +32,23 @@ Revision History:
     to detect the first 32-bit word of the official SDA OISL 72-bit Preamble 
     (32'h77AD_5B58 from 72'h77AD5B5843641E2E26) while retaining legacy marker 
     (32'h5555_5555) compatibility.
+  - Rev 3.3 (2026-11-01 15:49 KST) : [Audit Fix QUAL06-RX-C01 / OISL-GTH-004 - Zero-Payload Preservation]
+    Removed the 8-zero-word burst termination check ('zero_idle_cnt == 4'd7')
+    so that once 'is_preamble_word0' starts reception, all valid words qualified
+    by 'gt_rxdatavalid_in[0]' (including legitimate 32'h0000_0000 payload runs
+    in zero-padded continuation or MGMT frames) are committed continuously to
+    'rx_elast_mem' without truncating the burst.
+  - Rev 3.4 (2026-11-05 07:25 KST) : [Audit Section 6 Fix - Continuous Monitor & Modulo-3117 Debug Telemetry]
+    1. Kept the 16-word pre-buffer ('RX_START_WORDS = 16') to absorb the 2-cycle
+       gearbox pauses between 'clk_gth' (322.265625 MHz @ 64/66 duty cycle) and
+       'clk_312_5' (312.500000 MHz continuous) with zero mid-burst gaps.
+    2. Kept the internal simulation monitor continuous across frames (4-frame target
+       windowing is owned strictly by the testbench) and updated 'dbg_gth_rx_byte_cnt'
+       / 'dbg_gth_rx_frame_cnt' to modulo-3,117 tracking.
 ===========================================================================
 */
 
-module gth64b66b_rx (
+module gth64b66b_rx #(parameter integer RX_START_WORDS = 16) (
     input  wire        clk_gth,              // GTH RXUSRCLK2 (rx0_clk = 322.265625 MHz)
     input  wire        clk_312_5,            // Downstream 312.5 MHz Clock
     input  wire        rst_n,                // Active-low reset
@@ -109,7 +122,7 @@ module gth64b66b_rx (
 
     // =======================================================
     // 2. 66/64 DE-JITTER ELASTIC BUFFER (Continuous Burst Capture)
-    //    Uses commit_wr_ptr so trailing post-burst zeros are never drained
+    //    [Rev 3.3 - OISL-GTH-004] Preserves all valid words including zero payload.
     // =======================================================
     (* ram_style = "distributed" *) reg [31:0] rx_elast_mem [0:4095];
     reg  [11:0] raw_wr_ptr;
@@ -152,21 +165,13 @@ module gth64b66b_rx (
                     commit_wr_ptr <= raw_wr_ptr + 12'd1;
                 end
             end else begin
-                if (descrambled_word != 32'd0) begin
-                    zero_idle_cnt <= 4'd0;
-                    raw_wr_ptr    <= raw_wr_ptr + 12'd1;
-                    commit_wr_ptr <= raw_wr_ptr + 12'd1;
-                end else begin
-                    if (zero_idle_cnt == 4'd7) begin
-                        // 8 consecutive zero words -> end of frame burst!
-                        in_burst_sync <= 1'b0;
-                        zero_idle_cnt <= 4'd0;
-                        raw_wr_ptr    <= commit_wr_ptr;
-                    end else begin
-                        zero_idle_cnt <= zero_idle_cnt + 4'd1;
-                        raw_wr_ptr    <= raw_wr_ptr + 12'd1;
-                    end
-                end
+                // [Rev 3.3 - QUAL06-RX-C01 / OISL-GTH-004] RXDATAVALID denotes valid
+                // optical stream words, including zero-valued payload words. Keep
+                // capture active until reset or block-lock loss; never interpret
+                // eight consecutive zero words as a burst terminator.
+                zero_idle_cnt <= 4'd0;
+                raw_wr_ptr    <= raw_wr_ptr + 12'd1;
+                commit_wr_ptr <= raw_wr_ptr + 12'd1;
             end
         end
     end
@@ -197,8 +202,8 @@ module gth64b66b_rx (
             down_dv        <= 1'b0;
         end else begin
             if (!draining_burst) begin
-                // Pre-buffer 16 words so continuous 312.5 MHz drain never underflows
-                if (words_in_buf >= 12'd16) begin
+                // Pre-buffer 16 words so continuous 312.5 MHz drain never underflows across 2-cycle gearbox pauses
+                if (words_in_buf >= RX_START_WORDS[11:0]) begin
                     draining_burst <= 1'b1;
                     down_dv        <= 1'b1;
                     down_data      <= rx_elast_mem[rd_ptr];
@@ -223,6 +228,7 @@ module gth64b66b_rx (
 
     // =======================================================
     // 4. SUB-CYCLE 0.8 NS BYTE & FRAME TRACKERS (Matches u_error_inject)
+    //    [Rev 3.4] Continuous modulo-3,117 tracking (no hardcoded 4-frame stop)
     // =======================================================
 `ifndef SYNTHESIS
     integer b_sub;
@@ -257,10 +263,8 @@ module gth64b66b_rx (
                     end
                 end
             end else begin
-                byte_out       <= 8'h00;
-                out_clk_cnt    <= 16'd0;
-                frame_byte_cnt <= 12'd0;
-                frame_out_id   <= 32'd0;
+                // Hold frame_byte_cnt, out_clk_cnt, and frame_out_id across valid-low cycles
+                byte_out <= 8'h00;
             end
         end
     end
@@ -287,7 +291,7 @@ module gth64b66b_rx (
 
     // =======================================================
     // 5. INTERNAL ILA 2 (u_ila_1) GTH STAGE TELEMETRY COUNTERS
-    //    Housed inside gth64b66b_rx so Top Schematic stays clean!
+    //    [Rev 3.4] Modulo-3117 byte & frame tracking across word boundaries
     // =======================================================
     (* mark_debug = "true", dont_touch = "true" *) reg        dbg_gth_rx_ready;
     (* mark_debug = "true", dont_touch = "true" *) reg        dbg_rx_block_locked;
@@ -314,16 +318,15 @@ module gth64b66b_rx (
             down_dv_d1          <= down_dv;
 
             if (down_dv) begin
-                if (dbg_gth_rx_byte_cnt == 16'd3116)
-                    dbg_gth_rx_byte_cnt <= 16'd3117;
-                else
-                    dbg_gth_rx_byte_cnt <= dbg_gth_rx_byte_cnt + 16'd4;
-            end else begin
-                dbg_gth_rx_byte_cnt <= 16'd0;
-            end
-
-            if (down_dv && !down_dv_d1) begin
-                dbg_gth_rx_frame_cnt <= dbg_gth_rx_frame_cnt + 16'd1;
+                if (!down_dv_d1 && (dbg_gth_rx_byte_cnt == 16'd0)) begin
+                    dbg_gth_rx_byte_cnt  <= 16'd4;
+                    dbg_gth_rx_frame_cnt <= dbg_gth_rx_frame_cnt + 16'd1;
+                end else if (dbg_gth_rx_byte_cnt + 16'd4 > 16'd3117) begin
+                    dbg_gth_rx_byte_cnt  <= (dbg_gth_rx_byte_cnt + 16'd4) - 16'd3117;
+                    dbg_gth_rx_frame_cnt <= dbg_gth_rx_frame_cnt + 16'd1;
+                end else begin
+                    dbg_gth_rx_byte_cnt  <= dbg_gth_rx_byte_cnt + 16'd4;
+                end
             end
         end
     end

@@ -20,6 +20,10 @@ Revision History:
     (d0 = TXFN[7:0], d1 = TXFN[15:8], d14..d15 = 16'h0F28 CRC-16) and Payload 
     Word 1 with Table 2-18 (64'hAB00_0000_CDEF_07D0 on DAT1, 64'hAB00_4064_AAAA_0001 
     on DAT2 Continuation Frame).
+  - Rev 2.4 (2026-10-29 12:52 KST) : [Audit Fix - Elaboration & Self-Checking Scoreboard]
+    Preserved 100% of original descriptions, comments, and Rev 1.0/2.0 history.
+    Synchronized counter bindings with FEC_Demux.v Rev 2.4 and added strict $fatal 
+    verification on total Header bytes (128B) and Payload words (1020W).
 ===========================================================================
 */
 
@@ -36,7 +40,7 @@ module tb_FEC_Demux();
     wire        rs_load_dv;
     wire [63:0] rs_load_out;
 
-    // Hierarchical Waveform Trackers inside FEC_Demux
+    // Hierarchical Waveform Trackers inside FEC_Demux (Restored in FEC_Demux.v Rev 2.4)
     wire [5:0]  out_hdr_byte_cnt = u_fec_demux.out_hdr_byte_cnt; // 1..32 Bytes
     wire [8:0]  out_pld_word_cnt = u_fec_demux.out_pld_word_cnt; // 1..255 Words
     wire [11:0] out_pld_byte_cnt = u_fec_demux.out_pld_byte_cnt; // 8..2040 Bytes
@@ -146,6 +150,8 @@ module tb_FEC_Demux();
                  total_pld_words_out, total_pld_words_out * 8);
         if (total_hdr_bytes_out == 128 && total_pld_words_out == 1020)
             $display(" -> RESULT: [PASS] 100%% EXACT HEADER & PAYLOAD DEMULTIPLEXING!");
+        else
+            $fatal(1, " -> RESULT: [FAIL] Header or Payload count mismatch!");
         $display("======================================================================\n");
         $finish;
     end

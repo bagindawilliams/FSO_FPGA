@@ -7,6 +7,14 @@
 #                - Keeps standard default Vivado waveform colors.
 #                - Automatically sets Radix (unsigned for counters/indices,
 #                  ascii for string tags, hex for data/header/CRC buses).
+#
+# Revision History:
+#   - Rev 1.0 (2026-10-27) : Initial 25-testbench auto-grouping Tcl dispatcher.
+#   - Rev 2.3 (2026-10-29 01:49 KST) : Synchronized all 25 testbench waveform
+#     groups to include unified frame_id, frame_type_str ("DAT1", "DAT2", 
+#     "IDLE", "MGMT"), in_clk_cnt, in_byte_cnt, out_clk_cnt, out_byte_cnt, 
+#     and scoreboard telemetry counters.
+#
 # Usage        : In Vivado Tcl Console (while any simulation is open), run:
 #                  source setup_all_25_waveforms.tcl
 # ==============================================================================
@@ -36,7 +44,8 @@ proc add_grp_sigs {grp_title top_scope sig_list} {
                       [string match "*_ok_*" $s_low] || [string match "*_err_*" $s_low] || \
                       [string match "*tracker*" $s_low] || [string match "*scenario_id*" $s_low] || \
                       [string match "*_sequence*" $s_low] || [string match "*_tod_*" $s_low] || \
-                      [string match "*_sec*" $s_low] || [string match "*_picosec*" $s_low]} {
+                      [string match "*_sec*" $s_low] || [string match "*_picosec*" $s_low] || \
+                      [string match "*_acc*" $s_low]} {
                 set_property radix unsigned $w
             } else {
                 catch {set_property radix hex $w}
@@ -46,39 +55,39 @@ proc add_grp_sigs {grp_title top_scope sig_list} {
 }
 
 # ==============================================================================
-# 1. tb_fso_header_top
+# 1. tb_fso_header_top (4 Frames: DAT1, DAT2, IDLE, MGMT)
 # ==============================================================================
 proc wave_tb_fso_header_top {} {
     set t "tb_fso_header_top"
-    add_grp_sigs "1_Clocks_and_Control" $t {clk rst_n scenario_id trigger_header_gen system_busy}
+    add_grp_sigs "1_Clocks_and_Frame_ID" $t {clk rst_n frame_id frame_type_str scenario_id trigger_header_gen system_busy}
     add_grp_sigs "2_Table_2_9_Header_Inputs" $t {txfn_in rxfn_in ack_in ack_valid_in frame_type_in tx_ts_in tod_seconds_in ts_applies_in fcch_opcode_in fcch_pl_in}
-    add_grp_sigs "3_Serialized_16B_Header_and_CRC16_Out" $t {final_header_valid final_header_byte byte_tracker error_cnt}
+    add_grp_sigs "3_Serialized_16B_Header_and_CRC16_Out" $t {final_header_valid final_header_byte byte_tracker out_clk_cnt out_byte_cnt total_hdr_bytes error_cnt}
 }
 
 # ==============================================================================
-# 2. tb_fso_payload
+# 2. tb_fso_payload (2000B Jumbo: DAT1, DAT2 Continuation & ARQ Retx)
 # ==============================================================================
 proc wave_tb_fso_payload {} {
     set t "tb_fso_payload"
-    add_grp_sigs "1_PC_Packet_Gen_2000B" $t {clk rst_n trigger target_frame_size gen_tvalid gen_tdata gen_tkeep gen_tlast gen_tready}
-    add_grp_sigs "2_FrontEnd_1900B_Segmenter" $t {seg_tvalid seg_tdata seg_tlast seg_tready seg_valid_bytes}
-    add_grp_sigs "3_FSO_Payload_1912B_Table_2_18" $t {fifo_data_tvalid fifo_data_tdata fifo_data_tlast fifo_data_tready payload_cycle_cnt frame1_word_cnt frame2_word_cnt f1_pld_hdr f1_pkt_hdr f1_crc32 f2_pld_hdr f2_word1_data f2_word25_fcs f2_crc32}
+    add_grp_sigs "1_PC_Packet_Gen_2000B" $t {clk rst_n trigger target_frame_size frame_id frame_type_str gen_tvalid gen_tdata gen_tkeep gen_tlast gen_tready}
+    add_grp_sigs "2_FrontEnd_1900B_Segmenter" $t {seg_tvalid seg_tdata seg_tlast seg_tready seg_valid_bytes in_clk_cnt in_byte_cnt}
+    add_grp_sigs "3_FSO_Payload_1912B_Table_2_18" $t {fifo_data_tvalid fifo_data_tdata fifo_data_tlast fifo_data_tready payload_cycle_cnt out_clk_cnt out_byte_cnt frame1_word_cnt frame2_word_cnt f1_pld_hdr f1_pkt_hdr f1_crc32 f2_pld_hdr f2_word1_data f2_word25_fcs f2_crc32}
     add_grp_sigs "4_ARQ_DDR4_Sniffer_and_Retx" $t {ddr4_write_req ddr4_read_req ddr4_delete_req ddr4_addr retx_data_tvalid retx_data_tdata retx_data_tlast retx_word_cnt retx_last_word_crc32}
 }
 
 # ==============================================================================
-# 3. tb_idle_MGMT
+# 3. tb_idle_MGMT (25-bit PRBS IDLE & 5000 km MGMT Telemetry)
 # ==============================================================================
 proc wave_tb_idle_MGMT {} {
     set t "tb_idle_MGMT"
-    add_grp_sigs "1_Clocks_MUX_and_PNT_Inputs" $t {clk rst_n payload_mux_sel txfn_in mgmt_trigger_1hz rx_phy_ts_sec rx_phy_ts_picosec tx_phy_ts_sec tx_phy_ts_picosec range_meters range_ts_sec range_ts_picosec ts_valid}
+    add_grp_sigs "1_Clocks_MUX_and_PNT_Inputs" $t {clk rst_n frame_id frame_type_str payload_mux_sel txfn_in mgmt_trigger_1hz rx_phy_ts_sec rx_phy_ts_picosec tx_phy_ts_sec tx_phy_ts_picosec range_meters range_ts_sec range_ts_picosec ts_valid}
     add_grp_sigs "2_Path00_IDLE_25b_PRBS_1912B" $t {idle_tvalid idle_tdata idle_tlast idle_tready idle_crc_cnt idle_first_word_txfn0 idle_first_word_txfn1}
     add_grp_sigs "3_Path10_MGMT_Table_2_14_1912B" $t {mgmt_tvalid mgmt_tdata mgmt_tlast mgmt_tready mgmt_crc_cnt}
-    add_grp_sigs "4_Arbitrated_FSO_MUX_Out" $t {m_axis_fso_tvalid m_axis_fso_tdata m_axis_fso_tlast m_axis_fso_tready}
+    add_grp_sigs "4_Arbitrated_FSO_MUX_Out" $t {m_axis_fso_tvalid m_axis_fso_tdata m_axis_fso_tlast m_axis_fso_tready out_clk_cnt out_byte_cnt}
 }
 
 # ==============================================================================
-# 4. tb_FEC_RS
+# 4. tb_FEC_RS (RS(32,16) + 8xRS(255,239) over GF 0x187 + FEC_MUX)
 # ==============================================================================
 proc wave_tb_FEC_RS {} {
     set t "tb_FEC_RS"
@@ -89,7 +98,7 @@ proc wave_tb_FEC_RS {} {
 }
 
 # ==============================================================================
-# 5. tb_Scrambler_LPC
+# 5. tb_Scrambler_LPC (25-bit PRBS Seed 0x0000007 + LPC(24,16) Disparity)
 # ==============================================================================
 proc wave_tb_Scrambler_LPC {} {
     set t "tb_Scrambler_LPC"
@@ -101,7 +110,7 @@ proc wave_tb_Scrambler_LPC {} {
 }
 
 # ==============================================================================
-# 6. tb_mux_gearbox
+# 6. tb_mux_gearbox (Preamble 72'h77AD5B5843641E2E26 + 3108B LPC = 3117B)
 # ==============================================================================
 proc wave_tb_mux_gearbox {} {
     set t "tb_mux_gearbox"
@@ -111,7 +120,7 @@ proc wave_tb_mux_gearbox {} {
 }
 
 # ==============================================================================
-# 7. tb_x_gth_logic (CDC 1 TX)
+# 7. tb_x_gth_logic (CDC 1 TX: 312.5 MHz -> 200.0 MHz Latency +2)
 # ==============================================================================
 proc wave_tb_x_gth_logic {} {
     set t "tb_x_gth_logic"
@@ -120,7 +129,7 @@ proc wave_tb_x_gth_logic {} {
 }
 
 # ==============================================================================
-# 8. tb_cdc_logic_gth (CDC 2 TX)
+# 8. tb_cdc_logic_gth (CDC 2 TX: 200 MHz -> 312.5 MHz Continuous 3117B)
 # ==============================================================================
 proc wave_tb_cdc_logic_gth {} {
     set t "tb_cdc_logic_gth"
@@ -130,7 +139,7 @@ proc wave_tb_cdc_logic_gth {} {
 }
 
 # ==============================================================================
-# 9. tb_eth_rx_front_end_top
+# 9. tb_eth_rx_front_end_top (Back-to-Back 2000B Jumbo Segmentation)
 # ==============================================================================
 proc wave_tb_eth_rx_front_end_top {} {
     set t "tb_eth_rx_front_end_top"
@@ -140,16 +149,16 @@ proc wave_tb_eth_rx_front_end_top {} {
 }
 
 # ==============================================================================
-# 10. tb_mux_eth_32
+# 10. tb_mux_eth_32 (2000B Jumbo + 8B Ethernet Preamble = 2008B)
 # ==============================================================================
 proc wave_tb_mux_eth_32 {} {
     set t "tb_mux_eth_32"
-    add_grp_sigs "1_Reassembled_Stream_and_Preamble_In" $t {clk rst_n preamble_sfd asm_valid_in asm_data_in asm_last_in}
-    add_grp_sigs "2_Prepended_Ethernet_Frame_Out" $t {eth_valid_out eth_data_out eth_last_out out_word_cnt err_cnt}
+    add_grp_sigs "1_Reassembled_2000B_Jumbo_Input" $t {clk rst_n preamble_sfd asm_valid_in asm_data_in asm_last_in in_clk_cnt in_byte_cnt}
+    add_grp_sigs "2_Prepended_2008B_Ethernet_Frame_Out" $t {eth_valid_out eth_data_out eth_last_out out_clk_cnt out_byte_cnt out_word_cnt err_cnt}
 }
 
 # ==============================================================================
-# 11. tb_arq_tx_controller
+# 11. tb_arq_tx_controller (Selective Repeat ARQ Flowchart & Holdoff)
 # ==============================================================================
 proc wave_tb_arq_tx_controller {} {
     set t "tb_arq_tx_controller"
@@ -160,7 +169,7 @@ proc wave_tb_arq_tx_controller {} {
 }
 
 # ==============================================================================
-# 12. tb_cdc3_rx_gth_logic
+# 12. tb_cdc3_rx_gth_logic (CDC 3 RX: 312.5 MHz 32b -> 200 MHz 128b)
 # ==============================================================================
 proc wave_tb_cdc3_rx_gth_logic {} {
     set t "tb_cdc3_rx_gth_logic"
@@ -170,17 +179,17 @@ proc wave_tb_cdc3_rx_gth_logic {} {
 }
 
 # ==============================================================================
-# 13. tb_demux_decoder
+# 13. tb_demux_decoder (4-Frame 128b Demux & Preamble Lock)
 # ==============================================================================
 proc wave_tb_demux_decoder {} {
     set t "tb_demux_decoder"
-    add_grp_sigs "1_CDC3_128b_Input" $t {clk rst_n cdc_valid_in cdc_data_in}
-    add_grp_sigs "2_Extracted_72b_Preamble_and_Lock" $t {preamble_valid preamble_extracted link_locked}
-    add_grp_sigs "3_Extracted_96b_LPC_Out_3108B" $t {lpc_valid_out lpc_data_out lpc_out_cnt}
+    add_grp_sigs "1_CDC3_128b_Input_4_Frames" $t {clk rst_n demux_frame_id frame_type_str cdc_valid_in cdc_data_in in_clk_cnt in_byte_cnt}
+    add_grp_sigs "2_Extracted_72b_Preamble_and_Lock" $t {preamble_valid preamble_extracted link_locked locked_frame_cnt}
+    add_grp_sigs "3_Extracted_96b_LPC_Out_3108B" $t {lpc_valid_out lpc_data_out out_clk_cnt out_byte_cnt lpc_out_cnt}
 }
 
 # ==============================================================================
-# 14. tb_error_inject
+# 14. tb_error_inject (Post-CDC 2 3-Zone Error Injector)
 # ==============================================================================
 proc wave_tb_error_inject {} {
     set t "tb_error_inject"
@@ -190,17 +199,17 @@ proc wave_tb_error_inject {} {
 }
 
 # ==============================================================================
-# 15. tb_fso_gth_bridge_hotswap
+# 15. tb_fso_gth_bridge_hotswap (4-Frame GTH 64B/66B Bridge Loopback)
 # ==============================================================================
 proc wave_tb_fso_gth_bridge_hotswap {} {
     set t "tb_fso_gth_bridge_hotswap"
     add_grp_sigs "1_Clocks_Reset_and_Lock_Status" $t {clk_312_5 clk_100_drp gt_refclk_p sys_rst_n gth_link_up rx_block_locked}
-    add_grp_sigs "2_FSO_TX_Input_and_Serial_Fiber" $t {fso_tx_en fso_tx_data txp_out txn_out rxp_in rxn_in}
-    add_grp_sigs "3_FSO_RX_Recovered_Output" $t {fso_rx_valid fso_rx_data rx_word_cnt}
+    add_grp_sigs "2_FSO_TX_Input_4_Frames_3117B" $t {in_frame_id in_frame_type_str fso_tx_en fso_tx_data in_clk_cnt in_byte_cnt txp_out txn_out}
+    add_grp_sigs "3_FSO_RX_Recovered_Output_3117B" $t {out_frame_id out_frame_type_str fso_rx_valid fso_rx_data rx_byte_out out_clk_cnt out_byte_cnt rx_word_cnt}
 }
 
 # ==============================================================================
-# 16. tb_gth64b66b_loopback
+# 16. tb_gth64b66b_loopback (Full CDC 2 -> Error Inject -> GTH 64B/66B Loopback)
 # ==============================================================================
 proc wave_tb_gth64b66b_loopback {} {
     set t "tb_gth64b66b_loopback"
@@ -211,7 +220,7 @@ proc wave_tb_gth64b66b_loopback {} {
 }
 
 # ==============================================================================
-# 17. tb_demux_preamble_128
+# 17. tb_demux_preamble_128 (CDC 3 -> Demux 128 -> Preamble Decoder)
 # ==============================================================================
 proc wave_tb_demux_preamble_128 {} {
     set t "tb_demux_preamble_128"
@@ -221,7 +230,7 @@ proc wave_tb_demux_preamble_128 {} {
 }
 
 # ==============================================================================
-# 18. tb_lpc_dec_descrambler
+# 18. tb_lpc_dec_descrambler (LPC(24,16) 1b Repair + 25b Descrambler)
 # ==============================================================================
 proc wave_tb_lpc_dec_descrambler {} {
     set t "tb_lpc_dec_descrambler"
@@ -231,7 +240,7 @@ proc wave_tb_lpc_dec_descrambler {} {
 }
 
 # ==============================================================================
-# 19. tb_FEC_Demux
+# 19. tb_FEC_Demux (259W Descrambled -> 32B RS Header + 2040B RS Payload)
 # ==============================================================================
 proc wave_tb_FEC_Demux {} {
     set t "tb_FEC_Demux"
@@ -241,7 +250,7 @@ proc wave_tb_FEC_Demux {} {
 }
 
 # ==============================================================================
-# 20. tb_rs_decoder_rx
+# 20. tb_rs_decoder_rx (RS(32,16) & 8xRS(255,239) GF 0x187 Error Repair)
 # ==============================================================================
 proc wave_tb_rs_decoder_rx {} {
     set t "tb_rs_decoder_rx"
@@ -251,7 +260,7 @@ proc wave_tb_rs_decoder_rx {} {
 }
 
 # ==============================================================================
-# 21. tb_cdc4_logic_gth
+# 21. tb_cdc4_logic_gth (CDC 4 RX: 200 MHz -> 312.5 MHz Deframer Stream)
 # ==============================================================================
 proc wave_tb_cdc4_logic_gth {} {
     set t "tb_cdc4_logic_gth"
@@ -261,16 +270,16 @@ proc wave_tb_cdc4_logic_gth {} {
 }
 
 # ==============================================================================
-# 22. tb_fso_deframer_payload
+# 22. tb_fso_deframer_payload (4-Frame Zero-Init CRC-32 Store-and-Verify)
 # ==============================================================================
 proc wave_tb_fso_deframer_payload {} {
     set t "tb_fso_deframer_payload"
-    add_grp_sigs "1_Payload_478W_Input_and_Context" $t {clk rst_n rx_txfn hdr_crc_ok payload_dv payload_in}
-    add_grp_sigs "2_ZeroInit_CRC32_Check_and_477W_Drain" $t {pld_check_done pld_crc_ok calculated_crc32 received_crc32 m_axis_pld_tvalid m_axis_pld_tdata m_axis_pld_tlast drained_word_cnt}
+    add_grp_sigs "1_Payload_478W_Input_4_Frames" $t {clk rst_n frame_id frame_type_str rx_txfn hdr_crc_ok payload_dv payload_in in_clk_cnt in_byte_cnt}
+    add_grp_sigs "2_ZeroInit_CRC32_Check_and_477W_Drain" $t {pld_check_done pld_crc_ok calculated_crc32 received_crc32 m_axis_pld_tvalid m_axis_pld_tdata m_axis_pld_tlast out_clk_cnt out_byte_cnt drained_word_cnt}
 }
 
 # ==============================================================================
-# 23. tb_fso_ethernet_deframer
+# 23. tb_fso_ethernet_deframer (Deframer + Selective Repeat ARQ Reordering)
 # ==============================================================================
 proc wave_tb_fso_ethernet_deframer {} {
     set t "tb_fso_ethernet_deframer"
@@ -280,7 +289,7 @@ proc wave_tb_fso_ethernet_deframer {} {
 }
 
 # ==============================================================================
-# 24. tb_reassembly_and_backend (and bonus tb_eth_tx_back_end_top)
+# 24. tb_reassembly_and_backend (Table 2-18 Reassembly + PC 2 XGMII Back-End)
 # ==============================================================================
 proc wave_tb_reassembly_and_backend {} {
     set t "tb_reassembly_and_backend"
@@ -307,7 +316,7 @@ proc wave_tb_SDAOISL10Gto10G_top {} {
         grp1_seg_byte_cnt grp1_seg_active_bytes grp1_seg_frame_id
     }
     add_grp_sigs "GRP2_TX_FSO_FRAMER_ARQ" $t {
-        clk_tx grp2_tx_txfn grp2_tx_frame_type grp2_payload_mux_sel
+        clk_tx grp2_tx_txfn grp2_tx_frame_type grp2_tx_frame_str grp2_payload_mux_sel
         grp2_hdr_valid grp2_hdr_data grp2_hdr_clk_cnt grp2_hdr_byte_cnt
         grp2_pld_valid grp2_pld_data grp2_pld_last grp2_pld_clk_cnt grp2_pld_byte_cnt
     }
@@ -338,7 +347,8 @@ proc wave_tb_SDAOISL10Gto10G_top {} {
     add_grp_sigs "GRP7_RX_CDC4_DEFRAMER_ARQ" $t {
         clk_rx grp7_cdc4_hdr_dv grp7_cdc4_hdr_data grp7_cdc4_hdr_byte_cnt
         grp7_cdc4_pld_dv grp7_cdc4_pld_data grp7_cdc4_pld_clk_cnt grp7_cdc4_pld_byte_cnt
-        grp7_hdr_crc16_ok grp7_pld_crc32_ok grp7_rx_txfn grp7_rx_frame_type
+        grp7_hdr_crc16_ok grp7_pld_crc32_ok grp7_rx_txfn grp7_rx_frame_type grp7_rx_frame_str
+        grp7_mgmt_valid grp7_mgmt_range_meters
         grp7_arq_fb_valid grp7_arq_fb_rxfn grp7_arq_fb_ack
         grp7_deframed_valid grp7_deframed_data grp7_deframed_last
         grp7_defr_clk_cnt grp7_defr_byte_cnt
@@ -346,7 +356,7 @@ proc wave_tb_SDAOISL10Gto10G_top {} {
     add_grp_sigs "GRP8_PC2_REASSEMBLY_EGRESS_BACKEND" $t {
         clk_rx grp8_reasm_eth_valid grp8_reasm_eth_data grp8_reasm_eth_last
         grp8_reasm_clk_cnt grp8_reasm_byte_cnt grp8_reasm_pkt_bytes grp8_reasm_pkt_cnt
-        grp8_captured_ascii grp8_captured_fcs
+        grp8_captured_ascii grp8_captured_fcs scb_matched_words scb_error_words
         grp8_pc2_xgmii_txd grp8_pc2_xgmii_txc grp8_pc2_clk_cnt grp8_pc2_byte_cnt grp8_pc2_pkt_cnt
     }
 }

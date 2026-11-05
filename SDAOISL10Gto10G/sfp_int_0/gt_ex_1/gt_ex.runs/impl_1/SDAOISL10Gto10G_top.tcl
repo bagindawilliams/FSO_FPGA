@@ -1,5 +1,5 @@
 namespace eval ::optrace {
-  variable script "/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.runs/impl_1/SDAOISL10Gto10G_top.tcl"
+  variable script "/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.runs/impl_1/SDAOISL10Gto10G_top.tcl"
   variable category "vivado_impl"
 }
 
@@ -113,28 +113,27 @@ OPTRACE "create in-memory project" START { }
   set_param project.singleFileAddWarning.threshold 0
 OPTRACE "create in-memory project" END { }
 OPTRACE "set parameters" START { }
-  set_property webtalk.parent_dir {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.cache/wt} [current_project]
-  set_property parent.project_path {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.xpr} [current_project]
-  set_property ip_output_repo {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.cache/ip}} [current_project]
+  set_property webtalk.parent_dir {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.cache/wt} [current_project]
+  set_property parent.project_path {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.xpr} [current_project]
+  set_property ip_output_repo {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.cache/ip}} [current_project]
   set_property ip_cache_permissions {read write} [current_project]
-  set_property XPM_LIBRARIES {XPM_CDC XPM_MEMORY} [current_project]
+  set_property XPM_LIBRARIES {XPM_CDC XPM_FIFO XPM_MEMORY} [current_project]
 OPTRACE "set parameters" END { }
 OPTRACE "add files" START { }
-  add_files -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.runs/synth_1/SDAOISL10Gto10G_top.dcp}}
-  read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/ip/eth_10g_pcs_pma_tx_0/eth_10g_pcs_pma_tx_0.xci}}
-  read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/ip/cross_logic_gth_load/cross_logic_gth_load.xci}}
-  read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head.xci}}
-  read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/ip/bram_rs/bram_rs.xci}}
-  read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/ip/cross_gth_logic/cross_gth_logic.xci}}
-  read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/ip/gth_fso_64b66b/gth_fso_64b66b.xci}}
-  set_property is_enabled false [get_files -all {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.gen/sources_1/ip/gth_fso_64b66b/synth/gth_fso_64b66b.xdc}}]
-  read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/ip/cross_logic_gth/cross_logic_gth.xci}}
-  read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/ip/cross_gth_logic_load/cross_gth_logic_load.xci}}
-  read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/ip/cross_gth_logic_head/cross_gth_logic_head.xci}}
-  read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/ip/eth_10g_pcs_pma_rx_0/eth_10g_pcs_pma_rx_0.xci}}
-  read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci}}
+  add_files -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.runs/synth_1/SDAOISL10Gto10G_top.dcp}}
+  read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/ip/eth_10g_pcs_pma_tx_0/eth_10g_pcs_pma_tx_0.xci}}
+  read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/ip/cross_logic_gth_load/cross_logic_gth_load.xci}}
+  read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/ip/cross_logic_gth_head/cross_logic_gth_head.xci}}
+  read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/ip/bram_rs/bram_rs.xci}}
+  read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/ip/cross_gth_logic/cross_gth_logic.xci}}
+  read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/ip/gth_fso_64b66b/gth_fso_64b66b.xci}}
+  read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/ip/cross_logic_gth/cross_logic_gth.xci}}
+  read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/ip/cross_gth_logic_load/cross_gth_logic_load.xci}}
+  read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/ip/cross_gth_logic_head/cross_gth_logic_head.xci}}
+  read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/ip/eth_10g_pcs_pma_rx_0/eth_10g_pcs_pma_rx_0.xci}}
+  read_ip -quiet {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci}}
 OPTRACE "read constraints: implementation" START { }
-  read_xdc {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/gt_ex.srcs/constrs_1/new/SDAOISL10Gto10G.xdc}}
+  read_xdc {{/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/gt_ex.srcs/constrs_1/new/SDAOISL10Gto10G.xdc}}
 OPTRACE "read constraints: implementation" END { }
 OPTRACE "read constraints: implementation_pre" START { }
 OPTRACE "read constraints: implementation_pre" END { }
@@ -300,24 +299,24 @@ set rc [catch {
   create_msg_db write_bitstream.pb
 OPTRACE "Write Bitstream: pre hook" START { }
   set src_rc [catch { 
-    puts "source {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/allow_unconstrained_pins.tcl}"
-    source {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/allow_unconstrained_pins.tcl}
+    puts "source {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/allow_unconstrained_pins.tcl}"
+    source {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/allow_unconstrained_pins.tcl}
   } _RESULT] 
   if {$src_rc} { 
     set tool_flow [get_property -quiet TOOL_FLOW [current_project -quiet]]
     if { $tool_flow eq {SDx} } { 
       send_gid_msg -id 2 -ssname VPL_TCL -severity ERROR $_RESULT
-      send_gid_msg -id 3 -ssname VPL_TCL -severity ERROR "sourcing script {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/allow_unconstrained_pins.tcl} failed"
+      send_gid_msg -id 3 -ssname VPL_TCL -severity ERROR "sourcing script {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/allow_unconstrained_pins.tcl} failed"
     } else {
       send_msg_id runtcl-1 status "$_RESULT"
-      send_msg_id runtcl-2 status "sourcing script {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex/allow_unconstrained_pins.tcl} failed"
+      send_msg_id runtcl-2 status "sourcing script {/home/williams/MYFPGA/FPGA Final/SDAOISL/sfp_int/sfp_int_0/gt_ex_code/allow_unconstrained_pins.tcl} failed"
     }
     return -code error
   }
 OPTRACE "Write Bitstream: pre hook" END { }
 OPTRACE "read constraints: write_bitstream" START { }
 OPTRACE "read constraints: write_bitstream" END { }
-  set_property XPM_LIBRARIES {XPM_CDC XPM_MEMORY} [current_project]
+  set_property XPM_LIBRARIES {XPM_CDC XPM_FIFO XPM_MEMORY} [current_project]
   catch { write_mem_info -force -no_partial_mmi SDAOISL10Gto10G_top.mmi }
 OPTRACE "write_bitstream setup" END { }
 OPTRACE "write_bitstream" START { }
