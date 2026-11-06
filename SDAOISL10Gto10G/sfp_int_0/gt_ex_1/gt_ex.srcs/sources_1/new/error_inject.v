@@ -46,6 +46,15 @@
 //   - Updated 'corrupted_word_cnt' reset condition ('frame_start_on_any_lane') to
 //     detect byte position 12'd1 on any of the four lanes so 'corrupted_word_cnt'
 //     resets cleanly at the start of every frame without accumulating across frames.
+// Revision 0.06 (2026-11-06 KST) - Per-Frame Mask Enable & Completed-Frame Corruption Snapshot:
+//   - Added explicit 'frame_err_en' input port gating Zone 2 mask application
+//     ('if ((SIM_MODE == 1) && frame_err_en)') while keeping all modulo-3117 frame
+//     counters ('frame_byte_acc', 'state', 'lane_position', 'frame_out_id') running
+//     continuously across all frames.
+//   - Added 'frame_start_en_d0' (1-cycle pulse per 3117B frame when byte 1 enters on
+//     any lane with en_d0 == 1) and latched 'last_frame_corrupted_words' alongside
+//     'last_frame_done_pulse' when byte 3117 completes ('frame_end_on_any_lane')
+//     so testbenches can read the exact per-frame corrupted word count before reset.
 //////////////////////////////////////////////////////////////////////////////////
 
 module error_inject #(
@@ -54,12 +63,13 @@ module error_inject #(
     parameter   max_error   = 47,
     parameter   max_pad     = 1035 - max_error
 )(
-    input               clk,        // 312.5 MHz Continuous Clock
+    input               clk,          // 312.5 MHz Continuous Clock
     input               rst_n,
-    input               en,         // Continuous valid flag from CDC 2
-    input   [31:0]      data_in,    // Continuous 32-bit stream from CDC 2
-    output              flag,       // Continuous valid flag to gth64b66b_tx
-    output  [31:0]      data_out    // 32-bit stream to gth64b66b_tx
+    input               en,           // Continuous valid flag from CDC 2
+    input   [31:0]      data_in,      // Continuous 32-bit stream from CDC 2
+    input               frame_err_en, // Per-frame mask enable (1 = apply SIM_MODE mask, 0 = clean frame)
+    output              flag,         // Continuous valid flag to gth64b66b_tx
+    output  [31:0]      data_out      // 32-bit stream to gth64b66b_tx
 );
 
 reg [31:0] error [0:max_error];
@@ -130,13 +140,21 @@ always @* begin
             lane_zone[7 - 2 * lane_i -: 2]            = 2'd2;
             mask_offset                               = byte_pos - safe_words * 4;
             lane_mask_address[63 - 16 * lane_i -: 16] = mask_offset / 4;
-            if (SIM_MODE == 1)
+            if ((SIM_MODE == 1) && frame_err_en)
                 active_err_mask[31 - 8 * lane_i -: 8] = error[mask_offset / 4][31 - 8 * (mask_offset % 4) -: 8];
         end else begin
             lane_zone[7 - 2 * lane_i -: 2] = 2'd3;
         end
     end
 end
+
+// Exact 1-cycle frame-start indicator qualified by en_d0 (asserts once per 3117-byte frame)
+wire frame_start_en_d0 = en_d0 && (
+    (lane_position[47:36] == 12'd1) ||
+    (lane_position[35:24] == 12'd1) ||
+    (lane_position[23:12] == 12'd1) ||
+    (lane_position[11:0]  == 12'd1)
+);
 
 always @(posedge clk or negedge rst_n) begin
     if (!rst_n)
@@ -199,28 +217,44 @@ assign  data_out    = (flag) ? error_out : 32'b0;
 //   32-bit word period (not a separate hardware byte interface).
 // - 'corrupted_word_cnt' counts 32-bit bus words in the current frame that had a non-zero
 //   XOR mask applied (not the number of Reed-Solomon codeword symbol errors).
-// - Detects frame byte 1 across all 4 byte lanes ('frame_start_on_any_lane') so
-//   'corrupted_word_cnt' resets at the start of Frame 1, 2, 3, and 4 alike.
+// - 'last_frame_corrupted_words' latches the completed frame's final 'corrupted_word_cnt'
+//   on 'frame_end_on_any_lane' alongside a 1-cycle 'last_frame_done_pulse' before reset.
 reg  [7:0]  byte_out;
 reg  [11:0] frame_byte_cnt;
 reg  [15:0] out_clk_cnt;
 reg  [31:0] frame_out_id;
 reg  [31:0] cur_word;
 reg  [15:0] corrupted_word_cnt;
+reg  [15:0] last_frame_corrupted_words;
+reg         last_frame_done_pulse;
 
 wire frame_start_on_any_lane = (applied_position[47:36] == 12'd1) ||
                                (applied_position[35:24] == 12'd1) ||
                                (applied_position[23:12] == 12'd1) ||
                                (applied_position[11:0]  == 12'd1);
 
+wire frame_end_on_any_lane   = (applied_position[47:36] == 12'd3117) ||
+                               (applied_position[35:24] == 12'd3117) ||
+                               (applied_position[23:12] == 12'd3117) ||
+                               (applied_position[11:0]  == 12'd3117);
+
 always @(posedge clk or negedge rst_n) begin
-    if (~rst_n)
-        corrupted_word_cnt <= 16'd0;
-    else if (en_d1) begin
-        if (frame_start_on_any_lane)
-            corrupted_word_cnt <= (applied_mask != 32'd0) ? 16'd1 : 16'd0;
-        else if (applied_mask != 32'd0)
-            corrupted_word_cnt <= corrupted_word_cnt + 16'd1;
+    if (~rst_n) begin
+        corrupted_word_cnt         <= 16'd0;
+        last_frame_corrupted_words <= 16'd0;
+        last_frame_done_pulse      <= 1'b0;
+    end else begin
+        last_frame_done_pulse <= 1'b0;
+        if (en_d1) begin
+            if (frame_end_on_any_lane) begin
+                last_frame_corrupted_words <= corrupted_word_cnt;
+                last_frame_done_pulse      <= 1'b1;
+            end
+            if (frame_start_on_any_lane)
+                corrupted_word_cnt <= (applied_mask != 32'd0) ? 16'd1 : 16'd0;
+            else if (applied_mask != 32'd0)
+                corrupted_word_cnt <= corrupted_word_cnt + 16'd1;
+        end
     end
 end
 

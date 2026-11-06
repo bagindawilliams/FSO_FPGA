@@ -102,6 +102,8 @@ Revision History:
        requirements, including explicit reporting of "mismatched 32-bit payload words
        containing erroneous bytes at the CDC 4 output", minimum required (12B) vs.
        observed follow-on bytes at CDC 3, and the exact test-vector scope.
+    6. [2026-11-06 KST]: Added explicit '.frame_err_en(1'b1)' port connection on
+       'u_error_inject' to match error_inject.v Rev 0.06 with zero behavior change.
 ===========================================================================
 */
 
@@ -458,16 +460,17 @@ module tb_FEC_RS #(
 
     // 4.5 Channel Error Injector (Original 48-Word error.mem when INJ_SIM_MODE = 1)
     error_inject #(
-        .SIM_MODE   (INJ_SIM_MODE),
-        .safe_words (INJ_SAFE_WORDS),
-        .max_error  (INJ_MAX_ERROR)
+        .SIM_MODE     (INJ_SIM_MODE),
+        .safe_words   (INJ_SAFE_WORDS),
+        .max_error    (INJ_MAX_ERROR)
     ) u_error_inject (
-        .clk        (clk_gth),
-        .rst_n      (rst_n),
-        .en         (cdc2_out_valid),
-        .data_in    (cdc2_out_data),
-        .flag       (err_inj_out_valid),
-        .data_out   (err_inj_out_data)
+        .clk          (clk_gth),
+        .rst_n        (rst_n),
+        .en           (cdc2_out_valid),
+        .data_in      (cdc2_out_data),
+        .frame_err_en (1'b1),
+        .flag         (err_inj_out_valid),
+        .data_out     (err_inj_out_data)
     );
 
     // 4.6 GTH 64B/66B TX Adapter + GTH Serial Transceiver Core Wrapper + GTH 64B/66B RX Adapter
@@ -1467,7 +1470,7 @@ module tb_FEC_RS #(
                     within_t8_codewords_tested = within_t8_codewords_tested + 1;
                     if (cdc4_pld_lane_mismatch[rpt_f][rpt_l] == 0)
                         within_t8_codewords_healed = within_t8_codewords_healed + 1;
-                    else
+                else
                         within_t8_uncorrected_fails = within_t8_uncorrected_fails + 1;
                 end else begin
                     exceeds_t8_codewords_cnt  = exceeds_t8_codewords_cnt + 1;

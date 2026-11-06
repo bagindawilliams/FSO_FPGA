@@ -79,6 +79,27 @@ Revision History:
        simulation stop ('last_hdr_done_txfn', 'last_hdr_done_type_str', and
        'grp7_cdc4_pld_clk_cnt'/478) when 'rx_hdr_crc_pass_cnt > rx_pld_crc_pass_cnt',
        and updated report terminology to "Stimulus FCS Marker Preservation".
+  - Rev 2.7 (2026-11-06 19:40 KST) : [3-Mode Full Verification: Mode 0 Clean, Mode 1 FEC Repair, Mode 2 ARQ 5th-Retransmission & Reorder Recovery]
+    Configured Mode 2 (CH_ERROR_MODE=2) with 'ARQ_HOLDOFF_TICKS = 16'd8000' and a
+    simultaneous-push/pop-safe GRP2->GRP4 Frame Context FIFO gating 'injector_frame_err_en'
+    at frame boundaries ('frame_start_en_d0') so only DAT2 Packet A receives the 48-word
+    'error.mem' mask on Attempts 1..5 while Attempt 6 (5th Retransmission) and all other
+    frames pass through a clean channel.
+  - Rev 2.8 (2026-11-06 20:15 KST) : [Audit Final Freeze Refinements - Independent RX Reorder Slot Tag Readback & Mode 1 Active Injection/FEC PASS Criteria]
+    1. [Auditor Point 3 Fix]: Recorded the actual RX-decoded 'grp7_rx_txfn'
+       ('u_fso_ethernet_deframer.rx_txfn') and 'fso_seq' tag at the Reorder Buffer write
+       stream ('rx_reorder_slot_tag_txfn[0:15]' and 'rx_reorder_slot_tag_fso_seq[0:15]')
+       without referencing 'dat1_b_txfn', and loaded 'chk_reorder_slot_txfn' from
+       'rx_reorder_slot_tag_txfn[dat1_b_slot_idx]' so slot identity is verified
+       independently against 'dat1_b_txfn'.
+    2. [Auditor Point 5 Fix]: Split Mode 0 and Mode 1 PASS criteria into
+       'mode0_clean_pass_ok' (requiring 0 injected frames/words and 0 FEC repair counts)
+       and 'mode1_fec_repair_pass_ok' (explicitly requiring 'total_inj_frames_with_err > 0',
+       'total_inj_corrupted_words > 0', and 'grp6_rs_repaired_syms > 0' alongside 0 CRC
+       failures so an inactive injector can never falsely pass Mode 1).
+    3. [Auditor Points 2, 4, & 7]: Clarified console report terminology for
+       'RS_DecRepairedSyms', 'LOOPBACK_ARQ_DIRECT=1 (Local RX CRC Feedback Loopback)',
+       and timer configuration differences (500 cycles in Mode 0/1 vs 8,000 cycles in Mode 2).
 ===========================================================================
 */
 
@@ -86,11 +107,21 @@ module tb_SDAOISL10Gto10G_top();
 
     // =========================================================================
     // 1. TOP-LEVEL SIMULATION PARAMETERS
+    //    - CH_ERROR_MODE = 0 : Raw / Clean Channel Baseline (ARQ_HOLDOFF_TICKS=500)
+    //    - CH_ERROR_MODE = 1 : Correctable FEC Channel (max_error=18, <=8 RS syms/lane, ARQ_HOLDOFF_TICKS=500)
+    //    - CH_ERROR_MODE = 2 : Uncorrectable RS on DAT2_A (Attempts 1..5) -> Recovered
+    //                          by Closed-Loop ARQ & Reorder RAM on 5th Retransmission (Attempt 6, ARQ_HOLDOFF_TICKS=8000)
     // =========================================================================
     parameter SIM_MODE             = 1;     // 1 = Internal Packet Gen & XGMII Direct Mode
-    parameter CH_ERROR_MODE        = 0;     // 0 = Clean Baseline, 1 = Reduced Mask (max_error=18), 2 = Full 48-Word error.mem
+    parameter CH_ERROR_MODE        = 0;     // Select 0, 1, or 2
     parameter TARGET_JUMBO_PKTS    = 2;     // Number of 2000-Byte Jumbo packets to verify at PC 2 (4,000 MAC Bytes)
     parameter real GTH_REFCLK_HALF = 3.200; // [Rev 2.2] Exact 3.200 ns half-period (156.25 MHz RefClk)
+
+    localparam LOOPBACK_ARQ_DIRECT_CFG   = 1; // 1 = Single-FPGA Optical Loopback (Local RX CRC feedback)
+    // Mode-specific ARQ holdoff timer:
+    // - Mode 0 & Mode 1 retain exact baseline 16'd500 ticks
+    // - Mode 2 uses 16'd8000 ticks (~24.82 us > ~13.5 us loopback RTT) so every replay is causally triggered by NAK
+    localparam [15:0] ACTIVE_ARQ_HOLDOFF_TICKS = (CH_ERROR_MODE == 2) ? 16'd8000 : 16'd500;
 
     // =========================================================================
     // 2. PHYSICAL BOARD CLOCKS, RESET & SERIAL LOOPBACK WIRES
@@ -135,7 +166,9 @@ module tb_SDAOISL10Gto10G_top();
     // 3. GRAND TOP-LEVEL DUT INSTANTIATION
     // =========================================================================
     SDAOISL10Gto10G_top #(
-        .SIM_MODE (SIM_MODE)
+        .SIM_MODE            (SIM_MODE),
+        .LOOPBACK_ARQ_DIRECT (LOOPBACK_ARQ_DIRECT_CFG),
+        .ARQ_HOLDOFF_TICKS   (ACTIVE_ARQ_HOLDOFF_TICKS)
     ) u_dut (
         .sys_clk_p           (sys_clk_p),
         .sys_clk_n           (sys_clk_n),
@@ -348,6 +381,7 @@ module tb_SDAOISL10Gto10G_top();
     // -------------------------------------------------------------------------
     // GROUP 2: TX FSO FRAMER (16B HEADER + 1912B PAYLOAD) & ARQ TX (clk_tx)
     // -------------------------------------------------------------------------
+    wire        grp2_tx_trigger_gen    = u_dut.sda_encoder_inst.u_eth_fso_framer.tx_trigger_gen;
     wire [15:0] grp2_tx_txfn           = u_dut.sda_encoder_inst.u_eth_fso_framer.tx_txfn_out;
     wire [1:0]  grp2_tx_frame_type     = u_dut.sda_encoder_inst.u_eth_fso_framer.frame_type_out;
     wire [1:0]  grp2_payload_mux_sel   = u_dut.sda_encoder_inst.u_eth_fso_framer.payload_mux_sel;
@@ -362,7 +396,7 @@ module tb_SDAOISL10Gto10G_top();
     always @(*) begin
         case (grp2_tx_frame_type)
             2'b00:   grp2_tx_frame_str = "IDLE";
-            2'b01:   grp2_tx_frame_str = grp2_in_cont ? "DAT2" : "DAT1";
+            2'b01:   grp2_tx_frame_str = (grp2_payload_mux_sel == 2'b11) ? "RETX" : (grp2_in_cont ? "DAT2" : "DAT1");
             2'b10:   grp2_tx_frame_str = "MGMT";
             default: grp2_tx_frame_str = "RSVD";
         endcase
@@ -461,6 +495,402 @@ module tb_SDAOISL10Gto10G_top();
     wire [15:0]  grp4_tx_clk_cnt       = u_dut.sda_encoder_inst.u_error_injector.out_clk_cnt;    // 1..780 Clocks
     wire [31:0]  grp4_tx_frame_id      = u_dut.sda_encoder_inst.u_error_injector.frame_out_id;
     wire [15:0]  grp4_corrupted_words  = u_dut.sda_encoder_inst.u_error_injector.corrupted_word_cnt;
+    wire         inj_frame_start_en_d0 = u_dut.sda_encoder_inst.u_error_injector.frame_start_en_d0;
+    wire [15:0]  inj_last_frame_corrupted_words = u_dut.sda_encoder_inst.u_error_injector.last_frame_corrupted_words;
+    wire         inj_last_frame_done_pulse      = u_dut.sda_encoder_inst.u_error_injector.last_frame_done_pulse;
+
+    // =========================================================================
+    // [Rev 2.7 & Rev 2.8] GRP2 -> GRP4 FRAME CONTEXT FIFO, PER-FRAME INJECTOR GATING,
+    //                     CAUSAL NAK->REPLAY TRACKER, 478W REPLAY VERIFIER & RAM CLEANUP
+    // =========================================================================
+    reg [15:0] ctx_fifo_txfn      [0:127];
+    reg [1:0]  ctx_fifo_ftype     [0:127];
+    reg [1:0]  ctx_fifo_mux_sel   [0:127];
+    reg        ctx_fifo_is_target [0:127];
+    reg [3:0]  ctx_fifo_attempt   [0:127];
+    reg        ctx_fifo_err_en    [0:127];
+
+    integer    ctx_wr_ptr                     = 0;
+    integer    ctx_rd_ptr                     = 0;
+    integer    ctx_done_ptr                   = 0;
+    integer    ctx_fifo_count                 = 0;
+    integer    ctx_push_total_cnt             = 0;
+    integer    ctx_pop_total_cnt              = 0;
+    integer    ctx_done_total_cnt             = 0;
+    integer    ctx_fifo_overflow_err          = 0;
+    integer    ctx_fifo_underflow_err         = 0;
+
+    // Dynamic DATA Segment TXFN & Target Lifecycle Trackers
+    integer    new_data_seg_cnt               = 0;
+    reg [15:0] dat1_a_txfn                    = 16'd0;
+    reg [15:0] target_txfn                    = 16'd0; // 2nd new DATA segment (DAT2 Packet A)
+    reg [15:0] dat1_b_txfn                    = 16'd0; // 3rd new DATA segment (DAT1 Packet B)
+    reg [15:0] dat2_b_txfn                    = 16'd0; // 4th new DATA segment (DAT2 Packet B)
+    reg        target_txfn_valid              = 1'b0;
+    reg        dat1_b_txfn_valid              = 1'b0;
+    reg        dat2_b_txfn_valid              = 1'b0;
+
+    reg [1:0]  target_track_idx               = 2'd0;
+    reg [3:0]  target_phys_slot               = 4'd0;
+    reg [15:0] target_recorded_ram_addr       = 16'd0;
+    reg        target_ram_write_verified      = 1'b0;
+    integer    target_ram_read_addr_match_cnt = 0;
+    integer    target_ram_addr_mismatch_cnt   = 0;
+    reg        target_ram_delete_verified     = 1'b0;
+
+    integer    target_tx_attempt_cnt          = 0; // Expected in Mode 2: 6 (1 Initial + 5 Retx)
+    integer    target_retx_event_cnt          = 0; // Expected in Mode 2: 5
+    integer    post_ack_target_replay_cnt     = 0; // Expected in Mode 2: 0
+
+    // Causal NAK -> Replay Pairing Trackers (Auditor Detail 2)
+    reg        target_nak_awaiting_replay     = 1'b0;
+    integer    target_tx_nak_received_cnt     = 0; // Expected in Mode 2: 5
+    integer    target_causal_nak_replay_pairs = 0; // Expected in Mode 2: 5
+    integer    target_unpaired_replay_err     = 0; // Expected in Mode 2: 0
+    integer    target_timeout_before_nak_err  = 0; // Expected in Mode 2: 0
+    reg        target_tx_ack_processed        = 1'b0;
+    integer    target_drop_err_cnt            = 0;
+
+    // 478-Word Target Payload Reference & Replay Comparator
+    reg [31:0] target_init_payload_mem [0:477];
+    integer    target_init_words_captured     = 0;
+    integer    target_cur_pld_word_idx        = 0;
+    reg        capturing_target_init_pld      = 1'b0;
+    reg        checking_target_replay_pld     = 1'b0;
+    integer    target_replay_words_checked    = 0; // Expected in Mode 2: 5 x 478 = 2,390 words
+    integer    target_replay_word_mismatches  = 0;
+
+    // Per-Frame Injector Verification Counters across Mode 0, Mode 1, & Mode 2 (Auditor Point 5)
+    reg        tb_mode2_frame_err_en          = 1'b0;
+    reg [15:0] cur_inj_txfn                   = 16'd0;
+    reg        cur_inj_is_target              = 1'b0;
+    reg [3:0]  cur_inj_attempt                = 4'd0;
+    integer    total_inj_frames_with_err      = 0; // Mode 0: 0 | Mode 1: >0 | Mode 2: 5
+    integer    total_inj_corrupted_words      = 0; // Mode 0: 0 | Mode 1: >0 | Mode 2: 162
+    integer    target_inj_corrupted_frames    = 0; // Expected in Mode 2: 5 (Attempts 1..5, 36 or 27 words)
+    integer    target_inj_clean_retx5_ok      = 0; // Expected in Mode 2: 1 (Attempt 6, 0 corrupted words)
+    integer    non_target_inj_leak_err        = 0; // Expected in Mode 2: 0
+
+    wire       ctx_push_now = u_dut.rst_n && grp2_tx_trigger_gen;
+    wire       ctx_pop_now  = u_dut.rst_n && inj_frame_start_en_d0;
+
+    // Immediate combinational mux on frame_start_en_d0 so byte 1 of the new frame already sees its enable
+    wire       next_pop_err_en            = (ctx_fifo_count > 0) ? ctx_fifo_err_en[ctx_rd_ptr] : 1'b0;
+    wire       tb_mode2_frame_err_en_wire = inj_frame_start_en_d0 ? next_pop_err_en : tb_mode2_frame_err_en;
+
+    // Apply hierarchical override ONLY in CH_ERROR_MODE == 2 to gate channel error injection per frame
+    initial begin
+        if (CH_ERROR_MODE == 2) begin
+            force u_dut.sda_encoder_inst.injector_frame_err_en = tb_mode2_frame_err_en_wire;
+        end
+    end
+
+    // Controller internal probes for causal NAK->replay pairing and RAM cleanup verification
+    wire [2:0]  arq_ctrl_state          = u_dut.sda_encoder_inst.u_eth_fso_framer.u_arq_tx_controller.state;
+    wire [1:0]  arq_ctrl_target_idx     = u_dut.sda_encoder_inst.u_eth_fso_framer.u_arq_tx_controller.target_index;
+    wire [3:0]  arq_ctrl_alloc_slot     = u_dut.sda_encoder_inst.u_eth_fso_framer.u_arq_tx_controller.alloc_phys_slot;
+    wire [15:0] arq_ctrl_global_txfn    = u_dut.sda_encoder_inst.u_eth_fso_framer.u_arq_tx_controller.global_txfn;
+    wire        arq_ctrl_rx_valid       = u_dut.sda_encoder_inst.u_eth_fso_framer.u_arq_tx_controller.rx_ack_valid_in;
+    wire        arq_ctrl_rx_ack         = u_dut.sda_encoder_inst.u_eth_fso_framer.u_arq_tx_controller.rx_ack_in;
+    wire [15:0] arq_ctrl_rx_rxfn        = u_dut.sda_encoder_inst.u_eth_fso_framer.u_arq_tx_controller.rx_rxfn_in;
+    wire        arq_ctrl_ack_hit        = u_dut.sda_encoder_inst.u_eth_fso_framer.u_arq_tx_controller.ack_hit_found;
+    wire [1:0]  arq_ctrl_ack_hit_idx    = u_dut.sda_encoder_inst.u_eth_fso_framer.u_arq_tx_controller.ack_hit_index;
+    wire        arq_ctrl_drop_del_req   = u_dut.sda_encoder_inst.u_eth_fso_framer.u_arq_tx_controller.drop_del_req;
+    wire [1:0]  arq_ctrl_drop_idx       = u_dut.sda_encoder_inst.u_eth_fso_framer.u_arq_tx_controller.drop_index;
+    wire        arq_ctrl_timer_tick_en  = u_dut.sda_encoder_inst.u_eth_fso_framer.u_arq_tx_controller.timer_tick_en;
+
+    reg         push_is_target_tmp;
+    reg  [3:0]  push_attempt_tmp;
+    reg         push_err_en_tmp;
+
+    always @(posedge clk_tx) begin
+        if (!u_dut.rst_n) begin
+            ctx_wr_ptr                     <= 0;
+            ctx_rd_ptr                     <= 0;
+            ctx_done_ptr                   <= 0;
+            ctx_fifo_count                 <= 0;
+            ctx_push_total_cnt             <= 0;
+            ctx_pop_total_cnt              <= 0;
+            ctx_done_total_cnt             <= 0;
+            ctx_fifo_overflow_err          <= 0;
+            ctx_fifo_underflow_err         <= 0;
+            new_data_seg_cnt               <= 0;
+            dat1_a_txfn                    <= 16'd0;
+            target_txfn                    <= 16'd0;
+            dat1_b_txfn                    <= 16'd0;
+            dat2_b_txfn                    <= 16'd0;
+            target_txfn_valid              <= 1'b0;
+            dat1_b_txfn_valid              <= 1'b0;
+            dat2_b_txfn_valid              <= 1'b0;
+            target_track_idx               <= 2'd0;
+            target_phys_slot               <= 4'd0;
+            target_recorded_ram_addr       <= 16'd0;
+            target_ram_write_verified      <= 1'b0;
+            target_ram_read_addr_match_cnt <= 0;
+            target_ram_addr_mismatch_cnt   <= 0;
+            target_ram_delete_verified     <= 1'b0;
+            target_tx_attempt_cnt          <= 0;
+            target_retx_event_cnt          <= 0;
+            post_ack_target_replay_cnt     <= 0;
+            target_nak_awaiting_replay     <= 1'b0;
+            target_tx_nak_received_cnt     <= 0;
+            target_causal_nak_replay_pairs <= 0;
+            target_unpaired_replay_err     <= 0;
+            target_timeout_before_nak_err  <= 0;
+            target_tx_ack_processed        <= 1'b0;
+            target_drop_err_cnt            <= 0;
+            target_init_words_captured     <= 0;
+            target_cur_pld_word_idx        <= 0;
+            capturing_target_init_pld      <= 1'b0;
+            checking_target_replay_pld     <= 1'b0;
+            target_replay_words_checked    <= 0;
+            target_replay_word_mismatches  <= 0;
+            tb_mode2_frame_err_en          <= 1'b0;
+            cur_inj_txfn                   <= 16'd0;
+            cur_inj_is_target              <= 1'b0;
+            cur_inj_attempt                <= 4'd0;
+            total_inj_frames_with_err      <= 0;
+            total_inj_corrupted_words      <= 0;
+            target_inj_corrupted_frames    <= 0;
+            target_inj_clean_retx5_ok      <= 0;
+            non_target_inj_leak_err        <= 0;
+        end else begin
+            // 1. Record target tracker index & physical slot when S_EXEC_DATA (3'd4) fires for 2nd new DATA segment
+            if ((arq_ctrl_state == 3'd4) && (new_data_seg_cnt == 1)) begin
+                target_track_idx <= arq_ctrl_target_idx;
+                target_phys_slot <= arq_ctrl_alloc_slot;
+            end
+
+            // 2. Check for autonomous timer expiration BEFORE NAK arrives on target tracker slot
+            if ((CH_ERROR_MODE == 2) && target_txfn_valid && !target_tx_ack_processed &&
+                u_dut.sda_encoder_inst.u_eth_fso_framer.u_arq_tx_controller.track_valid[target_track_idx] &&
+                (u_dut.sda_encoder_inst.u_eth_fso_framer.u_arq_tx_controller.track_txfn[target_track_idx] == target_txfn)) begin
+                if ((u_dut.sda_encoder_inst.u_eth_fso_framer.u_arq_tx_controller.track_timer[target_track_idx] == 16'd1) &&
+                    arq_ctrl_timer_tick_en &&
+                    !(arq_ctrl_ack_hit && (arq_ctrl_ack_hit_idx == target_track_idx) && (arq_ctrl_rx_ack == 1'b0))) begin
+                    target_timeout_before_nak_err <= target_timeout_before_nak_err + 1;
+                    $display(" [%0.1f ns] [MODE2 ERROR] Target TXFN=%0d timer expired by timeout before NAK arrived!",
+                             $realtime, target_txfn);
+                end
+            end
+
+            // 3. Causal Pairing Step A: Capture incoming NAK or ACK for target_txfn at u_arq_tx_controller
+            if (target_txfn_valid && arq_ctrl_rx_valid && arq_ctrl_ack_hit && (arq_ctrl_rx_rxfn == target_txfn)) begin
+                if (arq_ctrl_rx_ack == 1'b0) begin
+                    // Verify timer was still positive when NAK arrived
+                    if (u_dut.sda_encoder_inst.u_eth_fso_framer.u_arq_tx_controller.track_timer[arq_ctrl_ack_hit_idx] == 16'd0)
+                        target_timeout_before_nak_err <= target_timeout_before_nak_err + 1;
+                    if (target_nak_awaiting_replay)
+                        target_unpaired_replay_err <= target_unpaired_replay_err + 1;
+                    target_nak_awaiting_replay <= 1'b1;
+                    target_tx_nak_received_cnt <= target_tx_nak_received_cnt + 1;
+                    if (CH_ERROR_MODE == 2) begin
+                        $display(" [%0.1f ns] [MODE2 TX TRACKER NAK #%0d] Target TXFN=%0d NAK processed (TimerRemaining=%0d cycles)",
+                                 $realtime, target_tx_nak_received_cnt + 1, target_txfn,
+                                 u_dut.sda_encoder_inst.u_eth_fso_framer.u_arq_tx_controller.track_timer[arq_ctrl_ack_hit_idx]);
+                    end
+                end else begin
+                    // Target ACK processed! Verify it occurred on Retransmission #5 (track_retx == 5) with positive timer
+                    if ((u_dut.sda_encoder_inst.u_eth_fso_framer.u_arq_tx_controller.track_retx[arq_ctrl_ack_hit_idx] == 3'd5) &&
+                        (u_dut.sda_encoder_inst.u_eth_fso_framer.u_arq_tx_controller.track_timer[arq_ctrl_ack_hit_idx] > 16'd0)) begin
+                        target_tx_ack_processed <= 1'b1;
+                    end
+                    if (CH_ERROR_MODE == 2) begin
+                        $display(" [%0.1f ns] [MODE2 TX TRACKER ACK] Target TXFN=%0d ACK processed on RetxCount=%0d (TimerRemaining=%0d cycles)",
+                                 $realtime, target_txfn,
+                                 u_dut.sda_encoder_inst.u_eth_fso_framer.u_arq_tx_controller.track_retx[arq_ctrl_ack_hit_idx],
+                                 u_dut.sda_encoder_inst.u_eth_fso_framer.u_arq_tx_controller.track_timer[arq_ctrl_ack_hit_idx]);
+                    end
+                end
+            end
+
+            // 4. Causal Pairing Step B: Pair S_EXEC_RETX (3'd2) execution for target_txfn with preceding NAK
+            if (target_txfn_valid && (arq_ctrl_state == 3'd2) &&
+                (u_dut.sda_encoder_inst.u_eth_fso_framer.u_arq_tx_controller.track_txfn[arq_ctrl_target_idx] == target_txfn)) begin
+                if (target_nak_awaiting_replay) begin
+                    target_nak_awaiting_replay     <= 1'b0;
+                    target_causal_nak_replay_pairs <= target_causal_nak_replay_pairs + 1;
+                end else begin
+                    target_unpaired_replay_err <= target_unpaired_replay_err + 1;
+                end
+            end
+
+            // 5. Verify target_txfn is never dropped due to retry exhaustion
+            if (target_txfn_valid && arq_ctrl_drop_del_req &&
+                (u_dut.sda_encoder_inst.u_eth_fso_framer.u_arq_tx_controller.track_txfn[arq_ctrl_drop_idx] == target_txfn)) begin
+                target_drop_err_cnt <= target_drop_err_cnt + 1;
+            end
+
+            // 6. Verify Actual RAM Address Mapping (Write -> 5x Read -> Delete) across Controller & Payload Wrapper
+            if (u_dut.sda_encoder_inst.u_eth_fso_framer.ddr4_delete_req && target_ram_write_verified &&
+                (u_dut.sda_encoder_inst.u_eth_fso_framer.ddr4_addr == target_recorded_ram_addr) &&
+                u_dut.sda_encoder_inst.u_eth_fso_framer.u_fso_payload_top.ddr4_delete_req &&
+                (u_dut.sda_encoder_inst.u_eth_fso_framer.u_fso_payload_top.ddr4_addr == target_recorded_ram_addr)) begin
+                target_ram_delete_verified <= 1'b1;
+                if (CH_ERROR_MODE == 2) begin
+                    $display(" [%0.1f ns] [MODE2 RAM CLEANUP] Verified ddr4_delete_req for Target TXFN=%0d at RAM Addr=0x%04X",
+                             $realtime, target_txfn, target_recorded_ram_addr);
+                end
+            end
+
+            // 7. Context FIFO Push on 1-cycle grp2_tx_trigger_gen & Pop on 1-cycle inj_frame_start_en_d0
+            push_is_target_tmp = 1'b0;
+            push_attempt_tmp   = 4'd0;
+            push_err_en_tmp    = (CH_ERROR_MODE == 1) ? 1'b1 : 1'b0;
+
+            if (ctx_push_now) begin
+                if (grp2_payload_mux_sel == 2'b01) begin
+                    // New DATA segment transmission
+                    new_data_seg_cnt <= new_data_seg_cnt + 1;
+                    if (new_data_seg_cnt == 0) begin
+                        dat1_a_txfn <= grp2_tx_txfn;
+                        capturing_target_init_pld  <= 1'b0;
+                        checking_target_replay_pld <= 1'b0;
+                    end else if (new_data_seg_cnt == 1) begin
+                        // 2nd new DATA segment = DAT2 Packet A (Target Frame!)
+                        target_txfn               <= grp2_tx_txfn;
+                        target_txfn_valid         <= 1'b1;
+                        target_tx_attempt_cnt     <= 1;
+                        push_is_target_tmp        = 1'b1;
+                        push_attempt_tmp          = 4'd1;
+                        push_err_en_tmp           = (CH_ERROR_MODE == 0) ? 1'b0 : 1'b1;
+                        capturing_target_init_pld <= 1'b1;
+                        checking_target_replay_pld<= 1'b0;
+                        target_cur_pld_word_idx   <= 0;
+                        if (u_dut.sda_encoder_inst.u_eth_fso_framer.ddr4_write_req &&
+                            u_dut.sda_encoder_inst.u_eth_fso_framer.u_fso_payload_top.ddr4_write_req) begin
+                            target_recorded_ram_addr  <= u_dut.sda_encoder_inst.u_eth_fso_framer.ddr4_addr;
+                            target_ram_write_verified <= 1'b1;
+                        end
+                        if (CH_ERROR_MODE == 2) begin
+                            $display(" [%0.1f ns] [MODE2 TARGET SELECTED] DAT2 Packet A assigned TXFN=%0d (Attempt #1, RAM_Addr=0x%04X, InjectErr=%0b)",
+                                     $realtime, grp2_tx_txfn, u_dut.sda_encoder_inst.u_eth_fso_framer.ddr4_addr, push_err_en_tmp);
+                        end
+                    end else if (new_data_seg_cnt == 2) begin
+                        dat1_b_txfn                <= grp2_tx_txfn;
+                        dat1_b_txfn_valid          <= 1'b1;
+                        capturing_target_init_pld  <= 1'b0;
+                        checking_target_replay_pld <= 1'b0;
+                    end else if (new_data_seg_cnt == 3) begin
+                        dat2_b_txfn                <= grp2_tx_txfn;
+                        dat2_b_txfn_valid          <= 1'b1;
+                        capturing_target_init_pld  <= 1'b0;
+                        checking_target_replay_pld <= 1'b0;
+                    end
+                end else if ((grp2_payload_mux_sel == 2'b11) && target_txfn_valid && (grp2_tx_txfn == target_txfn)) begin
+                    // Retransmission (Replay) of Target Frame (DAT2 Packet A)
+                    target_tx_attempt_cnt      <= target_tx_attempt_cnt + 1;
+                    target_retx_event_cnt      <= target_retx_event_cnt + 1;
+                    if (target_tx_ack_processed)
+                        post_ack_target_replay_cnt <= post_ack_target_replay_cnt + 1;
+                    push_is_target_tmp         = 1'b1;
+                    push_attempt_tmp           = target_tx_attempt_cnt[3:0] + 4'd1;
+                    // Inject error on Attempts 1..5 (Initial + Retx 1..4); Clean on Attempt 6 (Retx 5)!
+                    push_err_en_tmp            = (CH_ERROR_MODE == 2) ? ((target_tx_attempt_cnt + 1) <= 5) :
+                                                 ((CH_ERROR_MODE == 1) ? 1'b1 : 1'b0);
+                    capturing_target_init_pld  <= 1'b0;
+                    checking_target_replay_pld <= 1'b1;
+                    target_cur_pld_word_idx    <= 0;
+
+                    // Verify ddr4_read_req and ddr4_addr match recorded RAM address
+                    if (u_dut.sda_encoder_inst.u_eth_fso_framer.ddr4_read_req &&
+                        u_dut.sda_encoder_inst.u_eth_fso_framer.u_fso_payload_top.ddr4_read_req &&
+                        (u_dut.sda_encoder_inst.u_eth_fso_framer.ddr4_addr == target_recorded_ram_addr) &&
+                        (u_dut.sda_encoder_inst.u_eth_fso_framer.u_fso_payload_top.ddr4_addr == target_recorded_ram_addr)) begin
+                        target_ram_read_addr_match_cnt <= target_ram_read_addr_match_cnt + 1;
+                    end else begin
+                        target_ram_addr_mismatch_cnt <= target_ram_addr_mismatch_cnt + 1;
+                    end
+                    if (CH_ERROR_MODE == 2) begin
+                        $display(" [%0.1f ns] [MODE2 TARGET REPLAY #%0d] TXFN=%0d (Attempt #%0d, RAM_Addr=0x%04X, InjectErr=%0b)",
+                                 $realtime, target_retx_event_cnt + 1, grp2_tx_txfn, target_tx_attempt_cnt + 1,
+                                 u_dut.sda_encoder_inst.u_eth_fso_framer.ddr4_addr, push_err_en_tmp);
+                    end
+                end else begin
+                    capturing_target_init_pld  <= 1'b0;
+                    checking_target_replay_pld <= 1'b0;
+                end
+
+                // Write frame context entry into FIFO
+                ctx_fifo_txfn[ctx_wr_ptr]      <= grp2_tx_txfn;
+                ctx_fifo_ftype[ctx_wr_ptr]     <= grp2_tx_frame_type;
+                ctx_fifo_mux_sel[ctx_wr_ptr]   <= grp2_payload_mux_sel;
+                ctx_fifo_is_target[ctx_wr_ptr] <= push_is_target_tmp;
+                ctx_fifo_attempt[ctx_wr_ptr]   <= push_attempt_tmp;
+                ctx_fifo_err_en[ctx_wr_ptr]    <= push_err_en_tmp;
+                ctx_wr_ptr                     <= (ctx_wr_ptr + 1) % 128;
+                ctx_push_total_cnt             <= ctx_push_total_cnt + 1;
+            end
+
+            if (ctx_pop_now) begin
+                tb_mode2_frame_err_en <= next_pop_err_en;
+                cur_inj_txfn          <= (ctx_fifo_count > 0) ? ctx_fifo_txfn[ctx_rd_ptr]      : 16'd0;
+                cur_inj_is_target     <= (ctx_fifo_count > 0) ? ctx_fifo_is_target[ctx_rd_ptr] : 1'b0;
+                cur_inj_attempt       <= (ctx_fifo_count > 0) ? ctx_fifo_attempt[ctx_rd_ptr]   : 4'd0;
+                ctx_rd_ptr            <= (ctx_rd_ptr + 1) % 128;
+                ctx_pop_total_cnt     <= ctx_pop_total_cnt + 1;
+            end
+
+            // Simultaneous Push & Pop Safe Count Update
+            if (ctx_push_now && !ctx_pop_now) begin
+                if (ctx_fifo_count >= 128) ctx_fifo_overflow_err <= ctx_fifo_overflow_err + 1;
+                ctx_fifo_count <= ctx_fifo_count + 1;
+            end else if (!ctx_push_now && ctx_pop_now) begin
+                if (ctx_fifo_count == 0) ctx_fifo_underflow_err <= ctx_fifo_underflow_err + 1;
+                ctx_fifo_count <= ctx_fifo_count - 1;
+            end else if (ctx_push_now && ctx_pop_now) begin
+                if (ctx_fifo_count == 0) ctx_fifo_underflow_err <= ctx_fifo_underflow_err + 1;
+                // ctx_fifo_count unchanged on simultaneous push & pop
+            end
+
+            // 8. Verify 478-word payload equality across all 5 target replays at GRP2
+            if (grp2_pld_valid) begin
+                if (capturing_target_init_pld) begin
+                    if (target_cur_pld_word_idx < 478) begin
+                        target_init_payload_mem[target_cur_pld_word_idx] <= grp2_pld_data;
+                        target_init_words_captured <= target_init_words_captured + 1;
+                    end
+                    target_cur_pld_word_idx <= target_cur_pld_word_idx + 1;
+                    if (grp2_pld_last) capturing_target_init_pld <= 1'b0;
+                end else if (checking_target_replay_pld) begin
+                    if (target_cur_pld_word_idx < 478) begin
+                        if (grp2_pld_data !== target_init_payload_mem[target_cur_pld_word_idx])
+                            target_replay_word_mismatches <= target_replay_word_mismatches + 1;
+                        target_replay_words_checked <= target_replay_words_checked + 1;
+                    end
+                    target_cur_pld_word_idx <= target_cur_pld_word_idx + 1;
+                    if (grp2_pld_last) checking_target_replay_pld <= 1'b0;
+                end
+            end
+
+            // 9. Verify completed frame's corrupted_word_cnt snapshot on inj_last_frame_done_pulse
+            //    Across all modes (Auditor Point 5), accumulate total_inj_frames_with_err and
+            //    total_inj_corrupted_words so Mode 0 proves 0 injections and Mode 1 proves active injections.
+            if (inj_last_frame_done_pulse) begin
+                if (inj_last_frame_corrupted_words > 16'd0) begin
+                    total_inj_frames_with_err <= total_inj_frames_with_err + 1;
+                    total_inj_corrupted_words <= total_inj_corrupted_words + inj_last_frame_corrupted_words;
+                end
+                if (CH_ERROR_MODE == 2) begin
+                    if (ctx_fifo_is_target[ctx_done_ptr]) begin
+                        if (ctx_fifo_attempt[ctx_done_ptr] <= 4'd5) begin
+                            if ((inj_last_frame_corrupted_words == 16'd36) ||
+                                (inj_last_frame_corrupted_words == 16'd27))
+                                target_inj_corrupted_frames <= target_inj_corrupted_frames + 1;
+                        end else if (ctx_fifo_attempt[ctx_done_ptr] == 4'd6) begin
+                            if (inj_last_frame_corrupted_words == 16'd0)
+                                target_inj_clean_retx5_ok <= target_inj_clean_retx5_ok + 1;
+                        end
+                    end else begin
+                        if (inj_last_frame_corrupted_words != 16'd0)
+                            non_target_inj_leak_err <= non_target_inj_leak_err + 1;
+                    end
+                end
+                ctx_done_ptr       <= (ctx_done_ptr + 1) % 128;
+                ctx_done_total_cnt <= ctx_done_total_cnt + 1;
+            end
+        end
+    end
 
     // -------------------------------------------------------------------------
     // GROUP 5: GTH 64B/66B OPTICAL TRANSCEIVER SERIAL LOOPBACK (10.3125 Gbps)
@@ -564,8 +994,17 @@ module tb_SDAOISL10Gto10G_top();
     wire         grp7_arq_fb_ack       = u_dut.arq_fb_ack;
     wire         grp7_arq_fb_valid     = u_dut.arq_fb_ack_valid;
     wire         grp7_deframed_valid   = u_dut.sda_decoder_inst.deframed_data_tvalid;
+    wire         grp7_deframed_ready   = u_dut.sda_decoder_inst.u_fso_ethernet_deframer.m_axis_fso_tready;
     wire [31:0]  grp7_deframed_data    = u_dut.sda_decoder_inst.deframed_data_tdata;
     wire         grp7_deframed_last    = u_dut.sda_decoder_inst.deframed_data_tlast;
+
+    // Proven Reorder Buffer internal probes (identical to Rev 2.7)
+    wire         rx_reorder_in_tvalid  = u_dut.sda_decoder_inst.u_fso_ethernet_deframer.u_deframer.u_frame_demultiplexer.u_arq_rx_reorder.s_axis_data_tvalid;
+    wire [31:0]  rx_reorder_in_tdata   = u_dut.sda_decoder_inst.u_fso_ethernet_deframer.u_deframer.u_frame_demultiplexer.u_arq_rx_reorder.s_axis_data_tdata;
+    wire [15:0]  rx_reorder_slot_valid = u_dut.sda_decoder_inst.u_fso_ethernet_deframer.u_deframer.u_frame_demultiplexer.u_arq_rx_reorder.slot_valid;
+    wire [15:0]  rx_reorder_exp_txfn   = u_dut.sda_decoder_inst.u_fso_ethernet_deframer.expected_txfn;
+    wire [15:0]  rx_reorder_ooo_cnt    = u_dut.sda_decoder_inst.u_fso_ethernet_deframer.u_deframer.u_frame_demultiplexer.u_arq_rx_reorder.out_of_order_buffered_cnt;
+    wire [15:0]  rx_reorder_in_ord_cnt = u_dut.sda_decoder_inst.u_fso_ethernet_deframer.u_deframer.u_frame_demultiplexer.u_arq_rx_reorder.in_order_drained_cnt;
 
     reg  [31:0]  grp7_rx_frame_str;
     always @(*) begin
@@ -580,46 +1019,114 @@ module tb_SDAOISL10Gto10G_top();
     reg  [8:0]   grp7_defr_clk_cnt     = 9'd0;  // 1..477 Clocks
     reg  [11:0]  grp7_defr_byte_cnt    = 12'd0; // 4..1908 Bytes
 
-    // Event-Driven OISL CRC, MGMT (with per-event mismatch check) & In-Flight Partial Frame Tracker
-    integer      rx_hdr_crc_pass_cnt      = 0;
-    integer      rx_hdr_crc_fail_cnt      = 0;
-    integer      rx_pld_crc_pass_cnt      = 0;
-    integer      rx_pld_crc_fail_cnt      = 0;
-    integer      rx_idle_frame_cnt        = 0;
-    integer      rx_data_frame_cnt        = 0;
-    integer      rx_mgmt_frame_cnt        = 0;
-    integer      mgmt_valid_event_cnt     = 0;
-    integer      mgmt_range_mismatch_cnt  = 0;
-    reg  [63:0]  mgmt_captured_range      = 64'd0;
-    reg  [15:0]  last_hdr_done_txfn       = 16'd0;
-    reg  [31:0]  last_hdr_done_type_str   = "NONE";
+    // Event-Driven OISL CRC, MGMT & Mode 2 Target/Reorder Checkpoint Trackers
+    integer      rx_hdr_crc_pass_cnt         = 0;
+    integer      rx_hdr_crc_fail_cnt         = 0;
+    integer      rx_pld_crc_pass_cnt         = 0;
+    integer      rx_pld_crc_fail_cnt         = 0;
+    integer      rx_idle_frame_cnt           = 0;
+    integer      rx_data_frame_cnt           = 0;
+    integer      rx_mgmt_frame_cnt           = 0;
+    integer      mgmt_valid_event_cnt        = 0;
+    integer      mgmt_range_mismatch_cnt     = 0;
+    reg  [63:0]  mgmt_captured_range         = 64'd0;
+    reg  [15:0]  last_hdr_done_txfn          = 16'd0;
+    reg  [31:0]  last_hdr_done_type_str      = "NONE";
+
+    // [Rev 2.8 - Auditor Point 3 Fix]: Independent RX-Side Per-Slot Tag Table (0..15)
+    // Records the RX-decoded 'grp7_rx_txfn' (from u_fso_ethernet_deframer.rx_txfn),
+    // 'fso_seq', and word count written into each Reorder RAM slot [0..15] without
+    // referencing 'dat1_b_txfn'.
+    reg  [15:0]  cur_rx_reorder_wr_txfn      = 16'd0;
+    reg  [15:0]  rx_reorder_slot_tag_txfn    [0:15];
+    reg  [9:0]   rx_reorder_slot_tag_fso_seq [0:15];
+    reg  [9:0]   rx_reorder_slot_word_cnt    [0:15];
+    integer      s_idx;
+
+    // Mode 2 Target RX CRC & Reorder Checkpoint State (Auditor Detail 1 & Point 3)
+    integer      target_rx_crc_fail_cnt      = 0; // Expected in Mode 2: 5
+    reg          target_retx5_rx_crc_passed  = 1'b0;
+    reg          dat1_b_rx_crc_passed        = 1'b0;
+    reg          dat1_b_wait_slot_active     = 1'b0;
+    integer      dat1_b_wait_cycles          = 0;
+    integer      reorder_chk_timeout_err     = 0;
+    reg          reorder_chk_captured        = 1'b0;
+    reg          chk_reorder_slot_valid_bit  = 1'b0;
+    reg  [15:0]  chk_reorder_slot_txfn       = 16'd0;
+    reg  [9:0]   chk_reorder_slot_fso_seq    = 10'd0;
+    reg  [9:0]   chk_reorder_slot_words      = 10'd0;
+    integer      chk_reorder_ooo_cnt         = 0;
+    reg  [15:0]  chk_reorder_expected_txfn   = 16'd0;
+    integer      chk_defr_words_before_rec   = 0;
+    integer      chk_reasm_pkts_before_rec   = 0;
+    integer      pre_recovery_leakage_err    = 0;
+    integer      defr_data_words_to_reasm_cnt= 0; // Expected: 4 x 477 = 1,908 words
+    integer      defr_drained_seg_cnt        = 0; // Expected: 4 segments
+    reg  [9:0]   defr_drained_fso_seq [0:3];
+
+    // Forward declaration of reasm_pkt_502_cnt for pre-recovery check
+    integer      reasm_pkt_502_cnt           = 0;
+
+    wire [3:0]   dat1_b_slot_idx        = dat1_b_txfn[3:0];
+    wire         dat1_b_in_reorder_slot = dat1_b_txfn_valid &&
+                                          (rx_reorder_slot_valid[dat1_b_slot_idx] === 1'b1) &&
+                                          (rx_reorder_slot_word_cnt[dat1_b_slot_idx] == 10'd477);
 
     always @(posedge clk_rx) begin
         if (!u_dut.rst_n) begin
-            grp7_defr_clk_cnt       <= 9'd0;
-            grp7_defr_byte_cnt      <= 12'd0;
-            rx_hdr_crc_pass_cnt     <= 0;
-            rx_hdr_crc_fail_cnt     <= 0;
-            rx_pld_crc_pass_cnt     <= 0;
-            rx_pld_crc_fail_cnt     <= 0;
-            rx_idle_frame_cnt       <= 0;
-            rx_data_frame_cnt       <= 0;
-            rx_mgmt_frame_cnt       <= 0;
-            mgmt_valid_event_cnt    <= 0;
-            mgmt_range_mismatch_cnt <= 0;
-            mgmt_captured_range     <= 64'd0;
-            last_hdr_done_txfn      <= 16'd0;
-            last_hdr_done_type_str  <= "NONE";
+            grp7_defr_clk_cnt            <= 9'd0;
+            grp7_defr_byte_cnt           <= 12'd0;
+            rx_hdr_crc_pass_cnt          <= 0;
+            rx_hdr_crc_fail_cnt          <= 0;
+            rx_pld_crc_pass_cnt          <= 0;
+            rx_pld_crc_fail_cnt          <= 0;
+            rx_idle_frame_cnt            <= 0;
+            rx_data_frame_cnt            <= 0;
+            rx_mgmt_frame_cnt            <= 0;
+            mgmt_valid_event_cnt         <= 0;
+            mgmt_range_mismatch_cnt      <= 0;
+            mgmt_captured_range          <= 64'd0;
+            last_hdr_done_txfn           <= 16'd0;
+            last_hdr_done_type_str       <= "NONE";
+            cur_rx_reorder_wr_txfn       <= 16'd0;
+            target_rx_crc_fail_cnt       <= 0;
+            target_retx5_rx_crc_passed   <= 1'b0;
+            dat1_b_rx_crc_passed         <= 1'b0;
+            dat1_b_wait_slot_active      <= 1'b0;
+            dat1_b_wait_cycles           <= 0;
+            reorder_chk_timeout_err      <= 0;
+            reorder_chk_captured         <= 1'b0;
+            chk_reorder_slot_valid_bit   <= 1'b0;
+            chk_reorder_slot_txfn        <= 16'd0;
+            chk_reorder_slot_fso_seq     <= 10'd0;
+            chk_reorder_slot_words       <= 10'd0;
+            chk_reorder_ooo_cnt          <= 0;
+            chk_reorder_expected_txfn    <= 16'd0;
+            chk_defr_words_before_rec    <= 0;
+            chk_reasm_pkts_before_rec    <= 0;
+            pre_recovery_leakage_err     <= 0;
+            defr_data_words_to_reasm_cnt <= 0;
+            defr_drained_seg_cnt         <= 0;
+            for (s_idx = 0; s_idx < 16; s_idx = s_idx + 1) begin
+                rx_reorder_slot_tag_txfn[s_idx]    <= 16'd0;
+                rx_reorder_slot_tag_fso_seq[s_idx] <= 10'd0;
+                rx_reorder_slot_word_cnt[s_idx]    <= 10'd0;
+            end
         end else begin
-            if (grp7_deframed_valid) begin
-                if (grp7_defr_clk_cnt == 9'd477 || grp7_defr_clk_cnt == 9'd0) begin
+            if (grp7_deframed_valid && grp7_deframed_ready) begin
+                if ((defr_data_words_to_reasm_cnt % 477) == 0) begin
                     grp7_defr_clk_cnt  <= 9'd1;
                     grp7_defr_byte_cnt <= 12'd4;
+                    if (defr_drained_seg_cnt < 4)
+                        defr_drained_fso_seq[defr_drained_seg_cnt] <= grp7_deframed_data[23:14];
                 end else begin
                     grp7_defr_clk_cnt  <= grp7_defr_clk_cnt + 9'd1;
                     grp7_defr_byte_cnt <= grp7_defr_byte_cnt + 12'd4;
                 end
-            end else begin
+                if (grp7_deframed_last)
+                    defr_drained_seg_cnt <= defr_drained_seg_cnt + 1;
+                defr_data_words_to_reasm_cnt <= defr_data_words_to_reasm_cnt + 1;
+            end else if (!grp7_deframed_valid) begin
                 grp7_defr_clk_cnt  <= 9'd0;
                 grp7_defr_byte_cnt <= 12'd0;
             end
@@ -638,12 +1145,72 @@ module tb_SDAOISL10Gto10G_top();
                     rx_pld_crc_pass_cnt <= rx_pld_crc_pass_cnt + 1;
                     case (grp7_rx_frame_type)
                         2'b00: rx_idle_frame_cnt <= rx_idle_frame_cnt + 1;
-                        2'b01: rx_data_frame_cnt <= rx_data_frame_cnt + 1;
+                        2'b01: begin
+                            rx_data_frame_cnt <= rx_data_frame_cnt + 1;
+                            // Latch the RX-decoded TXFN for the verified DATA stream entering u_arq_rx_reorder
+                            cur_rx_reorder_wr_txfn                      <= grp7_rx_txfn;
+                            rx_reorder_slot_word_cnt[grp7_rx_txfn[3:0]] <= 10'd0;
+                        end
                         2'b10: rx_mgmt_frame_cnt <= rx_mgmt_frame_cnt + 1;
                     endcase
+
+                    if (target_txfn_valid && (grp7_rx_txfn == target_txfn)) begin
+                        target_retx5_rx_crc_passed <= 1'b1;
+                    end
+                    if ((CH_ERROR_MODE == 2) && dat1_b_txfn_valid && (grp7_rx_txfn == dat1_b_txfn) && !reorder_chk_captured) begin
+                        dat1_b_rx_crc_passed    <= 1'b1;
+                        dat1_b_wait_slot_active <= 1'b1;
+                        dat1_b_wait_cycles      <= 0;
+                    end
                 end else begin
                     rx_pld_crc_fail_cnt <= rx_pld_crc_fail_cnt + 1;
+                    if (target_txfn_valid && (grp7_rx_txfn == target_txfn)) begin
+                        target_rx_crc_fail_cnt <= target_rx_crc_fail_cnt + 1;
+                    end
                 end
+            end
+
+            // [Rev 2.8 - Auditor Point 3 Fix]: Record actual RX-decoded slot tag (cur_rx_reorder_wr_txfn)
+            // and fso_seq as words stream into u_arq_rx_reorder on rx_reorder_in_tvalid
+            if (rx_reorder_in_tvalid) begin
+                if (rx_reorder_slot_word_cnt[cur_rx_reorder_wr_txfn[3:0]] == 10'd0) begin
+                    rx_reorder_slot_tag_txfn[cur_rx_reorder_wr_txfn[3:0]]    <= cur_rx_reorder_wr_txfn;
+                    rx_reorder_slot_tag_fso_seq[cur_rx_reorder_wr_txfn[3:0]] <= rx_reorder_in_tdata[23:14];
+                end
+                rx_reorder_slot_word_cnt[cur_rx_reorder_wr_txfn[3:0]] <= rx_reorder_slot_word_cnt[cur_rx_reorder_wr_txfn[3:0]] + 10'd1;
+            end
+
+            // [Auditor Detail 1 & Point 3]: Wait for DAT1_B to finish writing into Reorder RAM (<=600 cycles after pld_check_done)
+            // and snapshot the independently recorded RX slot tag from rx_reorder_slot_tag_txfn[dat1_b_slot_idx]!
+            if (dat1_b_wait_slot_active) begin
+                if (dat1_b_in_reorder_slot) begin
+                    dat1_b_wait_slot_active    <= 1'b0;
+                    reorder_chk_captured       <= 1'b1;
+                    chk_reorder_slot_valid_bit <= rx_reorder_slot_valid[dat1_b_slot_idx];
+                    chk_reorder_slot_txfn      <= rx_reorder_slot_tag_txfn[dat1_b_slot_idx];
+                    chk_reorder_slot_fso_seq   <= rx_reorder_slot_tag_fso_seq[dat1_b_slot_idx];
+                    chk_reorder_slot_words     <= rx_reorder_slot_word_cnt[dat1_b_slot_idx];
+                    chk_reorder_ooo_cnt        <= rx_reorder_ooo_cnt;
+                    chk_reorder_expected_txfn  <= rx_reorder_exp_txfn;
+                    chk_defr_words_before_rec  <= defr_data_words_to_reasm_cnt;
+                    chk_reasm_pkts_before_rec  <= reasm_pkt_502_cnt;
+                    $display(" [%0.1f ns] [MODE2 REORDER CHECKPOINT] Slot[%0d] Valid=%0b | RecordedSlotTXFN=%0d (Exp:%0d), SlotFsoSeq=%0d, Words=%0d | ExpectedTXFN=%0d | WordsToReasm=%0d (Exp:477) | PktsOut=%0d",
+                             $realtime, dat1_b_slot_idx, rx_reorder_slot_valid[dat1_b_slot_idx],
+                             rx_reorder_slot_tag_txfn[dat1_b_slot_idx], dat1_b_txfn,
+                             rx_reorder_slot_tag_fso_seq[dat1_b_slot_idx], rx_reorder_slot_word_cnt[dat1_b_slot_idx],
+                             rx_reorder_exp_txfn, defr_data_words_to_reasm_cnt, reasm_pkt_502_cnt);
+                end else if (dat1_b_wait_cycles >= 600) begin
+                    dat1_b_wait_slot_active <= 1'b0;
+                    reorder_chk_timeout_err <= reorder_chk_timeout_err + 1;
+                end else begin
+                    dat1_b_wait_cycles <= dat1_b_wait_cycles + 1;
+                end
+            end
+
+            // Continuous pre-recovery leakage guard while DAT2_A (target_txfn) has not yet passed CRC-32
+            if ((CH_ERROR_MODE == 2) && target_txfn_valid && !target_retx5_rx_crc_passed) begin
+                if ((defr_data_words_to_reasm_cnt > 477) || (reasm_pkt_502_cnt > 0))
+                    pre_recovery_leakage_err <= pre_recovery_leakage_err + 1;
             end
 
             // [Rev 2.6] Check MGMT range value on EVERY grp7_mgmt_valid event
@@ -699,7 +1266,6 @@ module tb_SDAOISL10Gto10G_top();
     end
 
     // 1. Diagnostic Reassembly Monitor (502 words = 2,008B per packet)
-    integer reasm_pkt_502_cnt = 0;
     always @(posedge clk_rx) begin
         if (grp8_reasm_eth_valid) begin
             grp8_reasm_clk_cnt  <= grp8_reasm_clk_cnt + 16'd1;
@@ -947,16 +1513,22 @@ module tb_SDAOISL10Gto10G_top();
     end
 
     // =========================================================================
-    // 7. MAIN SIMULATION SEQUENCE & FINAL ETRI SCOREBOARD REPORT (REV 2.6)
+    // 7. MAIN SIMULATION SEQUENCE & FINAL ETRI SCOREBOARD REPORT (REV 2.8)
     // =========================================================================
     reg clock_freq_tolerance_ok;
+    reg mode0_clean_pass_ok;
+    reg mode1_fec_repair_pass_ok;
+    reg mode2_arq_recovery_pass_ok;
+    reg active_mode_pass_ok;
 
     initial begin
         $display("\n================================================================================");
         $display(" STARTING SDAOISL10Gto10G_top FULL END-TO-END SIMULATION (PC 1 -> FPGA -> PC 2)");
-        $display(" -> SIM_MODE          : %0d (Internal 2000B Jumbo Traffic Generator)", SIM_MODE);
-        $display(" -> CH_ERROR_MODE     : %0d (0=Clean Baseline, 1=Reduced Mask max_error=18, 2=Full 48-Word error.mem)", CH_ERROR_MODE);
-        $display(" -> TARGET_JUMBO_PKTS : %0d Packets (2 x 2,000B = 4,000 MAC Bytes / 1,000 Words)", TARGET_JUMBO_PKTS);
+        $display(" -> SIM_MODE            : %0d (Internal 2000B Jumbo Traffic Generator)", SIM_MODE);
+        $display(" -> CH_ERROR_MODE       : %0d (0=Clean Baseline, 1=FEC Repair max_error=18, 2=ARQ 5th-Retx Recovery on DAT2_A)", CH_ERROR_MODE);
+        $display(" -> LOOPBACK_ARQ_DIRECT : %0d (1=Local RX CRC Feedback Loopback)", LOOPBACK_ARQ_DIRECT_CFG);
+        $display(" -> ARQ_HOLDOFF_TICKS   : %0d clk_tx cycles (Mode 0/1 Baseline=500, Mode 2 NAK-Driven=8000)", ACTIVE_ARQ_HOLDOFF_TICKS);
+        $display(" -> TARGET_JUMBO_PKTS   : %0d Packets (2 x 2,000B = 4,000 MAC Bytes / 1,000 Words)", TARGET_JUMBO_PKTS);
         $display("================================================================================\n");
 
         wait(gth_link_up == 1'b1);
@@ -971,7 +1543,15 @@ module tb_SDAOISL10Gto10G_top();
         // Wait until TARGET_JUMBO_PKTS full 2,000-Byte Ethernet Jumbo frames complete XGMII Egress (/T/ + 3 Idle Cycles)
         // AND at least 1 IDLE frame and 1 MGMT frame are verified at the receiver
         wait(xgmii_pkt_completed_cnt >= TARGET_JUMBO_PKTS && mgmt_valid_event_cnt >= 1 && rx_idle_frame_cnt >= 1);
-        repeat (50) @(posedge clk_rx);
+
+        if (CH_ERROR_MODE == 2) begin
+            // Wait until Attempt 6 ACK and ddr4_delete_req cleanup complete, then observe for 1 full holdoff interval (8,500 clk_tx cycles)
+            wait(target_tx_ack_processed && target_ram_delete_verified);
+            repeat (8500) @(posedge clk_tx);
+        end else begin
+            // Preserve exact 50-cycle post-completion window for Mode 0 & Mode 1 baseline
+            repeat (50) @(posedge clk_rx);
+        end
 
         // Verify measured clock periods against IP configuration tolerances:
         // - tx0_clk & rx0_clk : 322.265625 MHz -> 3.103 ns +/- 0.010 ns
@@ -981,22 +1561,89 @@ module tb_SDAOISL10Gto10G_top();
                                   (measured_rx0_period_ns  >= 3.093 && measured_rx0_period_ns  <= 3.113) &&
                                   (measured_200m_period_ns >= 4.990 && measured_200m_period_ns <= 5.010);
 
+        // [Rev 2.8 - Auditor Point 5 Fix]: Separate Mode 0 vs Mode 1 PASS criteria
+        mode0_clean_pass_ok      = (rx_hdr_crc_fail_cnt       == 0)     &&
+                                   (rx_pld_crc_fail_cnt       == 0)     &&
+                                   (total_inj_frames_with_err == 0)     &&
+                                   (total_inj_corrupted_words == 0)     &&
+                                   (grp6_lpc_repaired_bits    == 16'd0) &&
+                                   (grp6_rs_repaired_syms     == 12'd0);
+
+        mode1_fec_repair_pass_ok = (rx_hdr_crc_fail_cnt       == 0)     &&
+                                   (rx_pld_crc_fail_cnt       == 0)     &&
+                                   (total_inj_frames_with_err >  0)     &&
+                                   (total_inj_corrupted_words >  0)     &&
+                                   (grp6_rs_repaired_syms     >  12'd0);
+
+        mode2_arq_recovery_pass_ok = target_txfn_valid && dat1_b_txfn_valid && dat2_b_txfn_valid &&
+                                     (rx_hdr_crc_fail_cnt             == 0)      &&
+                                     (rx_pld_crc_fail_cnt             == 5)      &&
+                                     (target_rx_crc_fail_cnt          == 5)      &&
+                                     (target_tx_attempt_cnt           == 6)      &&
+                                     (target_retx_event_cnt           == 5)      &&
+                                     (target_tx_nak_received_cnt      == 5)      &&
+                                     (target_causal_nak_replay_pairs  == 5)      &&
+                                     (target_nak_awaiting_replay      == 1'b0)   &&
+                                     (target_unpaired_replay_err      == 0)      &&
+                                     (target_timeout_before_nak_err   == 0)      &&
+                                     (target_init_words_captured      == 478)    &&
+                                     (target_replay_words_checked     == 2390)   &&
+                                     (target_replay_word_mismatches   == 0)      &&
+                                     (target_inj_corrupted_frames     == 5)      &&
+                                     (target_inj_clean_retx5_ok       == 1)      &&
+                                     (non_target_inj_leak_err         == 0)      &&
+                                     (ctx_fifo_overflow_err           == 0)      &&
+                                     (ctx_fifo_underflow_err          == 0)      &&
+                                     (reorder_chk_captured            == 1'b1)   &&
+                                     (reorder_chk_timeout_err         == 0)      &&
+                                     (chk_reorder_slot_valid_bit      == 1'b1)   &&
+                                     (chk_reorder_slot_txfn           == dat1_b_txfn) &&
+                                     (chk_reorder_slot_fso_seq        == 10'd2)  &&
+                                     (chk_reorder_slot_words          == 10'd477)&&
+                                     (chk_reorder_ooo_cnt             >= 1)      &&
+                                     (chk_reorder_expected_txfn       == target_txfn) &&
+                                     (chk_defr_words_before_rec       == 477)    &&
+                                     (chk_reasm_pkts_before_rec       == 0)      &&
+                                     (pre_recovery_leakage_err        == 0)      &&
+                                     (defr_drained_seg_cnt            == 4)      &&
+                                     (defr_data_words_to_reasm_cnt    == 1908)   &&
+                                     (defr_drained_fso_seq[0]         == 10'd0)  &&
+                                     (defr_drained_fso_seq[1]         == 10'd1)  &&
+                                     (defr_drained_fso_seq[2]         == 10'd2)  &&
+                                     (defr_drained_fso_seq[3]         == 10'd3)  &&
+                                     (target_retx5_rx_crc_passed      == 1'b1)   &&
+                                     (target_tx_ack_processed         == 1'b1)   &&
+                                     (target_ram_write_verified       == 1'b1)   &&
+                                     (target_ram_read_addr_match_cnt  == 5)      &&
+                                     (target_ram_addr_mismatch_cnt    == 0)      &&
+                                     (target_ram_delete_verified      == 1'b1)   &&
+                                     (target_drop_err_cnt             == 0)      &&
+                                     (post_ack_target_replay_cnt      == 0)      &&
+                                     (u_dut.sda_encoder_inst.u_eth_fso_framer.u_arq_tx_controller.track_valid[target_track_idx] == 1'b0) &&
+                                     (u_dut.sda_encoder_inst.u_eth_fso_framer.u_arq_tx_controller.slot_busy_bitmap[target_phys_slot] == 1'b0) &&
+                                     (u_dut.sda_encoder_inst.u_eth_fso_framer.u_arq_tx_controller.slot_del_pending[target_phys_slot] == 1'b0) &&
+                                     (u_dut.sda_encoder_inst.u_eth_fso_framer.u_arq_tx_controller.del_q_cnt == 5'd0) &&
+                                     (rx_reorder_slot_valid           == 16'd0);
+
+        active_mode_pass_ok = (CH_ERROR_MODE == 2) ? mode2_arq_recovery_pass_ok :
+                              ((CH_ERROR_MODE == 1) ? mode1_fec_repair_pass_ok : mode0_clean_pass_ok);
+
         $display("\n================================================================================");
-        $display(" SDAOISL10Gto10G_top END-TO-END VERIFICATION REPORT (SDA OISL v2.1.2 - REV 2.6)");
+        $display(" SDAOISL10Gto10G_top END-TO-END VERIFICATION REPORT (SDA OISL v2.1.2 - REV 2.8)");
         $display("================================================================================");
         $display(" 1. Measured Top-Level Clocks      : tx0_clk = %0.6f MHz (%0.3f ns) | rx0_clk = %0.6f MHz (%0.3f ns) | clk_logic = %0.6f MHz (%0.3f ns) [IP_Tol_OK=%0b]",
                  measured_tx0_mhz, measured_tx0_period_ns, measured_rx0_mhz, measured_rx0_period_ns, measured_200m_mhz, measured_200m_period_ns, clock_freq_tolerance_ok);
-        $display(" 2. Optical Link & Preamble Status : gth_link_up=%0b | rx_block_locked=%0b | Preamble=0x%018X (Locked=%0b)",
-                 gth_link_up, rx_block_locked, grp6_rx_preamble_72b, rx_preamble_locked);
+        $display(" 2. Optical Link & Preamble Status : gth_link_up=%0b | rx_block_locked=%0b | Preamble=0x%018X (Locked=%0b) | LoopbackDirect=%0d",
+                 gth_link_up, rx_block_locked, grp6_rx_preamble_72b, rx_preamble_locked, LOOPBACK_ARQ_DIRECT_CFG);
         $display(" 3. RX GTH Pause & LPC Burst Check : rx_fso_valid_out Words=%0d (PauseEvents=%0d, PauseCycles=%0d) | LPC 259W Bursts=%0d (IntraBurstGaps=%0d)",
                  rx_fso_valid_words_total, rx_fso_valid_pause_events, rx_fso_valid_pause_cycles, lpc_completed_bursts, lpc_intra_burst_gap_cnt);
         $display(" 4. Ingress Segmentation (14-bit)  : Segments=%0d [Seg0..3 = %0dB, %0dB, %0dB, %0dB] (Expected: 1900, 100, 1900, 100 | Mismatches=%0d)",
                  seg_completed_cnt, seg_observed_bytes[0], seg_observed_bytes[1], seg_observed_bytes[2], seg_observed_bytes[3], seg_size_mismatch_cnt);
-        $display(" 5. Frame Types & Event-Driven CRC : TX[IDLE=%0d, DATA=%0d, MGMT=%0d] | RX[IDLE=%0d, DATA=%0d, MGMT=%0d] | HdrCRC Pass=%0d (Fail=%0d) | PldCRC Pass=%0d (Fail=%0d)",
+        $display(" 5. Frame Types & Event-Driven CRC : TX[IDLE=%0d, DATA=%0d, MGMT=%0d] | RX[IDLE=%0d, DATA=%0d, MGMT=%0d] | HdrCRC Pass=%0d (Fail=%0d) | PldCRC Pass=%0d (Fail=%0d) [HoldoffTicks=%0d]",
                  tx_idle_frame_cnt, tx_data_frame_cnt, tx_mgmt_frame_cnt,
                  rx_idle_frame_cnt, rx_data_frame_cnt, rx_mgmt_frame_cnt,
-                 rx_hdr_crc_pass_cnt, rx_hdr_crc_fail_cnt, rx_pld_crc_pass_cnt, rx_pld_crc_fail_cnt);
-        if (rx_hdr_crc_pass_cnt > rx_pld_crc_pass_cnt) begin
+                 rx_hdr_crc_pass_cnt, rx_hdr_crc_fail_cnt, rx_pld_crc_pass_cnt, rx_pld_crc_fail_cnt, ACTIVE_ARQ_HOLDOFF_TICKS);
+        if (rx_hdr_crc_pass_cnt > (rx_pld_crc_pass_cnt + rx_pld_crc_fail_cnt)) begin
             $display("    -> In-Flight Partial Frame     : Header #%0d (TXFN=%0d, Type=\"%s\") completed Header CRC-16; Payload in flight at word %0d/478 at stop",
                      rx_hdr_crc_pass_cnt, last_hdr_done_txfn, last_hdr_done_type_str, grp7_cdc4_pld_clk_cnt);
         end
@@ -1010,6 +1657,28 @@ module tb_SDAOISL10Gto10G_top();
                  xgmii_min3_idle_verified_pkts, TARGET_JUMBO_PKTS, inter_pkt1_to_pkt2_idle_cycles);
         $display(" 9. Stimulus Marker Preservation   : ASCII Tag = \"%s\" | Stimulus FCS Marker = 0x%08X",
                  xgmii_captured_ascii, xgmii_captured_fcs);
+        if (CH_ERROR_MODE == 2) begin
+            $display("10. Channel Error & FEC Telemetry  : CH_ERROR_MODE=%0d | InjFrames=%0d (InjWords=%0d) | LPC_DecRepairedBits=%0d | RS_DecRepairedSyms=%0d | TargetInj=%0d/5 (CleanRetx5=%0d/1, Leak=%0d) | CtxFIFO Push=%0d, Pop=%0d (Ovfl=%0d, Udfl=%0d)",
+                     CH_ERROR_MODE, total_inj_frames_with_err, total_inj_corrupted_words,
+                     grp6_lpc_repaired_bits, grp6_rs_repaired_syms,
+                     target_inj_corrupted_frames, target_inj_clean_retx5_ok, non_target_inj_leak_err,
+                     ctx_push_total_cnt, ctx_pop_total_cnt, ctx_fifo_overflow_err, ctx_fifo_underflow_err);
+            $display("11. Mode 2 Target ARQ & Replay     : TargetTXFN=%0d (DAT2_A) | Attempts=%0d (Init+5Retx) | CausalNAK->ReplayPairs=%0d/5 (TimeoutErr=%0d, UnpairedErr=%0d) | ReplayWords=%0d/2390 (Mismatch=%0d)",
+                     target_txfn, target_tx_attempt_cnt, target_causal_nak_replay_pairs,
+                     target_timeout_before_nak_err, target_unpaired_replay_err,
+                     target_replay_words_checked, target_replay_word_mismatches);
+            $display("12. Mode 2 Reorder & RAM Cleanup   : Slot[%0d] Valid=%0b (RecordedSlotTXFN=%0d vs ExpDAT1_B=%0d, SlotFsoSeq=%0d, SlotWords=%0d) while ExpTXFN=%0d & ReasmIn=%0dW (LeakErr=%0d) | RAM_Addr=0x%04X (Wr=%0b, RdMatch=%0d/5, Del=%0b, DropErr=%0d, PostAckReplay=%0d)",
+                     dat1_b_slot_idx, chk_reorder_slot_valid_bit, chk_reorder_slot_txfn, dat1_b_txfn,
+                     chk_reorder_slot_fso_seq, chk_reorder_slot_words,
+                     chk_reorder_expected_txfn, chk_defr_words_before_rec, pre_recovery_leakage_err,
+                     target_recorded_ram_addr, target_ram_write_verified, target_ram_read_addr_match_cnt,
+                     target_ram_delete_verified, target_drop_err_cnt, post_ack_target_replay_cnt);
+        end else begin
+            $display("10. Channel Error & FEC Telemetry  : CH_ERROR_MODE=%0d | InjFrames=%0d (InjWords=%0d) | LPC_DecRepairedBits=%0d | RS_DecRepairedSyms=%0d | CtxFIFO Push=%0d, Pop=%0d (Ovfl=%0d, Udfl=%0d)",
+                     CH_ERROR_MODE, total_inj_frames_with_err, total_inj_corrupted_words,
+                     grp6_lpc_repaired_bits, grp6_rs_repaired_syms,
+                     ctx_push_total_cnt, ctx_pop_total_cnt, ctx_fifo_overflow_err, ctx_fifo_underflow_err);
+        end
 
         if (gth_link_up && rx_block_locked && rx_preamble_locked &&
             clock_freq_tolerance_ok &&
@@ -1020,7 +1689,7 @@ module tb_SDAOISL10Gto10G_top();
             (mgmt_valid_event_cnt >= 1) && (mgmt_range_mismatch_cnt == 0) &&
             (mgmt_captured_range == 64'h4153_12D0_0000_0000) &&
             (rx_hdr_crc_pass_cnt >= 6) && (rx_pld_crc_pass_cnt >= 6) &&
-            ((CH_ERROR_MODE != 0) || ((rx_hdr_crc_fail_cnt == 0) && (rx_pld_crc_fail_cnt == 0))) &&
+            active_mode_pass_ok &&
             (reasm_pkt_502_cnt == TARGET_JUMBO_PKTS) &&
             (scb_matched_words == TARGET_JUMBO_PKTS * 500) && (scb_error_words == 0) &&
             (xgmii_pkt_completed_cnt == TARGET_JUMBO_PKTS) &&
@@ -1031,9 +1700,12 @@ module tb_SDAOISL10Gto10G_top();
             (xgmii_captured_ascii == "Kookmin FSO ") &&
             (xgmii_captured_fcs == 32'hDEAD_BEEF)) begin
             $display("--------------------------------------------------------------------------------");
-            $display(" FINAL VERDICT: [PASS] TOP-LEVEL END-TO-END BASELINE VERIFIED (2x2000B XGMII EGRESS, 1900/100 SEGMENTS, IDLE, MGMT 5000KM & OISL CRCS)!");
+            $display(" FINAL VERDICT: [PASS] TOP-LEVEL END-TO-END VERIFIED (CH_ERROR_MODE=%0d, 2x2000B XGMII EGRESS, 1900/100 SEGMENTS, IDLE, MGMT 5000KM & OISL CRCS)!", CH_ERROR_MODE);
         end else begin
-            $fatal(1, "FINAL VERDICT: [FAIL] Top-level XGMII egress, segmentation, MGMT, IDLE, clock tolerance, or CRC verification failed!");
+            $display(" [DIAGNOSTIC FAIL BREAKDOWN] active_mode_ok=%0b (m0=%0b, m1=%0b, m2=%0b) | inj_frames=%0d | inj_words=%0d | slot_txfn=%0d (exp %0d)",
+                     active_mode_pass_ok, mode0_clean_pass_ok, mode1_fec_repair_pass_ok, mode2_arq_recovery_pass_ok,
+                     total_inj_frames_with_err, total_inj_corrupted_words, chk_reorder_slot_txfn, dat1_b_txfn);
+            $fatal(1, "FINAL VERDICT: [FAIL] Top-level XGMII egress, segmentation, MGMT, IDLE, clock tolerance, CRC, or Mode 2 ARQ recovery verification failed!");
         end
         $display("================================================================================\n");
         $finish;
